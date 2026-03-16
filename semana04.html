@@ -1,191 +1,918 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Semana 04 - Dinâmicas e Estéticas - Tópicos Especiais em Jogos Digitais</title>
-    <style>
-        * { margin: 0; padding: 0; box-sizing: border-box; }
-        body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; line-height: 1.6; background-color: #f0f2f5; }
-        
-        .header { background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white; padding: 20px 0; box-shadow: 0 2px 10px rgba(0,0,0,0.2); position: sticky; top: 0; z-index: 1000; }
-        .header-content { max-width: 1400px; margin: 0 auto; padding: 0 20px; display: flex; align-items: center; gap: 20px; }
-        .header-text h1 { font-size: 1.5em; margin-bottom: 5px; }
-        .header-text p { font-size: 0.9em; opacity: 0.95; }
-        
-        .container { max-width: 1400px; margin: 20px auto; padding: 0 20px; display: flex; gap: 20px; }
-        
-        .sidebar { width: 280px; background: white; border-radius: 10px; padding: 20px; box-shadow: 0 2px 10px rgba(0,0,0,0.1); height: fit-content; position: sticky; top: 120px; }
-        .sidebar h2 { color: #667eea; font-size: 1.2em; margin-bottom: 15px; padding-bottom: 10px; border-bottom: 2px solid #764ba2; }
-        
-        .week-menu { list-style: none; }
-        .week-menu li { margin-bottom: 8px; }
-        .week-menu a { display: block; padding: 12px 15px; background: #f8f9fa; color: #667eea; text-decoration: none; border-radius: 5px; transition: all 0.3s; border-left: 3px solid transparent; }
-        .week-menu a:hover { background: #667eea; color: white; border-left-color: #764ba2; transform: translateX(5px); }
-        .week-menu a.active { background: #667eea; color: white; border-left-color: #764ba2; font-weight: bold; }
-        
-        .main-content { flex: 1; }
-        
-        .section { background: white; margin: 20px 0; padding: 30px; border-radius: 10px; box-shadow: 0 2px 10px rgba(0,0,0,0.1); }
-        .section h2 { color: #667eea; font-size: 1.8em; margin-bottom: 20px; border-bottom: 3px solid #764ba2; padding-bottom: 10px; }
-        .section h3 { color: #764ba2; font-size: 1.3em; margin: 25px 0 15px 0; }
-        
-        .module-badge { display: inline-block; background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white; padding: 8px 16px; border-radius: 20px; font-size: 0.9em; margin-bottom: 15px; }
-        
-        .objectives-list, .topics-list { padding-left: 0; list-style-position: inside; }
-        .objectives-list li, .topics-list li { padding: 10px; margin: 8px 0; background: #f8f9fa; border-left: 4px solid #667eea; border-radius: 5px; list-style-position: inside; }
-        
-        .video-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(350px, 1fr)); gap: 20px; margin: 20px 0; }
-        .video-card { background: #f8f9fa; border-radius: 10px; overflow: hidden; box-shadow: 0 2px 5px rgba(0,0,0,0.1); }
-        .video-card iframe { width: 100%; height: 220px; border: none; }
-        .video-info { padding: 15px; }
-        .video-info h4 { color: #667eea; margin-bottom: 5px; }
-        
-        .atividade { background: #f8f9fa; padding: 25px; margin: 20px 0; border-radius: 10px; border-left: 5px solid #667eea; }
-        .atividade h4 { color: #667eea; font-size: 1.2em; margin-bottom: 15px; }
-        .atividade .descricao { margin: 15px 0; line-height: 1.8; }
-        .atividade .entrega { background: white; padding: 15px; border-radius: 5px; border-left: 3px solid #764ba2; margin-top: 15px; }
-        .atividade .entrega strong { color: #764ba2; display: block; margin-bottom: 5px; }
-        
-        .navigation { display: flex; justify-content: space-between; margin: 30px 0; }
-        .nav-button { padding: 15px 30px; background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white; text-decoration: none; border-radius: 8px; font-weight: bold; transition: transform 0.3s; display: inline-flex; align-items: center; gap: 10px; }
-        .nav-button:hover { transform: translateY(-2px); box-shadow: 0 5px 15px rgba(102, 126, 234, 0.4); }
-        
-        @media (max-width: 1024px) {
-            .container { flex-direction: column; }
-            .sidebar { width: 100%; position: static; }
-        }
-    </style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Semana 04 · Dinâmicas e Estéticas · IJD-038</title>
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=IBM+Plex+Mono:wght@400;600&family=Manrope:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --ink:#0b0c10;--ink2:#12131a;--ink3:#1a1c27;--ink4:#222436;
+  --glass:rgba(255,255,255,0.04);--line:rgba(255,255,255,0.07);
+  --lime:#c8f135;--lime2:#9ed608;--teal:#2de4c8;--violet:#a78bfa;
+  --amber:#fbbf24;--rose:#fb7185;--sky:#38bdf8;--text:#e8eaf2;--sub:#7b7f96;
+  --mono:'IBM Plex Mono',monospace;--sans:'Manrope',sans-serif;--display:'Syne',sans-serif;--r:12px;
+}
+*,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{font-family:var(--sans);background:var(--ink);color:var(--text);min-height:100vh;overflow-x:hidden;}
+body::after{content:'';position:fixed;inset:0;z-index:999;pointer-events:none;opacity:.025;background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");background-size:200px 200px;}
+.bg-dots{position:fixed;inset:0;z-index:0;pointer-events:none;background-image:radial-gradient(circle,rgba(200,241,53,.08) 1px,transparent 1px);background-size:40px 40px;mask-image:radial-gradient(ellipse 80% 80% at 50% 50%,black 40%,transparent 100%);}
+.bg-glow{position:fixed;z-index:0;pointer-events:none;width:600px;height:600px;border-radius:50%;background:radial-gradient(circle,rgba(167,139,250,.06) 0%,transparent 70%);top:-200px;left:-100px;animation:glowDrift 18s ease-in-out infinite alternate;}
+.bg-glow2{position:fixed;z-index:0;pointer-events:none;width:500px;height:500px;border-radius:50%;background:radial-gradient(circle,rgba(45,228,200,.05) 0%,transparent 70%);bottom:-100px;right:-80px;animation:glowDrift 22s ease-in-out infinite alternate-reverse;}
+@keyframes glowDrift{to{transform:translate(80px,60px)}}
+
+/* HUD */
+.hud{position:sticky;top:0;z-index:200;background:rgba(11,12,16,.88);backdrop-filter:blur(20px);border-bottom:1px solid var(--line);display:flex;align-items:center;gap:0;height:58px;overflow:hidden;}
+.hud::after{content:'';position:absolute;bottom:0;left:0;right:0;height:1.5px;background:linear-gradient(90deg,transparent,var(--violet),var(--teal),var(--amber),transparent);opacity:.7;}
+.hud-brand{display:flex;align-items:center;gap:12px;padding:0 24px;height:100%;border-right:1px solid var(--line);text-decoration:none;flex-shrink:0;}
+.hud-logo{width:30px;height:30px;border-radius:7px;background:var(--violet);display:flex;align-items:center;justify-content:center;font-size:.85em;color:var(--ink);font-weight:800;font-family:var(--display);}
+.hud-course{font-family:var(--mono);font-size:.62em;color:var(--sub);letter-spacing:.1em;text-transform:uppercase;line-height:1.3}
+.hud-course span{display:block;color:var(--violet);font-size:1.1em;letter-spacing:.05em}
+.hud-crumb{display:flex;align-items:center;gap:8px;padding:0 20px;font-family:var(--mono);font-size:.65em;color:var(--sub);flex:1;}
+.hud-crumb span{color:var(--sub);opacity:.4}
+.hud-xp{display:flex;align-items:center;gap:14px;padding:0 20px;border-left:1px solid var(--line);height:100%;}
+.xp-count{font-family:var(--mono);font-size:.72em;display:flex;align-items:baseline;gap:4px;}
+.xp-count strong{font-size:1.6em;color:var(--violet);line-height:1}
+.xp-count span{color:var(--sub)}
+.hud-bar{width:120px;height:6px;background:rgba(255,255,255,.08);border-radius:100px;overflow:hidden;}
+.hud-bar-fill{height:100%;border-radius:100px;background:linear-gradient(90deg,#7c3aed,var(--violet));box-shadow:0 0 8px rgba(167,139,250,.5);transition:width .8s cubic-bezier(.34,1.56,.64,1);width:0%;}
+.hud-level{font-family:var(--display);font-size:.9em;font-weight:700;color:var(--amber);white-space:nowrap;}
+.streak{display:flex;align-items:center;gap:5px;font-family:var(--mono);font-size:.62em;background:rgba(251,191,36,.1);border:1px solid rgba(251,191,36,.2);padding:4px 10px;border-radius:100px;color:var(--amber);}
+
+/* LAYOUT */
+.wrap{max-width:1440px;margin:0 auto;padding:32px 24px;display:grid;grid-template-columns:220px 1fr 240px;gap:24px;position:relative;z-index:1;}
+.left-nav{position:sticky;top:78px;height:fit-content;display:flex;flex-direction:column;gap:12px;}
+.nav-card{background:var(--ink2);border:1px solid var(--line);border-radius:var(--r);padding:16px;overflow:hidden;}
+.nav-label{font-family:var(--mono);font-size:.55em;letter-spacing:.18em;text-transform:uppercase;color:var(--sub);margin-bottom:10px;padding-bottom:8px;border-bottom:1px solid var(--line);}
+.nav-link{display:flex;align-items:center;gap:9px;padding:9px 10px;border-radius:8px;margin-bottom:2px;text-decoration:none;color:var(--sub);font-size:.82em;transition:all .18s;border:1px solid transparent;}
+.nav-link:hover{color:var(--text);background:var(--glass);border-color:var(--line);}
+.nav-link.cur{color:var(--violet);background:rgba(167,139,250,.07);border-color:rgba(167,139,250,.2);font-weight:600;}
+.nav-link .nd{width:6px;height:6px;border-radius:50%;flex-shrink:0;background:var(--sub);transition:all .2s;}
+.nav-link.cur .nd,.nav-link.done .nd{background:var(--violet);box-shadow:0 0 6px var(--violet);}
+.nav-link.done{color:rgba(167,139,250,.5);}
+.stat-row{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:4px;}
+.stat-box{background:var(--ink3);border:1px solid var(--line);border-radius:8px;padding:10px;text-align:center;}
+.stat-val{display:block;font-family:var(--display);font-size:1.3em;font-weight:800;color:var(--violet);}
+.stat-lbl{font-size:.58em;color:var(--sub);text-transform:uppercase;letter-spacing:.1em;font-family:var(--mono);}
+
+/* MAIN */
+.main{display:flex;flex-direction:column;gap:24px;}
+
+/* HERO */
+.hero{background:var(--ink2);border:1px solid var(--line);border-radius:16px;padding:48px;position:relative;overflow:hidden;}
+.hero::before{content:'';position:absolute;top:0;right:0;bottom:0;width:50%;background:linear-gradient(135deg,transparent 0%,rgba(167,139,250,.04) 100%);pointer-events:none;}
+.hero-eyebrow{font-family:var(--mono);font-size:.62em;letter-spacing:.2em;text-transform:uppercase;color:var(--violet);margin-bottom:14px;display:flex;align-items:center;gap:10px;}
+.hero-eyebrow::before{content:'';width:28px;height:2px;background:var(--violet);}
+.hero h1{font-family:var(--display);font-size:4em;font-weight:800;line-height:.92;letter-spacing:-.01em;margin-bottom:16px;}
+.hero h1 em{font-style:normal;-webkit-text-stroke:1.5px var(--violet);color:transparent;}
+.hero-sub{color:var(--sub);font-size:.95em;max-width:520px;line-height:1.7;margin-bottom:28px;}
+.chips{display:flex;gap:8px;flex-wrap:wrap;}
+.chip{padding:5px 14px;border-radius:100px;font-size:.75em;font-weight:500;border:1px solid var(--line);background:var(--glass);display:inline-flex;align-items:center;gap:6px;}
+.chip-violet{background:rgba(167,139,250,.1);border-color:rgba(167,139,250,.3);color:var(--violet);}
+.chip-teal{background:rgba(45,228,200,.08);border-color:rgba(45,228,200,.25);color:var(--teal);}
+.chip-amber{background:rgba(251,191,36,.08);border-color:rgba(251,191,36,.25);color:var(--amber);}
+.chip-rose{background:rgba(251,113,133,.08);border-color:rgba(251,113,133,.25);color:var(--rose);}
+.hero-deco{position:absolute;right:-20px;top:50%;transform:translateY(-50%);font-family:var(--display);font-size:14em;font-weight:800;color:rgba(255,255,255,.025);line-height:1;user-select:none;pointer-events:none;}
+
+/* SECTION CARD */
+.scard{background:var(--ink2);border:1px solid var(--line);border-radius:var(--r);overflow:hidden;}
+.scard-head{display:flex;align-items:center;gap:12px;padding:15px 22px;border-bottom:1px solid var(--line);background:rgba(255,255,255,.015);}
+.scard-ico{width:34px;height:34px;border-radius:9px;flex-shrink:0;display:flex;align-items:center;justify-content:center;font-size:1em;}
+.ico-lime{background:rgba(200,241,53,.15);border:1px solid rgba(200,241,53,.25);}
+.ico-teal{background:rgba(45,228,200,.12);border:1px solid rgba(45,228,200,.22);}
+.ico-amber{background:rgba(251,191,36,.12);border:1px solid rgba(251,191,36,.22);}
+.ico-violet{background:rgba(167,139,250,.12);border:1px solid rgba(167,139,250,.22);}
+.ico-rose{background:rgba(251,113,133,.12);border:1px solid rgba(251,113,133,.22);}
+.scard-title{font-family:var(--mono);font-size:.75em;letter-spacing:.08em;text-transform:uppercase;color:var(--text);flex:1;}
+.scard-xp{font-family:var(--mono);font-size:.62em;padding:3px 11px;border-radius:100px;background:rgba(167,139,250,.1);border:1px solid rgba(167,139,250,.2);color:var(--violet);}
+.scard-body{padding:24px;}
+
+/* PROGRESS TRACKER */
+.prog-track{display:flex;flex-direction:column;gap:10px;}
+.prog-section{display:flex;flex-direction:column;gap:6px;}
+.prog-label{font-family:var(--mono);font-size:.6em;text-transform:uppercase;letter-spacing:.12em;color:var(--sub);display:flex;justify-content:space-between;align-items:center;}
+.prog-bar{height:8px;background:rgba(255,255,255,.06);border-radius:100px;overflow:hidden;}
+.prog-fill{height:100%;border-radius:100px;transition:width .8s cubic-bezier(.34,1.56,.64,1);width:0%;}
+.pf-violet{background:linear-gradient(90deg,#7c3aed,var(--violet));box-shadow:0 0 8px rgba(167,139,250,.4);}
+.pf-teal{background:linear-gradient(90deg,#0d9488,var(--teal));box-shadow:0 0 8px rgba(45,228,200,.4);}
+.pf-amber{background:linear-gradient(90deg,#d97706,var(--amber));box-shadow:0 0 8px rgba(251,191,36,.4);}
+.pf-rose{background:linear-gradient(90deg,#e11d48,var(--rose));box-shadow:0 0 8px rgba(251,113,133,.4);}
+
+/* OBJECTIVES */
+.obj-grid{display:flex;flex-direction:column;gap:8px;}
+.obj{display:flex;align-items:center;gap:14px;padding:13px 16px;border-radius:9px;cursor:pointer;background:var(--ink3);border:1px solid var(--line);font-size:.88em;font-weight:500;transition:all .2s;user-select:none;}
+.obj:hover{border-color:rgba(167,139,250,.25);background:rgba(167,139,250,.04);}
+.obj.done{background:rgba(167,139,250,.05);border-color:rgba(167,139,250,.2);color:rgba(232,234,242,.4);text-decoration:line-through;}
+.obj-ring{width:24px;height:24px;border-radius:50%;flex-shrink:0;border:2px solid rgba(255,255,255,.15);display:flex;align-items:center;justify-content:center;font-size:.65em;transition:all .3s;}
+.obj.done .obj-ring{background:var(--violet);border-color:var(--violet);color:var(--ink);font-weight:700;}
+.obj.done .obj-ring::after{content:'✓';}
+
+/* MDA DRAG */
+.mda-arena{display:grid;grid-template-columns:1fr auto 1fr auto 1fr;gap:0;align-items:start;}
+.mda-col{display:flex;flex-direction:column;gap:8px;}
+.mda-col-head{text-align:center;padding:12px 8px;background:var(--ink3);border-radius:10px 10px 0 0;border:1px solid var(--line);border-bottom:none;font-family:var(--mono);font-size:.68em;text-transform:uppercase;letter-spacing:.1em;}
+.mda-pool{min-height:200px;background:var(--ink3);border:1px solid var(--line);border-radius:0 0 10px 10px;padding:10px;display:flex;flex-direction:column;gap:6px;}
+.mda-item{padding:9px 12px;border-radius:7px;background:var(--ink4);border:1px solid var(--line);font-size:.8em;cursor:grab;user-select:none;transition:all .2s;}
+.mda-item:hover{transform:translateY(-2px);box-shadow:0 6px 20px rgba(0,0,0,.3);}
+.mda-item[draggable]{cursor:grab;}
+.mda-item.dragging{opacity:.4;}
+.mda-zone{min-height:200px;background:rgba(255,255,255,.02);border:2px dashed rgba(255,255,255,.1);border-radius:10px;padding:10px;transition:all .2s;display:flex;flex-direction:column;gap:6px;}
+.mda-zone.over{border-color:var(--violet);background:rgba(167,139,250,.05);}
+.mda-arrow{display:flex;align-items:center;justify-content:center;font-size:1.5em;color:var(--sub);padding:0 8px;align-self:center;margin-top:50px;}
+.mda-item.in-m{border-color:rgba(45,228,200,.4);background:rgba(45,228,200,.06);color:var(--teal);}
+.mda-item.in-d{border-color:rgba(167,139,250,.4);background:rgba(167,139,250,.06);color:var(--violet);}
+.mda-item.in-a{border-color:rgba(251,191,36,.4);background:rgba(251,191,36,.06);color:var(--amber);}
+.mda-eval{margin-top:16px;padding:14px 18px;border-radius:9px;font-size:.83em;background:rgba(45,228,200,.06);border:1px solid rgba(45,228,200,.18);color:var(--sub);line-height:1.65;display:none;}
+.mda-eval.show{display:block;}
+.eval-btn{margin-top:12px;padding:10px 22px;background:var(--violet);color:var(--ink);border:none;border-radius:7px;font-family:var(--mono);font-size:.72em;cursor:pointer;font-weight:700;letter-spacing:.06em;transition:all .2s;}
+.eval-btn:hover{background:#9061f9;transform:translateY(-1px);}
+
+/* 8 AESTHETICS WHEEL */
+.aes-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;}
+.aes-card{background:var(--ink3);border:1px solid var(--line);border-radius:10px;padding:16px;cursor:pointer;transition:all .22s;text-align:center;position:relative;overflow:hidden;}
+.aes-card::after{content:'';position:absolute;bottom:0;left:0;right:0;height:2px;background:var(--aes-clr,var(--violet));transform:scaleX(0);transform-origin:left;transition:transform .28s;}
+.aes-card.selected::after{transform:scaleX(1);}
+.aes-card.selected{background:rgba(167,139,250,.06);border-color:var(--aes-clr,var(--violet));}
+.aes-ico{font-size:2em;margin-bottom:6px;}
+.aes-name{font-family:var(--display);font-weight:700;font-size:.82em;margin-bottom:4px;}
+.aes-desc{font-size:.7em;color:var(--sub);line-height:1.4;}
+.aes-detail{margin-top:16px;padding:16px;background:var(--ink3);border:1px solid var(--line);border-radius:9px;display:none;animation:fadein .2s ease;}
+.aes-detail.show{display:block;}
+
+/* QUIZ */
+.qcard{display:none;animation:fadein .2s ease;}
+.qcard.on{display:block;}
+@keyframes fadein{from{opacity:0;transform:translateY(4px)}to{opacity:1;transform:translateY(0)}}
+.q-prog{display:flex;gap:6px;margin-bottom:20px;align-items:center;}
+.q-dot{width:8px;height:8px;border-radius:50%;background:rgba(255,255,255,.1);transition:all .3s;}
+.q-dot.done{background:var(--violet);}
+.q-dot.cur{background:var(--violet);box-shadow:0 0 8px var(--violet);transform:scale(1.3);}
+.q-bar-wrap{flex:1;height:5px;background:rgba(255,255,255,.06);border-radius:100px;overflow:hidden;margin-left:8px;}
+.q-bar-fill{height:100%;background:linear-gradient(90deg,#7c3aed,var(--violet));border-radius:100px;transition:width .5s;}
+.q-count{font-family:var(--mono);font-size:.62em;color:var(--sub);}
+.q-score-mini{font-family:var(--mono);font-size:.62em;color:var(--violet);}
+.qtext{font-size:1em;font-weight:600;line-height:1.55;margin-bottom:16px;}
+.qopts{display:flex;flex-direction:column;gap:8px;}
+.qopt{padding:12px 16px;background:var(--ink3);border:1px solid var(--line);border-radius:8px;cursor:pointer;font-size:.88em;text-align:left;color:var(--text);transition:all .2s;}
+.qopt:hover:not(:disabled){border-color:rgba(167,139,250,.4);background:rgba(167,139,250,.05);}
+.qopt.ok{background:rgba(45,228,200,.1);border-color:var(--teal);color:var(--teal);}
+.qopt.no{background:rgba(251,113,133,.1);border-color:var(--rose);color:var(--rose);}
+.qfb{padding:12px 14px;border-radius:7px;font-size:.82em;margin-top:10px;display:none;line-height:1.55;}
+.qfb.show{display:block;}
+.qfb.ok{background:rgba(45,228,200,.08);border:1px solid rgba(45,228,200,.2);color:var(--teal);}
+.qfb.no{background:rgba(251,113,133,.08);border:1px solid rgba(251,113,133,.2);color:var(--rose);}
+.qnext{display:none;margin-top:12px;padding:10px 22px;background:var(--violet);color:var(--ink);border:none;border-radius:7px;font-family:var(--mono);font-size:.72em;cursor:pointer;font-weight:700;}
+.qnext.show{display:inline-block;}
+.qnext:hover{background:#9061f9;}
+.q-result{display:none;text-align:center;padding:24px;animation:fadein .3s ease;}
+.q-result.show{display:block;}
+.q-score-big{font-family:var(--display);font-size:4em;font-weight:800;color:var(--violet);}
+.q-msg{font-size:.9em;color:var(--sub);margin:8px 0 20px;}
+.q-xp{font-family:var(--mono);font-size:.78em;color:var(--violet);background:rgba(167,139,250,.1);border:1px solid rgba(167,139,250,.2);padding:8px 18px;border-radius:100px;display:inline-block;margin-bottom:16px;}
+.q-restart{padding:12px 28px;background:var(--violet);color:var(--ink);border:none;border-radius:8px;font-family:var(--mono);font-size:.78em;cursor:pointer;font-weight:700;}
+
+/* ACTIVITIES */
+.act-card{background:var(--ink3);border:1px solid var(--line);border-radius:10px;margin-bottom:12px;overflow:hidden;transition:border-color .2s;}
+.act-card.done-act{border-color:rgba(167,139,250,.3);}
+.act-head{display:flex;align-items:center;gap:12px;padding:16px 18px;cursor:pointer;}
+.act-head:hover{background:rgba(255,255,255,.02);}
+.act-num{width:32px;height:32px;border-radius:8px;background:rgba(167,139,250,.15);border:1px solid rgba(167,139,250,.25);display:flex;align-items:center;justify-content:center;font-family:var(--mono);font-size:.72em;color:var(--violet);font-weight:700;flex-shrink:0;}
+.act-name{flex:1;font-weight:600;font-size:.9em;}
+.act-xp{font-family:var(--mono);font-size:.6em;color:var(--violet);background:rgba(167,139,250,.1);border:1px solid rgba(167,139,250,.2);padding:3px 9px;border-radius:100px;}
+.act-chevron{color:var(--sub);font-size:.8em;transition:transform .2s;}
+.act-card.open .act-chevron{transform:rotate(90deg);}
+.act-body{display:none;padding:0 18px 18px;}
+.act-card.open .act-body{display:block;}
+.act-desc{font-size:.85em;color:var(--sub);line-height:1.65;margin-bottom:14px;padding-top:4px;}
+.act-steps{display:flex;flex-direction:column;gap:6px;margin-bottom:14px;}
+.act-step{display:flex;align-items:center;gap:10px;padding:9px 12px;background:var(--ink4);border-radius:7px;cursor:pointer;font-size:.82em;transition:all .2s;}
+.act-step:hover{background:rgba(167,139,250,.05);}
+.act-step.done{text-decoration:line-through;color:rgba(232,234,242,.35);}
+.step-check{width:18px;height:18px;border-radius:4px;border:1.5px solid rgba(255,255,255,.15);flex-shrink:0;display:flex;align-items:center;justify-content:center;font-size:.55em;transition:all .2s;}
+.act-step.done .step-check{background:var(--violet);border-color:var(--violet);color:var(--ink);}
+.act-step.done .step-check::after{content:'✓';font-weight:700;}
+.act-deliverable{font-size:.78em;padding:10px 14px;background:rgba(45,228,200,.05);border:1px solid rgba(45,228,200,.15);border-radius:7px;color:var(--teal);}
+.act-deliverable strong{display:block;margin-bottom:3px;}
+.act-done-btn{margin-top:12px;padding:10px 22px;background:var(--violet);color:var(--ink);border:none;border-radius:7px;font-family:var(--mono);font-size:.72em;cursor:pointer;font-weight:700;letter-spacing:.06em;transition:all .2s;}
+.act-done-btn:hover:not(:disabled){background:#9061f9;transform:translateY(-1px);}
+.act-done-btn:disabled{opacity:.5;cursor:not-allowed;}
+
+/* ACHIEVEMENTS */
+.ach-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(110px,1fr));gap:10px;}
+.ach{background:var(--ink3);border:1px solid var(--line);border-radius:10px;padding:14px;text-align:center;filter:grayscale(1);opacity:.4;transition:all .4s;}
+.ach.earned{filter:none;opacity:1;border-color:rgba(167,139,250,.4);box-shadow:0 0 20px rgba(167,139,250,.15);}
+.ach-ico{font-size:2em;margin-bottom:6px;}
+.ach-name{font-size:.65em;font-weight:700;font-family:var(--mono);color:var(--sub);}
+.ach.earned .ach-name{color:var(--violet);}
+
+/* RIGHT COL */
+.right-col{position:sticky;top:78px;height:fit-content;display:flex;flex-direction:column;gap:14px;}
+.rcard{background:var(--ink2);border:1px solid var(--line);border-radius:var(--r);padding:18px;}
+.rcard-title{font-family:var(--mono);font-size:.6em;text-transform:uppercase;letter-spacing:.15em;color:var(--sub);margin-bottom:12px;padding-bottom:8px;border-bottom:1px solid var(--line);}
+
+/* VIDEO */
+.vid-section{display:flex;flex-direction:column;gap:20px;}
+.vid-card{background:var(--ink3);border:1px solid var(--line);border-radius:10px;overflow:hidden;cursor:pointer;transition:all .2s;}
+.vid-card:hover{border-color:rgba(167,139,250,.3);transform:translateY(-2px);}
+.vid-thumb{position:relative;aspect-ratio:16/9;overflow:hidden;background:#000;}
+.vid-thumb img{width:100%;height:100%;object-fit:cover;opacity:.8;transition:opacity .2s;}
+.vid-card:hover .vid-thumb img{opacity:1;}
+.vid-overlay{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;background:rgba(0,0,0,.2);}
+.vid-play{width:52px;height:52px;border-radius:50%;background:rgba(167,139,250,.9);display:flex;align-items:center;justify-content:center;font-size:1.1em;padding-left:4px;box-shadow:0 0 0 12px rgba(167,139,250,.2);transition:transform .2s;}
+.vid-card:hover .vid-play{transform:scale(1.1);}
+.vid-body{padding:12px 14px;}
+.vid-tag{font-family:var(--mono);font-size:.55em;text-transform:uppercase;letter-spacing:.1em;color:var(--violet);margin-bottom:4px;}
+.vid-title{font-size:.82em;font-weight:600;color:var(--text);line-height:1.35;}
+.vid-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:12px;}
+
+/* VIDEO MODAL */
+.vid-modal{position:fixed;inset:0;z-index:600;background:rgba(0,0,0,.88);backdrop-filter:blur(10px);display:none;align-items:center;justify-content:center;padding:24px;}
+.vid-modal.open{display:flex;animation:fadein .2s ease;}
+.vid-modal-box{width:100%;max-width:900px;border-radius:14px;overflow:hidden;background:#000;position:relative;box-shadow:0 32px 80px rgba(0,0,0,.8),0 0 0 1px rgba(167,139,250,.15);}
+.vid-modal-close{position:absolute;top:12px;right:12px;z-index:10;width:36px;height:36px;border-radius:50%;background:rgba(0,0,0,.7);border:1px solid rgba(255,255,255,.15);color:#fff;font-size:1.1em;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:background .15s;}
+.vid-modal-close:hover{background:rgba(255,255,255,.15);}
+.vid-modal-iframe{width:100%;aspect-ratio:16/9;border:none;display:block;}
+
+/* TOAST */
+.toast{position:fixed;bottom:24px;right:24px;z-index:500;background:var(--ink4);border:1px solid rgba(167,139,250,.3);border-radius:11px;padding:13px 18px;min-width:210px;display:flex;align-items:center;gap:12px;box-shadow:0 8px 32px rgba(0,0,0,.5),0 0 16px rgba(167,139,250,.1);transform:translateY(120px) scale(.9);opacity:0;transition:all .38s cubic-bezier(.34,1.56,.64,1);pointer-events:none;}
+.toast.show{transform:translateY(0) scale(1);opacity:1;}
+.t-ico{font-size:1.4em;}
+.t-title{font-family:var(--mono);font-size:.78em;color:var(--violet);font-weight:600;}
+.t-msg{font-size:.68em;color:var(--sub);margin-top:1px;}
+.xpf{position:fixed;z-index:501;pointer-events:none;font-family:var(--display);font-size:2.2em;font-weight:800;color:var(--violet);text-shadow:0 0 20px rgba(167,139,250,.5);animation:xpup 1.3s ease-out forwards;}
+@keyframes xpup{0%{opacity:1;transform:translateY(0) scale(.7);}40%{opacity:1;transform:translateY(-48px) scale(1.1);}100%{opacity:0;transform:translateY(-90px) scale(.85);}}
+@keyframes cfall{to{transform:translateY(110vh) rotate(720deg);opacity:0;}}
+
+/* NAV FOOTER */
+.nf{display:flex;gap:12px;margin-top:8px;}
+.nfbtn{flex:1;padding:12px 16px;background:rgba(167,139,250,.1);border:1px solid rgba(167,139,250,.2);color:var(--violet);border-radius:9px;text-decoration:none;font-family:var(--mono);font-size:.72em;transition:all .22s;display:flex;align-items:center;gap:8px;}
+.nfbtn:hover{background:rgba(167,139,250,.2);transform:translateY(-2px);box-shadow:0 8px 22px rgba(167,139,250,.15);}
+.sep{font-family:var(--mono);font-size:.57em;letter-spacing:.18em;text-transform:uppercase;color:var(--sub);display:flex;align-items:center;gap:10px;margin-bottom:14px;}
+.sep::after{content:'';flex:1;height:1px;background:linear-gradient(90deg,var(--line),transparent);}
+.insight-box{padding:16px 18px;border-radius:9px;font-size:.83em;background:rgba(251,191,36,.06);border:1px solid rgba(251,191,36,.18);color:var(--sub);line-height:1.65;}
+.insight-box strong{color:var(--amber);}
+.qcallout{padding:20px 24px;border-radius:12px;position:relative;overflow:hidden;background:var(--ink3);border:1px solid var(--line);margin:16px 0;}
+.qcallout::before{content:'\201C';position:absolute;top:-10px;left:16px;font-size:6em;line-height:1;color:rgba(167,139,250,.12);font-family:var(--display);font-weight:800;pointer-events:none;}
+.qcallout-text{font-size:.95em;line-height:1.65;color:var(--text);font-style:italic;position:relative;z-index:1;}
+.qcallout-author{margin-top:12px;font-family:var(--mono);font-size:.65em;color:var(--violet);display:flex;align-items:center;gap:8px;}
+.qcallout-author::before{content:'—';color:var(--sub);}
+
+@media(max-width:1200px){.wrap{grid-template-columns:200px 1fr;}.right-col{display:none;}}
+@media(max-width:900px){.wrap{grid-template-columns:1fr;}.left-nav{display:none;}.hud-xp{display:none;}}
+@media(max-width:600px){.hero{padding:28px;}.hero h1{font-size:2.8em;}.aes-grid{grid-template-columns:repeat(2,1fr);}.mda-arena{grid-template-columns:1fr;}.mda-arrow{display:none;}}
+</style>
 </head>
 <body>
-    <div class="header">
-        <div class="header-content">
-            <div class="header-text">
-                <h1>📚 Semana 04 - Dinâmicas e Estéticas</h1>
-                <p>Tópicos Especiais em Jogos Digitais - IJD-038 | 6º Semestre</p>
-            </div>
-        </div>
+<div class="bg-dots"></div><div class="bg-glow"></div><div class="bg-glow2"></div>
+
+<!-- VIDEO MODAL -->
+<div class="vid-modal" id="vid-modal" onclick="closeVid(event)">
+  <div class="vid-modal-box">
+    <button class="vid-modal-close" onclick="closeVidBtn()">✕</button>
+    <iframe class="vid-modal-iframe" id="vid-iframe" src="" allow="autoplay;encrypted-media" allowfullscreen></iframe>
+  </div>
+</div>
+
+<!-- TOAST -->
+<div class="toast" id="toast"><div class="t-ico" id="t-ico">⚡</div><div><div class="t-title" id="t-title">+XP</div><div class="t-msg" id="t-msg"></div></div></div>
+
+<!-- HUD -->
+<header class="hud">
+  <a href="index.html" class="hud-brand">
+    <div class="hud-logo">IJ</div>
+    <div class="hud-course"><span>IJD-038</span>Jogos Digitais · 6º Sem.</div>
+  </a>
+  <div class="hud-crumb">
+    <span>Módulo 1</span><span>·</span><span>Fundamentos</span><span>·</span>
+    <span style="color:var(--violet)">Semana 04</span>
+  </div>
+  <div class="hud-xp">
+    <div class="streak">🔥 <span id="streak">0</span></div>
+    <div class="xp-count"><strong id="xp-val">0</strong><span>/ 550 XP</span></div>
+    <div class="hud-bar"><div class="hud-bar-fill" id="xp-bar"></div></div>
+    <div class="hud-level" id="xp-level">APRENDIZ</div>
+  </div>
+</header>
+
+<div class="wrap">
+<!-- LEFT NAV -->
+<aside class="left-nav">
+  <div class="nav-card">
+    <div class="nav-label">Semana 04</div>
+    <a href="#objetivos" class="nav-link cur"><span class="nd"></span>🎯 Objetivos</a>
+    <a href="#videos" class="nav-link"><span class="nd"></span>📺 Vídeos</a>
+    <a href="#mda-drag" class="nav-link"><span class="nd"></span>🎮 MDA Drag</a>
+    <a href="#esteticas" class="nav-link"><span class="nd"></span>🎨 8 Estéticas</a>
+    <a href="#quiz" class="nav-link"><span class="nd"></span>🧠 Quiz</a>
+    <a href="#atividades" class="nav-link"><span class="nd"></span>✏️ Atividades</a>
+    <a href="#conquistas" class="nav-link"><span class="nd"></span>🏆 Conquistas</a>
+  </div>
+  <div class="nav-card">
+    <div class="nav-label">Navegação</div>
+    <a href="semana03.html" class="nav-link done"><span class="nd"></span>Semana 03</a>
+    <a href="semana04.html" class="nav-link cur"><span class="nd"></span>Semana 04</a>
+    <a href="semana05.html" class="nav-link"><span class="nd"></span>Semana 05</a>
+  </div>
+  <div class="nav-card">
+    <div class="nav-label">Progresso</div>
+    <div class="stat-row">
+      <div class="stat-box"><span class="stat-val" id="sv-obj">0</span><span class="stat-lbl">Obj</span></div>
+      <div class="stat-box"><span class="stat-val" id="sv-q">0</span><span class="stat-lbl">Quiz</span></div>
+    </div>
+  </div>
+</aside>
+
+<!-- MAIN -->
+<main class="main">
+
+<!-- HERO -->
+<div class="hero">
+  <div class="hero-eyebrow">Módulo 1 · Fundamentos de Gamificação</div>
+  <h1>Dinâmicas<br>e <em>Estéticas</em></h1>
+  <p class="hero-sub">O framework MDA revela como mecânicas simples geram dinâmicas complexas e evocam emoções estéticas profundas. Aprenda a projetar para o <em>feeling</em>.</p>
+  <div class="chips">
+    <span class="chip chip-violet">🎯 MDA Framework</span>
+    <span class="chip chip-teal">🌊 Emergência</span>
+    <span class="chip chip-amber">🎨 8 Estéticas</span>
+    <span class="chip chip-rose">550 XP disponíveis</span>
+  </div>
+  <div class="hero-deco">04</div>
+</div>
+
+<!-- BARRA DE PROGRESSO GERAL -->
+<div class="scard" id="objetivos">
+  <div class="scard-head">
+    <div class="scard-ico ico-violet">📊</div>
+    <div class="scard-title">Progresso da Semana</div>
+    <div class="scard-xp">Visão Geral</div>
+  </div>
+  <div class="scard-body">
+    <div class="prog-track">
+      <div class="prog-section">
+        <div class="prog-label"><span>Objetivos</span><span id="pr-o">0 / 4</span></div>
+        <div class="prog-bar"><div class="prog-fill pf-violet" id="pb-o"></div></div>
+      </div>
+      <div class="prog-section">
+        <div class="prog-label"><span>MDA Drag</span><span id="pr-m">0 / 1</span></div>
+        <div class="prog-bar"><div class="prog-fill pf-teal" id="pb-m"></div></div>
+      </div>
+      <div class="prog-section">
+        <div class="prog-label"><span>Estéticas Exploradas</span><span id="pr-e">0 / 8</span></div>
+        <div class="prog-bar"><div class="prog-fill pf-amber" id="pb-e"></div></div>
+      </div>
+      <div class="prog-section">
+        <div class="prog-label"><span>Quiz</span><span id="pr-q">0 / 6</span></div>
+        <div class="prog-bar"><div class="prog-fill pf-rose" id="pb-q"></div></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- OBJETIVOS -->
+<div class="scard">
+  <div class="scard-head">
+    <div class="scard-ico ico-violet">🎯</div>
+    <div class="scard-title">Objetivos da Semana</div>
+    <div class="scard-xp">+10 XP cada</div>
+  </div>
+  <div class="scard-body">
+    <div class="obj-grid">
+      <div class="obj" id="obj0" onclick="togObj(0)"><div class="obj-ring"></div>Compreender o framework MDA (Mechanics-Dynamics-Aesthetics)</div>
+      <div class="obj" id="obj1" onclick="togObj(1)"><div class="obj-ring"></div>Identificar dinâmicas emergentes em sistemas de jogo</div>
+      <div class="obj" id="obj2" onclick="togObj(2)"><div class="obj-ring"></div>Analisar as 8 estéticas emocionais do MDA</div>
+      <div class="obj" id="obj3" onclick="togObj(3)"><div class="obj-ring"></div>Projetar experiências com foco em <em>feeling</em> do jogador</div>
+    </div>
+  </div>
+</div>
+
+<!-- VIDEOS -->
+<div class="scard" id="videos">
+  <div class="scard-head">
+    <div class="scard-ico ico-teal">📺</div>
+    <div class="scard-title">Vídeos da Semana</div>
+    <div class="scard-xp">+20 XP ao assistir</div>
+  </div>
+  <div class="scard-body">
+    <div class="vid-grid">
+      <div class="vid-card" onclick="openVid('uepIJ7jwHJ4')">
+        <div class="vid-thumb"><img src="https://img.youtube.com/vi/uepIJ7jwHJ4/mqdefault.jpg" alt="" onerror="this.style.background='#1a1c27'"><div class="vid-overlay"><div class="vid-play">▶</div></div></div>
+        <div class="vid-body"><div class="vid-tag">🎯 MDA Framework</div><div class="vid-title">MDA Framework Explained</div></div>
+      </div>
+      <div class="vid-card" onclick="openVid('zXl4tBpRmvU')">
+        <div class="vid-thumb"><img src="https://img.youtube.com/vi/zXl4tBpRmvU/mqdefault.jpg" alt="" onerror="this.style.background='#1a1c27'"><div class="vid-overlay"><div class="vid-play">▶</div></div></div>
+        <div class="vid-body"><div class="vid-tag">🌊 Emergência</div><div class="vid-title">Emergent Gameplay</div></div>
+      </div>
+      <div class="vid-card" onclick="openVid('9HVfkDewHAU')">
+        <div class="vid-thumb"><img src="https://img.youtube.com/vi/9HVfkDewHAU/mqdefault.jpg" alt="" onerror="this.style.background='#1a1c27'"><div class="vid-overlay"><div class="vid-play">▶</div></div></div>
+        <div class="vid-body"><div class="vid-tag">🎨 Estética</div><div class="vid-title">Game Feel and Aesthetics</div></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- MDA DRAG & DROP -->
+<div class="scard" id="mda-drag">
+  <div class="scard-head">
+    <div class="scard-ico ico-teal">🎮</div>
+    <div class="scard-title">Construtor MDA — Arraste os Elementos</div>
+    <div class="scard-xp">+60 XP</div>
+  </div>
+  <div class="scard-body">
+    <p style="font-size:.85em;color:var(--sub);margin-bottom:20px;line-height:1.65;">Arraste cada elemento para a coluna correta do framework MDA. <strong style="color:var(--text)">Mecânicas</strong> são regras, <strong style="color:var(--text)">Dinâmicas</strong> são comportamentos emergentes, <strong style="color:var(--text)">Estéticas</strong> são emoções evocadas.</p>
+
+    <!-- Pool de itens -->
+    <div style="margin-bottom:20px;">
+      <div class="sep">Elementos para classificar</div>
+      <div id="mda-pool" style="display:flex;flex-wrap:wrap;gap:8px;min-height:56px;padding:12px;background:var(--ink3);border:2px dashed rgba(255,255,255,.08);border-radius:10px;">
+        <div class="mda-item" draggable="true" data-cat="M" ondragstart="mdaDragStart(event)" style="--accent-color:var(--teal)">🎯 Pontuação por ação</div>
+        <div class="mda-item" draggable="true" data-cat="D" ondragstart="mdaDragStart(event)">⚔️ Competição acirrada</div>
+        <div class="mda-item" draggable="true" data-cat="A" ondragstart="mdaDragStart(event)">😂 Diversão / Fellowship</div>
+        <div class="mda-item" draggable="true" data-cat="M" ondragstart="mdaDragStart(event)">⏱️ Timer de pressão</div>
+        <div class="mda-item" draggable="true" data-cat="A" ondragstart="mdaDragStart(event)">😱 Suspense / Desafio</div>
+        <div class="mda-item" draggable="true" data-cat="D" ondragstart="mdaDragStart(event)">🌱 Progressão do personagem</div>
+        <div class="mda-item" draggable="true" data-cat="M" ondragstart="mdaDragStart(event)">🎲 Regra de movimento</div>
+        <div class="mda-item" draggable="true" data-cat="A" ondragstart="mdaDragStart(event)">🗺️ Descoberta / Exploração</div>
+        <div class="mda-item" draggable="true" data-cat="D" ondragstart="mdaDragStart(event)">🤝 Cooperação emergente</div>
+      </div>
     </div>
 
-    <div class="container">
-        <aside class="sidebar">
-            <h2>🔖 Navegação</h2>
-            <ul class="week-menu">
-                <li><a href="semana01.html">Semana 01</a></li>
-                <li><a href="semana02.html">Semana 02</a></li>
-                <li><a href="semana03.html">Semana 03</a></li>
-                <li><a href="semana04.html" class="active">Semana 04</a></li>
-                <li><a href="semana05.html">Semana 05</a></li>
-                <li><a href="semana06.html">Semana 06</a></li>
-                <li><a href="semana07.html">Semana 07</a></li>
-                <li><a href="semana08.html">Semana 08</a></li>
-                <li><a href="semana09.html">Semana 09</a></li>
-                <li><a href="semana10.html">Semana 10</a></li>
-                <li><a href="semana11.html">Semana 11</a></li>
-                <li><a href="semana12.html">Semana 12</a></li>
-                <li><a href="semana13.html">Semana 13</a></li>
-                <li><a href="semana14.html">Semana 14</a></li>
-                <li><a href="semana15.html">Semana 15</a></li>
-                <li><a href="semana16.html">Semana 16</a></li>
-                <li><a href="semana17.html">Semana 17</a></li>
-                <li><a href="semana18.html">Semana 18</a></li>
-                <li><a href="semana19.html">Semana 19</a></li>
-                <li><a href="semana20.html">Semana 20</a></li>
-                <li style="margin-top: 15px;"><a href="index.html" style="background: #764ba2; color: white;">🏠 Início</a></li>
-            </ul>
-        </aside>
-
-        <main class="main-content">
-            <div class="section">
-                <span class="module-badge">Módulo 1: Fundamentos de Gamificação</span>
-                <h2>🎯 Objetivos da Semana</h2>
-                <ul class="objectives-list">
-                    <li>Compreender framework MDA (Mechanics-Dynamics-Aesthetics)</li>
-                    <li>Identificar dinâmicas emergentes</li>
-                    <li>Analisar estéticas emocionais</li>
-                    <li>Projetar experiências com foco em feeling</li>
-                </ul>
-            </div>
-
-            <div class="section">
-                <h2>📚 Conteúdo Programático</h2>
-                <ul class="topics-list">
-                    <li>Framework MDA</li>
-                    <li>Mecânicas vs Dinâmicas vs Estéticas</li>
-                    <li>8 Estéticas do MDA</li>
-                    <li>Emergência em Sistemas</li>
-                    <li>Narrativa Emergente</li>
-                    <li>Player Expression</li>
-                </ul>
-            </div>
-
-            <div class="section">
-                <h2>🎬 Vídeos Recomendados</h2>
-                <div class="video-grid">
-                    <div class="video-card">
-                        <iframe src="https://www.youtube.com/embed/uepIJ7jwHJ4" allowfullscreen></iframe>
-                        <div class="video-info">
-                            <h4>MDA Framework Explained</h4>
-                        </div>
-                    </div>
-                    <div class="video-card">
-                        <iframe src="https://www.youtube.com/embed/zXl4tBpRmvU" allowfullscreen></iframe>
-                        <div class="video-info">
-                            <h4>Emergent Gameplay</h4>
-                        </div>
-                    </div>
-                    <div class="video-card">
-                        <iframe src="https://www.youtube.com/embed/9HVfkDewHAU" allowfullscreen></iframe>
-                        <div class="video-info">
-                            <h4>Game Feel and Aesthetics</h4>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <div class="section">
-                <h2>✏️ Atividades Práticas</h2>
-                <div class="atividade">
-                    <h4>🎯 Atividade 1: Aplicação MDA</h4>
-                    <div class="descricao">
-                        <p>Analisar jogo próprio (projeto anterior/TCC) usando framework MDA. Identificar mecânicas, dinâmicas resultantes, estéticas evocadas.</p>
-                    </div>
-                    <div class="entrega">
-                        <strong>📦 Entrega:</strong>
-                        Apresentação 10 slides com diagramas MDA + vídeo 5min explicando análise
-                    </div>
-                </div>
-                <div class="atividade">
-                    <h4>🎯 Atividade 2: Protótipo Emergência</h4>
-                    <div class="descricao">
-                        <p>Criar protótipo com 3-5 mecânicas simples que geram dinâmicas emergentes complexas (inspiração: Obra Dinn, Breath of the Wild).</p>
-                    </div>
-                    <div class="entrega">
-                        <strong>📦 Entrega:</strong>
-                        Build jogável + GDD explicando design decisions + vídeo mostrando emergência acontecendo
-                    </div>
-                </div>
-                <div class="atividade">
-                    <h4>🎯 Atividade 3: Mapa de Estéticas</h4>
-                    <div class="descricao">
-                        <p>Mapear 10 jogos conhecidos nas 8 estéticas do MDA. Analisar padrões por gênero.</p>
-                    </div>
-                    <div class="entrega">
-                        <strong>📦 Entrega:</strong>
-                        Infográfico interativo (Figma/Miro) + análise escrita de 2 páginas
-                    </div>
-                </div>
-            </div>
-
-            <div class="navigation">
-                <a href="semana03.html" class="nav-button">
-                    ⬅️ Semana Anterior
-                </a>
-                <a href="semana05.html" class="nav-button">
-                    Próxima Semana ➡️
-                </a>
-            </div>
-        </main>
+    <div class="mda-arena">
+      <!-- Mecânicas -->
+      <div>
+        <div class="mda-col-head" style="color:var(--teal);border-color:rgba(45,228,200,.2);">⚙️ Mecânicas</div>
+        <div class="mda-zone" id="zone-M" ondragover="mdaDragOver(event,'M')" ondrop="mdaDrop(event,'M')" ondragleave="mdaDragLeave(event)"></div>
+      </div>
+      <div class="mda-arrow">→</div>
+      <!-- Dinâmicas -->
+      <div>
+        <div class="mda-col-head" style="color:var(--violet);border-color:rgba(167,139,250,.2);">🌊 Dinâmicas</div>
+        <div class="mda-zone" id="zone-D" ondragover="mdaDragOver(event,'D')" ondrop="mdaDrop(event,'D')" ondragleave="mdaDragLeave(event)"></div>
+      </div>
+      <div class="mda-arrow">→</div>
+      <!-- Estéticas -->
+      <div>
+        <div class="mda-col-head" style="color:var(--amber);border-color:rgba(251,191,36,.2);">🎨 Estéticas</div>
+        <div class="mda-zone" id="zone-A" ondragover="mdaDragOver(event,'A')" ondrop="mdaDrop(event,'A')" ondragleave="mdaDragLeave(event)"></div>
+      </div>
     </div>
+
+    <button class="eval-btn" onclick="evalMDA()" style="margin-top:16px;">Verificar Classificação ▶</button>
+    <div class="mda-eval" id="mda-eval"></div>
+  </div>
+</div>
+
+<!-- 8 ESTÉTICAS -->
+<div class="scard" id="esteticas">
+  <div class="scard-head">
+    <div class="scard-ico ico-amber">🎨</div>
+    <div class="scard-title">As 8 Estéticas do MDA</div>
+    <div class="scard-xp">+5 XP cada clique</div>
+  </div>
+  <div class="scard-body">
+    <p style="font-size:.85em;color:var(--sub);margin-bottom:20px;line-height:1.65;">Clique em cada estética para explorar seu significado e exemplos. <strong style="color:var(--text)">Hunnicutt, LeBlanc & Zubek (2004)</strong> definiram 8 formas de prazer que os jogos podem evocar.</p>
+    <div class="aes-grid" id="aes-grid">
+      <div class="aes-card" style="--aes-clr:var(--lime)" onclick="selAes(0)" id="ae0"><div class="aes-ico">😂</div><div class="aes-name">Sensation</div><div class="aes-desc">Prazer sensorial puro</div></div>
+      <div class="aes-card" style="--aes-clr:var(--teal)" onclick="selAes(1)" id="ae1"><div class="aes-ico">🌍</div><div class="aes-name">Fantasy</div><div class="aes-desc">Mundos imaginários</div></div>
+      <div class="aes-card" style="--aes-clr:var(--violet)" onclick="selAes(2)" id="ae2"><div class="aes-ico">📖</div><div class="aes-name">Narrative</div><div class="aes-desc">Drama e história</div></div>
+      <div class="aes-card" style="--aes-clr:var(--amber)" onclick="selAes(3)" id="ae3"><div class="aes-ico">🧩</div><div class="aes-name">Challenge</div><div class="aes-desc">Obstáculos e superação</div></div>
+      <div class="aes-card" style="--aes-clr:var(--rose)" onclick="selAes(4)" id="ae4"><div class="aes-ico">👥</div><div class="aes-name">Fellowship</div><div class="aes-desc">Vínculo social</div></div>
+      <div class="aes-card" style="--aes-clr:var(--sky)" onclick="selAes(5)" id="ae5"><div class="aes-ico">🗺️</div><div class="aes-name">Discovery</div><div class="aes-desc">Exploração e novidade</div></div>
+      <div class="aes-card" style="--aes-clr:#4ade80" onclick="selAes(6)" id="ae6"><div class="aes-ico">🎭</div><div class="aes-name">Expression</div><div class="aes-desc">Identidade e criatividade</div></div>
+      <div class="aes-card" style="--aes-clr:#f97316" onclick="selAes(7)" id="ae7"><div class="aes-ico">🕹️</div><div class="aes-name">Submission</div><div class="aes-desc">Pastime / relaxamento</div></div>
+    </div>
+    <div class="aes-detail" id="aes-detail"></div>
+  </div>
+</div>
+
+<!-- QUIZ -->
+<div class="scard" id="quiz">
+  <div class="scard-head">
+    <div class="scard-ico ico-violet">🧠</div>
+    <div class="scard-title">Quiz — MDA e Dinâmicas</div>
+    <div class="scard-xp" id="q-score-mini">0 corretas</div>
+  </div>
+  <div class="scard-body">
+    <div class="q-prog">
+      <div class="q-dot cur" id="qd0"></div><div class="q-dot" id="qd1"></div><div class="q-dot" id="qd2"></div><div class="q-dot" id="qd3"></div><div class="q-dot" id="qd4"></div><div class="q-dot" id="qd5"></div>
+      <div class="q-bar-wrap"><div class="q-bar-fill" id="q-fill" style="width:0%"></div></div>
+      <div class="q-count" id="q-cnt">0 / 6</div>
+    </div>
+
+    <!-- Q0 -->
+    <div class="qcard on" id="qc0">
+      <div class="qtext">No framework MDA, de onde o game designer parte ao criar um jogo?</div>
+      <div class="qopts">
+        <button class="qopt" onclick="ansQ(0,0,0)">Das Mecânicas, que geram Dinâmicas, que evocam Estéticas</button>
+        <button class="qopt" onclick="ansQ(0,1,0)">Das Estéticas desejadas, trabalhando retroativamente</button>
+        <button class="qopt" onclick="ansQ(0,2,0)">Das Dinâmicas emergentes observadas em playtest</button>
+        <button class="qopt" onclick="ansQ(0,3,0)">Não importa a ordem — são camadas simultâneas</button>
+      </div>
+      <div class="qfb" id="qfb0"></div>
+      <button class="qnext" id="qnx0" onclick="nextQ(1)">Próxima →</button>
+    </div>
+    <!-- Q1 -->
+    <div class="qcard" id="qc1">
+      <div class="qtext">Qual das opções abaixo é um exemplo de DINÂMICA emergente?</div>
+      <div class="qopts">
+        <button class="qopt" onclick="ansQ(1,0,2)">A regra de que dois jogadores não podem ocupar o mesmo espaço</button>
+        <button class="qopt" onclick="ansQ(1,1,2)">A pontuação exibida na tela ao acertar um inimigo</button>
+        <button class="qopt" onclick="ansQ(1,2,2)">Jogadores formando alianças não previstas pelo designer</button>
+        <button class="qopt" onclick="ansQ(1,3,2)">O menu de pause interrompendo o jogo</button>
+      </div>
+      <div class="qfb" id="qfb1"></div>
+      <button class="qnext" id="qnx1" onclick="nextQ(2)">Próxima →</button>
+    </div>
+    <!-- Q2 -->
+    <div class="qcard" id="qc2">
+      <div class="qtext">A estética "Fellowship" no MDA se refere a…</div>
+      <div class="qopts">
+        <button class="qopt" onclick="ansQ(2,0,1)">Prazer estético visual dos gráficos do jogo</button>
+        <button class="qopt" onclick="ansQ(2,1,1)">A sensação de cooperação e pertencimento social entre jogadores</button>
+        <button class="qopt" onclick="ansQ(2,2,1)">A narrativa imersiva que prende o jogador</button>
+        <button class="qopt" onclick="ansQ(2,3,1)">Superar desafios difíceis sozinho</button>
+      </div>
+      <div class="qfb" id="qfb2"></div>
+      <button class="qnext" id="qnx2" onclick="nextQ(3)">Próxima →</button>
+    </div>
+    <!-- Q3 -->
+    <div class="qcard" id="qc3">
+      <div class="qtext">Breath of the Wild é famoso por emergência. Qual mecânica simples gera isso?</div>
+      <div class="qopts">
+        <button class="qopt" onclick="ansQ(3,0,3)">Sistema de diálogo com NPCs detalhado</button>
+        <button class="qopt" onclick="ansQ(3,1,3)">A narrativa principal com múltiplos finais</button>
+        <button class="qopt" onclick="ansQ(3,2,3)">Cutscenes não puláveis que explicam o sistema</button>
+        <button class="qopt" onclick="ansQ(3,3,3)">Física e química simuladas interagindo com o ambiente</button>
+      </div>
+      <div class="qfb" id="qfb3"></div>
+      <button class="qnext" id="qnx3" onclick="nextQ(4)">Próxima →</button>
+    </div>
+    <!-- Q4 -->
+    <div class="qcard" id="qc4">
+      <div class="qtext">O "player expression" como estética é melhor exemplificado por…</div>
+      <div class="qopts">
+        <button class="qopt" onclick="ansQ(4,0,0)">The Sims, onde o jogador cria identidades e histórias únicas</button>
+        <button class="qopt" onclick="ansQ(4,1,0)">Call of Duty, com foco em reação e precisão</button>
+        <button class="qopt" onclick="ansQ(4,2,0)">Tetris, onde o desafio aumenta progressivamente</button>
+        <button class="qopt" onclick="ansQ(4,3,0)">FIFA, com simulação realista do futebol</button>
+      </div>
+      <div class="qfb" id="qfb4"></div>
+      <button class="qnext" id="qnx4" onclick="nextQ(5)">Próxima →</button>
+    </div>
+    <!-- Q5 -->
+    <div class="qcard" id="qc5">
+      <div class="qtext">Por que o MDA é lido de trás para frente pelo jogador?</div>
+      <div class="qopts">
+        <button class="qopt" onclick="ansQ(5,0,2)">Porque o jogador aprende as mecânicas antes das estéticas</button>
+        <button class="qopt" onclick="ansQ(5,1,2)">Porque o tutorial ensina as dinâmicas primeiro</button>
+        <button class="qopt" onclick="ansQ(5,2,2)">O jogador experimenta primeiro a estética (feeling), depois percebe as dinâmicas e só por fim entende as mecânicas</button>
+        <button class="qopt" onclick="ansQ(5,3,2)">O jogador não lê o MDA — apenas o designer o usa</button>
+      </div>
+      <div class="qfb" id="qfb5"></div>
+      <button class="qnext" id="qnx5" onclick="showResult()">Ver Resultado ✓</button>
+    </div>
+
+    <div class="q-result" id="q-result">
+      <div class="q-score-big" id="q-score-txt">0/6</div>
+      <div class="q-msg" id="q-msg"></div>
+      <div class="q-xp" id="q-xp-txt"></div><br>
+      <button class="q-restart" onclick="restartQ()">🔄 Tentar Novamente</button>
+    </div>
+  </div>
+</div>
+
+<!-- ATIVIDADES -->
+<div class="scard" id="atividades">
+  <div class="scard-head">
+    <div class="scard-ico ico-rose">✏️</div>
+    <div class="scard-title">Atividades Práticas</div>
+    <div class="scard-xp">+100 XP cada</div>
+  </div>
+  <div class="scard-body">
+    <!-- A1 -->
+    <div class="act-card" id="ac1" onclick="togAct('ac1b',event)">
+      <div class="act-head">
+        <div class="act-num">01</div>
+        <div class="act-name">🎯 Aplicação MDA no Seu Projeto</div>
+        <div class="act-xp">+100 XP</div>
+        <span class="act-chevron">▶</span>
+      </div>
+    </div>
+    <div id="ac1b" style="display:none;padding:0 18px 18px;">
+      <div class="act-desc">Analisar jogo próprio (projeto anterior/TCC) usando framework MDA. Identificar mecânicas, dinâmicas resultantes, estéticas evocadas.</div>
+      <div class="act-steps">
+        <div class="act-step" onclick="togStep(this)"><div class="step-check"></div>Listar todas as mecânicas do seu jogo</div>
+        <div class="act-step" onclick="togStep(this)"><div class="step-check"></div>Mapear dinâmicas emergentes observadas em playtest</div>
+        <div class="act-step" onclick="togStep(this)"><div class="step-check"></div>Identificar quais das 8 estéticas seu jogo evoca</div>
+        <div class="act-step" onclick="togStep(this)"><div class="step-check"></div>Criar diagrama MDA com setas causais</div>
+        <div class="act-step" onclick="togStep(this)"><div class="step-check"></div>Gravar vídeo de 5min explicando a análise</div>
+      </div>
+      <div class="act-deliverable"><strong>📦 Entrega:</strong>Apresentação 10 slides com diagramas MDA + vídeo 5min explicando análise</div>
+      <button class="act-done-btn" id="adb1" onclick="doneAct(1,event)">✅ Marcar como Concluída</button>
+    </div>
+
+    <!-- A2 -->
+    <div class="act-card" id="ac2" onclick="togAct('ac2b',event)" style="margin-top:8px;">
+      <div class="act-head">
+        <div class="act-num">02</div>
+        <div class="act-name">🌊 Protótipo de Emergência</div>
+        <div class="act-xp">+100 XP</div>
+        <span class="act-chevron">▶</span>
+      </div>
+    </div>
+    <div id="ac2b" style="display:none;padding:0 18px 18px;">
+      <div class="act-desc">Criar protótipo com 3-5 mecânicas simples que geram dinâmicas emergentes complexas (inspiração: Obra Dinn, Breath of the Wild).</div>
+      <div class="act-steps">
+        <div class="act-step" onclick="togStep(this)"><div class="step-check"></div>Escolher 3-5 mecânicas simples e ortogonais</div>
+        <div class="act-step" onclick="togStep(this)"><div class="step-check"></div>Implementar protótipo jogável</div>
+        <div class="act-step" onclick="togStep(this)"><div class="step-check"></div>Registrar situações emergentes não previstas</div>
+        <div class="act-step" onclick="togStep(this)"><div class="step-check"></div>Gravar vídeo mostrando a emergência acontecendo</div>
+      </div>
+      <div class="act-deliverable"><strong>📦 Entrega:</strong>Build jogável + GDD explicando design decisions + vídeo mostrando emergência</div>
+      <button class="act-done-btn" id="adb2" onclick="doneAct(2,event)">✅ Marcar como Concluída</button>
+    </div>
+
+    <!-- A3 -->
+    <div class="act-card" id="ac3" onclick="togAct('ac3b',event)" style="margin-top:8px;">
+      <div class="act-head">
+        <div class="act-num">03</div>
+        <div class="act-name">🎨 Mapa de Estéticas</div>
+        <div class="act-xp">+100 XP</div>
+        <span class="act-chevron">▶</span>
+      </div>
+    </div>
+    <div id="ac3b" style="display:none;padding:0 18px 18px;">
+      <div class="act-desc">Mapear 10 jogos conhecidos nas 8 estéticas do MDA. Analisar padrões por gênero.</div>
+      <div class="act-steps">
+        <div class="act-step" onclick="togStep(this)"><div class="step-check"></div>Selecionar 10 jogos de gêneros diferentes</div>
+        <div class="act-step" onclick="togStep(this)"><div class="step-check"></div>Pontuar cada jogo nas 8 estéticas (0-10)</div>
+        <div class="act-step" onclick="togStep(this)"><div class="step-check"></div>Criar infográfico visual (Figma/Miro)</div>
+        <div class="act-step" onclick="togStep(this)"><div class="step-check"></div>Identificar padrões por gênero de jogo</div>
+      </div>
+      <div class="act-deliverable"><strong>📦 Entrega:</strong>Infográfico interativo (Figma/Miro) + análise escrita de 2 páginas</div>
+      <button class="act-done-btn" id="adb3" onclick="doneAct(3,event)">✅ Marcar como Concluída</button>
+    </div>
+  </div>
+</div>
+
+<!-- CONQUISTAS -->
+<div class="scard" id="conquistas">
+  <div class="scard-head">
+    <div class="scard-ico ico-amber">🏆</div>
+    <div class="scard-title">Conquistas da Semana</div>
+    <div class="scard-xp">Badges</div>
+  </div>
+  <div class="scard-body">
+    <div class="ach-grid">
+      <div class="ach" id="ac-s" title="Iniciou a semana"><div class="ach-ico">🚀</div><div class="ach-name">Iniciante</div></div>
+      <div class="ach" id="ac-m" title="Completou o MDA Drag"><div class="ach-ico">🔗</div><div class="ach-name">Classificador</div></div>
+      <div class="ach" id="ac-e" title="Explorou todas as estéticas"><div class="ach-ico">🎨</div><div class="ach-name">Esteta</div></div>
+      <div class="ach" id="ac-q" title="5+ no quiz"><div class="ach-ico">🧠</div><div class="ach-name">Quiz Master</div></div>
+      <div class="ach" id="ac-a" title="Todas as atividades"><div class="ach-ico">⭐</div><div class="ach-name">Completo</div></div>
+      <div class="ach" id="ac-x" title="XP máximo"><div class="ach-ico">💎</div><div class="ach-name">550 XP</div></div>
+    </div>
+  </div>
+</div>
+
+<!-- NAV -->
+<div class="nf">
+  <a href="semana03.html" class="nfbtn">⬅️ Semana 03</a>
+  <a href="semana05.html" class="nfbtn" style="justify-content:flex-end;">Semana 05 ➡️</a>
+</div>
+</main>
+
+<!-- RIGHT COL -->
+<aside class="right-col">
+  <div class="rcard">
+    <div class="rcard-title">📌 Conceito Central</div>
+    <div class="qcallout">
+      <div class="qcallout-text">"Mechanics give rise to dynamic behavior, and dynamic behavior evokes aesthetic responses."</div>
+      <div class="qcallout-author">Hunnicutt, LeBlanc & Zubek, MDA Paper (2004)</div>
+    </div>
+  </div>
+  <div class="rcard">
+    <div class="rcard-title">⚡ Dica do Designer</div>
+    <div class="insight-box"><strong>Emergência > Complexidade</strong><br>Prefer 3 mecânicas simples que interagem a 15 mecânicas isoladas. Breath of the Wild tem física, química e vento — tudo se combina.</div>
+  </div>
+  <div class="rcard">
+    <div class="rcard-title">📚 Leitura Recomendada</div>
+    <p style="font-size:.78em;color:var(--sub);line-height:1.6;">MDA: A Formal Approach to Game Design (2004) — paper original de Hunnicutt, LeBlanc & Zubek. Disponível gratuitamente online.</p>
+  </div>
+</aside>
+</div>
+
+<script>
+const MAX_XP=550;
+let XP=0,streak=0,toastT=null;
+let objS=[false,false,false,false];
+let aesS=new Set();
+let mdaDone=false;
+let qCorrect=0,qAnswered={};
+let actS=[false,false,false];
+let vidWatched=false;
+
+const LEVELS=[
+  [0,'APRENDIZ'],[100,'ESTUDANTE'],[200,'DESIGNER'],[300,'ANALISTA'],[400,'EXPERT'],[500,'MESTRE MDA']
+];
+const Q_XPS=[15,15,20,20,20,25];
+const Q_FB=[
+  {ok:'✅ Correto! O designer parte das mecânicas e vai "para frente". O jogador experimenta ao contrário.',fail:'❌ Na verdade o designer projeta de Mecânicas → Dinâmicas → Estéticas.'},
+  {ok:'✅ Exato! Alianças não previstas são dinâmicas emergentes clássicas — não foram programadas, surgem da interação.',fail:'❌ Dinâmicas emergem da interação entre mecânicas e jogadores. Alianças são o exemplo perfeito.'},
+  {ok:'✅ Fellowship = vínculo social. Guildas, amizades em MMORPGs, jogos cooperativos.',fail:'❌ Fellowship é sobre conexão social entre jogadores, não sobre gráficos ou desafios individuais.'},
+  {ok:'✅ A física e química do BotW criam emergência infinita: fogo + vento + madeira = novos comportamentos.',fail:'❌ A emergência do BotW vem exatamente das simulações físicas e químicas interagindo.'},
+  {ok:'✅ The Sims é o exemplo clássico de Expression — criar histórias, personas, casas únicas.',fail:'❌ Expression é sobre o jogador expressar sua criatividade e identidade. The Sims é o exemplo canônico.'},
+  {ok:'✅ O jogador sente primeiro (estética), depois percebe padrões (dinâmicas), e só analiticamente entende regras (mecânicas).',fail:'❌ O jogador percebe de trás para frente: Estética → Dinâmica → Mecânica.'}
+];
+const AES_DATA=[
+  {name:'Sensation',ico:'😂',clr:'var(--lime)',desc:'Prazer sensorial puro — visuais, sons, feedback háptico. O jogo como prazer dos sentidos.',ex:'Ex: Super Mario Odyssey — o som de capturar inimigos, a física do chapéu.',jogos:'Beat Saber, Guitar Hero, Tetris Effect'},
+  {name:'Fantasy',ico:'🌍',clr:'var(--teal)',desc:'Mundos imaginários e alter-egos. O prazer de ser algo ou estar em algum lugar que não existe.',ex:'Ex: World of Warcraft — ser um herói épico em Azeroth.',jogos:'Skyrim, Elden Ring, Final Fantasy'},
+  {name:'Narrative',ico:'📖',clr:'var(--violet)',desc:'Drama, arco de personagem, história envolvente. O jogo como veículo de narrativa.',ex:'Ex: The Last of Us — vínculo emocional com Joel e Ellie.',jogos:'The Last of Us, Red Dead Redemption, Disco Elysium'},
+  {name:'Challenge',ico:'🧩',clr:'var(--amber)',desc:'Obstáculos, dificuldade, senso de conquista ao superar. O prazer do mastery.',ex:'Ex: Dark Souls — a satisfação de vencer um boss após 20 tentativas.',jogos:'Dark Souls, Celeste, Super Meat Boy'},
+  {name:'Fellowship',ico:'👥',clr:'var(--rose)',desc:'Cooperação, amizade, comunidade. O jogo como criador de vínculos sociais.',ex:'Ex: Among Us — a dinâmica social de desconfiança e aliança.',jogos:'Among Us, Minecraft, Deep Rock Galactic'},
+  {name:'Discovery',ico:'🗺️',clr:'var(--sky)',desc:'Exploração de terreno desconhecido, descoberta de mecânicas ocultas, segredos.',ex:'Ex: Hollow Knight — descobrir áreas escondidas, lore fragmentado.',jogos:'Hollow Knight, No Man\'s Sky, Outer Wilds'},
+  {name:'Expression',ico:'🎭',clr:'#4ade80',desc:'Criatividade, personalização, identidade. O jogador como autor e artista.',ex:'Ex: The Sims — criar famílias, histórias, construir casas únicas.',jogos:'The Sims, Dreams, LittleBigPlanet'},
+  {name:'Submission',ico:'🕹️',clr:'#f97316',desc:'Passatempo, relaxamento, flow sem objetivo definido. O jogo como escape.',ex:'Ex: Stardew Valley — o loop tranquilo de plantar, colher, dormir.',jogos:'Stardew Valley, Animal Crossing, Candy Crush'}
+];
+
+function addXP(v,title,ico){
+  XP=Math.min(XP+v,MAX_XP);streak++;
+  const f=document.createElement('div');f.className='xpf';f.textContent='+'+v;
+  f.style.cssText='left:'+(window.innerWidth/2-30)+'px;top:200px;';
+  document.body.appendChild(f);setTimeout(()=>f.remove(),1400);
+  toast(ico,title,'+'+v+' XP');updateHUD();checkAch();
+}
+function updateHUD(){
+  document.getElementById('xp-val').textContent=XP;
+  document.getElementById('xp-bar').style.width=(XP/MAX_XP*100)+'%';
+  document.getElementById('streak').textContent=streak;
+  const lv=LEVELS.filter(l=>XP>=l[0]).pop();
+  document.getElementById('xp-level').textContent=lv[1];
+  document.getElementById('sv-obj').textContent=objS.filter(Boolean).length;
+  document.getElementById('sv-q').textContent=qCorrect;
+  fixBars();
+}
+function fixBars(){
+  const pairs=[['pr-o','pb-o',objS.filter(Boolean).length,4],['pr-m','pb-m',mdaDone?1:0,1],['pr-e','pb-e',aesS.size,8],['pr-q','pb-q',qCorrect,6]];
+  for(const[tid,bid,v,max]of pairs){const t=document.getElementById(tid),b=document.getElementById(bid);if(t)t.textContent=v+' / '+max;if(b)b.style.width=(v/max*100)+'%';}
+}
+function toast(ico,title,msg){
+  document.getElementById('t-ico').textContent=ico;
+  document.getElementById('t-title').textContent=title;
+  document.getElementById('t-msg').textContent=msg;
+  const el=document.getElementById('toast');
+  el.classList.add('show');clearTimeout(toastT);
+  toastT=setTimeout(()=>el.classList.remove('show'),3000);
+}
+function confetti(){
+  for(let i=0;i<40;i++){
+    const c=document.createElement('div');
+    const clrs=['#a78bfa','#2de4c8','#fbbf24','#fb7185','#c8f135'];
+    c.style.cssText=`position:fixed;left:${Math.random()*100}vw;top:-10px;width:${8+Math.random()*6}px;height:${8+Math.random()*6}px;background:${clrs[~~(Math.random()*5)]};z-index:502;border-radius:${Math.random()>.5?'50%':'2px'};animation:cfall ${1.5+Math.random()*2}s ease-in forwards;animation-delay:${Math.random()*0.5}s;pointer-events:none;`;
+    document.body.appendChild(c);setTimeout(()=>c.remove(),4000);
+  }
+}
+
+/* OBJECTIVES */
+function togObj(i){
+  objS[i]=!objS[i];
+  document.getElementById('obj'+i).classList.toggle('done',objS[i]);
+  if(objS[i])addXP(10,'Objetivo marcado!','✅');
+  if(objS.every(Boolean)){earn('ac-o');addXP(20,'Todos os objetivos!','🎯');}
+  updateHUD();
+}
+
+/* MDA DRAG */
+let draggedItem=null;
+function mdaDragStart(e){draggedItem=e.target;e.target.classList.add('dragging');}
+function mdaDragOver(e,zone){e.preventDefault();document.getElementById('zone-'+zone).classList.add('over');}
+function mdaDragLeave(e){e.currentTarget.classList.remove('over');}
+function mdaDrop(e,zone){
+  e.preventDefault();
+  e.currentTarget.classList.remove('over');
+  if(!draggedItem)return;
+  draggedItem.classList.remove('dragging');
+  draggedItem.classList.add('in-'+zone.toLowerCase());
+  e.currentTarget.appendChild(draggedItem);
+  draggedItem=null;
+}
+document.addEventListener('dragend',e=>{if(e.target.classList.contains('mda-item'))e.target.classList.remove('dragging');});
+function evalMDA(){
+  let correct=0,total=0;
+  ['M','D','A'].forEach(cat=>{
+    const zone=document.getElementById('zone-'+cat);
+    zone.querySelectorAll('.mda-item').forEach(item=>{
+      total++;
+      if(item.dataset.cat===cat)correct++;
+    });
+  });
+  const pct=total>0?Math.round(correct/total*100):0;
+  const pool=document.getElementById('mda-pool');
+  const unplaced=pool.querySelectorAll('.mda-item').length;
+  const ev=document.getElementById('mda-eval');
+  if(unplaced>0){ev.innerHTML=`⚠️ Classifique todos os ${unplaced} elementos restantes antes de avaliar.`;ev.classList.add('show');return;}
+  ev.innerHTML=`${pct>=80?'🏆':pct>=60?'⚡':'🔄'} Score MDA: ${pct}% (${correct}/${total} corretos)<br><span style="font-size:.85em;opacity:.8">Mecânicas = regras/ações · Dinâmicas = comportamentos emergentes · Estéticas = emoções evocadas</span>`;
+  ev.classList.add('show');
+  if(!mdaDone){mdaDone=true;addXP(60,'MDA classificado!','🔗');earn('ac-m');}
+  updateHUD();
+}
+
+/* AESTHETICS */
+function selAes(i){
+  const card=document.getElementById('ae'+i);
+  const wasSelected=card.classList.contains('selected');
+  document.querySelectorAll('.aes-card').forEach(c=>c.classList.remove('selected'));
+  const det=document.getElementById('aes-detail');
+  if(wasSelected){det.classList.remove('show');return;}
+  card.classList.add('selected');
+  const d=AES_DATA[i];
+  det.innerHTML=`<div style="display:flex;align-items:center;gap:12px;margin-bottom:12px"><span style="font-size:2em">${d.ico}</span><div><div style="font-family:var(--display);font-weight:700;font-size:1.1em;color:${d.clr}">${d.name}</div><div style="font-size:.75em;color:var(--sub)">Jogos: ${d.jogos}</div></div></div><p style="font-size:.85em;color:var(--sub);line-height:1.65;margin-bottom:8px">${d.desc}</p><p style="font-size:.82em;color:var(--text);line-height:1.55">${d.ex}</p>`;
+  det.classList.add('show');
+  if(!aesS.has(i)){aesS.add(i);addXP(5,'Estética explorada!','🎨');if(aesS.size===8){earn('ac-e');addXP(20,'Todas as estéticas!','🌟');}}
+  updateHUD();
+}
+
+/* QUIZ */
+function ansQ(qi,chosen,correct){
+  const card=document.getElementById('qc'+qi);
+  const opts=card.querySelectorAll('.qopt');
+  opts.forEach(o=>o.disabled=true);
+  const ok=chosen===correct;
+  opts[chosen].classList.add(ok?'ok':'no');
+  if(!ok)opts[correct].classList.add('ok');
+  const fb=document.getElementById('qfb'+qi);
+  fb.innerHTML=ok?Q_FB[qi].ok:Q_FB[qi].fail;
+  fb.className='qfb show '+(ok?'ok':'no');
+  document.getElementById('qnx'+qi).classList.add('show');
+  if(ok){qCorrect++;addXP(Q_XPS[qi],'Resposta correta!','🧠');}
+  qAnswered[qi]=ok;
+  const done=Object.keys(qAnswered).length;
+  document.getElementById('q-fill').style.width=(done/6*100)+'%';
+  document.getElementById('q-cnt').textContent=done+' / 6';
+  document.getElementById('q-score-mini').textContent=qCorrect+' corretas';
+  for(let k=0;k<=qi;k++){const d=document.getElementById('qd'+k);if(d){d.classList.remove('cur');d.classList.add('done');}}
+  if(done<6){const nd=document.getElementById('qd'+done);if(nd)nd.classList.add('cur');}
+  updateHUD();
+}
+function nextQ(n){document.getElementById('qc'+(n-1)).classList.remove('on');document.getElementById('qc'+n).classList.add('on');}
+function showResult(){
+  document.getElementById('qc5').classList.remove('on');
+  const r=document.getElementById('q-result');r.classList.add('show');
+  document.getElementById('q-score-txt').textContent=qCorrect+'/6';
+  const msgs=['Revise o material — estude o paper MDA 🔄','Progredindo! Continue 📈','Bom entendimento ✅','Excelente domínio! 🌟','Mestre do MDA! 🏆'];
+  document.getElementById('q-msg').textContent=msgs[Math.min(Math.floor(qCorrect/6*4),4)];
+  const earned=Object.keys(qAnswered).filter(k=>qAnswered[k]).reduce((a,k)=>a+Q_XPS[+k],0);
+  document.getElementById('q-xp-txt').textContent='+'+earned+' XP conquistados no Quiz';
+  if(qCorrect>=5){earn('ac-q');confetti();}
+}
+function restartQ(){
+  qCorrect=0;qAnswered={};
+  document.getElementById('q-result').classList.remove('show');
+  document.getElementById('q-fill').style.width='0%';
+  document.getElementById('q-cnt').textContent='0 / 6';
+  document.getElementById('q-score-mini').textContent='0 corretas';
+  for(let i=0;i<6;i++){
+    const c=document.getElementById('qc'+i);
+    c.classList.toggle('on',i===0);
+    c.querySelectorAll('.qopt').forEach(o=>{o.disabled=false;o.classList.remove('ok','no');});
+    const fb=c.querySelector('.qfb');if(fb){fb.className='qfb';fb.innerHTML='';}
+    const nx=c.querySelector('.qnext');if(nx)nx.classList.remove('show');
+    const d=document.getElementById('qd'+i);if(d){d.classList.toggle('cur',i===0);d.classList.remove('done');}
+  }
+  updateHUD();
+}
+
+/* ACTIVITIES */
+function togAct(id,e){if(e.target.classList.contains('act-done-btn'))return;const el=document.getElementById(id);if(el)el.style.display=el.style.display==='none'?'block':'none';e.currentTarget.closest('.act-card').classList.toggle('open');}
+function togStep(el){el.classList.toggle('done');}
+function doneAct(i,e){
+  e.stopPropagation();
+  if(actS[i-1])return;
+  actS[i-1]=true;
+  const btn=document.getElementById('adb'+i);
+  btn.disabled=true;btn.textContent='✅ CONCLUÍDA!';
+  addXP(100,'Atividade concluída!','🎓');
+  if(actS.every(Boolean)){addXP(50,'Todas as atividades!','⭐');earn('ac-a');confetti();}
+  updateHUD();
+}
+
+/* ACHIEVEMENTS */
+function earn(id){const el=document.getElementById(id);if(el&&!el.classList.contains('earned')){el.classList.add('earned');toast('🏆','Conquista desbloqueada!',el.title||'');confetti();}}
+function checkAch(){if(XP>=MAX_XP)earn('ac-x');}
+
+/* VIDEO */
+function openVid(id){
+  const modal=document.getElementById('vid-modal');
+  const iframe=document.getElementById('vid-iframe');
+  iframe.src=`https://www.youtube.com/embed/${id}?autoplay=1&rel=0`;
+  modal.classList.add('open');document.body.style.overflow='hidden';
+  if(!vidWatched){vidWatched=true;addXP(20,'Vídeo assistido!','📺');}
+}
+function closeVid(e){if(e.target===document.getElementById('vid-modal'))closeVidBtn();}
+function closeVidBtn(){const modal=document.getElementById('vid-modal');const iframe=document.getElementById('vid-iframe');modal.classList.remove('open');iframe.src='';document.body.style.overflow='';}
+document.addEventListener('keydown',e=>{if(e.key==='Escape')closeVidBtn();});
+
+setTimeout(()=>{earn('ac-s');toast('🚀','Bem-vindo à Semana 04!','Dinâmicas e Estéticas · 550 XP disponíveis');},800);
+updateHUD();
+</script>
 </body>
 </html>
