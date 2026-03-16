@@ -1,0 +1,433 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Semana 01 - Introdução à Gamificação - Tópicos Especiais em Jogos Digitais</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; line-height: 1.6; background-color: #f0f2f5; }
+        
+        .header { background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white; padding: 20px 0; box-shadow: 0 2px 10px rgba(0,0,0,0.2); position: sticky; top: 0; z-index: 1000; }
+        .header-content { max-width: 1400px; margin: 0 auto; padding: 0 20px; display: flex; align-items: center; gap: 20px; }
+        .header-content img { width: 60px; height: 60px; border-radius: 50%; border: 3px solid white; object-fit: cover; }
+        .header-text h1 { font-size: 1.5em; margin-bottom: 5px; }
+        .header-text p { font-size: 0.9em; opacity: 0.95; }
+        
+        .container { max-width: 1400px; margin: 20px auto; padding: 0 20px; display: flex; gap: 20px; }
+        
+        .sidebar { width: 280px; background: white; border-radius: 10px; padding: 20px; box-shadow: 0 2px 10px rgba(0,0,0,0.1); height: fit-content; position: sticky; top: 120px; }
+        .sidebar h2 { color: #667eea; font-size: 1.2em; margin-bottom: 15px; padding-bottom: 10px; border-bottom: 2px solid #764ba2; }
+        
+        .week-menu { list-style: none; }
+        .week-menu li { margin-bottom: 8px; }
+        .week-menu a { display: block; padding: 12px 15px; background: #f8f9fa; color: #667eea; text-decoration: none; border-radius: 5px; transition: all 0.3s; border-left: 3px solid transparent; }
+        .week-menu a:hover { background: #667eea; color: white; border-left-color: #764ba2; transform: translateX(5px); }
+        .week-menu a.active { background: #667eea; color: white; border-left-color: #764ba2; font-weight: bold; }
+        
+        .main-content { flex: 1; }
+        
+        .section { background: white; margin: 20px 0; padding: 30px; border-radius: 10px; box-shadow: 0 2px 10px rgba(0,0,0,0.1); }
+        .section h2 { color: #667eea; font-size: 1.8em; margin-bottom: 20px; border-bottom: 3px solid #764ba2; padding-bottom: 10px; }
+        .section h3 { color: #764ba2; font-size: 1.3em; margin: 25px 0 15px 0; }
+        
+        .module-badge { display: inline-block; background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white; padding: 8px 16px; border-radius: 20px; font-size: 0.9em; margin-bottom: 15px; }
+        
+        .objectives-list, .topics-list { padding-left: 0; list-style-position: inside; }
+        .objectives-list li, .topics-list li { padding: 10px; margin: 8px 0; background: #f8f9fa; border-left: 4px solid #667eea; border-radius: 5px; list-style-position: inside; }
+        
+        .video-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(350px, 1fr)); gap: 20px; margin: 20px 0; }
+        .video-card { background: #f8f9fa; border-radius: 10px; overflow: hidden; box-shadow: 0 2px 5px rgba(0,0,0,0.1); }
+        .video-card iframe { width: 100%; height: 220px; border: none; }
+        .video-info { padding: 15px; }
+        .video-info h4 { color: #667eea; margin-bottom: 5px; }
+        
+        .atividade { background: #f8f9fa; padding: 25px; margin: 20px 0; border-radius: 10px; border-left: 5px solid #667eea; }
+        .atividade h4 { color: #667eea; font-size: 1.2em; margin-bottom: 15px; }
+        .atividade .descricao { margin: 15px 0; line-height: 1.8; }
+        .atividade .entrega { background: white; padding: 15px; border-radius: 5px; border-left: 3px solid #764ba2; margin-top: 15px; }
+        .atividade .entrega strong { color: #764ba2; display: block; margin-bottom: 5px; }
+        
+        .navigation { display: flex; justify-content: space-between; margin: 30px 0; }
+        .nav-button { padding: 15px 30px; background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white; text-decoration: none; border-radius: 8px; font-weight: bold; transition: transform 0.3s; display: inline-flex; align-items: center; gap: 10px; }
+        .nav-button:hover { transform: translateY(-2px); box-shadow: 0 5px 15px rgba(102, 126, 234, 0.4); }
+        
+        @media (max-width: 1024px) {
+            .container { flex-direction: column; }
+            .sidebar { width: 100%; position: static; }
+        }
+    </style>
+    <style>
+.video-card a {
+    text-decoration: none;
+    color: inherit;
+    display: block;
+    transition: transform .2s ease;
+}
+
+.video-card a:hover {
+    transform: scale(1.03);
+}
+
+.video-card img {
+    width: 100%;
+    border-radius: 10px;
+}
+
+.video-info {
+    padding: 8px 4px;
+}
+
+.video-info p {
+    color: #2a5bd7;
+    font-size: 13px;
+    margin-top: 4px;
+}
+</style>
+<style>
+.tooltip {
+  position: relative;
+  cursor: help;
+  margin-left: 6px;
+}
+
+.tooltip-icon {
+  display: inline-block;
+  width: 18px;
+  height: 18px;
+  border-radius: 50%;
+  background: #2a5bd7;
+  color: #fff;
+  text-align: center;
+  font-size: 12px;
+  line-height: 18px;
+  font-weight: bold;
+}
+
+.tooltip .tooltiptext {
+  visibility: hidden;
+  width: 360px;
+  background-color: #222;
+  color: #fff;
+  text-align: left;
+  padding: 10px;
+  border-radius: 6px;
+  position: absolute;
+  z-index: 10;
+  bottom: 130%;
+  left: 0;
+  opacity: 0;
+  transition: opacity 0.25s;
+  font-size: 13px;
+  line-height: 1.4;
+}
+
+.tooltip:hover .tooltiptext {
+  visibility: visible;
+  opacity: 1;
+}
+</style>
+</head>
+<body>
+    <div class="header">
+        <div class="header-content">
+            <div class="header-text">
+                <h1>📚 Semana 01 - Introdução à Gamificação</h1>
+                <p>Tópicos Especiais em Jogos Digitais - IJD-038 | 6º Semestre</p>
+            </div>
+        </div>
+    </div>
+
+    <div class="container">
+        <aside class="sidebar">
+            <h2>📑 Navegação</h2>
+            <ul class="week-menu">
+                <li><a href="semana01.html" class="active">Semana 01</a></li>
+                <li><a href="semana02.html">Semana 02</a></li>
+                <li><a href="semana03.html">Semana 03</a></li>
+                <li><a href="semana04.html">Semana 04</a></li>
+                <li><a href="semana05.html">Semana 05</a></li>
+                <li><a href="semana06.html">Semana 06</a></li>
+                <li><a href="semana07.html">Semana 07</a></li>
+                <li><a href="semana08.html">Semana 08</a></li>
+                <li><a href="semana09.html">Semana 09</a></li>
+                <li><a href="semana10.html">Semana 10</a></li>
+                <li><a href="semana11.html">Semana 11</a></li>
+                <li><a href="semana12.html">Semana 12</a></li>
+                <li><a href="semana13.html">Semana 13</a></li>
+                <li><a href="semana14.html">Semana 14</a></li>
+                <li><a href="semana15.html">Semana 15</a></li>
+                <li><a href="semana16.html">Semana 16</a></li>
+                <li><a href="semana17.html">Semana 17</a></li>
+                <li><a href="semana18.html">Semana 18</a></li>
+                <li><a href="semana19.html">Semana 19</a></li>
+                <li><a href="semana20.html">Semana 20</a></li>
+                <li style="margin-top: 15px;"><a href="index.html" style="background: #764ba2; color: white;">🏠 Início</a></li>
+            </ul>
+        </aside>
+
+        <main class="main-content">
+            <div class="section">
+                <span class="module-badge">Módulo 1: Fundamentos de Gamificação</span>
+                <h2>🎯 Objetivos da Semana</h2>
+                <ul class="objectives-list">
+                    <li>Compreender o conceito e história da gamificação</li>
+                    <li>Identificar diferenças entre gamificação, jogos sérios e advergames</li>
+                    <li>Reconhecer aplicações práticas de gamificação</li>
+                    <li>Analisar cases de sucesso iniciais</li>
+                </ul>
+            </div>
+<div class="section">
+    <h2>📚 Conteúdo Programático</h2>
+
+    <ul class="topics-list">
+
+        <li>
+            <a href="#" class="tooltip">
+                Definição de Gamificação
+                <span class="tooltiptext">
+                Uso de elementos de jogos (pontos, níveis, recompensas e desafios) em contextos não-jogo para aumentar engajamento e motivação.
+                </span>
+            </a>
+        </li>
+
+        <li>
+            <a href="#" class="tooltip">
+                História e Evolução
+                <span class="tooltiptext">
+                Surge nos anos 2000 com redes sociais e apps fitness, popularizando-se após smartphones e apps educacionais.
+                </span>
+            </a>
+        </li>
+
+        <li>
+            <a href="#" class="tooltip">
+                Gamificação vs Jogos Sérios vs Advergames
+                <span class="tooltiptext">
+                Gamificação: usa elementos de jogo em atividades reais.
+                Jogos sérios: o jogo é o próprio treinamento.
+                Advergame: jogo criado para marketing de marca.
+                </span>
+            </a>
+        </li>
+
+        <li>
+            <a href="#" class="tooltip">
+                Aplicações em Diversos Setores
+                <span class="tooltiptext">
+                Educação, saúde, marketing, produtividade, fitness e fidelização de clientes.
+                </span>
+            </a>
+        </li>
+
+        <li>
+            <a href="#" class="tooltip">
+                Princípios Fundamentais
+                <span class="tooltiptext">
+                Feedback imediato, progressão, recompensas, autonomia e senso de conquista.
+                </span>
+            </a>
+        </li>
+
+        <li>
+<strong>Cases Pioneiros (clique para explorar):</strong>
+            <ul>
+                <li>
+                    <a href="https://www.nike.com/nrc-app" target="_blank" class="tooltip">
+                        Nike+
+                        <span class="tooltiptext">
+                        Gamificou corrida real: registra desempenho, cria desafios,
+                        ranking entre amigos e medalhas virtuais.
+                        </span>
+                    </a>
+                </li>
+
+                <li>
+                    <a href="https://foursquare.com" target="_blank" class="tooltip">
+                        Foursquare
+                        <span class="tooltiptext">
+                        Check-ins geram badges e rankings,
+                        incentivando visitar lugares no mundo real.
+                        </span>
+                    </a>
+                </li>
+
+                <li>
+                    <a href="https://www.duolingo.com" target="_blank" class="tooltip">
+                        Duolingo
+                        <span class="tooltiptext">
+                        Aprendizado com XP, streak diário, ligas competitivas e metas diárias.
+                        </span>
+                    </a>
+                </li>
+            </ul>
+
+        </li>
+
+    </ul>
+</div>
+
+          <div class="section">
+    <h2>🎬 Vídeos Recomendados</h2>
+
+    <div class="video-grid">
+
+    <div class="video-card">
+        <a href="https://youtu.be/OssPfRY3318" target="_blank">
+            <img src="https://img.youtube.com/vi/OssPfRY3318/hqdefault.jpg" alt="What is Gamification?">
+            <div class="video-info">
+                <h4>What is Gamification?</h4>
+                <p>▶ Assistir no YouTube</p>
+            </div>
+        </a>
+    </div>
+
+    <div class="video-card">
+        <a href="https://youtu.be/9a5aizIqpR8" target="_blank">
+            <img src="https://img.youtube.com/vi/9a5aizIqpR8/hqdefault.jpg" alt="The Science of Gamification">
+            <div class="video-info">
+                <h4>The Science of Gamification</h4>
+                <p>▶ Assistir no YouTube</p>
+            </div>
+        </a>
+    </div>
+
+    <div class="video-card">
+        <a href="https://youtu.be/t0pLA7Onoxo" target="_blank">
+            <img src="https://img.youtube.com/vi/t0pLA7Onoxo/hqdefault.jpg" alt="Gamification Examples and Success Stories">
+            <div class="video-info">
+                <h4>Gamification Examples and Success Stories</h4>
+                <p>▶ Assistir no YouTube</p>
+            </div>
+        </a>
+    </div>
+
+</div>
+</div>
+            <div class="section">
+                <h2>✏️ Atividades Práticas</h2>
+                <div class="atividade">
+                    <h4>🎯 Atividade 1: Mapa Conceitual de Gamificação</h4>
+                    <div class="descricao">
+                        <p>Criar um mapa conceitual identificando: definição, elementos-chave, aplicações, benefícios e desafios da gamificação.</p>
+                    </div>
+                    <div class="entrega">
+    <strong>📦 Entrega:</strong>
+    Mapa conceitual digital 
+    (<a href="https://miro.com" target="_blank">Miro</a>, 
+    <a href="https://coggle.it" target="_blank">Coggle</a>, 
+    <a href="https://www.mindmeister.com" target="_blank">MindMeister</a> 
+    ou similar) 
+    com no mínimo 10 conceitos interligados
+</div>
+                </div>
+             <div class="atividade">
+    <h4>🎯 Atividade 2: Análise de Case: Duolingo</h4>
+
+    <div class="descricao">
+        <p>Explorar o sistema de gamificação do Duolingo e analisar seus elementos.</p>
+    </div>
+
+    <div class="procedimento">
+        <strong>🕹️ Exploração obrigatória (15 min):</strong>
+        <ul>
+            <li>Criar conta ou usar modo convidado</li>
+            <li>Completar 3 lições</li>
+            <li>Ganhar um streak</li>
+            <li>Subir 1 nível</li>
+            <li>Observar recompensas e feedback visual</li>
+            <li>Ver ranking/comparação social</li>
+        </ul>
+    </div>
+
+    <div class="entrega">
+        <strong>📦 Entrega:</strong>
+        Relatório estruturado (1 página) contendo:
+        <ul>
+            <li>Prints dos elementos encontrados</li>
+            <li>Função de cada elemento para motivar o jogador</li>
+            <li>Qual elemento é mais eficaz e por quê</li>
+        </ul>
+    </div>
+</div>
+                </div>
+     <div class="atividade">
+    <h4>
+        🎯 Atividade 3: Projeto Guiado de Gamificação
+
+        <span class="tooltip">
+            <span class="tooltip-icon">i</span>
+            <span class="tooltiptext">
+                Exemplo de resolução:<br><br>
+
+                Contexto: Academia<br>
+                Problema: Pessoas desistem após 2 semanas<br>
+                Público: Adultos iniciantes<br><br>
+
+                Mecânicas:<br>
+                • Pontos por frequência<br>
+                • Desafios semanais<br>
+                • Níveis de progresso visual<br>
+                • Conquistas desbloqueáveis<br><br>
+
+                Resultado esperado:<br>
+                Aumento de constância e motivação
+            </span>
+        </span>
+
+    </h4>
+
+    <div class="descricao">
+        <p>Desenvolver uma proposta completa de aplicação de gamificação para um problema real.</p>
+    </div>
+
+    <div class="procedimento">
+        <strong>🧠 Etapas:</strong>
+        <ul>
+            <li>Escolher um contexto real</li>
+            <li>Descrever o problema existente</li>
+            <li>Definir o público-alvo</li>
+            <li>Criar mecânicas de jogo adequadas</li>
+            <li>Explicar como o sistema mudaria o comportamento</li>
+        </ul>
+    </div>
+
+    <div class="entrega">
+    <strong>📦 Entrega:</strong>
+    Apresentação de 5 slides (preferencialmente criada com IA)
+
+    <span class="tooltip">
+        <span class="tooltip-icon">i</span>
+        <span class="tooltiptext">
+            Estrutura sugerida:<br>
+            Slide 1 – Problema<br>
+            Slide 2 – Público-alvo<br>
+            Slide 3 – Mecânicas propostas<br>
+            Slide 4 – Jornada do usuário<br>
+            Slide 5 – Resultado esperado<br><br>
+
+            Sugestão profissional:<br>
+            Utilize ferramentas de IA de apresentação:<br>
+            • <a href="https://gamma.app" target="_blank">Gamma</a><br>
+            • <a href="https://www.canva.com" target="_blank">Canva AI</a><br>
+            • <a href="https://tome.app" target="_blank">Tome</a><br>
+            • <a href="https://www.beautiful.ai" target="_blank">Beautiful.ai</a><br><br>
+
+            Importante: revisar e adaptar o conteúdo —
+            não entregar exatamente como a IA gerou.
+        </span>
+    </span>
+</div>
+</div>
+            <div class="navigation">
+                <a href="index.html" class="nav-button">
+                    ⬅️ Semana Anterior
+                </a>
+                <a href="semana02.html" class="nav-button">
+                    Próxima Semana ➡️
+                </a>
+            </div>
+        </main>
+    </div>
+</body>
+</html>

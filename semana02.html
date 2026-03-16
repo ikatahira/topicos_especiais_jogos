@@ -1,0 +1,1737 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SEMANA 02 — Psicologia & Motivação | IJD-038</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Rajdhani:wght@400;600;700&family=Share+Tech+Mono&family=Inter:wght@300;400;500&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --neon-cyan: #00f5ff;
+            --neon-yellow: #ffd700;
+            --neon-pink: #ff2d78;
+            --neon-green: #39ff14;
+            --bg-dark: #04080f;
+            --bg-panel: #080e1a;
+            --bg-card: #0d1526;
+            --border: rgba(0,245,255,0.2);
+            --border-bright: rgba(0,245,255,0.6);
+            --text-main: #e8f4f8;
+            --text-dim: #7a9fb5;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background: var(--bg-dark);
+            color: var(--text-main);
+            min-height: 100vh;
+            overflow-x: hidden;
+        }
+
+        /* Scanline overlay */
+        body::before {
+            content: '';
+            position: fixed;
+            top: 0; left: 0; right: 0; bottom: 0;
+            background: repeating-linear-gradient(
+                0deg,
+                transparent,
+                transparent 2px,
+                rgba(0,0,0,0.03) 2px,
+                rgba(0,0,0,0.03) 4px
+            );
+            pointer-events: none;
+            z-index: 9999;
+        }
+
+        /* ═══ HUD TOP BAR ═══ */
+        .hud-bar {
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            background: rgba(4, 8, 15, 0.95);
+            border-bottom: 1px solid var(--neon-cyan);
+            box-shadow: 0 0 20px rgba(0,245,255,0.15), inset 0 -1px 0 rgba(0,245,255,0.3);
+            padding: 12px 30px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 20px;
+        }
+
+        .hud-logo {
+            font-family: 'Rajdhani', sans-serif;
+            font-weight: 700;
+            font-size: 1.1em;
+            color: var(--neon-cyan);
+            letter-spacing: 3px;
+            text-shadow: 0 0 10px rgba(0,245,255,0.5);
+            white-space: nowrap;
+        }
+
+        .hud-week {
+            font-family: 'Share Tech Mono', monospace;
+            font-size: 0.85em;
+            color: var(--neon-yellow);
+            letter-spacing: 2px;
+            text-shadow: 0 0 8px rgba(255,215,0,0.5);
+        }
+
+        .hud-xp-block {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            min-width: 200px;
+        }
+
+        .xp-label {
+            font-family: 'Share Tech Mono', monospace;
+            font-size: 0.75em;
+            color: var(--neon-green);
+            letter-spacing: 1px;
+        }
+
+        .xp-bar-outer {
+            flex: 1;
+            height: 8px;
+            background: rgba(57,255,20,0.1);
+            border: 1px solid rgba(57,255,20,0.3);
+            border-radius: 4px;
+            overflow: hidden;
+            position: relative;
+        }
+
+        .xp-bar-fill {
+            height: 100%;
+            background: linear-gradient(90deg, #39ff14, #00f5ff);
+            border-radius: 4px;
+            width: 0%;
+            transition: width 1.5s cubic-bezier(0.25, 1, 0.5, 1);
+            box-shadow: 0 0 8px rgba(57,255,20,0.6);
+        }
+
+        .xp-count {
+            font-family: 'Share Tech Mono', monospace;
+            font-size: 0.8em;
+            color: var(--neon-green);
+            min-width: 60px;
+            text-align: right;
+        }
+
+        /* ═══ HERO SECTION ═══ */
+        .hero {
+            padding: 60px 30px 40px;
+            max-width: 1200px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: 1fr auto;
+            gap: 40px;
+            align-items: center;
+        }
+
+        .hero-left .mission-tag {
+            font-family: 'Share Tech Mono', monospace;
+            font-size: 0.75em;
+            color: var(--neon-pink);
+            letter-spacing: 3px;
+            text-transform: uppercase;
+            margin-bottom: 16px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .mission-tag::before {
+            content: '';
+            display: inline-block;
+            width: 20px;
+            height: 1px;
+            background: var(--neon-pink);
+            box-shadow: 0 0 5px var(--neon-pink);
+        }
+
+        .hero h1 {
+            font-family: 'Rajdhani', sans-serif;
+            font-weight: 700;
+            font-size: clamp(2.5em, 5vw, 4em);
+            line-height: 1.1;
+            color: #fff;
+            text-shadow: 0 0 30px rgba(0,245,255,0.2);
+            margin-bottom: 16px;
+        }
+
+        .hero h1 span {
+            color: var(--neon-cyan);
+            text-shadow: 0 0 20px rgba(0,245,255,0.6);
+        }
+
+        .hero-subtitle {
+            font-size: 1em;
+            color: var(--text-dim);
+            font-weight: 300;
+            letter-spacing: 0.5px;
+            line-height: 1.6;
+            max-width: 520px;
+        }
+
+        .hero-stats {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+            min-width: 180px;
+        }
+
+        .stat-pill {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            padding: 14px 20px;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .stat-pill::before {
+            content: '';
+            position: absolute;
+            top: 0; left: 0; right: 0;
+            height: 2px;
+            background: var(--neon-cyan);
+            box-shadow: 0 0 8px var(--neon-cyan);
+        }
+
+        .stat-pill .val {
+            font-family: 'Rajdhani', sans-serif;
+            font-size: 1.8em;
+            font-weight: 700;
+            color: var(--neon-cyan);
+            display: block;
+            line-height: 1;
+            text-shadow: 0 0 12px rgba(0,245,255,0.5);
+        }
+
+        .stat-pill .lbl {
+            font-size: 0.7em;
+            color: var(--text-dim);
+            letter-spacing: 1.5px;
+            text-transform: uppercase;
+            margin-top: 4px;
+            display: block;
+        }
+
+        /* ═══ MAIN LAYOUT ═══ */
+        .layout {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 30px 60px;
+            display: grid;
+            grid-template-columns: 220px 1fr;
+            gap: 24px;
+        }
+
+        /* ═══ SIDEBAR NAV ═══ */
+        .nav-panel {
+            position: sticky;
+            top: 70px;
+            height: fit-content;
+            background: var(--bg-panel);
+            border: 1px solid var(--border);
+            border-radius: 10px;
+            overflow: hidden;
+        }
+
+        .nav-header {
+            background: rgba(0,245,255,0.05);
+            border-bottom: 1px solid var(--border);
+            padding: 14px 16px;
+            font-family: 'Share Tech Mono', monospace;
+            font-size: 0.7em;
+            color: var(--neon-cyan);
+            letter-spacing: 2px;
+        }
+
+        .nav-week {
+            display: block;
+            padding: 10px 16px;
+            font-family: 'Rajdhani', sans-serif;
+            font-size: 0.95em;
+            font-weight: 600;
+            color: var(--text-dim);
+            text-decoration: none;
+            border-left: 2px solid transparent;
+            transition: all 0.2s;
+            letter-spacing: 0.5px;
+        }
+
+        .nav-week:hover {
+            color: var(--neon-cyan);
+            border-left-color: var(--neon-cyan);
+            background: rgba(0,245,255,0.04);
+        }
+
+        .nav-week.active {
+            color: var(--neon-cyan);
+            border-left-color: var(--neon-cyan);
+            background: rgba(0,245,255,0.08);
+            text-shadow: 0 0 6px rgba(0,245,255,0.3);
+        }
+
+        .nav-week.locked {
+            opacity: 0.3;
+            cursor: default;
+        }
+
+        .nav-week.locked::after {
+            content: '🔒';
+            float: right;
+            font-size: 0.8em;
+        }
+
+        .nav-divider {
+            height: 1px;
+            background: var(--border);
+            margin: 6px 0;
+        }
+
+        .nav-home {
+            display: block;
+            margin: 10px;
+            padding: 10px;
+            text-align: center;
+            background: rgba(0,245,255,0.06);
+            border: 1px solid var(--border);
+            border-radius: 6px;
+            color: var(--neon-cyan);
+            text-decoration: none;
+            font-family: 'Rajdhani', sans-serif;
+            font-size: 0.9em;
+            letter-spacing: 1px;
+            transition: all 0.2s;
+        }
+
+        .nav-home:hover {
+            background: rgba(0,245,255,0.12);
+        }
+
+        /* ═══ CONTENT PANELS ═══ */
+        .content { display: flex; flex-direction: column; gap: 20px; }
+
+        .panel {
+            background: var(--bg-panel);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            overflow: hidden;
+            position: relative;
+        }
+
+        .panel-header {
+            padding: 18px 24px;
+            border-bottom: 1px solid var(--border);
+            display: flex;
+            align-items: center;
+            gap: 14px;
+            background: rgba(0,245,255,0.03);
+        }
+
+        .panel-icon {
+            font-size: 1.4em;
+            filter: drop-shadow(0 0 6px rgba(0,245,255,0.4));
+        }
+
+        .panel-title {
+            font-family: 'Rajdhani', sans-serif;
+            font-weight: 700;
+            font-size: 1.2em;
+            color: #fff;
+            letter-spacing: 1px;
+        }
+
+        .panel-title span {
+            color: var(--neon-cyan);
+        }
+
+        .panel-xp {
+            margin-left: auto;
+            font-family: 'Share Tech Mono', monospace;
+            font-size: 0.7em;
+            color: var(--neon-green);
+            background: rgba(57,255,20,0.08);
+            border: 1px solid rgba(57,255,20,0.2);
+            padding: 4px 10px;
+            border-radius: 20px;
+            white-space: nowrap;
+        }
+
+        .panel-body { padding: 24px; }
+
+        /* ═══ OBJECTIVE CHIPS ═══ */
+        .obj-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+            gap: 12px;
+        }
+
+        .obj-chip {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            padding: 14px 16px;
+            display: flex;
+            align-items: flex-start;
+            gap: 12px;
+            transition: border-color 0.2s, transform 0.2s;
+            cursor: default;
+        }
+
+        .obj-chip:hover {
+            border-color: var(--neon-cyan);
+            transform: translateY(-2px);
+        }
+
+        .obj-check {
+            width: 20px;
+            height: 20px;
+            border: 2px solid var(--neon-cyan);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+            margin-top: 1px;
+            cursor: pointer;
+            transition: background 0.2s, box-shadow 0.2s;
+        }
+
+        .obj-check.done {
+            background: var(--neon-cyan);
+            box-shadow: 0 0 8px rgba(0,245,255,0.5);
+        }
+
+        .obj-check.done::after { content: '✓'; font-size: 0.7em; color: #000; font-weight: 700; }
+
+        .obj-text {
+            font-size: 0.9em;
+            color: var(--text-main);
+            line-height: 1.4;
+        }
+
+        /* ═══ THEORY CARDS ═══ */
+        .theory-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 16px;
+        }
+
+        .theory-card {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: 10px;
+            padding: 20px;
+            position: relative;
+            overflow: hidden;
+            transition: transform 0.2s, border-color 0.2s;
+        }
+
+        .theory-card::before {
+            content: '';
+            position: absolute;
+            top: 0; left: 0; right: 0;
+            height: 3px;
+        }
+
+        .theory-card.sdt::before { background: linear-gradient(90deg, var(--neon-cyan), #0088ff); }
+        .theory-card.flow::before { background: linear-gradient(90deg, var(--neon-yellow), var(--neon-pink)); }
+        .theory-card.mot::before { background: linear-gradient(90deg, var(--neon-green), var(--neon-cyan)); }
+
+        .theory-card:hover {
+            transform: translateY(-3px);
+            border-color: rgba(0,245,255,0.4);
+        }
+
+        .theory-badge {
+            font-family: 'Share Tech Mono', monospace;
+            font-size: 0.65em;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            padding: 4px 10px;
+            border-radius: 3px;
+            display: inline-block;
+            margin-bottom: 12px;
+        }
+
+        .sdt .theory-badge { background: rgba(0,245,255,0.1); color: var(--neon-cyan); }
+        .flow .theory-badge { background: rgba(255,215,0,0.1); color: var(--neon-yellow); }
+        .mot .theory-badge { background: rgba(57,255,20,0.1); color: var(--neon-green); }
+
+        .theory-card h3 {
+            font-family: 'Rajdhani', sans-serif;
+            font-size: 1.3em;
+            font-weight: 700;
+            color: #fff;
+            margin-bottom: 10px;
+        }
+
+        .theory-card p {
+            font-size: 0.88em;
+            color: var(--text-dim);
+            line-height: 1.6;
+            margin-bottom: 14px;
+        }
+
+        .game-example {
+            background: rgba(0,0,0,0.3);
+            border-left: 3px solid var(--neon-cyan);
+            padding: 10px 14px;
+            border-radius: 0 6px 6px 0;
+            font-size: 0.82em;
+            color: var(--text-main);
+        }
+
+        .game-example .tag {
+            font-family: 'Share Tech Mono', monospace;
+            color: var(--neon-cyan);
+            font-size: 0.8em;
+            letter-spacing: 1px;
+            display: block;
+            margin-bottom: 4px;
+        }
+
+        /* ═══ SDT NEEDS DISPLAY ═══ */
+        .needs-row {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 16px;
+            margin: 16px 0;
+        }
+
+        .need-node {
+            text-align: center;
+            padding: 20px 16px;
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: 10px;
+            position: relative;
+            cursor: default;
+            transition: all 0.3s;
+        }
+
+        .need-node:hover { transform: scale(1.04); }
+
+        .need-node.competencia { border-top: 3px solid #00f5ff; }
+        .need-node.autonomia { border-top: 3px solid #ffd700; }
+        .need-node.relacionamento { border-top: 3px solid #ff2d78; }
+
+        .need-icon { font-size: 2.2em; margin-bottom: 10px; display: block; }
+
+        .need-node h4 {
+            font-family: 'Rajdhani', sans-serif;
+            font-size: 1.1em;
+            font-weight: 700;
+            color: #fff;
+            margin-bottom: 6px;
+        }
+
+        .need-node p {
+            font-size: 0.8em;
+            color: var(--text-dim);
+            line-height: 1.5;
+        }
+
+        .need-game {
+            margin-top: 10px;
+            font-family: 'Share Tech Mono', monospace;
+            font-size: 0.72em;
+            padding: 5px 8px;
+            border-radius: 4px;
+        }
+
+        .competencia .need-game { background: rgba(0,245,255,0.1); color: var(--neon-cyan); }
+        .autonomia .need-game { background: rgba(255,215,0,0.1); color: var(--neon-yellow); }
+        .relacionamento .need-game { background: rgba(255,45,120,0.1); color: var(--neon-pink); }
+
+        /* ═══ VIDEO CARDS ═══ */
+        .video-row {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 18px;
+        }
+
+        .video-card {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: 10px;
+            overflow: hidden;
+            transition: border-color 0.2s, transform 0.2s;
+        }
+
+        .video-card:hover {
+            border-color: var(--neon-cyan);
+            transform: translateY(-3px);
+        }
+
+        .video-card iframe {
+            width: 100%;
+            aspect-ratio: 16/9;
+            border: none;
+            display: block;
+        }
+
+        .video-meta {
+            padding: 14px;
+            display: flex;
+            align-items: flex-start;
+            gap: 12px;
+        }
+
+        .video-num {
+            font-family: 'Share Tech Mono', monospace;
+            font-size: 0.75em;
+            color: var(--neon-pink);
+            background: rgba(255,45,120,0.1);
+            border: 1px solid rgba(255,45,120,0.25);
+            padding: 3px 8px;
+            border-radius: 4px;
+            white-space: nowrap;
+            margin-top: 2px;
+            flex-shrink: 0;
+        }
+
+        .video-title {
+            font-family: 'Rajdhani', sans-serif;
+            font-weight: 600;
+            font-size: 1em;
+            color: #fff;
+            margin-bottom: 4px;
+        }
+
+        .video-desc {
+            font-size: 0.78em;
+            color: var(--text-dim);
+            line-height: 1.4;
+        }
+
+        /* ═══ MISSION CARDS (Activities) ═══ */
+        .mission-list { display: flex; flex-direction: column; gap: 16px; }
+
+        .mission-card {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: 10px;
+            overflow: hidden;
+        }
+
+        .mission-top {
+            padding: 16px 20px;
+            display: flex;
+            align-items: center;
+            gap: 16px;
+            border-bottom: 1px solid rgba(0,245,255,0.08);
+            cursor: pointer;
+            transition: background 0.2s;
+        }
+
+        .mission-top:hover { background: rgba(0,245,255,0.04); }
+
+        .mission-num {
+            font-family: 'Rajdhani', sans-serif;
+            font-size: 1.8em;
+            font-weight: 700;
+            color: rgba(0,245,255,0.2);
+            line-height: 1;
+            min-width: 36px;
+        }
+
+        .mission-info { flex: 1; }
+
+        .mission-name {
+            font-family: 'Rajdhani', sans-serif;
+            font-weight: 700;
+            font-size: 1.1em;
+            color: #fff;
+            margin-bottom: 4px;
+        }
+
+        .mission-tags { display: flex; gap: 8px; flex-wrap: wrap; }
+
+        .m-tag {
+            font-family: 'Share Tech Mono', monospace;
+            font-size: 0.65em;
+            padding: 3px 8px;
+            border-radius: 3px;
+            letter-spacing: 1px;
+        }
+
+        .tag-individual { background: rgba(0,245,255,0.1); color: var(--neon-cyan); border: 1px solid rgba(0,245,255,0.2); }
+        .tag-grupo { background: rgba(255,215,0,0.1); color: var(--neon-yellow); border: 1px solid rgba(255,215,0,0.2); }
+        .tag-unity { background: rgba(57,255,20,0.1); color: var(--neon-green); border: 1px solid rgba(57,255,20,0.2); }
+        .tag-docs { background: rgba(255,45,120,0.1); color: var(--neon-pink); border: 1px solid rgba(255,45,120,0.2); }
+
+        .mission-reward {
+            font-family: 'Share Tech Mono', monospace;
+            font-size: 0.8em;
+            color: var(--neon-green);
+            white-space: nowrap;
+        }
+
+        .mission-body {
+            padding: 0 20px;
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.4s ease, padding 0.3s;
+        }
+
+        .mission-body.open {
+            max-height: 600px;
+            padding: 20px;
+        }
+
+        .mission-desc {
+            font-size: 0.9em;
+            color: var(--text-dim);
+            line-height: 1.7;
+            margin-bottom: 16px;
+        }
+
+        .mission-deliverable {
+            background: rgba(0,245,255,0.05);
+            border: 1px solid rgba(0,245,255,0.15);
+            border-radius: 8px;
+            padding: 14px 16px;
+        }
+
+        .mission-deliverable strong {
+            font-family: 'Share Tech Mono', monospace;
+            font-size: 0.75em;
+            color: var(--neon-cyan);
+            letter-spacing: 1px;
+            display: block;
+            margin-bottom: 8px;
+        }
+
+        .mission-deliverable p {
+            font-size: 0.88em;
+            color: var(--text-main);
+            line-height: 1.6;
+        }
+
+        .mission-tips {
+            margin-top: 14px;
+            padding: 12px 16px;
+            background: rgba(255,215,0,0.04);
+            border: 1px solid rgba(255,215,0,0.15);
+            border-radius: 8px;
+        }
+
+        .mission-tips strong {
+            font-family: 'Share Tech Mono', monospace;
+            font-size: 0.75em;
+            color: var(--neon-yellow);
+            letter-spacing: 1px;
+            display: block;
+            margin-bottom: 6px;
+        }
+
+        .mission-tips ul {
+            list-style: none;
+            display: flex;
+            flex-direction: column;
+            gap: 4px;
+        }
+
+        .mission-tips li {
+            font-size: 0.85em;
+            color: var(--text-dim);
+            padding-left: 14px;
+            position: relative;
+        }
+
+        .mission-tips li::before {
+            content: '›';
+            position: absolute;
+            left: 0;
+            color: var(--neon-yellow);
+        }
+
+        /* ═══ FLOW CHART ═══ */
+        .flow-diagram {
+            display: flex;
+            flex-direction: column;
+            gap: 0;
+            position: relative;
+            padding: 20px 0;
+        }
+
+        .flow-row {
+            display: flex;
+            align-items: stretch;
+            gap: 0;
+        }
+
+        .flow-axis {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 0;
+            width: 60px;
+            flex-shrink: 0;
+        }
+
+        .flow-label-y {
+            writing-mode: vertical-lr;
+            transform: rotate(180deg);
+            font-family: 'Share Tech Mono', monospace;
+            font-size: 0.7em;
+            color: var(--neon-cyan);
+            letter-spacing: 2px;
+            padding: 20px 0;
+        }
+
+        .flow-chart-area {
+            flex: 1;
+            height: 240px;
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: 10px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .flow-zone {
+            position: absolute;
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-family: 'Share Tech Mono', monospace;
+            font-size: 0.7em;
+            letter-spacing: 1px;
+            text-align: center;
+            transition: opacity 0.3s;
+        }
+
+        /* Boredom zone */
+        .zone-boredom {
+            top: 0; left: 0; right: 0; height: 40%;
+            background: linear-gradient(180deg, rgba(255,45,120,0.12) 0%, transparent 100%);
+            border-bottom: 1px dashed rgba(255,45,120,0.2);
+            color: rgba(255,45,120,0.6);
+        }
+
+        /* Anxiety zone */
+        .zone-anxiety {
+            top: 0; right: 0; width: 35%; height: 100%;
+            background: linear-gradient(270deg, rgba(255,215,0,0.1) 0%, transparent 100%);
+            border-left: 1px dashed rgba(255,215,0,0.2);
+            color: rgba(255,215,0,0.6);
+        }
+
+        /* Flow zone diagonal strip */
+        .zone-flow {
+            top: 25%; left: 20%; width: 55%; height: 50%;
+            background: rgba(0,245,255,0.08);
+            border: 1px solid rgba(0,245,255,0.25);
+            border-radius: 8px;
+            color: var(--neon-cyan);
+        }
+
+        .flow-chart-label {
+            font-family: 'Rajdhani', sans-serif;
+            font-weight: 700;
+            font-size: 1.1em;
+        }
+
+        .flow-chart-sub {
+            font-family: 'Inter', sans-serif;
+            font-size: 0.75em;
+            color: var(--text-dim);
+            margin-top: 4px;
+        }
+
+        .flow-axis-x {
+            text-align: center;
+            font-family: 'Share Tech Mono', monospace;
+            font-size: 0.7em;
+            color: var(--neon-cyan);
+            letter-spacing: 2px;
+            margin-top: 8px;
+        }
+
+        .flow-games-row {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 12px;
+            margin-top: 16px;
+        }
+
+        .flow-game {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            padding: 12px;
+            text-align: center;
+        }
+
+        .flow-game .fg-icon { font-size: 1.6em; margin-bottom: 6px; display: block; }
+
+        .flow-game h4 {
+            font-family: 'Rajdhani', sans-serif;
+            font-weight: 700;
+            font-size: 0.95em;
+            color: #fff;
+            margin-bottom: 4px;
+        }
+
+        .flow-game p {
+            font-size: 0.75em;
+            color: var(--text-dim);
+            line-height: 1.4;
+        }
+
+        .flow-game .fg-zone {
+            font-family: 'Share Tech Mono', monospace;
+            font-size: 0.65em;
+            margin-top: 8px;
+            padding: 3px 8px;
+            border-radius: 3px;
+            display: inline-block;
+        }
+
+        .fg-zone.flow { background: rgba(0,245,255,0.1); color: var(--neon-cyan); }
+        .fg-zone.anxiety { background: rgba(255,215,0,0.1); color: var(--neon-yellow); }
+        .fg-zone.boredom { background: rgba(255,45,120,0.1); color: var(--neon-pink); }
+
+        /* ═══ INTRINSIC VS EXTRINSIC ═══ */
+        .compare-split {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 16px;
+        }
+
+        .compare-block {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: 10px;
+            padding: 20px;
+        }
+
+        .compare-block h4 {
+            font-family: 'Rajdhani', sans-serif;
+            font-weight: 700;
+            font-size: 1.2em;
+            margin-bottom: 12px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .compare-block.intrinsic { border-top: 3px solid var(--neon-green); }
+        .compare-block.extrinsic { border-top: 3px solid var(--neon-yellow); }
+
+        .compare-block.intrinsic h4 { color: var(--neon-green); }
+        .compare-block.extrinsic h4 { color: var(--neon-yellow); }
+
+        .compare-item {
+            display: flex;
+            gap: 10px;
+            align-items: flex-start;
+            margin-bottom: 10px;
+        }
+
+        .compare-dot {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            margin-top: 5px;
+            flex-shrink: 0;
+        }
+
+        .intrinsic .compare-dot { background: var(--neon-green); box-shadow: 0 0 5px var(--neon-green); }
+        .extrinsic .compare-dot { background: var(--neon-yellow); box-shadow: 0 0 5px var(--neon-yellow); }
+
+        .compare-item p { font-size: 0.88em; color: var(--text-dim); line-height: 1.5; }
+
+        .compare-example {
+            margin-top: 14px;
+            padding: 12px;
+            border-radius: 6px;
+            font-size: 0.82em;
+        }
+
+        .intrinsic .compare-example { background: rgba(57,255,20,0.07); color: rgba(57,255,20,0.8); }
+        .extrinsic .compare-example { background: rgba(255,215,0,0.07); color: rgba(255,215,0,0.8); }
+
+        /* ═══ BOTTOM NAV ═══ */
+        .bottom-nav {
+            display: flex;
+            justify-content: space-between;
+            gap: 16px;
+            margin-top: 8px;
+        }
+
+        .btn-nav {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 16px 24px;
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: 10px;
+            color: var(--text-main);
+            text-decoration: none;
+            font-family: 'Rajdhani', sans-serif;
+            font-weight: 600;
+            font-size: 1em;
+            letter-spacing: 1px;
+            transition: all 0.2s;
+        }
+
+        .btn-nav:hover {
+            border-color: var(--neon-cyan);
+            color: var(--neon-cyan);
+            background: rgba(0,245,255,0.06);
+            transform: translateY(-2px);
+        }
+
+        .btn-nav .arrow { font-size: 1.2em; }
+
+        /* ═══ PROGRESS TRACKER ═══ */
+        .progress-track {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: 10px;
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+
+        .pt-header {
+            font-family: 'Share Tech Mono', monospace;
+            font-size: 0.72em;
+            color: var(--neon-cyan);
+            letter-spacing: 2px;
+        }
+
+        .pt-modules {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 8px;
+        }
+
+        .pt-mod {
+            height: 6px;
+            border-radius: 3px;
+            background: rgba(0,245,255,0.1);
+            border: 1px solid rgba(0,245,255,0.15);
+            overflow: hidden;
+        }
+
+        .pt-mod.done { background: var(--neon-cyan); box-shadow: 0 0 6px rgba(0,245,255,0.4); }
+        .pt-mod.active { background: linear-gradient(90deg, var(--neon-cyan) 60%, rgba(0,245,255,0.2)); }
+
+        /* ═══ TOAST NOTIFICATION ═══ */
+        .toast {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            background: var(--bg-panel);
+            border: 1px solid var(--neon-green);
+            border-radius: 10px;
+            padding: 16px 20px;
+            display: flex;
+            align-items: center;
+            gap: 14px;
+            transform: translateY(100px);
+            opacity: 0;
+            transition: all 0.4s cubic-bezier(0.25, 1, 0.5, 1);
+            z-index: 2000;
+            box-shadow: 0 0 20px rgba(57,255,20,0.15);
+            max-width: 300px;
+        }
+
+        .toast.show { transform: translateY(0); opacity: 1; }
+
+        .toast-icon { font-size: 1.5em; }
+
+        .toast-text strong {
+            display: block;
+            font-family: 'Rajdhani', sans-serif;
+            font-size: 1em;
+            color: var(--neon-green);
+            margin-bottom: 2px;
+        }
+
+        .toast-text span { font-size: 0.8em; color: var(--text-dim); }
+
+        /* ═══ RESPONSIVE ═══ */
+        @media (max-width: 900px) {
+            .layout { grid-template-columns: 1fr; }
+            .nav-panel { position: static; }
+            .hero { grid-template-columns: 1fr; }
+            .hero-stats { flex-direction: row; justify-content: flex-start; }
+            .stat-pill { min-width: 120px; }
+            .needs-row { grid-template-columns: 1fr; }
+            .compare-split { grid-template-columns: 1fr; }
+        }
+
+        @media (max-width: 600px) {
+            .hud-bar { padding: 10px 16px; }
+            .hero { padding: 30px 16px 20px; }
+            .layout { padding: 0 16px 40px; }
+            .flow-games-row { grid-template-columns: 1fr; }
+        }
+
+        /* Glow pulse animation */
+        @keyframes glowPulse {
+            0%, 100% { box-shadow: 0 0 8px rgba(0,245,255,0.3); }
+            50% { box-shadow: 0 0 16px rgba(0,245,255,0.6); }
+        }
+
+        .panel-header { animation: glowPulse 4s ease-in-out infinite; }
+
+        /* Corner decorations */
+        .panel::after {
+            content: '';
+            position: absolute;
+            top: 0; right: 0;
+            width: 40px; height: 40px;
+            border-top: 2px solid var(--neon-cyan);
+            border-right: 2px solid var(--neon-cyan);
+            border-radius: 0 12px 0 0;
+            opacity: 0.3;
+        }
+
+        .chevron {
+            transition: transform 0.3s;
+            color: var(--text-dim);
+            font-size: 0.85em;
+        }
+
+        .mission-top.open .chevron { transform: rotate(90deg); }
+    </style>
+</head>
+<body>
+
+    <!-- ═══ HUD TOP BAR ═══ -->
+    <nav class="hud-bar">
+        <div class="hud-logo">IJD-038</div>
+        <div class="hud-week">SEMANA 02 / 20</div>
+        <div class="hud-xp-block">
+            <span class="xp-label">XP</span>
+            <div class="xp-bar-outer">
+                <div class="xp-bar-fill" id="xpBar"></div>
+            </div>
+            <span class="xp-count" id="xpCount">0 / 400</span>
+        </div>
+    </nav>
+
+    <!-- ═══ HERO ═══ -->
+    <header class="hero">
+        <div class="hero-left">
+            <div class="mission-tag">MÓDULO 1 — FUNDAMENTOS DE GAMIFICAÇÃO</div>
+            <h1>Psicologia e<br><span>Motivação</span></h1>
+            <p class="hero-subtitle">
+                Por que os jogadores continuam jogando? Descubra as forças psicológicas que movem jogadores — e como aplicar isso nos seus designs.
+            </p>
+        </div>
+        <div class="hero-stats">
+            <div class="stat-pill">
+                <span class="val">3</span>
+                <span class="lbl">VÍDEOS</span>
+            </div>
+            <div class="stat-pill">
+                <span class="val">3</span>
+                <span class="lbl">MISSÕES</span>
+            </div>
+            <div class="stat-pill">
+                <span class="val">400</span>
+                <span class="lbl">XP TOTAL</span>
+            </div>
+        </div>
+    </header>
+
+    <!-- ═══ MAIN LAYOUT ═══ -->
+    <div class="layout">
+
+        <!-- SIDEBAR NAV -->
+        <aside class="nav-panel">
+            <div class="nav-header">// NAVEGAÇÃO</div>
+            <a href="semana01.html" class="nav-week">S01 · Intro Gamificação</a>
+            <a href="semana02.html" class="nav-week active">S02 · Psicologia</a>
+            <a href="semana03.html" class="nav-week">S03 · Mecânicas</a>
+            <a href="semana04.html" class="nav-week">S04 · Dinâmicas</a>
+            <a href="semana05.html" class="nav-week">S05 · Elementos</a>
+            <div class="nav-divider"></div>
+            <a href="semana06.html" class="nav-week locked">S06 · Educacional</a>
+            <a href="semana07.html" class="nav-week locked">S07 · Corporativa</a>
+            <a href="semana08.html" class="nav-week locked">S08 · Design</a>
+            <a href="semana09.html" class="nav-week locked">S09 · Métricas</a>
+            <a href="semana10.html" class="nav-week locked">S10 · Cases</a>
+            <div class="nav-divider"></div>
+            <a href="semana11.html" class="nav-week locked">S11 · Cloud Gaming</a>
+            <a href="semana12.html" class="nav-week locked">S12 · Ray Tracing</a>
+            <a href="semana13.html" class="nav-week locked">S13 · IA Procedural</a>
+            <a href="semana14.html" class="nav-week locked">S14 · Blockchain</a>
+            <a href="semana15.html" class="nav-week locked">S15 · Metaverso</a>
+            <div class="nav-divider"></div>
+            <a href="semana16.html" class="nav-week locked">S16 · Motion Design</a>
+            <a href="semana17.html" class="nav-week locked">S17 · UI/UX Anim</a>
+            <a href="semana18.html" class="nav-week locked">S18 · Motion Gfx</a>
+            <a href="semana19.html" class="nav-week locked">S19 · Projeto</a>
+            <a href="semana20.html" class="nav-week locked">S20 · Apresentação</a>
+            <a href="index.html" class="nav-home">⌂ INÍCIO</a>
+        </aside>
+
+        <!-- CONTENT -->
+        <main class="content">
+
+            <!-- OBJECTIVES -->
+            <div class="panel">
+                <div class="panel-header">
+                    <span class="panel-icon">🎯</span>
+                    <span class="panel-title">Objetivos da <span>Semana</span></span>
+                    <span class="panel-xp">+50 XP cada</span>
+                </div>
+                <div class="panel-body">
+                    <div class="obj-grid">
+                        <div class="obj-chip">
+                            <div class="obj-check" onclick="toggleObj(this)"></div>
+                            <span class="obj-text">Entender a Teoria da Autodeterminação (SDT) e suas 3 necessidades</span>
+                        </div>
+                        <div class="obj-chip">
+                            <div class="obj-check" onclick="toggleObj(this)"></div>
+                            <span class="obj-text">Distinguir motivação intrínseca vs extrínseca em jogos reais</span>
+                        </div>
+                        <div class="obj-chip">
+                            <div class="obj-check" onclick="toggleObj(this)"></div>
+                            <span class="obj-text">Aplicar o conceito de Flow State no game design</span>
+                        </div>
+                        <div class="obj-chip">
+                            <div class="obj-check" onclick="toggleObj(this)"></div>
+                            <span class="obj-text">Analisar sistemas de recompensa de jogos AAA</span>
+                        </div>
+                        <div class="obj-chip">
+                            <div class="obj-check" onclick="toggleObj(this)"></div>
+                            <span class="obj-text">Implementar um sistema básico de recompensa em Unity</span>
+                        </div>
+                        <div class="obj-chip">
+                            <div class="obj-check" onclick="toggleObj(this)"></div>
+                            <span class="obj-text">Propor melhorias motivacionais baseadas em SDT</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- THEORY: SDT -->
+            <div class="panel">
+                <div class="panel-header">
+                    <span class="panel-icon">🧠</span>
+                    <span class="panel-title">Teoria da <span>Autodeterminação (SDT)</span></span>
+                    <span class="panel-xp">Ryan & Deci, 2000</span>
+                </div>
+                <div class="panel-body">
+                    <p style="font-size:0.9em; color:var(--text-dim); margin-bottom:20px; line-height:1.7;">
+                        A SDT é a principal teoria que explica <em style="color:var(--text-main)">por que as pessoas jogam</em>. Ela diz que todo ser humano tem 3 necessidades psicológicas básicas. Quando um jogo satisfaz essas necessidades, os jogadores ficam engajados de forma genuína — não apenas por recompensas externas.
+                    </p>
+
+                    <div class="needs-row">
+                        <div class="need-node competencia">
+                            <span class="need-icon">⚔️</span>
+                            <h4>Competência</h4>
+                            <p>Sentir que está ficando melhor no jogo. Maestria, progresso visível, superar desafios.</p>
+                            <div class="need-game">Elden Ring: mortes = aprendizado</div>
+                        </div>
+                        <div class="need-node autonomia">
+                            <span class="need-icon">🗺️</span>
+                            <h4>Autonomia</h4>
+                            <p>Ter escolhas reais que importam. Sentir que as ações são suas, não impostas.</p>
+                            <div class="need-game">BotW: "vá para onde quiser"</div>
+                        </div>
+                        <div class="need-node relacionamento">
+                            <span class="need-icon">🤝</span>
+                            <h4>Relacionamento</h4>
+                            <p>Conexão com outros jogadores ou personagens. Pertencimento a uma comunidade.</p>
+                            <div class="need-game">Among Us: confiança e traição</div>
+                        </div>
+                    </div>
+
+                    <div class="theory-grid" style="margin-top:16px;">
+                        <div class="theory-card sdt">
+                            <div class="theory-badge">COMPETÊNCIA</div>
+                            <h3>Como implementar em jogos?</h3>
+                            <p>Curva de dificuldade bem calibrada, feedback claro sobre progresso, sistema de achievements, tutoriais adaptivos, dificuldade dinâmica (DDA).</p>
+                            <div class="game-example">
+                                <span class="tag">// EXEMPLO UNITY</span>
+                                Adaptar dificuldade dos inimigos via PlayerStats.winRate para manter o jogador no Flow
+                            </div>
+                        </div>
+                        <div class="theory-card flow">
+                            <div class="theory-badge">AUTONOMIA</div>
+                            <h3>Mais que só escolhas</h3>
+                            <p>Autonomia não é só "abrir mundo". Um jogo linear ainda satisfaz autonomia se o jogador sente que as ações são voluntárias e fazem sentido para ele.</p>
+                            <div class="game-example">
+                                <span class="tag">// EXEMPLO</span>
+                                Hollow Knight: linear mas cada rota parece descoberta sua
+                            </div>
+                        </div>
+                        <div class="theory-card mot">
+                            <div class="theory-badge">RELACIONAMENTO</div>
+                            <h3>Além do multiplayer</h3>
+                            <p>Relacionamento não precisa de outros jogadores. NPCs com personalidade, lore profundo, e comunidades ao redor do jogo também atendem essa necessidade.</p>
+                            <div class="game-example">
+                                <span class="tag">// EXEMPLO</span>
+                                Stardew Valley: NPCs com rotinas e memória criam vínculo real
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- THEORY: FLOW -->
+            <div class="panel">
+                <div class="panel-header">
+                    <span class="panel-icon">🌊</span>
+                    <span class="panel-title">Flow State — <span>O Estado de "No Game"</span></span>
+                    <span class="panel-xp">Csikszentmihalyi</span>
+                </div>
+                <div class="panel-body">
+                    <p style="font-size:0.9em; color:var(--text-dim); margin-bottom:20px; line-height:1.7;">
+                        Flow é quando você "perde a noção do tempo" jogando. É o estado ideal de engajamento — desafio e habilidade em perfeito equilíbrio. Todo bom game designer busca manter o jogador nessa zona.
+                    </p>
+
+                    <div style="position:relative; background:var(--bg-card); border:1px solid var(--border); border-radius:10px; padding:20px; min-height:220px; overflow:hidden; margin-bottom:16px;">
+                        <!-- Y axis -->
+                        <div style="position:absolute; left:14px; top:50%; transform:translateY(-50%) rotate(-90deg); font-family:'Share Tech Mono',monospace; font-size:0.65em; color:var(--neon-cyan); letter-spacing:2px; white-space:nowrap;">HABILIDADE →</div>
+                        <!-- X axis -->
+                        <div style="position:absolute; bottom:10px; left:50%; transform:translateX(-50%); font-family:'Share Tech Mono',monospace; font-size:0.65em; color:var(--neon-pink); letter-spacing:2px;">← DESAFIO →</div>
+
+                        <!-- Zones -->
+                        <div style="position:absolute; top:15px; left:50px; right:15px; height:35%; background:rgba(255,45,120,0.1); border:1px dashed rgba(255,45,120,0.25); border-radius:8px; display:flex; align-items:center; justify-content:center;">
+                            <span style="font-family:'Share Tech Mono',monospace; font-size:0.65em; color:rgba(255,45,120,0.7);">TÉDIO (desafio < habilidade)</span>
+                        </div>
+
+                        <div style="position:absolute; bottom:35px; right:15px; width:35%; top:50%; background:rgba(255,215,0,0.08); border:1px dashed rgba(255,215,0,0.25); border-radius:8px; display:flex; align-items:center; justify-content:center;">
+                            <span style="font-family:'Share Tech Mono',monospace; font-size:0.62em; color:rgba(255,215,0,0.7); text-align:center;">ANSIEDADE<br>(desafio > habilidade)</span>
+                        </div>
+
+                        <div style="position:absolute; top:38%; left:50px; right:35%; height:28%; background:rgba(0,245,255,0.08); border:2px solid rgba(0,245,255,0.3); border-radius:8px; display:flex; flex-direction:column; align-items:center; justify-content:center; box-shadow:0 0 15px rgba(0,245,255,0.1);">
+                            <span style="font-family:'Rajdhani',sans-serif; font-weight:700; font-size:1.1em; color:var(--neon-cyan); text-shadow:0 0 10px rgba(0,245,255,0.5);">⟡ FLOW ZONE</span>
+                            <span style="font-size:0.72em; color:var(--text-dim); margin-top:4px;">equilíbrio perfeito</span>
+                        </div>
+                    </div>
+
+                    <div class="flow-games-row">
+                        <div class="flow-game">
+                            <span class="fg-icon">🎸</span>
+                            <h4>Guitar Hero</h4>
+                            <p>Músicas avançam gradualmente. Você quase falha, mas consegue.</p>
+                            <span class="fg-zone flow">FLOW</span>
+                        </div>
+                        <div class="flow-game">
+                            <span class="fg-icon">🪙</span>
+                            <h4>Early Candy Crush</h4>
+                            <p>Fases muito fáceis por muito tempo. Jogador enjoa.</p>
+                            <span class="fg-zone boredom">TÉDIO</span>
+                        </div>
+                        <div class="flow-game">
+                            <span class="fg-icon">🗡️</span>
+                            <h4>Dark Souls (início)</h4>
+                            <p>Para quem nunca jogou, o boss inicial gera pânico puro.</p>
+                            <span class="fg-zone anxiety">ANSIEDADE</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- THEORY: INTRINSIC vs EXTRINSIC -->
+            <div class="panel">
+                <div class="panel-header">
+                    <span class="panel-icon">⚡</span>
+                    <span class="panel-title">Motivação <span>Intrínseca vs Extrínseca</span></span>
+                </div>
+                <div class="panel-body">
+                    <p style="font-size:0.9em; color:var(--text-dim); margin-bottom:20px; line-height:1.7;">
+                        O perigo dos sistemas de recompensa mal projetados: quando você adiciona recompensas externas demais, pode destruir a motivação natural do jogador. Isso se chama <em style="color:var(--text-main)">Overjustification Effect</em>.
+                    </p>
+
+                    <div class="compare-split">
+                        <div class="compare-block intrinsic">
+                            <h4>🟢 Intrínseca</h4>
+                            <div class="compare-item">
+                                <div class="compare-dot"></div>
+                                <p>Joga pelo prazer da atividade em si</p>
+                            </div>
+                            <div class="compare-item">
+                                <div class="compare-dot"></div>
+                                <p>Motivação sustentada a longo prazo</p>
+                            </div>
+                            <div class="compare-item">
+                                <div class="compare-dot"></div>
+                                <p>Continua mesmo sem recompensas</p>
+                            </div>
+                            <div class="compare-item">
+                                <div class="compare-dot"></div>
+                                <p>Associada à satisfação das 3 necessidades SDT</p>
+                            </div>
+                            <div class="compare-example">🎮 Minecraft: constói porque é criativo, não pela recompensa</div>
+                        </div>
+                        <div class="compare-block extrinsic">
+                            <h4>🟡 Extrínseca</h4>
+                            <div class="compare-item">
+                                <div class="compare-dot"></div>
+                                <p>Joga por recompensa externa (XP, moeda, ranking)</p>
+                            </div>
+                            <div class="compare-item">
+                                <div class="compare-dot"></div>
+                                <p>Eficaz no curto prazo, esgota com o tempo</p>
+                            </div>
+                            <div class="compare-item">
+                                <div class="compare-dot"></div>
+                                <p>Pode destruir motivação intrínseca existente</p>
+                            </div>
+                            <div class="compare-item">
+                                <div class="compare-dot"></div>
+                                <p>Base de muitos jogos mobile F2P</p>
+                            </div>
+                            <div class="compare-example">📱 Battle pass: joga obrigado para não perder o passe</div>
+                        </div>
+                    </div>
+
+                    <div style="margin-top:16px; padding:16px; background:rgba(0,245,255,0.04); border:1px solid rgba(0,245,255,0.15); border-radius:8px;">
+                        <p style="font-size:0.85em; color:var(--text-dim); line-height:1.6;">
+                            <strong style="color:var(--neon-cyan)">⚠️ Regra de Ouro para Game Designers:</strong> Use recompensas externas para INICIAR o engajamento, mas construa sistemas que desenvolvam motivação intrínseca. Jogos que só têm FOMO (Fear Of Missing Out) como engajamento têm churn altíssimo.
+                        </p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- VIDEOS -->
+            <div class="panel">
+    <div class="panel-header">
+        <span class="panel-icon">📚</span>
+        <span class="panel-title">Documentos da <span>Semana</span></span>
+        <span class="panel-xp">Leitura Essencial</span>
+    </div>
+
+    <div class="panel-body">
+        <p style="font-size:0.85em; color:var(--text-dim); margin-bottom:16px;">
+            Três materiais fundamentais para aprofundar os conceitos de Arquitetura e Psicologia no Game Design.
+            Leia ou explore antes de realizar as atividades práticas.
+        </p>
+
+        <div class="video-row">
+
+            <div class="video-card">
+    <video controls style="width:100%; border-radius:8px;">
+        <source src="docs\Semana2_A_Psicologia_do_Jogo.mp4" type="video/mp4">
+        Seu navegador não suporta vídeo HTML5.
+    </video>
+    <div class="video-meta">
+        <span class="video-num">DOC 04</span>
+        <div>
+            <div class="video-title">A Psicologia do Jogo</div>
+            <div class="video-desc">
+                Vídeo complementar sobre motivação, SDT e design centrado na experiência do jogador.
+            </div>
+        </div>
+    </div>
+</div>
+            <!-- DOC 01 -->
+            <div class="video-card">
+                <a href="img\arquitetura_psicologia_no_game_design.png" target="_blank">
+                    <img src="arquitetura_psicologia_no_game_design.png" 
+                         alt="Arquitetura e Psicologia no Game Design"
+                         style="width:100%; border-radius:8px;">
+                </a>
+                <div class="video-meta">
+                    <span class="video-num">DOC 01</span>
+                    <div>
+                        <div class="video-title">Arquitetura e Psicologia no Game Design</div>
+                        <div class="video-desc">
+                            Infográfico visual sobre ScriptableObjects, SDT, Flow e design centrado no jogador.
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- DOC 02 -->
+            <div class="video-card">
+                <a href="docs\The_Game_Design_Triad.pptx" target="_blank">
+                    <div style="height:180px; display:flex; align-items:center; justify-content:center; font-size:3em;">
+                        📊
+                    </div>
+                </a>
+                <div class="video-meta">
+                    <span class="video-num">DOC 02</span>
+                    <div>
+                        <div class="video-title">The Game Design Triad</div>
+                        <div class="video-desc">
+                            Apresentação sobre a tríade fundamental do design de jogos e suas aplicações práticas.
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- DOC 03 -->
+            <div class="video-card">
+                <a href="docs\Advanced Game Engineering and Level Design Study Guide.xlsx" target="_blank">
+                    <div style="height:180px; display:flex; align-items:center; justify-content:center; font-size:3em;">
+                        📈
+                    </div>
+                </a>
+                <div class="video-meta">
+                    <span class="video-num">DOC 03</span>
+                    <div>
+                        <div class="video-title">Advanced Game Engineering Guide</div>
+                        <div class="video-desc">
+                            Planilha e guia de estudo com estrutura técnica e organização modular para projetos de jogos.
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
+            <!-- MISSIONS / ACTIVITIES -->
+            <div class="panel">
+                <div class="panel-header">
+                    <span class="panel-icon">🚀</span>
+                    <span class="panel-title">Missões da <span>Semana</span></span>
+                    <span class="panel-xp">400 XP disponíveis</span>
+                </div>
+                <div class="panel-body" style="padding-top:16px;">
+                    <div class="mission-list">
+
+                        <!-- MISSION 1 -->
+                        <div class="mission-card">
+                            <div class="mission-top" onclick="toggleMission(this)">
+                                <div class="mission-num">01</div>
+                                <div class="mission-info">
+                                    <div class="mission-name">Análise SDT de Jogo AAA</div>
+                                    <div class="mission-tags">
+                                        <span class="m-tag tag-individual">INDIVIDUAL</span>
+                                        <span class="m-tag tag-docs">RELATÓRIO</span>
+                                    </div>
+                                </div>
+                                <div class="mission-reward">+100 XP</div>
+                                <span class="chevron">›</span>
+                            </div>
+                            <div class="mission-body">
+                                <p class="mission-desc">
+                                    Escolha um jogo que você já jogou (BotW, Elden Ring, Celeste, Hollow Knight, qualquer AAA ou indie relevante). Analise profundamente como ele atende — ou falha em atender — às 3 necessidades da SDT: Competência, Autonomia e Relacionamento.
+                                </p>
+                                <div class="mission-deliverable">
+                                    <strong>📦 ENTREGA</strong>
+                                    <p>Relatório de 2-3 páginas com: (1) breve intro do jogo escolhido, (2) análise de cada dimensão SDT com exemplos específicos de mecânicas, (3) nota de 0-10 para cada dimensão com justificativa, (4) proposta de melhoria de 1 elemento com base na teoria.</p>
+                                </div>
+                                <div class="mission-tips">
+                                    <strong>💡 DICAS</strong>
+                                    <ul>
+                                        <li>Seja específico — não "o jogo tem progresso", mas "o sistema de runes em Elden Ring representa competência porque..."</li>
+                                        <li>Inclua screenshots das mecânicas que está analisando</li>
+                                        <li>Compare com a semana anterior: esse jogo é gamificado? Ou é só um jogo?</li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- MISSION 2 -->
+                        <div class="mission-card">
+                            <div class="mission-top" onclick="toggleMission(this)">
+                                <div class="mission-num">02</div>
+                                <div class="mission-info">
+                                    <div class="mission-name">Implementação: Difficulty Adaptive System</div>
+                                    <div class="mission-tags">
+                                        <span class="m-tag tag-individual">INDIVIDUAL</span>
+                                        <span class="m-tag tag-unity">UNITY / UNREAL</span>
+                                    </div>
+                                </div>
+                                <div class="mission-reward">+200 XP</div>
+                                <span class="chevron">›</span>
+                            </div>
+                            <div class="mission-body">
+                                <p class="mission-desc">
+                                    Implemente um sistema que adapta a dificuldade em tempo real para manter o jogador na Flow Zone. Baseie-se em pelo menos 2 métricas de desempenho (ex: winRate, deathCount, tempoMédioNaFase). O sistema deve ser visível na UI (algum indicador do estado atual).
+                                </p>
+                                <div class="mission-deliverable">
+                                    <strong>📦 ENTREGA</strong>
+                                    <p>Repositório GitHub com: (1) protótipo jogável em Unity ou Unreal, (2) código comentado do DDA System, (3) README explicando a lógica do algoritmo e as métricas usadas, (4) GIF ou vídeo curto demonstrando o sistema funcionando.</p>
+                                </div>
+                                <div class="mission-tips">
+                                    <strong>💡 DICAS</strong>
+                                    <ul>
+                                        <li>Comece simples: winRate = vitorias / tentativas. Se > 0.7, aumenta dificuldade. Se &lt; 0.3, diminui</li>
+                                        <li>Mostre na UI o "estado motivacional" atual: BORED / FLOW / ANXIOUS</li>
+                                        <li>Extra: use PlayerPrefs para salvar histórico e comparar sessões</li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- MISSION 3 -->
+                        <div class="mission-card">
+                            <div class="mission-top" onclick="toggleMission(this)">
+                                <div class="mission-num">03</div>
+                                <div class="mission-info">
+                                    <div class="mission-name">Experimento: Intrínseca vs Extrínseca</div>
+                                    <div class="mission-tags">
+                                        <span class="m-tag tag-grupo">GRUPO (3-4 pessoas)</span>
+                                        <span class="m-tag tag-docs">DOCUMENTO</span>
+                                    </div>
+                                </div>
+                                <div class="mission-reward">+100 XP</div>
+                                <span class="chevron">›</span>
+                            </div>
+                            <div class="mission-body">
+                                <p class="mission-desc">
+                                    Desenhe um experimento controlado que teste se adicionar recompensas externas aumenta ou diminui a motivação intrínseca de jogar algo específico. O experimento não precisa ser executado (apenas planejado com rigor), mas deve ser realista e baseado na teoria.
+                                </p>
+                                <div class="mission-deliverable">
+                                    <strong>📦 ENTREGA</strong>
+                                    <p>Documento de 2 páginas com: (1) hipótese clara, (2) metodologia — grupos controle e experimental, (3) métricas quantitativas escolhidas, (4) possíveis resultados esperados com base na teoria, (5) como esse experimento se aplicaria a um jogo real em fase de desenvolvimento.</p>
+                                </div>
+                                <div class="mission-tips">
+                                    <strong>💡 DICAS</strong>
+                                    <ul>
+                                        <li>Exemplo: Grupo A joga Tetris sem recompensas. Grupo B joga com sistema de pontos e ranking. Mede-se: sessões por semana, tempo por sessão, satisfação relatada</li>
+                                        <li>Inclua análise do Overjustification Effect — como você evitaria esse problema no design?</li>
+                                        <li>Conecte com games reais: qual jogo famoso teve esse problema? (Warcraft 3: Reforged, Diablo 4 no lançamento, etc)</li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+
+            <!-- PROGRESS TRACK -->
+            <div class="progress-track">
+                <div class="pt-header">// PROGRESSO DO SEMESTRE</div>
+                <div class="pt-modules">
+                    <div class="pt-mod done" title="S01 - Concluído"></div>
+                    <div class="pt-mod active" title="S02 - Atual"></div>
+                    <div class="pt-mod" title="S03"></div>
+                    <div class="pt-mod" title="S04"></div>
+                    <div class="pt-mod" title="S05"></div>
+                    <div class="pt-mod" title="S06"></div>
+                    <div class="pt-mod" title="S07"></div>
+                    <div class="pt-mod" title="S08"></div>
+                    <div class="pt-mod" title="S09"></div>
+                    <div class="pt-mod" title="S10"></div>
+                    <div class="pt-mod" title="S11"></div>
+                    <div class="pt-mod" title="S12"></div>
+                    <div class="pt-mod" title="S13"></div>
+                    <div class="pt-mod" title="S14"></div>
+                    <div class="pt-mod" title="S15"></div>
+                    <div class="pt-mod" title="S16"></div>
+                    <div class="pt-mod" title="S17"></div>
+                    <div class="pt-mod" title="S18"></div>
+                    <div class="pt-mod" title="S19"></div>
+                    <div class="pt-mod" title="S20"></div>
+                </div>
+                <div style="font-family:'Share Tech Mono',monospace; font-size:0.7em; color:var(--text-dim);">
+                    SEMANA 02 / 20 — MÓDULO 1: FUNDAMENTOS
+                </div>
+            </div>
+
+            <!-- BOTTOM NAV -->
+            <div class="bottom-nav">
+                <a href="semana01.html" class="btn-nav">
+                    <span class="arrow">←</span>
+                    S01 · Intro Gamificação
+                </a>
+                <a href="semana03.html" class="btn-nav">
+                    S03 · Mecânicas de Jogo
+                    <span class="arrow">→</span>
+                </a>
+            </div>
+
+        </main>
+    </div>
+
+    <!-- TOAST -->
+    <div class="toast" id="toast">
+        <span class="toast-icon">⚡</span>
+        <div class="toast-text">
+            <strong id="toastTitle">Objetivo concluído!</strong>
+            <span id="toastSub">+50 XP adicionados</span>
+        </div>
+    </div>
+
+    <script>
+        // ═══ XP SYSTEM ═══
+        const MAX_XP = 400;
+        let currentXP = 0;
+        let objCount = 0;
+
+        function updateXP(amount) {
+            currentXP = Math.min(currentXP + amount, MAX_XP);
+            const pct = (currentXP / MAX_XP) * 100;
+            document.getElementById('xpBar').style.width = pct + '%';
+            document.getElementById('xpCount').textContent = currentXP + ' / ' + MAX_XP;
+        }
+
+        function showToast(title, sub) {
+            const t = document.getElementById('toast');
+            document.getElementById('toastTitle').textContent = title;
+            document.getElementById('toastSub').textContent = sub;
+            t.classList.add('show');
+            setTimeout(() => t.classList.remove('show'), 3000);
+        }
+
+        function toggleObj(el) {
+            if (el.classList.contains('done')) {
+                el.classList.remove('done');
+                currentXP = Math.max(0, currentXP - 50);
+                const pct = (currentXP / MAX_XP) * 100;
+                document.getElementById('xpBar').style.width = pct + '%';
+                document.getElementById('xpCount').textContent = currentXP + ' / ' + MAX_XP;
+                objCount--;
+            } else {
+                el.classList.add('done');
+                updateXP(50);
+                objCount++;
+                const messages = [
+                    ['Objetivo desbloqueado!', '+50 XP adicionados'],
+                    ['Conhecimento absorvido!', '+50 XP — continue!'],
+                    ['Progresso detectado!', '+50 XP no banco'],
+                    ['Excelente!', 'Mais 50 XP conquistados'],
+                    ['Quase lá!', '+50 XP — falta pouco!'],
+                    ['SEMANA 02 COMPLETA!', '400 XP — Partiu Semana 03!'],
+                ];
+                const idx = Math.min(objCount - 1, messages.length - 1);
+                showToast(messages[idx][0], messages[idx][1]);
+            }
+        }
+
+        function toggleMission(el) {
+            const body = el.nextElementSibling;
+            const isOpen = body.classList.contains('open');
+            el.classList.toggle('open', !isOpen);
+            body.classList.toggle('open', !isOpen);
+        }
+
+        // Animate XP bar on load
+        setTimeout(() => {
+            // restore from sessionStorage if any
+            const saved = parseInt(sessionStorage.getItem('s02_xp') || '0');
+            if (saved > 0) {
+                currentXP = saved;
+                const pct = (currentXP / MAX_XP) * 100;
+                document.getElementById('xpBar').style.width = pct + '%';
+                document.getElementById('xpCount').textContent = currentXP + ' / ' + MAX_XP;
+            }
+        }, 300);
+
+        // Save XP before leaving
+        window.addEventListener('beforeunload', () => {
+            sessionStorage.setItem('s02_xp', currentXP);
+        });
+    </script>
+</body>
+</html>

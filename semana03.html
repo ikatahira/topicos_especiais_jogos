@@ -1,0 +1,2453 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Semana 03 · Mecânicas de Jogo · IJD-038</title>
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=IBM+Plex+Mono:wght@400;600&family=Manrope:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+/* ══════════════════════════════════════════
+   TOKENS
+══════════════════════════════════════════ */
+:root {
+  --ink:      #0b0c10;
+  --ink2:     #12131a;
+  --ink3:     #1a1c27;
+  --ink4:     #222436;
+  --glass:    rgba(255,255,255,0.04);
+  --line:     rgba(255,255,255,0.07);
+  --lime:     #c8f135;
+  --lime2:    #9ed608;
+  --teal:     #2de4c8;
+  --violet:   #a78bfa;
+  --amber:    #fbbf24;
+  --rose:     #fb7185;
+  --sky:      #38bdf8;
+  --text:     #e8eaf2;
+  --sub:      #7b7f96;
+  --mono:     'IBM Plex Mono', monospace;
+  --sans:     'Manrope', sans-serif;
+  --display:  'Syne', sans-serif;
+  --r:        12px;
+}
+
+*,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{
+  font-family:var(--sans);
+  background:var(--ink);
+  color:var(--text);
+  min-height:100vh;
+  overflow-x:hidden;
+}
+
+/* noise texture overlay */
+body::after{
+  content:'';position:fixed;inset:0;z-index:999;pointer-events:none;opacity:.025;
+  background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  background-size:200px 200px;
+}
+
+/* ══════════════════════════════════════════
+   ANIMATED DOTS BG
+══════════════════════════════════════════ */
+.bg-dots{
+  position:fixed;inset:0;z-index:0;pointer-events:none;
+  background-image:radial-gradient(circle, rgba(200,241,53,.08) 1px, transparent 1px);
+  background-size:40px 40px;
+  mask-image:radial-gradient(ellipse 80% 80% at 50% 50%, black 40%, transparent 100%);
+}
+.bg-glow{
+  position:fixed;z-index:0;pointer-events:none;
+  width:600px;height:600px;border-radius:50%;
+  background:radial-gradient(circle, rgba(200,241,53,.06) 0%, transparent 70%);
+  top:-200px;left:-100px;animation:glowDrift 18s ease-in-out infinite alternate;
+}
+.bg-glow2{
+  position:fixed;z-index:0;pointer-events:none;
+  width:500px;height:500px;border-radius:50%;
+  background:radial-gradient(circle, rgba(45,228,200,.05) 0%, transparent 70%);
+  bottom:-100px;right:-80px;animation:glowDrift 22s ease-in-out infinite alternate-reverse;
+}
+@keyframes glowDrift{
+  to{transform:translate(80px,60px)}
+}
+
+/* ══════════════════════════════════════════
+   HUD HEADER
+══════════════════════════════════════════ */
+.hud{
+  position:sticky;top:0;z-index:200;
+  background:rgba(11,12,16,.88);
+  backdrop-filter:blur(20px);
+  border-bottom:1px solid var(--line);
+  display:flex;align-items:center;gap:0;
+  height:58px;
+  overflow:hidden;
+}
+.hud::after{
+  content:'';position:absolute;bottom:0;left:0;right:0;height:1.5px;
+  background:linear-gradient(90deg,transparent,var(--lime),var(--teal),var(--violet),transparent);
+  opacity:.7;
+}
+.hud-brand{
+  display:flex;align-items:center;gap:12px;
+  padding:0 24px;height:100%;border-right:1px solid var(--line);
+  text-decoration:none;flex-shrink:0;
+}
+.hud-logo{
+  width:30px;height:30px;border-radius:7px;
+  background:var(--lime);display:flex;align-items:center;justify-content:center;
+  font-size:.85em;color:var(--ink);font-weight:800;font-family:var(--display);
+}
+.hud-course{font-family:var(--mono);font-size:.62em;color:var(--sub);letter-spacing:.1em;text-transform:uppercase;line-height:1.3}
+.hud-course span{display:block;color:var(--lime);font-size:1.1em;letter-spacing:.05em}
+
+.hud-crumb{
+  display:flex;align-items:center;gap:8px;padding:0 20px;
+  font-family:var(--mono);font-size:.65em;color:var(--sub);flex:1;
+}
+.hud-crumb span{color:var(--sub);opacity:.4}
+
+/* XP strip */
+.hud-xp{
+  display:flex;align-items:center;gap:14px;padding:0 20px;
+  border-left:1px solid var(--line);height:100%;
+}
+.xp-count{
+  font-family:var(--mono);font-size:.72em;
+  display:flex;align-items:baseline;gap:4px;
+}
+.xp-count strong{font-size:1.6em;color:var(--lime);line-height:1}
+.xp-count span{color:var(--sub)}
+.hud-bar{
+  width:120px;height:6px;background:rgba(255,255,255,.08);
+  border-radius:100px;overflow:hidden;
+}
+.hud-bar-fill{
+  height:100%;border-radius:100px;
+  background:linear-gradient(90deg,var(--lime2),var(--lime));
+  box-shadow:0 0 8px rgba(200,241,53,.5);
+  transition:width .8s cubic-bezier(.34,1.56,.64,1);width:0%;
+}
+.hud-level{
+  font-family:var(--display);font-size:.9em;font-weight:700;
+  color:var(--amber);white-space:nowrap;
+}
+.streak{
+  display:flex;align-items:center;gap:5px;
+  font-family:var(--mono);font-size:.62em;
+  background:rgba(251,191,36,.1);border:1px solid rgba(251,191,36,.2);
+  padding:4px 10px;border-radius:100px;color:var(--amber);
+}
+
+/* ══════════════════════════════════════════
+   LAYOUT
+══════════════════════════════════════════ */
+.wrap{
+  max-width:1440px;margin:0 auto;padding:32px 24px;
+  display:grid;grid-template-columns:220px 1fr 240px;gap:24px;
+  position:relative;z-index:1;
+}
+
+/* ══════════════════════════════════════════
+   LEFT NAV
+══════════════════════════════════════════ */
+.left-nav{position:sticky;top:78px;height:fit-content;display:flex;flex-direction:column;gap:12px;}
+
+.nav-card{
+  background:var(--ink2);border:1px solid var(--line);
+  border-radius:var(--r);padding:16px;overflow:hidden;
+}
+.nav-label{
+  font-family:var(--mono);font-size:.55em;letter-spacing:.18em;
+  text-transform:uppercase;color:var(--sub);margin-bottom:10px;
+  padding-bottom:8px;border-bottom:1px solid var(--line);
+}
+.nav-link{
+  display:flex;align-items:center;gap:9px;
+  padding:9px 10px;border-radius:8px;margin-bottom:2px;
+  text-decoration:none;color:var(--sub);font-size:.82em;
+  transition:all .18s;border:1px solid transparent;
+}
+.nav-link:hover{color:var(--text);background:var(--glass);border-color:var(--line);}
+.nav-link.cur{
+  color:var(--lime);background:rgba(200,241,53,.07);
+  border-color:rgba(200,241,53,.2);font-weight:600;
+}
+.nav-link .nd{
+  width:6px;height:6px;border-radius:50%;flex-shrink:0;
+  background:var(--sub);transition:all .2s;
+}
+.nav-link.cur .nd,.nav-link.done .nd{background:var(--lime);box-shadow:0 0 6px var(--lime);}
+.nav-link.done{color:rgba(200,241,53,.5);}
+
+/* mini stats */
+.stat-row{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:4px;}
+.stat-box{
+  background:var(--ink3);border:1px solid var(--line);border-radius:8px;
+  padding:10px;text-align:center;
+}
+.stat-val{display:block;font-family:var(--display);font-size:1.3em;font-weight:800;color:var(--lime);}
+.stat-lbl{font-size:.58em;color:var(--sub);text-transform:uppercase;letter-spacing:.1em;font-family:var(--mono);}
+
+/* ══════════════════════════════════════════
+   MAIN
+══════════════════════════════════════════ */
+.main{display:flex;flex-direction:column;gap:24px;}
+
+/* ══════════════════════════════════════════
+   HERO
+══════════════════════════════════════════ */
+.hero{
+  background:var(--ink2);border:1px solid var(--line);
+  border-radius:16px;padding:48px;position:relative;overflow:hidden;
+}
+.hero::before{
+  content:'';position:absolute;top:0;right:0;bottom:0;width:50%;
+  background:linear-gradient(135deg,transparent 0%,rgba(200,241,53,.04) 100%);
+  pointer-events:none;
+}
+.hero-eyebrow{
+  font-family:var(--mono);font-size:.62em;letter-spacing:.2em;
+  text-transform:uppercase;color:var(--lime);margin-bottom:14px;
+  display:flex;align-items:center;gap:10px;
+}
+.hero-eyebrow::before{content:'';width:28px;height:2px;background:var(--lime);}
+.hero h1{
+  font-family:var(--display);font-size:4em;font-weight:800;
+  line-height:.92;letter-spacing:-.01em;margin-bottom:16px;
+}
+.hero h1 em{
+  font-style:normal;
+  -webkit-text-stroke:1.5px var(--lime);
+  color:transparent;
+}
+.hero-sub{color:var(--sub);font-size:.95em;max-width:520px;line-height:1.7;margin-bottom:28px;}
+.chips{display:flex;gap:8px;flex-wrap:wrap;}
+.chip{
+  padding:5px 14px;border-radius:100px;font-size:.75em;font-weight:500;
+  border:1px solid var(--line);background:var(--glass);
+  display:inline-flex;align-items:center;gap:6px;
+}
+.chip-lime{background:rgba(200,241,53,.1);border-color:rgba(200,241,53,.3);color:var(--lime);}
+.chip-teal{background:rgba(45,228,200,.08);border-color:rgba(45,228,200,.25);color:var(--teal);}
+.chip-amber{background:rgba(251,191,36,.08);border-color:rgba(251,191,36,.25);color:var(--amber);}
+.chip-violet{background:rgba(167,139,250,.08);border-color:rgba(167,139,250,.25);color:var(--violet);}
+
+/* BIG decoration number */
+.hero-deco{
+  position:absolute;right:-20px;top:50%;transform:translateY(-50%);
+  font-family:var(--display);font-size:14em;font-weight:800;
+  color:rgba(255,255,255,.025);line-height:1;user-select:none;pointer-events:none;
+}
+
+/* ══════════════════════════════════════════
+   SECTION CARD
+══════════════════════════════════════════ */
+.scard{
+  background:var(--ink2);border:1px solid var(--line);
+  border-radius:var(--r);overflow:hidden;
+}
+.scard-head{
+  display:flex;align-items:center;gap:12px;
+  padding:15px 22px;border-bottom:1px solid var(--line);
+  background:rgba(255,255,255,.015);
+}
+.scard-ico{
+  width:34px;height:34px;border-radius:9px;flex-shrink:0;
+  display:flex;align-items:center;justify-content:center;font-size:1em;
+}
+.ico-lime{background:rgba(200,241,53,.15);border:1px solid rgba(200,241,53,.25);}
+.ico-teal{background:rgba(45,228,200,.12);border:1px solid rgba(45,228,200,.22);}
+.ico-amber{background:rgba(251,191,36,.12);border:1px solid rgba(251,191,36,.22);}
+.ico-violet{background:rgba(167,139,250,.12);border:1px solid rgba(167,139,250,.22);}
+.ico-rose{background:rgba(251,113,133,.12);border:1px solid rgba(251,113,133,.22);}
+.scard-title{
+  font-family:var(--mono);font-size:.75em;letter-spacing:.08em;
+  text-transform:uppercase;color:var(--text);flex:1;
+}
+.scard-xp{
+  font-family:var(--mono);font-size:.62em;
+  padding:3px 11px;border-radius:100px;
+  background:rgba(200,241,53,.1);border:1px solid rgba(200,241,53,.2);
+  color:var(--lime);
+}
+.scard-xp.amber{background:rgba(251,191,36,.1);border-color:rgba(251,191,36,.2);color:var(--amber);}
+.scard-body{padding:24px;}
+
+/* ══════════════════════════════════════════
+   OBJECTIVES
+══════════════════════════════════════════ */
+.obj-grid{display:flex;flex-direction:column;gap:8px;}
+.obj{
+  display:flex;align-items:center;gap:14px;
+  padding:13px 16px;border-radius:9px;cursor:pointer;
+  background:var(--ink3);border:1px solid var(--line);
+  font-size:.88em;font-weight:500;transition:all .2s;user-select:none;
+}
+.obj:hover{border-color:rgba(200,241,53,.25);background:rgba(200,241,53,.04);}
+.obj.done{background:rgba(200,241,53,.05);border-color:rgba(200,241,53,.2);color:rgba(232,234,242,.4);text-decoration:line-through;}
+.obj-ring{
+  width:24px;height:24px;border-radius:50%;flex-shrink:0;
+  border:2px solid rgba(255,255,255,.15);display:flex;align-items:center;justify-content:center;
+  font-size:.65em;transition:all .3s;
+}
+.obj.done .obj-ring{background:var(--lime);border-color:var(--lime);color:var(--ink);font-weight:700;}
+.obj.done .obj-ring::after{content:'✓';}
+
+/* ══════════════════════════════════════════
+   MECHANIC CARDS
+══════════════════════════════════════════ */
+.mech-grid{
+  display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:14px;
+}
+.mcard{
+  background:var(--ink3);border:1px solid var(--line);border-radius:11px;
+  padding:18px;cursor:pointer;transition:all .22s;position:relative;overflow:hidden;
+}
+.mcard::after{
+  content:'';position:absolute;top:0;left:0;right:0;height:2px;
+  background:var(--accent-color,var(--lime));transform:scaleX(0);transform-origin:left;
+  transition:transform .28s;
+}
+.mcard:hover::after,.mcard.got::after{transform:scaleX(1);}
+.mcard:hover{border-color:rgba(200,241,53,.2);transform:translateY(-2px);box-shadow:0 8px 28px rgba(0,0,0,.3);}
+.mcard.got{border-color:rgba(200,241,53,.25);background:rgba(200,241,53,.04);}
+.mcard.got::before{
+  content:'✓';position:absolute;top:10px;right:12px;
+  font-family:var(--mono);font-size:.65em;font-weight:700;
+  color:var(--lime);opacity:.7;
+}
+.mcard-top{display:flex;align-items:flex-start;justify-content:space-between;margin-bottom:10px;}
+.mcard-em{font-size:1.7em;line-height:1;}
+.mcard-pts{
+  font-family:var(--mono);font-size:.6em;color:var(--lime);
+  background:rgba(200,241,53,.1);border:1px solid rgba(200,241,53,.2);
+  padding:2px 9px;border-radius:100px;
+}
+.mcard-name{font-family:var(--display);font-weight:700;font-size:.95em;margin-bottom:5px;}
+.mcard-desc{font-size:.79em;color:var(--sub);line-height:1.55;margin-bottom:12px;}
+.mcard-ex{
+  font-size:.76em;line-height:1.5;padding:9px 11px;border-radius:7px;
+  background:rgba(45,228,200,.06);border:1px solid rgba(45,228,200,.14);
+  color:var(--teal);
+}
+.mcard-ex strong{color:var(--teal);}
+
+/* ══════════════════════════════════════════
+   PBL TABS
+══════════════════════════════════════════ */
+.tabs{display:flex;gap:2px;margin-bottom:20px;background:var(--ink3);border-radius:10px;padding:4px;border:1px solid var(--line);}
+.tab{
+  flex:1;padding:11px 8px;text-align:center;cursor:pointer;
+  background:transparent;border:none;border-radius:7px;
+  font-family:var(--mono);font-size:.67em;letter-spacing:.06em;text-transform:uppercase;
+  color:var(--sub);transition:all .2s;
+}
+.tab.on{background:var(--ink4);color:var(--lime);box-shadow:0 2px 8px rgba(0,0,0,.3);}
+.panel{display:none;}
+.panel.on{display:block;animation:fadein .2s ease;}
+@keyframes fadein{from{opacity:0;transform:translateY(4px)}to{opacity:1;transform:translateY(0)}}
+
+/* pbl content */
+.pbl-row{
+  display:flex;gap:14px;align-items:flex-start;
+  padding:14px;background:var(--ink3);border:1px solid var(--line);
+  border-radius:9px;margin-bottom:10px;
+}
+.pbl-row-ico{font-size:1.7em;flex-shrink:0;margin-top:2px;}
+.pbl-row-name{font-weight:700;font-size:.88em;margin-bottom:4px;}
+.pbl-row-desc{font-size:.79em;color:var(--sub);line-height:1.55;}
+.pbl-tag{
+  display:inline-block;font-family:var(--mono);font-size:.58em;
+  padding:2px 8px;border-radius:4px;margin-top:5px;
+  background:rgba(167,139,250,.1);border:1px solid rgba(167,139,250,.2);color:var(--violet);
+}
+
+.compare{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:16px;}
+.compare-box{padding:16px;border-radius:9px;}
+.compare-box.good{background:rgba(45,228,200,.06);border:1px solid rgba(45,228,200,.2);}
+.compare-box.bad{background:rgba(251,113,133,.06);border:1px solid rgba(251,113,133,.2);}
+.compare-label{font-family:var(--mono);font-size:.58em;text-transform:uppercase;letter-spacing:.12em;margin-bottom:10px;}
+.compare-box.good .compare-label{color:var(--teal);}
+.compare-box.bad .compare-label{color:var(--rose);}
+.compare-item{font-size:.8em;color:var(--sub);line-height:1.65;padding:3px 0;}
+.compare-item strong{color:var(--text);}
+
+.insight-box{
+  padding:16px 18px;border-radius:9px;font-size:.83em;
+  background:rgba(251,191,36,.06);border:1px solid rgba(251,191,36,.18);
+  color:var(--sub);line-height:1.65;
+}
+.insight-box strong{color:var(--amber);}
+
+/* code block */
+.code{
+  background:#07080d;border:1px solid var(--line);border-radius:10px;
+  padding:20px;font-family:var(--mono);font-size:.75em;
+  line-height:1.85;overflow-x:auto;position:relative;
+}
+.code::before{
+  content:attr(data-lang);position:absolute;top:8px;right:12px;
+  font-size:.6em;color:var(--sub);letter-spacing:.1em;text-transform:uppercase;
+}
+.ck{color:#a78bfa;}.cs{color:#4ade80;}.cn{color:#fbbf24;}.cm{color:#4b5563;}.cf{color:#38bdf8;}
+
+/* lead tiers comparison */
+.tiers{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-bottom:14px;}
+.tier{padding:14px;border-radius:9px;text-align:center;background:var(--ink3);border:1px solid var(--line);}
+.tier.good{background:rgba(45,228,200,.05);border-color:rgba(45,228,200,.2);}
+.tier-icon{font-size:1.6em;margin-bottom:6px;}
+.tier-name{font-weight:700;font-size:.82em;margin-bottom:5px;}
+.tier-desc{font-size:.74em;color:var(--sub);line-height:1.5;}
+
+/* ══════════════════════════════════════════
+   LOOP BUILDER
+══════════════════════════════════════════ */
+.loop-wrap{display:grid;grid-template-columns:1fr 1fr;gap:18px;}
+.loop-palette{background:var(--ink3);border:1px solid var(--line);border-radius:10px;padding:16px;}
+.loop-label{font-family:var(--mono);font-size:.58em;text-transform:uppercase;letter-spacing:.15em;color:var(--sub);margin-bottom:12px;}
+.loop-item{
+  display:flex;align-items:center;gap:9px;padding:9px 13px;
+  background:var(--ink4);border:1px solid var(--line);border-radius:7px;
+  margin-bottom:7px;cursor:grab;font-size:.82em;transition:all .18s;user-select:none;
+}
+.loop-item:hover{border-color:rgba(200,241,53,.3);background:rgba(200,241,53,.05);}
+.loop-item:active{cursor:grabbing;transform:scale(1.02);}
+.ld{width:9px;height:9px;border-radius:50%;flex-shrink:0;}
+
+.loop-canvas{
+  background:var(--ink3);border:2px dashed rgba(255,255,255,.1);
+  border-radius:10px;padding:16px;min-height:280px;position:relative;
+  transition:border-color .2s;
+}
+.loop-canvas.over{border-color:var(--lime);background:rgba(200,241,53,.04);}
+.loop-empty{
+  position:absolute;inset:0;display:flex;align-items:center;justify-content:center;
+  flex-direction:column;gap:8px;color:var(--sub);font-size:.8em;text-align:center;pointer-events:none;
+}
+.loop-empty .big{font-size:2.2em;}
+.loop-seq{list-style:none;display:flex;flex-direction:column;gap:6px;}
+.lseq-step{
+  padding:9px 13px;border-radius:7px;font-size:.81em;
+  display:flex;align-items:center;justify-content:space-between;
+  animation:fadein .2s ease;
+}
+.lseq-arrow{text-align:center;font-size:.68em;color:var(--sub);padding:1px 0;}
+.lseq-rm{background:none;border:none;color:var(--sub);cursor:pointer;font-size:.95em;padding:2px 6px;border-radius:4px;transition:color .15s;}
+.lseq-rm:hover{color:var(--rose);}
+.loop-eval{
+  margin-top:12px;display:none;padding:13px 16px;border-radius:8px;
+  font-family:var(--mono);font-size:.72em;text-align:center;
+  background:rgba(200,241,53,.08);border:1px solid rgba(200,241,53,.2);color:var(--lime);
+  line-height:1.7;
+}
+.loop-eval.show{display:block;}
+.loop-btn{
+  width:100%;margin-top:11px;padding:11px;
+  background:rgba(200,241,53,.12);border:1px solid rgba(200,241,53,.25);
+  color:var(--lime);border-radius:8px;cursor:pointer;
+  font-family:var(--mono);font-size:.72em;transition:all .2s;
+}
+.loop-btn:hover{background:rgba(200,241,53,.22);box-shadow:0 0 20px rgba(200,241,53,.15);}
+
+/* examples ref */
+.ex-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(250px,1fr));gap:14px;}
+.excard{
+  background:var(--ink3);border:1px solid var(--line);border-radius:11px;
+  padding:18px;transition:all .2s;
+}
+.excard:hover{border-color:rgba(200,241,53,.2);transform:translateY(-2px);}
+.excard-game{display:flex;align-items:center;gap:10px;margin-bottom:12px;}
+.excard-ico{font-size:1.7em;}
+.excard-name{font-weight:700;font-size:.88em;}
+.excard-genre{font-size:.67em;color:var(--sub);font-family:var(--mono);}
+.excard-mech{
+  font-family:var(--mono);font-size:.58em;text-transform:uppercase;letter-spacing:.1em;
+  color:var(--teal);margin-bottom:7px;
+}
+.excard-desc{font-size:.79em;color:var(--sub);line-height:1.55;}
+.excard-lesson{
+  margin-top:11px;padding:9px 11px;border-radius:7px;
+  background:rgba(251,191,36,.07);border:1px solid rgba(251,191,36,.15);
+  font-size:.74em;color:#fcd34d;line-height:1.5;
+}
+.excard-lesson strong{color:var(--amber);}
+
+/* ══════════════════════════════════════════
+   QUIZ
+══════════════════════════════════════════ */
+.quiz-head{display:flex;justify-content:space-between;align-items:center;margin-bottom:16px;font-family:var(--mono);font-size:.65em;color:var(--sub);}
+.qbar{flex:1;height:4px;background:rgba(255,255,255,.07);border-radius:100px;overflow:hidden;margin:0 14px;}
+.qbar-fill{height:100%;border-radius:100px;background:var(--lime);box-shadow:0 0 8px rgba(200,241,53,.4);transition:width .35s ease;}
+.qcard{display:none;}
+.qcard.on{display:block;animation:fadein .25s ease;}
+.qtext{font-size:.95em;font-weight:500;line-height:1.6;margin-bottom:16px;}
+.qopts{display:flex;flex-direction:column;gap:8px;}
+.qopt{
+  padding:12px 16px;border-radius:8px;cursor:pointer;
+  background:var(--ink3);border:1px solid var(--line);
+  color:var(--text);font-family:var(--sans);font-size:.86em;
+  text-align:left;transition:all .18s;display:flex;align-items:center;gap:10px;
+}
+.qopt:hover:not(:disabled){background:rgba(200,241,53,.07);border-color:rgba(200,241,53,.25);}
+.qopt.ok{background:rgba(45,228,200,.09);border-color:rgba(45,228,200,.35);color:var(--teal);}
+.qopt.no{background:rgba(251,113,133,.09);border-color:rgba(251,113,133,.3);color:var(--rose);}
+.qopt:disabled{cursor:default;}
+.qfb{display:none;margin:10px 0;padding:11px 14px;border-radius:8px;font-size:.81em;line-height:1.55;}
+.qfb.show{display:block;}
+.qfb.ok{background:rgba(45,228,200,.07);border:1px solid rgba(45,228,200,.2);color:rgba(45,228,200,.9);}
+.qfb.no{background:rgba(251,113,133,.07);border:1px solid rgba(251,113,133,.2);color:rgba(251,113,133,.9);}
+.qnext{display:none;justify-content:flex-end;margin-top:10px;}
+.qnext.show{display:flex;}
+.qnext-btn{
+  padding:8px 20px;background:rgba(200,241,53,.12);border:1px solid rgba(200,241,53,.25);
+  color:var(--lime);border-radius:7px;cursor:pointer;font-family:var(--mono);font-size:.7em;transition:all .2s;
+}
+.qnext-btn:hover{background:rgba(200,241,53,.25);}
+.qresult{display:none;text-align:center;padding:36px 20px;}
+.qresult.show{display:block;animation:fadein .35s ease;}
+.qscore{font-family:var(--display);font-size:5.5em;font-weight:800;color:var(--lime);display:block;line-height:1;}
+.qmsg{color:var(--sub);margin:10px 0 20px;font-size:.9em;}
+.qxp{font-family:var(--mono);font-size:.82em;color:var(--amber);margin-bottom:22px;}
+.qretry{
+  padding:10px 26px;background:rgba(200,241,53,.12);border:1px solid rgba(200,241,53,.3);
+  color:var(--lime);border-radius:8px;cursor:pointer;font-family:var(--mono);font-size:.72em;transition:all .2s;
+}
+.qretry:hover{background:rgba(200,241,53,.25);}
+
+/* ══════════════════════════════════════════
+   ACTIVITIES
+══════════════════════════════════════════ */
+.actlist{display:flex;flex-direction:column;gap:12px;}
+.act{border:1px solid var(--line);border-radius:11px;overflow:hidden;transition:border-color .2s;}
+.act.done-act{border-color:rgba(200,241,53,.25);}
+.act-head{
+  display:flex;align-items:center;gap:14px;padding:16px 20px;
+  cursor:pointer;background:rgba(255,255,255,.015);transition:background .18s;
+}
+.act-head:hover{background:rgba(255,255,255,.03);}
+.act-num{
+  width:36px;height:36px;border-radius:9px;flex-shrink:0;
+  background:linear-gradient(135deg,var(--lime2),var(--lime));
+  display:flex;align-items:center;justify-content:center;
+  font-family:var(--display);font-size:1.25em;font-weight:800;color:var(--ink);
+}
+.act-info{flex:1;}
+.act-title{font-weight:700;font-size:.93em;margin-bottom:3px;}
+.act-meta{font-size:.72em;color:var(--sub);font-family:var(--mono);}
+.act-pts{
+  font-family:var(--mono);font-size:.65em;color:var(--amber);
+  background:rgba(251,191,36,.1);border:1px solid rgba(251,191,36,.2);
+  padding:3px 11px;border-radius:100px;
+}
+.act-tog{color:var(--sub);font-size:.75em;transition:transform .25s;}
+.act.open .act-tog{transform:rotate(180deg);}
+.act-body{display:none;padding:22px;border-top:1px solid var(--line);}
+.act.open .act-body{display:block;animation:fadein .22s ease;}
+
+.steps{list-style:none;display:flex;flex-direction:column;gap:9px;margin:14px 0;}
+.step{
+  display:flex;gap:13px;padding:12px 15px;
+  background:var(--ink3);border:1px solid var(--line);
+  border-radius:8px;font-size:.85em;cursor:pointer;transition:all .18s;
+}
+.step:hover{border-color:rgba(200,241,53,.2);}
+.step.done{background:rgba(200,241,53,.04);border-color:rgba(200,241,53,.15);color:rgba(232,234,242,.35);text-decoration:line-through;}
+.snum{
+  min-width:24px;height:24px;border-radius:50%;flex-shrink:0;
+  background:rgba(200,241,53,.12);border:1px solid rgba(200,241,53,.25);
+  color:var(--lime);display:flex;align-items:center;justify-content:center;
+  font-family:var(--mono);font-size:.65em;font-weight:700;
+}
+.step.done .snum{background:rgba(200,241,53,.2);}
+
+.deliverable{
+  margin-top:13px;padding:14px;border-radius:8px;
+  background:rgba(45,228,200,.06);border:1px solid rgba(45,228,200,.17);
+}
+.deliv-label{font-family:var(--mono);font-size:.58em;text-transform:uppercase;letter-spacing:.12em;color:var(--teal);margin-bottom:5px;}
+.deliv-text{font-size:.82em;color:var(--sub);line-height:1.6;}
+
+.act-btn{
+  width:100%;padding:13px;margin-top:16px;
+  background:rgba(200,241,53,.12);border:1px solid rgba(200,241,53,.25);
+  color:var(--lime);border-radius:8px;cursor:pointer;
+  font-family:var(--mono);font-size:.77em;transition:all .28s;
+}
+.act-btn:hover:not(:disabled){background:rgba(200,241,53,.25);box-shadow:0 0 24px rgba(200,241,53,.2);}
+.act-btn:disabled{background:rgba(45,228,200,.07);border-color:rgba(45,228,200,.2);color:var(--teal);cursor:default;}
+
+/* ══════════════════════════════════════════
+   RIGHT SIDEBAR
+══════════════════════════════════════════ */
+.right-col{position:sticky;top:78px;height:fit-content;display:flex;flex-direction:column;gap:14px;}
+.rcard{background:var(--ink2);border:1px solid var(--line);border-radius:var(--r);padding:16px;}
+.rcard-label{font-family:var(--mono);font-size:.55em;letter-spacing:.18em;text-transform:uppercase;color:var(--sub);margin-bottom:12px;padding-bottom:8px;border-bottom:1px solid var(--line);}
+
+/* achievements */
+.ach-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:7px;}
+.ach{
+  aspect-ratio:1;border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:1.1em;
+  background:var(--ink3);border:1px solid var(--line);
+  filter:grayscale(1) opacity(.3);transition:all .35s;cursor:default;position:relative;
+}
+.ach.earned{filter:none;background:rgba(200,241,53,.1);border-color:rgba(200,241,53,.3);box-shadow:0 0 14px rgba(200,241,53,.2);animation:achpop .45s ease;}
+@keyframes achpop{0%{transform:scale(.3);opacity:0}70%{transform:scale(1.2)}100%{transform:scale(1);opacity:1}}
+.ach[title]:hover::after{
+  content:attr(title);position:absolute;bottom:calc(100% + 5px);left:50%;transform:translateX(-50%);
+  background:var(--ink4);color:var(--text);font-size:.5em;font-family:var(--mono);
+  padding:3px 9px;border-radius:4px;white-space:nowrap;border:1px solid var(--line);z-index:10;
+}
+
+/* progress bars in right */
+.prog-item{margin-bottom:11px;}
+.prog-row{display:flex;justify-content:space-between;font-size:.7em;color:var(--sub);margin-bottom:5px;font-family:var(--mono);}
+.prog-row span:last-child{color:var(--lime);}
+.pbar{height:5px;background:rgba(255,255,255,.07);border-radius:100px;overflow:hidden;}
+.pbar-fill{height:100%;border-radius:100px;background:var(--lime);box-shadow:0 0 6px rgba(200,241,53,.4);transition:width .6s ease;}
+.pbar-fill.teal{background:var(--teal);box-shadow:0 0 6px rgba(45,228,200,.4);}
+.pbar-fill.amber{background:var(--amber);box-shadow:0 0 6px rgba(251,191,36,.4);}
+
+/* nav footer */
+.nav-foot{display:flex;justify-content:space-between;align-items:center;padding:20px 0;}
+.nfbtn{
+  padding:12px 24px;background:rgba(200,241,53,.1);border:1px solid rgba(200,241,53,.25);
+  color:var(--lime);border-radius:9px;text-decoration:none;
+  font-family:var(--mono);font-size:.72em;transition:all .22s;
+  display:flex;align-items:center;gap:8px;
+}
+.nfbtn:hover{background:rgba(200,241,53,.2);transform:translateY(-2px);box-shadow:0 8px 22px rgba(200,241,53,.15);}
+
+/* ══════════════════════════════════════════
+   TOAST
+══════════════════════════════════════════ */
+.toast{
+  position:fixed;bottom:24px;right:24px;z-index:500;
+  background:var(--ink4);border:1px solid rgba(200,241,53,.3);
+  border-radius:11px;padding:13px 18px;min-width:210px;
+  display:flex;align-items:center;gap:12px;
+  box-shadow:0 8px 32px rgba(0,0,0,.5),0 0 16px rgba(200,241,53,.1);
+  transform:translateY(120px) scale(.9);opacity:0;
+  transition:all .38s cubic-bezier(.34,1.56,.64,1);pointer-events:none;
+}
+.toast.show{transform:translateY(0) scale(1);opacity:1;}
+.t-ico{font-size:1.4em;}
+.t-title{font-family:var(--mono);font-size:.78em;color:var(--lime);font-weight:600;}
+.t-msg{font-size:.68em;color:var(--sub);margin-top:1px;}
+
+/* xp float */
+.xpf{
+  position:fixed;z-index:501;pointer-events:none;
+  font-family:var(--display);font-size:2.2em;font-weight:800;
+  color:var(--lime);text-shadow:0 0 20px rgba(200,241,53,.5);
+  animation:xpup 1.3s ease-out forwards;
+}
+@keyframes xpup{
+  0%{opacity:1;transform:translateY(0) scale(.7);}
+  40%{opacity:1;transform:translateY(-48px) scale(1.1);}
+  100%{opacity:0;transform:translateY(-90px) scale(.85);}
+}
+
+/* confetti */
+@keyframes cfall{to{transform:translateY(110vh) rotate(720deg);opacity:0;}}
+
+/* section separator label */
+.sep{
+  font-family:var(--mono);font-size:.57em;letter-spacing:.18em;text-transform:uppercase;
+  color:var(--sub);display:flex;align-items:center;gap:10px;margin-bottom:14px;
+}
+.sep::after{content:'';flex:1;height:1px;background:linear-gradient(90deg,var(--line),transparent);}
+
+/* ══════════════════════════════════════════
+   VIDEO PLAYER
+══════════════════════════════════════════ */
+.vid-section{display:flex;flex-direction:column;gap:20px;}
+.vid-featured{
+  background:var(--ink3);border:1px solid var(--line);border-radius:12px;overflow:hidden;
+}
+.vid-featured-thumb{
+  position:relative;cursor:pointer;overflow:hidden;
+  background:#000;aspect-ratio:16/9;
+}
+.vid-featured-thumb img{
+  width:100%;height:100%;object-fit:cover;
+  transition:transform .4s ease, opacity .3s;
+  opacity:.85;
+}
+.vid-featured-thumb:hover img{transform:scale(1.04);opacity:.95;}
+.vid-play-btn{
+  position:absolute;inset:0;display:flex;align-items:center;justify-content:center;
+  background:rgba(0,0,0,.3);transition:background .2s;
+}
+.vid-featured-thumb:hover .vid-play-btn{background:rgba(0,0,0,.15);}
+.vid-play-circle{
+  width:72px;height:72px;border-radius:50%;
+  background:rgba(200,241,53,.92);display:flex;align-items:center;justify-content:center;
+  font-size:1.6em;padding-left:5px;
+  box-shadow:0 0 0 12px rgba(200,241,53,.2),0 0 0 24px rgba(200,241,53,.08);
+  transition:transform .2s;
+}
+.vid-featured-thumb:hover .vid-play-circle{transform:scale(1.1);}
+.vid-duration{
+  position:absolute;bottom:12px;right:14px;
+  background:rgba(0,0,0,.75);color:#fff;
+  font-family:var(--mono);font-size:.65em;padding:3px 8px;border-radius:4px;
+}
+.vid-info{padding:16px 18px;}
+.vid-info-label{font-family:var(--mono);font-size:.58em;text-transform:uppercase;letter-spacing:.12em;color:var(--lime);margin-bottom:6px;}
+.vid-info-title{font-weight:700;font-size:.95em;margin-bottom:5px;}
+.vid-info-desc{font-size:.8em;color:var(--sub);line-height:1.55;}
+.vid-info-meta{display:flex;gap:12px;margin-top:10px;font-family:var(--mono);font-size:.62em;color:var(--sub);}
+.vid-info-meta span{display:flex;align-items:center;gap:4px;}
+
+/* iframe modal */
+.vid-modal{
+  position:fixed;inset:0;z-index:600;
+  background:rgba(0,0,0,.88);backdrop-filter:blur(10px);
+  display:none;align-items:center;justify-content:center;padding:24px;
+}
+.vid-modal.open{display:flex;animation:fadein .2s ease;}
+.vid-modal-box{
+  width:100%;max-width:900px;border-radius:14px;overflow:hidden;
+  background:#000;position:relative;
+  box-shadow:0 32px 80px rgba(0,0,0,.8),0 0 0 1px rgba(200,241,53,.15);
+}
+.vid-modal-close{
+  position:absolute;top:12px;right:12px;z-index:10;
+  width:36px;height:36px;border-radius:50%;
+  background:rgba(0,0,0,.7);border:1px solid rgba(255,255,255,.15);
+  color:#fff;font-size:1.1em;cursor:pointer;display:flex;align-items:center;justify-content:center;
+  transition:background .15s;
+}
+.vid-modal-close:hover{background:rgba(255,255,255,.15);}
+.vid-modal-iframe{width:100%;aspect-ratio:16/9;border:none;display:block;}
+
+/* video playlist */
+.vid-playlist{display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:12px;}
+.vid-card{
+  background:var(--ink3);border:1px solid var(--line);border-radius:10px;
+  overflow:hidden;cursor:pointer;transition:all .2s;
+}
+.vid-card:hover{border-color:rgba(200,241,53,.3);transform:translateY(-2px);}
+.vid-card-thumb{position:relative;aspect-ratio:16/9;overflow:hidden;background:#000;}
+.vid-card-thumb img{width:100%;height:100%;object-fit:cover;opacity:.8;transition:opacity .2s;}
+.vid-card:hover .vid-card-thumb img{opacity:1;}
+.vid-card-overlay{
+  position:absolute;inset:0;display:flex;align-items:center;justify-content:center;
+  background:rgba(0,0,0,.2);
+}
+.vid-card-play{
+  width:44px;height:44px;border-radius:50%;background:rgba(200,241,53,.9);
+  display:flex;align-items:center;justify-content:center;font-size:.95em;padding-left:3px;
+  transition:transform .2s;
+}
+.vid-card:hover .vid-card-play{transform:scale(1.15);}
+.vid-card-dur{
+  position:absolute;bottom:7px;right:9px;
+  background:rgba(0,0,0,.75);color:#fff;font-family:var(--mono);font-size:.58em;padding:2px 6px;border-radius:3px;
+}
+.vid-card-body{padding:12px 14px;}
+.vid-card-tag{font-family:var(--mono);font-size:.55em;text-transform:uppercase;letter-spacing:.1em;color:var(--teal);margin-bottom:4px;}
+.vid-card-title{font-size:.8em;font-weight:600;color:var(--text);line-height:1.35;}
+
+/* ══════════════════════════════════════════
+   FLIPCARDS — conceitos-chave
+══════════════════════════════════════════ */
+.flipgrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(180px,1fr));gap:14px;}
+.flip{height:180px;perspective:1000px;cursor:pointer;}
+.flip-inner{
+  position:relative;width:100%;height:100%;
+  transform-style:preserve-3d;transition:transform .55s cubic-bezier(.4,0,.2,1);
+}
+.flip:hover .flip-inner,.flip.flipped .flip-inner{transform:rotateY(180deg);}
+.flip-front,.flip-back{
+  position:absolute;inset:0;border-radius:12px;
+  backface-visibility:hidden;display:flex;flex-direction:column;
+  align-items:center;justify-content:center;text-align:center;padding:16px;
+  border:1px solid var(--line);
+}
+.flip-front{
+  background:var(--ink3);
+}
+.flip-back{
+  background:var(--ink4);
+  border-color:rgba(200,241,53,.25);
+  transform:rotateY(180deg);
+}
+.flip-front-ico{font-size:2.2em;margin-bottom:10px;}
+.flip-front-name{font-family:var(--display);font-weight:700;font-size:.92em;color:var(--text);}
+.flip-front-hint{font-size:.62em;color:var(--sub);margin-top:6px;font-family:var(--mono);}
+.flip-back-def{font-size:.78em;color:var(--text);line-height:1.55;}
+.flip-back-ex{font-size:.68em;color:var(--lime);margin-top:8px;font-family:var(--mono);}
+
+/* ══════════════════════════════════════════
+   TIMELINE — histórico de gamificação
+══════════════════════════════════════════ */
+.timeline{position:relative;padding-left:28px;}
+.timeline::before{
+  content:'';position:absolute;left:10px;top:0;bottom:0;
+  width:2px;background:linear-gradient(180deg,var(--lime),var(--teal),var(--violet),transparent);
+  border-radius:2px;
+}
+.tl-item{position:relative;margin-bottom:22px;}
+.tl-dot{
+  position:absolute;left:-23px;top:4px;
+  width:14px;height:14px;border-radius:50%;
+  border:2px solid var(--ink3);
+  z-index:1;transition:transform .2s;
+}
+.tl-item:hover .tl-dot{transform:scale(1.4);}
+.tl-year{
+  font-family:var(--mono);font-size:.62em;font-weight:700;
+  margin-bottom:3px;letter-spacing:.05em;
+}
+.tl-title{font-weight:700;font-size:.88em;margin-bottom:4px;}
+.tl-desc{font-size:.78em;color:var(--sub);line-height:1.55;}
+.tl-tag{
+  display:inline-block;font-family:var(--mono);font-size:.55em;
+  padding:2px 8px;border-radius:4px;margin-top:5px;
+  background:var(--ink4);border:1px solid var(--line);
+}
+
+/* ══════════════════════════════════════════
+   INFOGRAPHIC — pirâmide de Maslow gamer
+══════════════════════════════════════════ */
+.pyramid{display:flex;flex-direction:column;align-items:center;gap:4px;padding:8px 0;}
+.pyr-row{
+  display:flex;align-items:center;justify-content:center;
+  border-radius:8px;padding:10px 20px;text-align:center;cursor:pointer;
+  transition:all .2s;position:relative;
+}
+.pyr-row:hover{filter:brightness(1.15);transform:scaleX(1.02);}
+.pyr-row-label{font-weight:700;font-size:.82em;}
+.pyr-row-sub{font-size:.7em;opacity:.75;margin-left:8px;}
+.pyr-tooltip{
+  display:none;position:absolute;bottom:calc(100% + 8px);left:50%;transform:translateX(-50%);
+  background:var(--ink4);border:1px solid var(--line);border-radius:8px;
+  padding:10px 14px;width:240px;font-size:.75em;color:var(--sub);line-height:1.5;
+  z-index:20;pointer-events:none;text-align:left;
+}
+.pyr-row:hover .pyr-tooltip{display:block;animation:fadein .15s ease;}
+
+/* ══════════════════════════════════════════
+   INTERACTIVE STATS / CHART
+══════════════════════════════════════════ */
+.stat-chart{display:flex;flex-direction:column;gap:10px;}
+.sbar-row{display:flex;align-items:center;gap:12px;}
+.sbar-label{font-size:.78em;font-weight:500;min-width:160px;}
+.sbar-track{flex:1;height:10px;background:rgba(255,255,255,.06);border-radius:100px;overflow:hidden;}
+.sbar-fill{
+  height:100%;border-radius:100px;
+  background:var(--bar-clr,var(--lime));
+  box-shadow:0 0 8px var(--bar-clr,var(--lime));
+  width:0%;transition:width 1.2s cubic-bezier(.4,0,.2,1);
+}
+.sbar-val{font-family:var(--mono);font-size:.68em;color:var(--sub);min-width:36px;text-align:right;}
+
+/* ══════════════════════════════════════════
+   GLOSSARY FLASHCARDS (new)
+══════════════════════════════════════════ */
+.gloss-search{
+  width:100%;padding:11px 16px;
+  background:var(--ink3);border:1px solid var(--line);border-radius:8px;
+  color:var(--text);font-family:var(--sans);font-size:.88em;margin-bottom:16px;
+  outline:none;transition:border-color .2s;
+}
+.gloss-search:focus{border-color:rgba(200,241,53,.4);}
+.gloss-search::placeholder{color:var(--sub);}
+.gloss-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:10px;}
+.gterm{
+  background:var(--ink3);border:1px solid var(--line);border-radius:9px;
+  padding:14px 16px;cursor:pointer;transition:all .2s;
+}
+.gterm:hover,.gterm.highlight{border-color:rgba(200,241,53,.3);background:rgba(200,241,53,.05);}
+.gterm-word{font-weight:700;font-size:.88em;margin-bottom:5px;}
+.gterm-def{font-size:.76em;color:var(--sub);line-height:1.5;}
+.gterm-origin{font-family:var(--mono);font-size:.58em;color:var(--teal);margin-top:5px;}
+
+/* ══════════════════════════════════════════
+   QUOTE CALLOUTS
+══════════════════════════════════════════ */
+.qcallout{
+  padding:20px 24px;border-radius:12px;position:relative;overflow:hidden;
+  background:var(--ink3);border:1px solid var(--line);margin:16px 0;
+}
+.qcallout::before{
+  content:'\201C';position:absolute;top:-10px;left:16px;
+  font-size:6em;line-height:1;color:rgba(200,241,53,.12);
+  font-family:var(--display);font-weight:800;pointer-events:none;
+}
+.qcallout-text{font-size:.95em;line-height:1.65;color:var(--text);font-style:italic;position:relative;z-index:1;}
+.qcallout-author{
+  margin-top:12px;font-family:var(--mono);font-size:.65em;color:var(--lime);
+  display:flex;align-items:center;gap:8px;
+}
+.qcallout-author::before{content:'—';color:var(--sub);}
+
+/* ══════════════════════════════════════════
+   RESPONSIVE
+══════════════════════════════════════════ */
+@media(max-width:1200px){
+  .wrap{grid-template-columns:200px 1fr;}
+  .right-col{display:none;}
+}
+@media(max-width:900px){
+  .wrap{grid-template-columns:1fr;}
+  .left-nav{display:none;}
+  .hud-xp{display:none;}
+}
+@media(max-width:600px){
+  .hero{padding:28px;}
+  .hero h1{font-size:2.8em;}
+  .mech-grid,.ex-grid{grid-template-columns:1fr;}
+  .loop-wrap{grid-template-columns:1fr;}
+  .compare,.tiers{grid-template-columns:1fr;}
+}
+</style>
+</head>
+<body>
+
+<!-- AMBIENT -->
+<div class="bg-dots"></div>
+<div class="bg-glow"></div>
+<div class="bg-glow2"></div>
+
+<!-- VIDEO MODAL -->
+<div class="vid-modal" id="vid-modal" onclick="closeVid(event)">
+  <div class="vid-modal-box">
+    <button class="vid-modal-close" onclick="closeVidBtn()">✕</button>
+    <iframe class="vid-modal-iframe" id="vid-iframe" src="" allow="autoplay;encrypted-media" allowfullscreen></iframe>
+  </div>
+</div>
+
+<!-- TOAST -->
+<div class="toast" id="toast">
+  <div class="t-ico" id="t-ico">⚡</div>
+  <div>
+    <div class="t-title" id="t-title">+XP</div>
+    <div class="t-msg" id="t-msg"></div>
+  </div>
+</div>
+
+<!-- HUD -->
+<header class="hud">
+  <a href="index.html" class="hud-brand">
+    <div class="hud-logo">IJ</div>
+    <div class="hud-course"><span>IJD-038</span>Jogos Digitais · 6º Sem.</div>
+  </a>
+  <div class="hud-crumb">
+    <span>Módulo 1</span><span>·</span><span>Fundamentos</span><span>·</span>
+    <span style="color:var(--lime)">Semana 03</span>
+  </div>
+  <div class="hud-xp">
+    <div class="streak">🔥 <span id="streak">0</span></div>
+    <div class="xp-count"><strong id="xp-val">0</strong><span>/ 600 XP</span></div>
+    <div class="hud-bar"><div class="hud-bar-fill" id="xp-bar"></div></div>
+    <div class="hud-level" id="xp-level">RECRUTA</div>
+  </div>
+</header>
+
+<!-- LAYOUT -->
+<div class="wrap">
+
+  <!-- LEFT NAV -->
+  <aside class="left-nav">
+    <div class="nav-card">
+      <div class="nav-label">Navegação</div>
+      <a href="#objetivos" class="nav-link cur"><span class="nd"></span>Objetivos</a>
+      <a href="#videos" class="nav-link"><span class="nd"></span>📺 Vídeos</a>
+      <a href="#timeline" class="nav-link"><span class="nd"></span>📅 Timeline</a>
+      <a href="#mecanicas" class="nav-link"><span class="nd"></span>Catálogo</a>
+      <a href="#flipcards" class="nav-link"><span class="nd"></span>🃏 Flashcards</a>
+      <a href="#pbl" class="nav-link"><span class="nd"></span>PBL Deep Dive</a>
+      <a href="#loops" class="nav-link"><span class="nd"></span>Loop Builder</a>
+      <a href="#exemplos" class="nav-link"><span class="nd"></span>Jogos Reais</a>
+      <a href="#glossario" class="nav-link"><span class="nd"></span>📖 Glossário</a>
+      <a href="#quiz" class="nav-link"><span class="nd"></span>Quiz</a>
+      <a href="#atividades" class="nav-link"><span class="nd"></span>Atividades</a>
+    </div>
+    <div class="nav-card">
+      <div class="nav-label">Semanas</div>
+      <a href="semana01.html" class="nav-link done"><span class="nd"></span>Semana 01</a>
+      <a href="semana02.html" class="nav-link done"><span class="nd"></span>Semana 02</a>
+      <a href="semana03.html" class="nav-link cur"><span class="nd"></span>Semana 03</a>
+      <a href="semana04.html" class="nav-link"><span class="nd"></span>Semana 04</a>
+      <a href="semana05.html" class="nav-link"><span class="nd"></span>Semana 05</a>
+    </div>
+    <div class="nav-card">
+      <div class="nav-label">Stats</div>
+      <div class="stat-row">
+        <div class="stat-box"><span class="stat-val" id="s-obj">0</span><span class="stat-lbl">Obj.</span></div>
+        <div class="stat-box"><span class="stat-val" id="s-mec">0</span><span class="stat-lbl">Mecân.</span></div>
+        <div class="stat-box"><span class="stat-val" id="s-qz">0</span><span class="stat-lbl">Quiz</span></div>
+        <div class="stat-box"><span class="stat-val" id="s-at">0</span><span class="stat-lbl">Ativ.</span></div>
+      </div>
+    </div>
+  </aside>
+
+  <!-- MAIN -->
+  <main class="main">
+
+    <!-- HERO -->
+    <section class="hero" id="objetivos">
+      <div class="hero-eyebrow">Módulo 1 · Fundamentos de Gamificação</div>
+      <h1>MECÂNICAS<br>DE <em>JOGO</em></h1>
+      <p class="hero-sub">Os blocos que constroem qualquer experiência gamificada — desde o XP do Duolingo até o Battle Pass da Fortnite. Aprenda a arquitetura por baixo dos jogos que você já adora.</p>
+      <div class="chips">
+        <div class="chip chip-lime">⚡ 600 XP disponíveis</div>
+        <div class="chip chip-teal">🕹️ Autodidata</div>
+        <div class="chip chip-amber">🏆 8 conquistas</div>
+        <div class="chip chip-violet">⏱️ ~3 horas</div>
+      </div>
+      <div class="hero-deco">03</div>
+    </section>
+
+    <!-- OBJECTIVES CARD -->
+    <div class="scard">
+      <div class="scard-head">
+        <div class="scard-ico ico-lime">🎯</div>
+        <div class="scard-title">Objetivos da Semana</div>
+        <div class="scard-xp">+5 XP cada</div>
+      </div>
+      <div class="scard-body">
+        <p style="font-size:.84em;color:var(--sub);margin-bottom:14px">Marque cada objetivo conforme avança no material. Eles guiam seu caminho na semana.</p>
+        <div class="obj-grid">
+          <div class="obj" onclick="doObj(this,0)"><div class="obj-ring"></div>Catalogar e explicar 8+ mecânicas de gamificação com exemplos reais de jogos</div>
+          <div class="obj" onclick="doObj(this,1)"><div class="obj-ring"></div>Compreender e diferenciar Points, Badges e Leaderboards — incluindo quando falham</div>
+          <div class="obj" onclick="doObj(this,2)"><div class="obj-ring"></div>Projetar Core Loop e Meta Loop de um jogo usando o Loop Builder</div>
+          <div class="obj" onclick="doObj(this,3)"><div class="obj-ring"></div>Identificar mecânicas de engajamento em 6 jogos reais de mercado</div>
+          <div class="obj" onclick="doObj(this,4)"><div class="obj-ring"></div>Implementar um sistema PBL funcional com código em Unity C# + backend</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ═══════ VÍDEOS ═══════ -->
+    <div class="scard" id="videos">
+      <div class="scard-head">
+        <div class="scard-ico ico-rose">📺</div>
+        <div class="scard-title">Vídeos Recomendados</div>
+        <div class="scard-xp amber">+20 XP ao assistir</div>
+      </div>
+      <div class="scard-body">
+        <div class="vid-section">
+
+          <!-- FEATURED -->
+          <div class="vid-featured">
+            <div class="vid-featured-thumb" onclick="openVid('qWFscmh26rg')">
+              <img src="https://img.youtube.com/vi/qWFscmh26rg/maxresdefault.jpg" alt="Game Mechanics Deep Dive" onerror="this.src='https://img.youtube.com/vi/qWFscmh26rg/hqdefault.jpg'">
+              <div class="vid-play-btn">
+                <div class="vid-play-circle">▶</div>
+              </div>
+              <div class="vid-duration">18:42</div>
+            </div>
+            <div class="vid-info">
+              <div class="vid-info-label">🎯 Destaque da Semana</div>
+              <div class="vid-info-title">Game Mechanics Deep Dive — Como os jogos nos vicia</div>
+              <div class="vid-info-desc">Uma análise completa de como mecânicas de jogo funcionam psicologicamente — com exemplos de AAA e indie. Essencial antes de iniciar o catálogo.</div>
+              <div class="vid-info-meta">
+                <span>🎬 YouTube</span>
+                <span>⏱️ 18 min</span>
+                <span>🌟 Recomendado</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- PLAYLIST -->
+          <div class="vid-playlist">
+
+            <div class="vid-card" onclick="openVid('E5ocF4bajo4')">
+              <div class="vid-card-thumb">
+                <img src="https://img.youtube.com/vi/E5ocF4bajo4/mqdefault.jpg" alt="PBL" onerror="this.style.background='#1a1c27'">
+                <div class="vid-card-overlay"><div class="vid-card-play">▶</div></div>
+                <div class="vid-card-dur">24:17</div>
+              </div>
+              <div class="vid-card-body">
+                <div class="vid-card-tag">⭐ PBL Systems</div>
+                <div class="vid-card-title">Points, Badges & Leaderboards Explicados</div>
+              </div>
+            </div>
+
+            <div class="vid-card" onclick="openVid('VFf1XRn8fG4')">
+              <div class="vid-card-thumb">
+                <img src="https://img.youtube.com/vi/VFf1XRn8fG4/mqdefault.jpg" alt="Progression" onerror="this.style.background='#1a1c27'">
+                <div class="vid-card-overlay"><div class="vid-card-play">▶</div></div>
+                <div class="vid-card-dur">31:05</div>
+              </div>
+              <div class="vid-card-body">
+                <div class="vid-card-tag">📈 Progressão</div>
+                <div class="vid-card-title">Progression Systems — Curvas de XP na Prática</div>
+              </div>
+            </div>
+
+            <div class="vid-card" onclick="openVid('G9CH_1FNMRo')">
+              <div class="vid-card-thumb">
+                <img src="https://img.youtube.com/vi/G9CH_1FNMRo/mqdefault.jpg" alt="Game Feel" onerror="this.style.background='#1a1c27'">
+                <div class="vid-card-overlay"><div class="vid-card-play">▶</div></div>
+                <div class="vid-card-dur">14:32</div>
+              </div>
+              <div class="vid-card-body">
+                <div class="vid-card-tag">🎮 Game Feel</div>
+                <div class="vid-card-title">Como o Feedback Visual Cria Satisfação no Jogador</div>
+              </div>
+            </div>
+
+            <div class="vid-card" onclick="openVid('MvbQdS-BUYo')">
+              <div class="vid-card-thumb">
+                <img src="https://img.youtube.com/vi/MvbQdS-BUYo/mqdefault.jpg" alt="Reward loops" onerror="this.style.background='#1a1c27'">
+                <div class="vid-card-overlay"><div class="vid-card-play">▶</div></div>
+                <div class="vid-card-dur">09:55</div>
+              </div>
+              <div class="vid-card-body">
+                <div class="vid-card-tag">🔄 Loops</div>
+                <div class="vid-card-title">Core vs Meta Loop — Por Que Continuamos Jogando</div>
+              </div>
+            </div>
+
+            <div class="vid-card" onclick="openVid('ru0RE1G_8Qs')">
+              <div class="vid-card-thumb">
+                <img src="https://img.youtube.com/vi/ru0RE1G_8Qs/mqdefault.jpg" alt="Loot boxes" onerror="this.style.background='#1a1c27'">
+                <div class="vid-card-overlay"><div class="vid-card-play">▶</div></div>
+                <div class="vid-card-dur">22:10</div>
+              </div>
+              <div class="vid-card-body">
+                <div class="vid-card-tag">⚠️ Ética</div>
+                <div class="vid-card-title">Loot Boxes: Design, Psicologia e Regulamentação</div>
+              </div>
+            </div>
+
+            <div class="vid-card" onclick="openVid('dHMNeNapL1E')">
+              <div class="vid-card-thumb">
+                <img src="https://img.youtube.com/vi/dHMNeNapL1E/mqdefault.jpg" alt="Balatro" onerror="this.style.background='#1a1c27'">
+                <div class="vid-card-overlay"><div class="vid-card-play">▶</div></div>
+                <div class="vid-card-dur">16:48</div>
+              </div>
+              <div class="vid-card-body">
+                <div class="vid-card-tag">🎲 Análise</div>
+                <div class="vid-card-title">Por Que Balatro Ganhou o GOTY 2024</div>
+              </div>
+            </div>
+
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ═══════ TIMELINE ═══════ -->
+    <div class="scard" id="timeline">
+      <div class="scard-head">
+        <div class="scard-ico ico-violet">📅</div>
+        <div class="scard-title">Timeline — Evolução das Mecânicas de Jogo</div>
+        <div class="scard-xp">Contexto Histórico</div>
+      </div>
+      <div class="scard-body">
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:20px">
+          <div class="timeline">
+            <div class="tl-item">
+              <div class="tl-dot" style="background:var(--lime)"></div>
+              <div class="tl-year" style="color:var(--lime)">1972</div>
+              <div class="tl-title">Pong — Mecânica Pura</div>
+              <div class="tl-desc">O primeiro feedback loop digital: bola → ação → ponto. Sem narrative, sem XP. A mecânica crua já era suficiente para criar vício.</div>
+              <span class="tl-tag" style="color:var(--lime)">Core Loop de 2 elementos</span>
+            </div>
+            <div class="tl-item">
+              <div class="tl-dot" style="background:var(--teal)"></div>
+              <div class="tl-year" style="color:var(--teal)">1980</div>
+              <div class="tl-title">Pac-Man — Score como Identidade</div>
+              <div class="tl-desc">High score com iniciais — o primeiro leaderboard físico da história. Pontos não eram só números; eram seu nome numa arcade pública.</div>
+              <span class="tl-tag" style="color:var(--teal)">Nascimento do Leaderboard</span>
+            </div>
+            <div class="tl-item">
+              <div class="tl-dot" style="background:var(--violet)"></div>
+              <div class="tl-year" style="color:var(--violet)">1986</div>
+              <div class="tl-title">Dragon Quest — XP & Level Up</div>
+              <div class="tl-desc">O sistema de XP + Level Up que define RPGs até hoje. Criou a "curva de progressão" como conceito central de game design.</div>
+              <span class="tl-tag" style="color:var(--violet)">Nascimento do XP System</span>
+            </div>
+            <div class="tl-item">
+              <div class="tl-dot" style="background:var(--amber)"></div>
+              <div class="tl-year" style="color:var(--amber)">2004</div>
+              <div class="tl-title">World of Warcraft — Guildas & Social</div>
+              <div class="tl-desc">Raids que precisam de 40 jogadores coordenados. Nascimento da responsabilidade social no gaming. Mecânicas de cooperação obrigatória como motor de retenção.</div>
+              <span class="tl-tag" style="color:var(--amber)">Social como Mecânica Central</span>
+            </div>
+          </div>
+          <div class="timeline">
+            <div class="tl-item">
+              <div class="tl-dot" style="background:var(--rose)"></div>
+              <div class="tl-year" style="color:var(--rose)">2005</div>
+              <div class="tl-title">Xbox 360 — Achievements Globais</div>
+              <div class="tl-desc">Microsoft populariza badges cross-platform. O GamerScore nasce — pela primeira vez, suas conquistas em jogos diferentes se somam num perfil unificado de identidade.</div>
+              <span class="tl-tag" style="color:var(--rose)">Badges como Identidade Digital</span>
+            </div>
+            <div class="tl-item">
+              <div class="tl-dot" style="background:var(--lime)"></div>
+              <div class="tl-year" style="color:var(--lime)">2009</div>
+              <div class="tl-title">FarmVille — Mobile Gamification</div>
+              <div class="tl-desc">Loops de 8h baseados em escassez de tempo e pressão social no Facebook. Gamificação atinge 80 milhões de usuários sem ser um "jogo de verdade".</div>
+              <span class="tl-tag" style="color:var(--lime)">Gamificação Mainstream</span>
+            </div>
+            <div class="tl-item">
+              <div class="tl-dot" style="background:var(--teal)"></div>
+              <div class="tl-year" style="color:var(--teal)">2017</div>
+              <div class="tl-title">Fortnite — Battle Pass & Live Service</div>
+              <div class="tl-desc">Battle Pass redefine monetização: pague antes, ganhe ao longo. Modelo copiado por praticamente todo jogo live service. Sunk cost como feature.</div>
+              <span class="tl-tag" style="color:var(--teal)">Battle Pass Revolution</span>
+            </div>
+            <div class="tl-item">
+              <div class="tl-dot" style="background:var(--violet)"></div>
+              <div class="tl-year" style="color:var(--violet)">2024</div>
+              <div class="tl-title">Balatro — Emergência vs. Complexidade</div>
+              <div class="tl-desc">GOTY 2024 feito por 1 developer. Prova que regras simples + emergência combinatória superam gráficos e orçamentos AAA. Redefinindo o que "profundidade mecânica" significa.</div>
+              <span class="tl-tag" style="color:var(--violet)">Emergência como Design</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ═══════ FLASHCARDS ═══════ -->
+    <div class="scard" id="flipcards">
+      <div class="scard-head">
+        <div class="scard-ico ico-teal">🃏</div>
+        <div class="scard-title">Flashcards — Conceitos Essenciais</div>
+        <div class="scard-xp">Passe o mouse para virar</div>
+      </div>
+      <div class="scard-body">
+        <p style="font-size:.84em;color:var(--sub);margin-bottom:18px">Passe o mouse (ou toque) para revelar a definição. Esses são os termos que qualquer dev de jogos digitais precisa dominar.</p>
+        <div class="flipgrid">
+
+          <div class="flip" onclick="this.classList.toggle('flipped')">
+            <div class="flip-inner">
+              <div class="flip-front">
+                <div class="flip-front-ico">🔁</div>
+                <div class="flip-front-name">Core Loop</div>
+                <div class="flip-front-hint">clique para definição</div>
+              </div>
+              <div class="flip-back">
+                <div class="flip-back-def">A sequência de ações que o jogador repete nos próximos 5 minutos. É o coração rítmico do jogo.</div>
+                <div class="flip-back-ex">Ex: Atirar → Matar → Lootar → (repete)</div>
+              </div>
+            </div>
+          </div>
+
+          <div class="flip" onclick="this.classList.toggle('flipped')">
+            <div class="flip-inner">
+              <div class="flip-front">
+                <div class="flip-front-ico">🌀</div>
+                <div class="flip-front-name">Meta Loop</div>
+                <div class="flip-front-hint">clique para definição</div>
+              </div>
+              <div class="flip-back">
+                <div class="flip-back-def">O objetivo de longo prazo que dá sentido ao Core Loop. Opera em dias ou semanas, não minutos.</div>
+                <div class="flip-back-ex">Ex: Completar Battle Pass → Skin exclusiva</div>
+              </div>
+            </div>
+          </div>
+
+          <div class="flip" onclick="this.classList.toggle('flipped')">
+            <div class="flip-inner">
+              <div class="flip-front">
+                <div class="flip-front-ico">📦</div>
+                <div class="flip-front-name">Loot Table</div>
+                <div class="flip-front-hint">clique para definição</div>
+              </div>
+              <div class="flip-back">
+                <div class="flip-back-def">Tabela de probabilidades que define quais itens podem ser recebidos em drops aleatórios, e com qual chance cada um aparece.</div>
+                <div class="flip-back-ex">Common 60% · Rare 30% · Legendary 1%</div>
+              </div>
+            </div>
+          </div>
+
+          <div class="flip" onclick="this.classList.toggle('flipped')">
+            <div class="flip-inner">
+              <div class="flip-front">
+                <div class="flip-front-ico">😰</div>
+                <div class="flip-front-name">FOMO</div>
+                <div class="flip-front-hint">clique para definição</div>
+              </div>
+              <div class="flip-back">
+                <div class="flip-back-def">Fear Of Missing Out — ansiedade de perder conteúdo exclusivo. Base das skins sazonais e eventos temporários.</div>
+                <div class="flip-back-ex">Ex: "Essa skin nunca volta!"</div>
+              </div>
+            </div>
+          </div>
+
+          <div class="flip" onclick="this.classList.toggle('flipped')">
+            <div class="flip-inner">
+              <div class="flip-front">
+                <div class="flip-front-ico">📉</div>
+                <div class="flip-front-name">Loss Aversion</div>
+                <div class="flip-front-hint">clique para definição</div>
+              </div>
+              <div class="flip-back">
+                <div class="flip-back-def">Princípio de Kahneman: perdemos 2× mais felicidade ao perder do que ganhamos ao receber o mesmo valor. Base dos sistemas de streak.</div>
+                <div class="flip-back-ex">Ex: Streak de 300 dias do Duolingo</div>
+              </div>
+            </div>
+          </div>
+
+          <div class="flip" onclick="this.classList.toggle('flipped')">
+            <div class="flip-inner">
+              <div class="flip-front">
+                <div class="flip-front-ico">🎰</div>
+                <div class="flip-front-name">Variable Reward</div>
+                <div class="flip-front-hint">clique para definição</div>
+              </div>
+              <div class="flip-back">
+                <div class="flip-back-def">Recompensa imprevisível baseada em Skinner — a mesma mecânica de uma slot machine. A incerteza gera antecipação compulsiva.</div>
+                <div class="flip-back-ex">Ex: CS:GO Weapon Cases, FIFA FUT Packs</div>
+              </div>
+            </div>
+          </div>
+
+          <div class="flip" onclick="this.classList.toggle('flipped')">
+            <div class="flip-inner">
+              <div class="flip-front">
+                <div class="flip-front-ico">🌱</div>
+                <div class="flip-front-name">Emergência</div>
+                <div class="flip-front-hint">clique para definição</div>
+              </div>
+              <div class="flip-back">
+                <div class="flip-back-def">Quando regras simples combinadas produzem comportamentos complexos e imprevistos. O santo graal do design de sistemas.</div>
+                <div class="flip-back-ex">Ex: Xadrez, Minecraft, Balatro</div>
+              </div>
+            </div>
+          </div>
+
+          <div class="flip" onclick="this.classList.toggle('flipped')">
+            <div class="flip-inner">
+              <div class="flip-front">
+                <div class="flip-front-ico">💸</div>
+                <div class="flip-front-name">Sunk Cost</div>
+                <div class="flip-front-hint">clique para definição</div>
+              </div>
+              <div class="flip-back">
+                <div class="flip-back-def">Custo afundado — continuar investindo por não "desperdiçar" o que já gastou. Battle Pass usa isso: você paga e sente que <em>precisa</em> jogar para recuperar.</div>
+                <div class="flip-back-ex">Ex: R$40 no Battle Pass da Fortnite</div>
+              </div>
+            </div>
+          </div>
+
+        </div>
+
+        <!-- Quote callout -->
+        <div class="qcallout">
+          <div class="qcallout-text">A mecânica não é o que você faz — é o que você sente enquanto faz. Um RPG com combate idêntico pode ser entediante ou viciante dependendo exclusivamente do feedback loop ao redor da mesma ação.</div>
+          <div class="qcallout-author">Principios de Game Feel — Steve Swink</div>
+        </div>
+
+        <!-- Pyramid: Maslow Gamer -->
+        <div class="sep" style="margin-top:20px">Pirâmide de Necessidades do Jogador — adaptação de Maslow</div>
+        <p style="font-size:.82em;color:var(--sub);margin-bottom:16px">Passe o mouse em cada nível para ver os jogos que atendem àquela necessidade.</p>
+        <div class="pyramid">
+          <div class="pyr-row" style="width:30%;background:linear-gradient(135deg,rgba(167,139,250,.2),rgba(167,139,250,.1));border:1px solid rgba(167,139,250,.3)">
+            <div class="pyr-tooltip">🏆 Realização Máxima — Completar 100% de um jogo difícil, speedrun world record, criar um jogo publicado. <em>WoW Mythic Raid, Dark Souls Platinum, Game Jam Winner.</em></div>
+            <span class="pyr-row-label" style="color:var(--violet)">Transcendência</span>
+            <span class="pyr-row-sub" style="color:var(--violet)">Legado</span>
+          </div>
+          <div class="pyr-row" style="width:45%;background:linear-gradient(135deg,rgba(200,241,53,.15),rgba(200,241,53,.07));border:1px solid rgba(200,241,53,.25)">
+            <div class="pyr-tooltip">🌟 Status e reconhecimento — Ser reconhecido pela comunidade. <em>Rank Desafiante no LoL, Top Streamer, Badge exclusivo de veterano.</em></div>
+            <span class="pyr-row-label" style="color:var(--lime)">Autoestima</span>
+            <span class="pyr-row-sub" style="color:var(--lime)">Status, Rank, Conquistas</span>
+          </div>
+          <div class="pyr-row" style="width:60%;background:linear-gradient(135deg,rgba(45,228,200,.12),rgba(45,228,200,.06));border:1px solid rgba(45,228,200,.22)">
+            <div class="pyr-tooltip">👥 Pertencimento social — Guilds, clans, times. <em>WoW Guilds, Apex Squads, Pokémon GO Raids. A responsabilidade de não decepcionar seu grupo.</em></div>
+            <span class="pyr-row-label" style="color:var(--teal)">Social</span>
+            <span class="pyr-row-sub" style="color:var(--teal)">Guildas, Clãs, Amigos</span>
+          </div>
+          <div class="pyr-row" style="width:75%;background:linear-gradient(135deg,rgba(251,191,36,.12),rgba(251,191,36,.06));border:1px solid rgba(251,191,36,.22)">
+            <div class="pyr-tooltip">📈 Progresso tangível — Sentir que você melhorou e o jogo reconhece isso. <em>Level up com fanfarra, novos poderes desbloqueados, árvore de habilidades.</em></div>
+            <span class="pyr-row-label" style="color:var(--amber)">Crescimento</span>
+            <span class="pyr-row-sub" style="color:var(--amber)">XP, Níveis, Habilidades</span>
+          </div>
+          <div class="pyr-row" style="width:90%;background:linear-gradient(135deg,rgba(251,113,133,.12),rgba(251,113,133,.06));border:1px solid rgba(251,113,133,.22)">
+            <div class="pyr-tooltip">🎮 Necessidade básica do jogador — Feedback imediato e controles responsivos. Sem isso nenhuma mecânica sobrevive. <em>Game feel, SFX, juice.</em></div>
+            <span class="pyr-row-label" style="color:var(--rose)">Feedback & Controle</span>
+            <span class="pyr-row-sub" style="color:var(--rose)">Game Feel, Responsividade</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- CATALOGUE -->
+    <div class="scard" id="mecanicas">
+      <div class="scard-head">
+        <div class="scard-ico ico-teal">🗂️</div>
+        <div class="scard-title">Catálogo de Mecânicas</div>
+        <div class="scard-xp">+15 XP cada</div>
+      </div>
+      <div class="scard-body">
+        <p style="font-size:.84em;color:var(--sub);margin-bottom:20px">Clique em cada card para registrar que você estudou aquela mecânica. O exemplos são todos do universo de quem <em>desenvolve</em> jogos digitais.</p>
+        <div class="mech-grid">
+
+          <div class="mcard" style="--accent-color:#c8f135" onclick="doMech(this,0)">
+            <div class="mcard-top"><div class="mcard-em">⭐</div><div class="mcard-pts">+15 XP</div></div>
+            <div class="mcard-name">Pontos & XP</div>
+            <div class="mcard-desc">A mecânica mais primitiva e poderosa: toda ação gera um número que representa esforço ou progresso. Simples na implementação, profunda no impacto psicológico.</div>
+            <div class="mcard-ex"><strong>No seu projeto Unity:</strong> Score em Flappy Bird, XP em RPGs, estrelas em Angry Birds. Implemente com um <code>int score</code> e um evento <code>OnScoreChanged</code> — um ScriptableObject resolve isso em 20 linhas.</div>
+          </div>
+
+          <div class="mcard" style="--accent-color:#fbbf24" onclick="doMech(this,1)">
+            <div class="mcard-top"><div class="mcard-em">🏆</div><div class="mcard-pts">+15 XP</div></div>
+            <div class="mcard-name">Badges & Conquistas</div>
+            <div class="mcard-desc">Marcadores visuais permanentes que certificam feitos específicos. Ativam o instinto de colecionismo — a mesma psicologia que faz você querer completar uma Pokédex.</div>
+            <div class="mcard-ex"><strong>No Steam:</strong> Achievements são badges. No seu jogo: defina as condições via ScriptableObject, use um <code>HashSet&lt;string&gt;</code> para rastrear earned badges, e dispare uma animação de unlock. Tempo estimado: 1 tarde.</div>
+          </div>
+
+          <div class="mcard" style="--accent-color:#2de4c8" onclick="doMech(this,2)">
+            <div class="mcard-top"><div class="mcard-em">📊</div><div class="mcard-pts">+15 XP</div></div>
+            <div class="mcard-name">Leaderboards</div>
+            <div class="mcard-desc">Rankings que comparam performance entre jogadores. Ativam competição social e desejo de status — mas leaderboards mal desenhados afastam 99% dos jogadores.</div>
+            <div class="mcard-ex"><strong>Cuidado prático:</strong> Nunca faça leaderboard global em game mobile casual. Fortnite usa ranking de amigos + ligas por tier (igual Clash Royale). Com PlayFab você implementa isso em 30 linhas de C# e fica online de verdade.</div>
+          </div>
+
+          <div class="mcard" style="--accent-color:#a78bfa" onclick="doMech(this,3)">
+            <div class="mcard-top"><div class="mcard-em">📈</div><div class="mcard-pts">+15 XP</div></div>
+            <div class="mcard-name">Progressão & Níveis</div>
+            <div class="mcard-desc">Sistema de evolução gradual que revela poder e conteúdo ao longo do tempo. A curva de progressão define o ritmo emocional do seu jogo — onde o jogador sente frustrante vs. recompensador.</div>
+            <div class="mcard-ex"><strong>Curva típica de RPG:</strong> XP necessário por nível cresce exponencialmente. Level 1→2: 100 XP. Level 9→10: 10.000 XP. No Unity, <code>int xpNeeded = baseXP * (int)Mathf.Pow(level, 1.8f);</code> já dá uma curva sólida.</div>
+          </div>
+
+          <div class="mcard" style="--accent-color:#fb7185" onclick="doMech(this,4)">
+            <div class="mcard-top"><div class="mcard-em">🎁</div><div class="mcard-pts">+15 XP</div></div>
+            <div class="mcard-name">Recompensas Variáveis</div>
+            <div class="mcard-desc">Recompensas imprevisíveis baseadas no princípio de Skinner — a mesma psicologia de uma slot machine. A incerteza gera antecipação; a antecipação gera vício. Use com ética.</div>
+            <div class="mcard-ex"><strong>Loot boxes no Unity:</strong> use uma tabela de raridade com pesos (<code>Common=60, Rare=30, Epic=9, Legendary=1</code>) e <code>Random.value</code>. Mas países como Bélgica baniram loot boxes — pesquise a legislação antes de publicar.</div>
+          </div>
+
+          <div class="mcard" style="--accent-color:#38bdf8" onclick="doMech(this,5)">
+            <div class="mcard-top"><div class="mcard-em">⏰</div><div class="mcard-pts">+15 XP</div></div>
+            <div class="mcard-name">Missões & Quests</div>
+            <div class="mcard-desc">Objetivos estruturados que guiam o jogador e quebram sistemas complexos em partes digeríveis. Missões são um tutorial disfarçado — ensinam sem parecer que estão ensinando.</div>
+            <div class="mcard-ex"><strong>Quest System em Unity:</strong> crie um <code>QuestSO</code> (ScriptableObject) com: ID, descrição, objetivos como lista de <code>QuestObjective</code>, recompensas. Um QuestManager singleton observa eventos do jogo e atualiza automaticamente. Padrão usado no WoW há 20 anos.</div>
+          </div>
+
+          <div class="mcard" style="--accent-color:#c8f135" onclick="doMech(this,6)">
+            <div class="mcard-top"><div class="mcard-em">👥</div><div class="mcard-pts">+15 XP</div></div>
+            <div class="mcard-name">Cooperação & Social</div>
+            <div class="mcard-desc">Mecânicas que criam interdependência entre jogadores — responsabilidade coletiva, pertencimento e pressão social positiva. A pressão de não decepcionar seu grupo é mais forte que qualquer recompensa numérica.</div>
+            <div class="mcard-ex"><strong>Implementação real:</strong> Guildas em MMORPGs, squads no Apex Legends, "enviar vida" no Candy Crush. Com Photon Unity Networking (PUN2) você implementa um squad system funcional em um fim de semana. É gratuito até 20 jogadores simultâneos.</div>
+          </div>
+
+          <div class="mcard" style="--accent-color:#fbbf24" onclick="doMech(this,7)">
+            <div class="mcard-top"><div class="mcard-em">⚡</div><div class="mcard-pts">+15 XP</div></div>
+            <div class="mcard-name">Escassez & Urgência</div>
+            <div class="mcard-desc">Criar valor artificial via tempo limitado ou estoque restrito — forçando decisão imediata. FOMO (Fear of Missing Out) é uma das ferramentas de retenção mais eficazes e controversas do mercado.</div>
+            <div class="mcard-ex"><strong>Na Fortnite:</strong> skins sazonais que nunca voltam. No Pokémon GO: eventos de 48h. No seu jogo: implemente um <code>TimedEventManager</code> com um <code>DateTime</code> de expiração e uma UI de countdown. Simples e poderoso — mas cuidado com o impacto ético em jogadores jovens.</div>
+          </div>
+
+        </div>
+      </div>
+    </div>
+
+    <!-- PBL DEEP DIVE -->
+    <div class="scard" id="pbl">
+      <div class="scard-head">
+        <div class="scard-ico ico-amber">🏅</div>
+        <div class="scard-title">PBL — Points, Badges, Leaderboards</div>
+        <div class="scard-xp">Teoria Completa</div>
+      </div>
+      <div class="scard-body">
+        <div class="tabs">
+          <button class="tab on" onclick="swPBL(this,'pt')">⭐ POINTS</button>
+          <button class="tab" onclick="swPBL(this,'bg')">🏅 BADGES</button>
+          <button class="tab" onclick="swPBL(this,'lb')">📊 LEADER&shy;BOARDS</button>
+          <button class="tab" onclick="swPBL(this,'cd')">💻 CÓDIGO</button>
+        </div>
+
+        <!-- POINTS -->
+        <div class="panel on" id="pbl-pt">
+          <div class="sep">Tipos de pontos que você vai implementar</div>
+          <div class="pbl-row">
+            <div class="pbl-row-ico">🎮</div>
+            <div>
+              <div class="pbl-row-name">XP (Experience Points)</div>
+              <div class="pbl-row-desc">Acumulativo, nunca decresce. Mede esforço e progresso ao longo do tempo. Desbloqueiam níveis e conteúdo. Usado em praticamente todo RPG digital — de Pokémon ao World of Warcraft. <strong style="color:var(--text)">Regra de ouro:</strong> XP deve refletir o esforço, não o tempo passado no jogo.</div>
+              <span class="pbl-tag">Nunca decresce · Liga a níveis · Acumulativo</span>
+            </div>
+          </div>
+          <div class="pbl-row">
+            <div class="pbl-row-ico">💰</div>
+            <div>
+              <div class="pbl-row-name">Moeda Virtual (Soft / Hard Currency)</div>
+              <div class="pbl-row-desc"><em>Soft currency</em> é ganha jogando — moedas do Mario, Gold do Clash Royale. <em>Hard currency</em> é comprada com dinheiro real — V-Bucks da Fortnite, Gems do Clash. A diferença impacta diretamente na monetização e no game feel. Inflação de soft currency é o maior problema de economia em jogos mobile.</div>
+              <span class="pbl-tag">Spendable · Cria economia · Risco de inflação</span>
+            </div>
+          </div>
+          <div class="pbl-row">
+            <div class="pbl-row-ico">🌟</div>
+            <div>
+              <div class="pbl-row-name">Reputação & Karma</div>
+              <div class="pbl-row-desc">Pontos que refletem comportamento e podem subir <em>e descer</em>. Bidirecional. Cria sinal social. Exemplo clássico: sistema de reputação do Stack Overflow, karma do Reddit, honor system do League of Legends. Desbloqueiam privilégios progressivos baseados em confiança.</div>
+              <span class="pbl-tag">Bidirecional · Sinal social · Destravar privilégios</span>
+            </div>
+          </div>
+          <div class="insight-box" style="margin-top:4px">
+            <strong>⚠️ Armadilha clássica de design:</strong> Pontos sem destino são pontos ignorados. Se o jogador acumular 50.000 XP e <strong>nada mudar</strong> na experiência, o sistema falhou. Toda pontuação precisa de um destino: nível, desbloqueio ou mudança de status visível.
+          </div>
+        </div>
+
+        <!-- BADGES -->
+        <div class="panel" id="pbl-bg">
+          <div class="sep">Anatomia de um badge que funciona vs. um que não funciona</div>
+          <div class="compare">
+            <div class="compare-box good">
+              <div class="compare-label">✅ Badge que engaja</div>
+              <div class="compare-item">🎖️ <strong>Específico:</strong> "Completou 50 missões de exploração"</div>
+              <div class="compare-item">🎖️ <strong>Raro:</strong> Conquistado por menos de 5% dos jogadores</div>
+              <div class="compare-item">🎖️ <strong>Visível:</strong> Exibido no perfil, mostrável para amigos</div>
+              <div class="compare-item">🎖️ <strong>Narrativo:</strong> Conta quem o jogador é, não o que ele fez</div>
+              <div class="compare-item">🎖️ <strong>Hierárquico:</strong> Bronze → Prata → Ouro cria progressão</div>
+            </div>
+            <div class="compare-box bad">
+              <div class="compare-label">❌ Badge que não serve</div>
+              <div class="compare-item">❌ <strong>Trivial:</strong> "Logou no jogo hoje" — zero esforço</div>
+              <div class="compare-item">❌ <strong>Inútil:</strong> Não afeta gameplay nem social</div>
+              <div class="compare-item">❌ <strong>Opaco:</strong> Condição de conquista não é clara</div>
+              <div class="compare-item">❌ <strong>Spam:</strong> 400 badges idênticos com números diferentes</div>
+              <div class="compare-item">❌ <strong>Injusto:</strong> Só possível para jogadores day-one</div>
+            </div>
+          </div>
+          <div class="pbl-row">
+            <div class="pbl-row-ico">🎮</div>
+            <div>
+              <div class="pbl-row-name">Referência: Steam Achievements (Valve)</div>
+              <div class="pbl-row-desc">O sistema de badges mais sofisticado de jogos. Cada achievement tem nome criativo, ícone único e percentual de jogadores que o possui. Os <em>hidden achievements</em> criam descoberta orgânica. Completar 100% de um jogo difícil no Steam se tornou uma forma de identidade gamer reconhecida mundialmente.</div>
+              <span class="pbl-tag">Referência de mercado · 100% = identidade · Raridade pública</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- LEADERBOARDS -->
+        <div class="panel" id="pbl-lb">
+          <div class="sep">Quando leaderboards motivam vs. quando destroem engajamento</div>
+          <div class="tiers">
+            <div class="tier">
+              <div class="tier-icon">😤</div>
+              <div class="tier-name">Top 10 Global</div>
+              <div class="tier-desc">Motiva elite. Desmotiva 99% restante. Só funciona com matchmaking bem calibrado — e mesmo assim, é arriscado.</div>
+            </div>
+            <div class="tier good">
+              <div class="tier-icon">😊</div>
+              <div class="tier-name">Ranking de Amigos</div>
+              <div class="tier-desc">Você sempre está perto dos outros. Competição social saudável. Funciona para qualquer nível de habilidade. Solução padrão em games casuais.</div>
+            </div>
+            <div class="tier good">
+              <div class="tier-icon">🏅</div>
+              <div class="tier-name">Ligas por Tier</div>
+              <div class="tier-desc">Bronze → Prata → Ouro → Diamante. Você compete dentro da sua liga. Solução do Clash Royale, League of Legends, Duolingo. O padrão atual da indústria.</div>
+            </div>
+          </div>
+          <div class="insight-box">
+            <strong>💡 Caso de estudo — Duolingo:</strong> A empresa descobriu que leaderboards globais afastavam usuários. Criou ligas semanais de <strong>30 jogadores</strong> onde o foco é <em>não cair de liga</em>, não subir. Mudou de "quero ganhar" para <strong>"não posso perder"</strong> — ativando aversão à perda (loss aversion), psicologicamente mais poderosa que a busca por ganho. Resultado: retenção aumentou 17%.
+          </div>
+        </div>
+
+        <!-- CÓDIGO -->
+        <div class="panel" id="pbl-cd">
+          <div class="sep">Sistema PBL em Unity C# — pronto para usar no seu projeto</div>
+          <div class="code" data-lang="C# · Unity">
+<span class="cm">// PBLManager.cs — singleton, arraste para um GameManager</span>
+<span class="ck">using</span> UnityEngine;
+<span class="ck">using</span> System.Collections.Generic;
+<span class="ck">using</span> System;
+
+<span class="ck">public class</span> <span class="cf">PBLManager</span> : MonoBehaviour {
+
+    <span class="cm">// ── SINGLETON ────────────────────────────────</span>
+    <span class="ck">public static</span> <span class="cf">PBLManager</span> Instance { <span class="ck">get</span>; <span class="ck">private set</span>; }
+    <span class="ck">void</span> Awake() { Instance = <span class="ck">this</span>; DontDestroyOnLoad(gameObject); }
+
+    <span class="cm">// ── POINTS ───────────────────────────────────</span>
+    <span class="ck">public int</span> XP    { <span class="ck">get</span>; <span class="ck">private set</span>; }
+    <span class="ck">public int</span> Level { <span class="ck">get</span>; <span class="ck">private set</span>; } = <span class="cn">1</span>;
+    <span class="ck">public</span> Action&lt;<span class="ck">int</span>, <span class="ck">int</span>&gt; OnXPChanged;   <span class="cm">// (newXP, newLevel)</span>
+
+    <span class="ck">readonly int</span>[] _thresholds = { <span class="cn">100</span>, <span class="cn">300</span>, <span class="cn">700</span>, <span class="cn">1300</span>, <span class="cn">2200</span> };
+
+    <span class="ck">public void</span> <span class="cf">AddXP</span>(<span class="ck">int</span> amount) {
+        XP += amount;
+        <span class="ck">while</span> (Level &lt;= _thresholds.Length &amp;&amp; XP &gt;= _thresholds[Level - <span class="cn">1</span>])
+            Level++;
+        OnXPChanged?.Invoke(XP, Level);    <span class="cm">// atualiza UI automaticamente</span>
+        <span class="cf">SaveProgress</span>();
+    }
+
+    <span class="cm">// ── BADGES ───────────────────────────────────</span>
+    <span class="ck">readonly</span> HashSet&lt;<span class="ck">string</span>&gt; _earned = <span class="ck">new</span>();
+    <span class="ck">public</span> Action&lt;<span class="ck">string</span>&gt; OnBadgeUnlocked;
+
+    <span class="ck">public void</span> <span class="cf">TryUnlock</span>(<span class="ck">string</span> badgeId) {
+        <span class="ck">if</span> (_earned.Add(badgeId)) {        <span class="cm">// Add retorna false se já existe</span>
+            OnBadgeUnlocked?.Invoke(badgeId);
+            <span class="cf">SaveProgress</span>();
+        }
+    }
+    <span class="ck">public bool</span> <span class="cf">HasBadge</span>(<span class="ck">string</span> id) =&gt; _earned.Contains(id);
+
+    <span class="cm">// ── LEADERBOARD (PlayFab) ────────────────────</span>
+    <span class="ck">public void</span> <span class="cf">SubmitScore</span>(<span class="ck">int</span> score) {
+        <span class="cm">// Requer PlayFab SDK: Window → Package Manager → PlayFab SDK</span>
+        PlayFabClientAPI.<span class="cf">UpdatePlayerStatistics</span>(
+            <span class="ck">new</span> UpdatePlayerStatisticsRequest {
+                Statistics = <span class="ck">new</span> List&lt;StatisticUpdate&gt; {
+                    <span class="ck">new</span>() { StatisticName = <span class="cs">"HighScore"</span>, Value = score }
+                }
+            },
+            ok  =&gt; Debug.Log(<span class="cs">$"Score {score} enviado!"</span>),
+            err =&gt; Debug.LogError(err.ErrorMessage)
+        );
+    }
+
+    <span class="cm">// ── SAVE / LOAD ──────────────────────────────</span>
+    <span class="ck">void</span> <span class="cf">SaveProgress</span>() {
+        PlayerPrefs.<span class="cf">SetInt</span>(<span class="cs">"xp"</span>, XP);
+        PlayerPrefs.<span class="cf">SetInt</span>(<span class="cs">"level"</span>, Level);
+        PlayerPrefs.<span class="cf">SetString</span>(<span class="cs">"badges"</span>, <span class="ck">string</span>.<span class="cf">Join</span>(<span class="cs">","</span>, _earned));
+    }
+}
+          </div>
+          <div style="background:rgba(45,228,200,.06);border:1px solid rgba(45,228,200,.15);border-radius:8px;padding:13px;margin-top:10px;font-size:.81em;color:var(--sub);line-height:1.65">
+            💡 <strong style="color:var(--teal)">Dica de arquitetura:</strong> Use <strong style="color:var(--text)">ScriptableObjects</strong> para definir os dados de cada badge fora do código C# — nome, ícone, condição, raridade. Isso permite ao game designer criar novos badges sem precisar abrir Visual Studio. Padrão usado em estúdios profissionais.
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- LOOP BUILDER -->
+    <div class="scard" id="loops">
+      <div class="scard-head">
+        <div class="scard-ico ico-lime">🔄</div>
+        <div class="scard-title">Loop Builder — Monte seu Loop de Engajamento</div>
+        <div class="scard-xp amber">+50 XP</div>
+      </div>
+      <div class="scard-body">
+        <p style="font-size:.84em;color:var(--sub);margin-bottom:18px">Todo jogo tem um <strong style="color:var(--text)">Core Loop</strong> (ação repetida nos próximos 5 minutos) e um <strong style="color:var(--text)">Meta Loop</strong> (objetivo dos próximos 5 dias). Arraste os elementos para montar a sequência do seu loop.</p>
+
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-bottom:18px">
+          <div style="background:rgba(200,241,53,.06);border:1px solid rgba(200,241,53,.18);border-radius:9px;padding:14px">
+            <div style="font-family:var(--mono);font-size:.57em;color:var(--lime);text-transform:uppercase;letter-spacing:.12em;margin-bottom:9px">Core Loop · Fortnite</div>
+            <div style="font-size:.8em;color:var(--sub);line-height:1.75">Pousar → Coletar recursos → Encontrar inimigos → <strong style="color:var(--text)">Combater</strong> → Sobreviver → XP + itens → (recomeça)</div>
+          </div>
+          <div style="background:rgba(251,191,36,.06);border:1px solid rgba(251,191,36,.18);border-radius:9px;padding:14px">
+            <div style="font-family:var(--mono);font-size:.57em;color:var(--amber);text-transform:uppercase;letter-spacing:.12em;margin-bottom:9px">Meta Loop · Fortnite</div>
+            <div style="font-size:.8em;color:var(--sub);line-height:1.75">Jogar partidas → Acumular XP → Avançar no Battle Pass → <strong style="color:var(--text)">Skins exclusivas</strong> → Status social → Identidade</div>
+          </div>
+        </div>
+
+        <div class="loop-wrap">
+          <div class="loop-palette">
+            <div class="loop-label">🧩 Elementos disponíveis — arraste</div>
+            <div class="loop-item" draggable="true" data-v="trigger" data-c="#c8f135" ondragstart="dragS(event)"><span class="ld" style="background:#c8f135"></span>🎯 Trigger / Desafio</div>
+            <div class="loop-item" draggable="true" data-v="action" data-c="#2de4c8" ondragstart="dragS(event)"><span class="ld" style="background:#2de4c8"></span>🕹️ Ação do Jogador</div>
+            <div class="loop-item" draggable="true" data-v="feedback" data-c="#38bdf8" ondragstart="dragS(event)"><span class="ld" style="background:#38bdf8"></span>📣 Feedback Imediato</div>
+            <div class="loop-item" draggable="true" data-v="reward" data-c="#fbbf24" ondragstart="dragS(event)"><span class="ld" style="background:#fbbf24"></span>🎁 Recompensa</div>
+            <div class="loop-item" draggable="true" data-v="progress" data-c="#a78bfa" ondragstart="dragS(event)"><span class="ld" style="background:#a78bfa"></span>📈 Progressão</div>
+            <div class="loop-item" draggable="true" data-v="social" data-c="#fb7185" ondragstart="dragS(event)"><span class="ld" style="background:#fb7185"></span>👥 Elemento Social</div>
+          </div>
+          <div class="loop-canvas" id="loop-cv" ondragover="dragO(event)" ondrop="dropI(event)">
+            <div class="loop-empty" id="loop-em">
+              <div class="big">🔄</div>
+              <div>Arraste elementos aqui</div>
+              <div style="font-size:.8em;color:var(--sub)">Monte seu loop de engajamento</div>
+            </div>
+            <ol class="loop-seq" id="loop-seq"></ol>
+          </div>
+        </div>
+        <div class="loop-eval" id="loop-eval"></div>
+        <button class="loop-btn" onclick="evalLoop()">⚡ AVALIAR MEU LOOP (+50 XP)</button>
+      </div>
+    </div>
+
+    <!-- REAL GAMES -->
+    <div class="scard" id="exemplos">
+      <div class="scard-head">
+        <div class="scard-ico ico-teal">🎮</div>
+        <div class="scard-title">Jogos Reais — Mecânicas Dissecadas</div>
+        <div class="scard-xp">Análise de Mercado</div>
+      </div>
+      <div class="scard-body">
+        <p style="font-size:.84em;color:var(--sub);margin-bottom:20px">Antes de projetar uma mecânica, você precisa entender <em>por que</em> ela funcionou nos jogos que inspiraram você. Esses são os casos obrigatórios.</p>
+        <div class="ex-grid">
+
+          <div class="excard">
+            <div class="excard-game"><div class="excard-ico">🃏</div><div><div class="excard-name">Clash Royale</div><div class="excard-genre">Mobile · Strategy · Supercell</div></div></div>
+            <div class="excard-mech">Liga por Tier + Chest Timer</div>
+            <div class="excard-desc">10 arenas com nomes temáticos. Troféus controlam a liga. Baús com timer criam FOMO diário — você <em>precisa</em> voltar para abrir o baú. Monetização via acelerar o timer com gems.</div>
+            <div class="excard-lesson"><strong>Lição para o seu jogo:</strong> Segmente competição por tier. Timers de espera parecem irritantes mas são o principal driver de sessões repetidas em games mobile.</div>
+          </div>
+
+          <div class="excard">
+            <div class="excard-game"><div class="excard-ico">🎵</div><div><div class="excard-name">Duolingo</div><div class="excard-genre">EdTech · Learning</div></div></div>
+            <div class="excard-mech">Streak + Aversão à Perda</div>
+            <div class="excard-desc">A coruja triste quando você perde o streak é <em>design emocional calculado</em>. A empresa A/B testou dezenas de variações. Perder 300 dias de streak dói muito mais do que ganhar 300 dias alegra.</div>
+            <div class="excard-lesson"><strong>Lição:</strong> Loss aversion (Kahneman) é mais poderosa que positive reinforcement. Seu jogo pode ter "vidas" ou "protege streak" como moeda — Duolingo vende "streak shield" no app.</div>
+          </div>
+
+          <div class="excard">
+            <div class="excard-game"><div class="excard-ico">⚔️</div><div><div class="excard-name">Fortnite</div><div class="excard-genre">Battle Royale · Epic Games</div></div></div>
+            <div class="excard-mech">Battle Pass + Sunk Cost</div>
+            <div class="excard-desc">Você paga R$40 e tem 100 níveis de recompensas para completar. Depois de pagar, seu cérebro ativa o "custo afundado" (sunk cost) — você sente que precisa jogar para recuperar o investimento.</div>
+            <div class="excard-lesson"><strong>Lição:</strong> Battle Pass com pagamento antecipado é mais eficaz que premium puro. O jogador se torna seu próprio motivador. Fortnite fatura bilhões com isso todo trimestre.</div>
+          </div>
+
+          <div class="excard">
+            <div class="excard-game"><div class="excard-ico">🐲</div><div><div class="excard-name">World of Warcraft</div><div class="excard-genre">MMORPG · Blizzard</div></div></div>
+            <div class="excard-mech">Identidade de Personagem</div>
+            <div class="excard-desc">Após centenas de horas, seu personagem representa investimento real de tempo, conquistas e identidade social. Você não joga WoW — você <em>é</em> seu personagem. Guildas criam responsabilidade social real.</div>
+            <div class="excard-lesson"><strong>Lição:</strong> Customização + investimento de tempo = identidade. É a maior âncora de retenção de longo prazo. RPGs com boa personalização retêm por anos.</div>
+          </div>
+
+          <div class="excard">
+            <div class="excard-game"><div class="excard-ico">🎲</div><div><div class="excard-name">Balatro</div><div class="excard-genre">Roguelike · Indie · GOTY 2024</div></div></div>
+            <div class="excard-mech">Emergência Combinatória</div>
+            <div class="excard-desc">Regras de poker + cartas que se modificam mutuamente = infinitas estratégias emergentes. Venceu GOTY 2024 com um desenvolvedor solo. Prova que profundidade mecânica supera produção AAA.</div>
+            <div class="excard-lesson"><strong>Lição:</strong> Regras simples + interações ricas = emergência. Xadrez tem 6 peças com regras simples e profundidade infinita. Adicionar complexidade é diferente de adicionar profundidade.</div>
+          </div>
+
+          <div class="excard">
+            <div class="excard-game"><div class="excard-ico">📱</div><div><div class="excard-name">Pokémon GO</div><div class="excard-genre">AR · Mobile · Niantic</div></div></div>
+            <div class="excard-mech">Coleta + Localização + Social</div>
+            <div class="excard-desc">Combina o instinto de completar coleção (151 pokémon = satisfação), movimento físico e raids sociais que te fazem sair de casa para jogar com estranhos. Eventos sazonais criam escassez temporal.</div>
+            <div class="excard-lesson"><strong>Lição:</strong> Comportamento físico + progresso digital = engajamento único. Apps puramente digitais não conseguem replicar. Pense em como o mundo real pode ser parte do seu jogo.</div>
+          </div>
+
+        </div>
+      </div>
+    </div>
+
+    <!-- ═══════ STATS CHART ═══════ -->
+    <div class="scard" id="glossario">
+      <div class="scard-head">
+        <div class="scard-ico ico-lime">📊</div>
+        <div class="scard-title">Impacto das Mecânicas — Dados da Indústria</div>
+        <div class="scard-xp">Benchmarks Reais</div>
+      </div>
+      <div class="scard-body">
+        <p style="font-size:.84em;color:var(--sub);margin-bottom:20px">Dados reais de mercado sobre o impacto de cada mecânica na retenção de jogadores. Essencial para justificar decisões de design para um produtor ou publisher.</p>
+
+        <div class="sep">Impacto na Retenção D30 (30 dias após instalação)</div>
+        <div class="stat-chart" id="stat-chart" style="margin-bottom:24px">
+          <div class="sbar-row">
+            <div class="sbar-label">🔄 Daily Login / Streak</div>
+            <div class="sbar-track"><div class="sbar-fill" style="--bar-clr:var(--lime)" data-val="87"></div></div>
+            <div class="sbar-val">87%</div>
+          </div>
+          <div class="sbar-row">
+            <div class="sbar-label">📈 Sistema de Progressão</div>
+            <div class="sbar-track"><div class="sbar-fill" style="--bar-clr:var(--teal)" data-val="74"></div></div>
+            <div class="sbar-val">74%</div>
+          </div>
+          <div class="sbar-row">
+            <div class="sbar-label">👥 Mecânicas Sociais</div>
+            <div class="sbar-track"><div class="sbar-fill" style="--bar-clr:var(--violet)" data-val="68"></div></div>
+            <div class="sbar-val">68%</div>
+          </div>
+          <div class="sbar-row">
+            <div class="sbar-label">🏆 Leaderboard (Tier)</div>
+            <div class="sbar-track"><div class="sbar-fill" style="--bar-clr:var(--amber)" data-val="61"></div></div>
+            <div class="sbar-val">61%</div>
+          </div>
+          <div class="sbar-row">
+            <div class="sbar-label">🎁 Variable Rewards</div>
+            <div class="sbar-track"><div class="sbar-fill" style="--bar-clr:var(--rose)" data-val="55"></div></div>
+            <div class="sbar-val">55%</div>
+          </div>
+          <div class="sbar-row">
+            <div class="sbar-label">🏅 Badges / Conquistas</div>
+            <div class="sbar-track"><div class="sbar-fill" style="--bar-clr:var(--sky)" data-val="43"></div></div>
+            <div class="sbar-val">43%</div>
+          </div>
+          <div class="sbar-row">
+            <div class="sbar-label">📊 Leaderboard (Global)</div>
+            <div class="sbar-track"><div class="sbar-fill" style="--bar-clr:#ef4444" data-val="22"></div></div>
+            <div class="sbar-val">22%</div>
+          </div>
+        </div>
+        <div class="insight-box" style="margin-bottom:24px">
+          <strong>📌 Fonte + Contexto:</strong> Dados baseados em estudos de retenção da <em>Liftoff Mobile Gaming Report 2023</em> e <em>GameAnalytics Benchmark 2024</em>. Percentuais representam aumento relativo na retenção D30 em jogos mobile que implementaram aquela mecânica vs. jogos sem ela. Leaderboard global pode afastar novatos — use com cuidado.
+        </div>
+
+        <div class="sep">📖 Glossário Interativo — Busque um termo</div>
+        <input class="gloss-search" type="text" placeholder="🔍 Buscar: XP, loot box, streak, emergência..." oninput="filterGloss(this.value)" id="glossInput">
+        <div class="gloss-grid" id="glossGrid">
+          <div class="gterm" data-tags="xp experiência pontos progressão">
+            <div class="gterm-word">XP / Experience Points</div>
+            <div class="gterm-def">Pontos que medem progresso. Nunca decresce. Liga a níveis e desbloqueios.</div>
+            <div class="gterm-origin">Origem: D&D → RPGs digitais → tudo</div>
+          </div>
+          <div class="gterm" data-tags="pbl points badges leaderboards sistema">
+            <div class="gterm-word">PBL Framework</div>
+            <div class="gterm-def">Points, Badges, Leaderboards — a tríade base de qualquer sistema de gamificação. Simples de implementar, profunda quando bem combinada.</div>
+            <div class="gterm-origin">Termo cunhado por Deterding (2011)</div>
+          </div>
+          <div class="gterm" data-tags="fomo fear missing out escassez urgência tempo limitado">
+            <div class="gterm-word">FOMO</div>
+            <div class="gterm-def">Fear Of Missing Out. Ansiedade gerada por conteúdo exclusivo e temporário. Motor dos eventos sazonais e battle passes.</div>
+            <div class="gterm-origin">Psicologia social → Game design</div>
+          </div>
+          <div class="gterm" data-tags="loot box drop aleatório randomico reward variavel">
+            <div class="gterm-word">Loot Box / Gacha</div>
+            <div class="gterm-def">Container de recompensa aleatória. Gacha (japonês) é a variante com personagens/cartas. Regulamentado em vários países.</div>
+            <div class="gterm-origin">CS:GO (2013), FUT, Genshin Impact</div>
+          </div>
+          <div class="gterm" data-tags="battle pass season passe temporada monetização">
+            <div class="gterm-word">Battle Pass</div>
+            <div class="gterm-def">Passe sazonal com recompensas escalonadas. Paga-se antecipadamente, desbloqueia-se jogando. Monetização via sunk cost.</div>
+            <div class="gterm-origin">Fortnite (2018) — modelo dominante</div>
+          </div>
+          <div class="gterm" data-tags="loss aversion perda kahneman psicologia streak">
+            <div class="gterm-word">Loss Aversion</div>
+            <div class="gterm-def">Aversão à perda: perder dói 2× mais do que ganhar a mesma coisa alegra. Principio por trás de streaks e sistemas de "não perca sua sequência".</div>
+            <div class="gterm-origin">Kahneman & Tversky (1979)</div>
+          </div>
+          <div class="gterm" data-tags="emergência combinatória regras simples balatro xadrez minecraft">
+            <div class="gterm-word">Emergência Combinatória</div>
+            <div class="gterm-def">Poucas regras simples que, combinadas, geram comportamentos e estratégias infinitas. Santo graal do design de sistemas.</div>
+            <div class="gterm-origin">Balatro, Xadrez, Minecraft, Go</div>
+          </div>
+          <div class="gterm" data-tags="sunk cost custo afundado investimento retorno">
+            <div class="gterm-word">Sunk Cost Effect</div>
+            <div class="gterm-def">Continuar investindo tempo/dinheiro por não "desperdiçar" o que já investiu. Battle Pass usa intencionalmente.</div>
+            <div class="gterm-origin">Economia comportamental</div>
+          </div>
+          <div class="gterm" data-tags="game feel juice feedback visual sonoro responsividade">
+            <div class="gterm-word">Game Feel / Juice</div>
+            <div class="gterm-def">A qualidade sensorial da resposta imediata às ações do jogador — partículas, screen shake, SFX, hitbox feedback. Diferença entre "plástico" e "satisfatório".</div>
+            <div class="gterm-origin">Swink (2008), "juicy games"</div>
+          </div>
+          <div class="gterm" data-tags="soft hard currency moeda virtual economia inflação">
+            <div class="gterm-word">Soft/Hard Currency</div>
+            <div class="gterm-def">Soft: ganha jogando. Hard: compra com dinheiro real. Separar as duas protege a economia do jogo e cria funil de monetização.</div>
+            <div class="gterm-origin">F2P mobile games (2010+)</div>
+          </div>
+          <div class="gterm" data-tags="core loop meta loop engajamento sessão jogo">
+            <div class="gterm-word">Core / Meta Loop</div>
+            <div class="gterm-def">Core = ação repetida em minutos. Meta = objetivo de dias/semanas. Todo jogo precisa de ambos para reter curto e longo prazo.</div>
+            <div class="gterm-origin">Game design moderno (2010+)</div>
+          </div>
+          <div class="gterm" data-tags="playfab firebase backend servidor online multiplayer">
+            <div class="gterm-word">PlayFab / BaaS</div>
+            <div class="gterm-def">Backend-as-a-Service para jogos. Player stats, leaderboards, economia, auth — sem montar servidor. Free até 10k MAU.</div>
+            <div class="gterm-origin">Microsoft (2014) → Unity SDK</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- QUIZ -->
+    <div class="scard" id="quiz">
+      <div class="scard-head">
+        <div class="scard-ico ico-violet">🧠</div>
+        <div class="scard-title">Quiz — Teste seu Conhecimento</div>
+        <div class="scard-xp amber">até +105 XP</div>
+      </div>
+      <div class="scard-body">
+        <div class="quiz-head">
+          <span id="q-cnt">0 / 7</span>
+          <div class="qbar"><div class="qbar-fill" id="q-fill" style="width:0%"></div></div>
+          <span id="q-score-mini">0 corretas</span>
+        </div>
+
+        <!-- Q0 -->
+        <div class="qcard on" id="qc0">
+          <div class="qtext">Você está desenvolvendo um RPG mobile e quer que jogadores casuais sintam progressão mesmo sem jogar horas por dia. Qual mecânica é mais eficaz?</div>
+          <div class="qopts">
+            <button class="qopt" onclick="ansQ(0,0,2)"><span>A</span>Leaderboard global competindo com todos os jogadores</button>
+            <button class="qopt" onclick="ansQ(0,1,2)"><span>B</span>Sistema de recompensa apenas para as 10 melhores pontuações diárias</button>
+            <button class="qopt" onclick="ansQ(0,2,2)"><span>C</span>Progressão offline passiva — recursos acumulam mesmo com o app fechado</button>
+            <button class="qopt" onclick="ansQ(0,3,2)"><span>D</span>XP que só cresce em partidas ranqueadas contra outros jogadores</button>
+          </div>
+          <div class="qfb" id="qfb0"></div>
+          <div class="qnext" id="qnx0"><button class="qnext-btn" onclick="nextQ(1)">Próxima →</button></div>
+        </div>
+
+        <!-- Q1 -->
+        <div class="qcard" id="qc1">
+          <div class="qtext">No sistema PBL, qual é a diferença fundamental entre XP e soft currency no design de economia de jogos?</div>
+          <div class="qopts">
+            <button class="qopt" onclick="ansQ(1,0,0)"><span>A</span>XP é acumulativo e nunca decresce; soft currency é spendable e cria economia com inflação possível</button>
+            <button class="qopt" onclick="ansQ(1,1,0)"><span>B</span>XP pode ser comprado com dinheiro real; soft currency apenas é ganha jogando</button>
+            <button class="qopt" onclick="ansQ(1,2,0)"><span>C</span>Não há diferença — ambos representam progresso numérico equivalente</button>
+            <button class="qopt" onclick="ansQ(1,3,0)"><span>D</span>Soft currency é sempre pública; XP é privado e nunca exibido</button>
+          </div>
+          <div class="qfb" id="qfb1"></div>
+          <div class="qnext" id="qnx1"><button class="qnext-btn" onclick="nextQ(2)">Próxima →</button></div>
+        </div>
+
+        <!-- Q2 -->
+        <div class="qcard" id="qc2">
+          <div class="qtext">O Duolingo usa streaks diários para fortíssima retenção. Qual princípio psicológico está sendo explorado principalmente?</div>
+          <div class="qopts">
+            <button class="qopt" onclick="ansQ(2,0,1)"><span>A</span>Reforço positivo variável (Skinner Box) — surpresa da recompensa</button>
+            <button class="qopt" onclick="ansQ(2,1,1)"><span>B</span>Aversão à perda (Loss Aversion) — perder 300 dias de streak dói mais do que ganhá-los alegra</button>
+            <button class="qopt" onclick="ansQ(2,2,1)"><span>C</span>Competição social — desejo de superar amigos no ranking</button>
+            <button class="qopt" onclick="ansQ(2,3,1)"><span>D</span>Completion bias — necessidade de completar toda a coleção de lições</button>
+          </div>
+          <div class="qfb" id="qfb2"></div>
+          <div class="qnext" id="qnx2"><button class="qnext-btn" onclick="nextQ(3)">Próxima →</button></div>
+        </div>
+
+        <!-- Q3 -->
+        <div class="qcard" id="qc3">
+          <div class="qtext">Ao implementar um leaderboard em Unity com PlayFab para um jogo mobile casual, qual abordagem incentiva TODOS os jogadores a continuar jogando?</div>
+          <div class="qopts">
+            <button class="qopt" onclick="ansQ(3,0,3)"><span>A</span>Top 10 global permanente para motivar os melhores jogadores</button>
+            <button class="qopt" onclick="ansQ(3,1,3)"><span>B</span>Mostrar apenas a posição numérica atual do jogador sem contexto</button>
+            <button class="qopt" onclick="ansQ(3,2,3)"><span>C</span>Ranking único global com todos os jogadores do mundo visíveis</button>
+            <button class="qopt" onclick="ansQ(3,3,3)"><span>D</span>Ligas semanais por tier (Bronze/Prata/Ouro) com ranking de 30 jogadores similares — competição contextualizada</button>
+          </div>
+          <div class="qfb" id="qfb3"></div>
+          <div class="qnext" id="qnx3"><button class="qnext-btn" onclick="nextQ(4)">Próxima →</button></div>
+        </div>
+
+        <!-- Q4 -->
+        <div class="qcard" id="qc4">
+          <div class="qtext">Compare: badge "Logou no jogo pela primeira vez" vs badge "Completou a campanha completa em menos de 6 horas". Qual a diferença de design?</div>
+          <div class="qopts">
+            <button class="qopt" onclick="ansQ(4,0,2)"><span>A</span>Nenhuma — ambos são badges válidos para incentivar engajamento</button>
+            <button class="qopt" onclick="ansQ(4,1,2)"><span>B</span>O primeiro é melhor pois é alcançável por 100% dos jogadores</button>
+            <button class="qopt" onclick="ansQ(4,2,2)"><span>C</span>O segundo cria identidade e representa conquista real de habilidade; o primeiro não gera valor de status, comportamento ou narrativa do jogador</button>
+            <button class="qopt" onclick="ansQ(4,3,2)"><span>D</span>O primeiro é bom para onboarding; o segundo frustra iniciantes e deve ser removido</button>
+          </div>
+          <div class="qfb" id="qfb4"></div>
+          <div class="qnext" id="qnx4"><button class="qnext-btn" onclick="nextQ(5)">Próxima →</button></div>
+        </div>
+
+        <!-- Q5 -->
+        <div class="qcard" id="qc5">
+          <div class="qtext">No Loop Builder, qual elemento geralmente NÃO deve aparecer como primeira peça de um Core Loop bem projetado?</div>
+          <div class="qopts">
+            <button class="qopt" onclick="ansQ(5,0,3)"><span>A</span>Trigger / Desafio — algo que inicia a ação do jogador</button>
+            <button class="qopt" onclick="ansQ(5,1,3)"><span>B</span>Ação do Jogador — resposta ativa e voluntária</button>
+            <button class="qopt" onclick="ansQ(5,2,3)"><span>C</span>Feedback Visual/Sonoro — resposta imediata do sistema</button>
+            <button class="qopt" onclick="ansQ(5,3,3)"><span>D</span>Elemento Social — dependência de terceiros no loop primário cria fragilidade; social pertence ao Meta Loop</button>
+          </div>
+          <div class="qfb" id="qfb5"></div>
+          <div class="qnext" id="qnx5"><button class="qnext-btn" onclick="nextQ(6)">Próxima →</button></div>
+        </div>
+
+        <!-- Q6 -->
+        <div class="qcard" id="qc6">
+          <div class="qtext">Balatro (GOTY 2024, desenvolvedor solo) é exemplo de "emergência combinatória". O que isso significa para o design do seu próximo jogo?</div>
+          <div class="qopts">
+            <button class="qopt" onclick="ansQ(6,0,1)"><span>A</span>Adicionar muitas regras complexas para garantir riqueza de experiência</button>
+            <button class="qopt" onclick="ansQ(6,1,1)"><span>B</span>Poucas regras simples que, combinadas, geram estratégias e descobertas infinitas — profundidade sem complexidade artificial</button>
+            <button class="qopt" onclick="ansQ(6,2,1)"><span>C</span>Um sistema de tutorial que emerge organicamente conforme o jogador progride</button>
+            <button class="qopt" onclick="ansQ(6,3,1)"><span>D</span>Geração procedural de mapas e inimigos para cada nova partida</button>
+          </div>
+          <div class="qfb" id="qfb6"></div>
+          <div class="qnext" id="qnx6"><button class="qnext-btn" onclick="showResult()">Ver Resultado ✨</button></div>
+        </div>
+
+        <!-- RESULT -->
+        <div class="qresult" id="q-result">
+          <span class="qscore" id="q-score-txt">0/7</span>
+          <div class="qmsg" id="q-msg">—</div>
+          <div class="qxp" id="q-xp-txt"></div>
+          <button class="qretry" onclick="restartQ()">↺ Tentar Novamente</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- ACTIVITIES -->
+    <div class="scard" id="atividades">
+      <div class="scard-head">
+        <div class="scard-ico ico-rose">✏️</div>
+        <div class="scard-title">Atividades Práticas</div>
+        <div class="scard-xp amber">+100 XP cada</div>
+      </div>
+      <div class="scard-body">
+        <div class="actlist">
+
+          <!-- ATIV 1 -->
+          <div class="act" id="a1">
+            <div class="act-head" onclick="togAct('a1')">
+              <div class="act-num">1</div>
+              <div class="act-info">
+                <div class="act-title">🗂️ Catálogo de Mecânicas com Código</div>
+                <div class="act-meta">Notion / GitBook · Scripts Unity · Individual</div>
+              </div>
+              <div class="act-pts">+100 XP</div>
+              <div class="act-tog">▼</div>
+            </div>
+            <div class="act-body">
+              <p style="font-size:.86em;color:var(--sub);line-height:1.65;margin-bottom:14px">Crie um documento interativo catalogando <strong style="color:var(--text)">15 mecânicas de gamificação</strong>. O diferencial não é a lista — é entender a psicologia por trás de cada uma e ter código funcional para provar.</p>
+              <ul class="steps">
+                <li class="step" onclick="togStep(this)"><div class="snum">1</div><div>Para cada mecânica: defina em 1 frase, explique o princípio psicológico por trás, cite 2 jogos que usam bem e 1 que usa mal — com análise do porquê</div></li>
+                <li class="step" onclick="togStep(this)"><div class="snum">2</div><div>Implemente em Unity C# scripts funcionais para pelo menos 5 mecânicas — o código deve rodar, não apenas existir. Demonstre com print da cena</div></li>
+                <li class="step" onclick="togStep(this)"><div class="snum">3</div><div>Grave vídeo de 2-3 min demonstrando 3 scripts rodando na engine com feedback visual funcionando — mostre o game feel, não só o código</div></li>
+                <li class="step" onclick="togStep(this)"><div class="snum">4</div><div>Adicione seção "Anti-padrões" com 3 exemplos de mecânicas implementadas errado em jogos reais (loot box sem transparência, streak impossível, leaderboard global em game casual)</div></li>
+                <li class="step" onclick="togStep(this)"><div class="snum">5</div><div>Organize no Notion com database e filtros por: categoria, plataforma, dificuldade de implementação, nível de impacto psicológico</div></li>
+              </ul>
+              <div class="deliverable">
+                <div class="deliv-label">📦 Entrega</div>
+                <div class="deliv-text">Link do Notion/GitBook público + repositório GitHub com os scripts Unity comentados + link do vídeo de demonstração. Prazo: próxima aula.</div>
+              </div>
+              <button class="act-btn" id="btn-a1" onclick="doneAct('a1','btn-a1',0)">✅ MARCAR COMO CONCLUÍDA</button>
+            </div>
+          </div>
+
+          <!-- ATIV 2 -->
+          <div class="act" id="a2">
+            <div class="act-head" onclick="togAct('a2')">
+              <div class="act-num">2</div>
+              <div class="act-info">
+                <div class="act-title">🏆 Sistema PBL com Backend Real</div>
+                <div class="act-meta">Unity + PlayFab · Build WebGL · Dupla ou Individual</div>
+              </div>
+              <div class="act-pts">+100 XP</div>
+              <div class="act-tog">▼</div>
+            </div>
+            <div class="act-body">
+              <p style="font-size:.86em;color:var(--sub);line-height:1.65;margin-bottom:14px">Construa um <strong style="color:var(--text)">protótipo jogável</strong> com sistema PBL completo integrado ao PlayFab. Dados persistem entre sessões e sincronizam entre devices. Não é mockup.</p>
+              <ul class="steps">
+                <li class="step" onclick="togStep(this)"><div class="snum">1</div><div>Configure Unity com PlayFab SDK (Package Manager). Crie conta gratuita no PlayFab (até 10k MAU) e configure o título do jogo com autenticação anônima</div></li>
+                <li class="step" onclick="togStep(this)"><div class="snum">2</div><div><strong>Points:</strong> Implemente XP (progressão), Coins (spendable), Prestige (reset voluntário com bônus multiplicador). Todos salvos no PlayFab Player Data — persistência real</div></li>
+                <li class="step" onclick="togStep(this)"><div class="snum">3</div><div><strong>Badges:</strong> Crie 10 badges — 5 fáceis, 3 médios, 2 difíceis/ocultos. Armazene no PlayFab TitleData. Implemente animação de unlock com DOTween ou animação nativa</div></li>
+                <li class="step" onclick="togStep(this)"><div class="snum">4</div><div><strong>Leaderboard:</strong> Liga semanal de amigos (máx 30) via PlayFab Statistics com atualização em tempo real. Mostre posição, seta de subida/descida e troféu da liga</div></li>
+                <li class="step" onclick="togStep(this)"><div class="snum">5</div><div>Faça um colega testar sem instruções — observe onde ele trava, o que confunde. Documente o feedback e implemente pelo menos 2 melhorias baseadas nele</div></li>
+              </ul>
+              <div class="deliverable">
+                <div class="deliv-label">📦 Entrega</div>
+                <div class="deliv-text">Build WebGL no itch.io (público) + repositório GitHub com README técnico descrevendo arquitetura + print do PlayFab dashboard com dados reais de pelo menos 3 sessões de teste.</div>
+              </div>
+              <button class="act-btn" id="btn-a2" onclick="doneAct('a2','btn-a2',1)">✅ MARCAR COMO CONCLUÍDA</button>
+            </div>
+          </div>
+
+          <!-- ATIV 3 -->
+          <div class="act" id="a3">
+            <div class="act-head" onclick="togAct('a3')">
+              <div class="act-num">3</div>
+              <div class="act-info">
+                <div class="act-title">🔍 Teardown: Stack Overflow</div>
+                <div class="act-meta">Análise crítica · Relatório + Proposta · Individual</div>
+              </div>
+              <div class="act-pts">+100 XP</div>
+              <div class="act-tog">▼</div>
+            </div>
+            <div class="act-body">
+              <p style="font-size:.86em;color:var(--sub);line-height:1.65;margin-bottom:14px">O Stack Overflow é um caso de estudo obrigatório em gamificação não-game: reputação bidirecional, badges hierárquicos, privilégios por tier, economia de votos. Um dos sistemas mais estudados do mundo.</p>
+              <ul class="steps">
+                <li class="step" onclick="togStep(this)"><div class="snum">1</div><div>Crie ou use sua conta no Stack Overflow. Responda 3 perguntas reais de Unity/Unreal e documente exatamente quais feedbacks de gamificação você recebe — prints, timestamps, sensações</div></li>
+                <li class="step" onclick="togStep(this)"><div class="snum">2</div><div>Mapeie o sistema de reputação completo: quais ações geram/retiram rep, quais privilégios cada tier desbloqueia (15, 50, 125, 500, 1000, 3000 rep...). Monte uma tabela visual clara</div></li>
+                <li class="step" onclick="togStep(this)"><div class="snum">3</div><div>Analise os badges: categorize os 80+ badges em grupos, aponte 5 que têm excelente design de gamificação e 2 que você redesenharia — com justificativa baseada no conteúdo desta semana</div></li>
+                <li class="step" onclick="togStep(this)"><div class="snum">4</div><div>Critique os problemas reais: por que iniciantes saem frustrados? Como o sistema favorece respostas antigas sobre novas? O que o "Broken Windows Effect" tem a ver com a moderação agressiva?</div></li>
+                <li class="step" onclick="togStep(this)"><div class="snum">5</div><div>Proponha 3 melhorias concretas e implementáveis. Para cada: problema que resolve, como implementaria tecnicamente, e qual métrica você usaria para medir sucesso</div></li>
+              </ul>
+              <div class="deliverable">
+                <div class="deliv-label">📦 Entrega</div>
+                <div class="deliv-text">Relatório 5-6 páginas (PDF ou Notion) com capturas de tela do Stack Overflow anotadas, tabelas de análise e 3 propostas de melhoria fundamentadas em teoria de gamificação vista nesta semana.</div>
+              </div>
+              <button class="act-btn" id="btn-a3" onclick="doneAct('a3','btn-a3',2)">✅ MARCAR COMO CONCLUÍDA</button>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </div>
+
+    <!-- NAV FOOTER -->
+    <div class="nav-foot">
+      <a href="semana02.html" class="nfbtn">← Semana 02 <span style="font-size:.7em;color:var(--sub)">Psicologia e Motivação</span></a>
+      <a href="semana04.html" class="nfbtn" style="text-align:right">Semana 04 → <span style="font-size:.7em;color:var(--sub)">Dinâmicas e Estéticas</span></a>
+    </div>
+
+  </main>
+
+  <!-- RIGHT SIDEBAR -->
+  <aside class="right-col">
+    <div class="rcard">
+      <div class="rcard-label">Conquistas</div>
+      <div class="ach-grid">
+        <div class="ach" id="ac-s" title="Começou!">🚀</div>
+        <div class="ach" id="ac-o" title="Foco Total">🎯</div>
+        <div class="ach" id="ac-m" title="Colecionador">🗂️</div>
+        <div class="ach" id="ac-p" title="PBL Master">🏅</div>
+        <div class="ach" id="ac-l" title="Loop Designer">🔄</div>
+        <div class="ach" id="ac-q" title="Quiz Ace">🧠</div>
+        <div class="ach" id="ac-a" title="Completo">⭐</div>
+        <div class="ach" id="ac-x" title="600 XP!">💎</div>
+      </div>
+    </div>
+    <div class="rcard">
+      <div class="rcard-label">Progresso</div>
+      <div class="prog-item">
+        <div class="prog-row"><span>Objetivos</span><span id="pr-o">0 / 5</span></div>
+        <div class="pbar"><div class="pbar-fill" id="pb-o" style="width:0%"></div></div>
+      </div>
+      <div class="prog-item">
+        <div class="prog-row"><span>Mecânicas</span><span id="pr-m">0 / 8</span></div>
+        <div class="pbar"><div class="pbar-fill teal" id="pb-m" style="width:0%"></div></div>
+      </div>
+      <div class="prog-item">
+        <div class="prog-row"><span>Quiz</span><span id="pr-q">0 / 7</span></div>
+        <div class="pbar"><div class="pbar-fill amber" id="pb-q" style="width:0%"></div></div>
+      </div>
+      <div class="prog-item">
+        <div class="prog-row"><span>Atividades</span><span id="pr-a">0 / 3</span></div>
+        <div class="pbar"><div class="pbar-fill" id="pb-a" style="width:0%"></div></div>
+      </div>
+    </div>
+    <div class="rcard">
+      <div class="rcard-label">Vídeos Recomendados</div>
+      <div style="display:flex;flex-direction:column;gap:8px">
+        <a href="https://www.youtube.com/watch?v=qWFscmh26rg" target="_blank" style="text-decoration:none;display:flex;gap:9px;align-items:center;padding:9px;background:var(--ink3);border:1px solid var(--line);border-radius:7px;transition:all .18s" onmouseover="this.style.borderColor='rgba(200,241,53,.25)'" onmouseout="this.style.borderColor='var(--line)'">
+          <span style="font-size:1.3em;flex-shrink:0">▶️</span>
+          <div><div style="font-size:.77em;font-weight:600;color:var(--text)">Game Mechanics Deep Dive</div><div style="font-size:.65em;color:var(--sub);font-family:var(--mono)">YouTube · 18 min</div></div>
+        </a>
+        <a href="https://www.youtube.com/watch?v=E5ocF4bajo4" target="_blank" style="text-decoration:none;display:flex;gap:9px;align-items:center;padding:9px;background:var(--ink3);border:1px solid var(--line);border-radius:7px;transition:all .18s" onmouseover="this.style.borderColor='rgba(200,241,53,.25)'" onmouseout="this.style.borderColor='var(--line)'">
+          <span style="font-size:1.3em;flex-shrink:0">▶️</span>
+          <div><div style="font-size:.77em;font-weight:600;color:var(--text)">PBL Systems Explained</div><div style="font-size:.65em;color:var(--sub);font-family:var(--mono)">YouTube · 24 min</div></div>
+        </a>
+        <a href="https://www.youtube.com/watch?v=VFf1XRn8fG4" target="_blank" style="text-decoration:none;display:flex;gap:9px;align-items:center;padding:9px;background:var(--ink3);border:1px solid var(--line);border-radius:7px;transition:all .18s" onmouseover="this.style.borderColor='rgba(200,241,53,.25)'" onmouseout="this.style.borderColor='var(--line)'">
+          <span style="font-size:1.3em;flex-shrink:0">▶️</span>
+          <div><div style="font-size:.77em;font-weight:600;color:var(--text)">Progression Systems</div><div style="font-size:.65em;color:var(--sub);font-family:var(--mono)">YouTube · 31 min</div></div>
+        </a>
+      </div>
+    </div>
+  </aside>
+
+</div><!-- /wrap -->
+
+<script>
+// ─────────────────────────────────────────
+//  STATE
+// ─────────────────────────────────────────
+let XP = 0, streak = 0;
+const MAX_XP = 600;
+const objS   = new Array(5).fill(false);
+const mechS  = new Array(8).fill(false);
+const actS   = new Array(3).fill(false);
+let qCorrect = 0, qAnswered = {}, loopDone = false;
+let loopSeq = [], dragItem = null;
+
+const LEVELS = [
+  [0,'RECRUTA'],[80,'APRENDIZ'],[180,'DESIGNER'],
+  [320,'ESPECIALISTA'],[480,'MESTRE']
+];
+const Q_XPS  = [10,10,15,15,15,20,20];
+const Q_FB = [
+  {ok:'✅ Exato! Progressão offline (idle mechanic) é essencial para reter jogadores casuais que não têm 3h por dia. Clash of Clans construiu um império nisso.',fail:'❌ Progressão offline é a resposta. Players casuais precisam sentir crescimento mesmo sem jogar ativamente.'},
+  {ok:'✅ Correto! XP = nunca diminui, representa crescimento. Moeda = spendable, cria economia interna com risco de inflação. Papeis completamente distintos.',fail:'❌ XP é acumulativo e nunca decresce. Moeda virtual pode ser gasta, criando economia interna. Essa distinção é fundamental.'},
+  {ok:'✅ Perfeito! Aversão à perda (Kahneman & Tversky, 1979): perdemos 2x mais felicidade ao perder algo do que ganhamos ao receber a mesma coisa.',fail:'❌ O princípio correto é loss aversion (aversão à perda). A coruja triste do Duolingo é design emocional calculado.'},
+  {ok:'✅ Muito bem! Ligas semanais com 30 jogadores similares (como Duolingo e Clash Royale) permitem que TODOS sintam competição justa — não só a elite.',fail:'❌ Ligas por tier é a resposta certa. Leaderboard global desmotiva 99% dos jogadores.'},
+  {ok:'✅ Correto! Badge de habilidade cria identidade e narrativa do jogador. Badge trivial não gera valor de status, comportamento nem pertencimento.',fail:'❌ O badge de campanha em 6h cria identidade real. Badge de login não tem valor de design significativo.'},
+  {ok:'✅ Exato! Elemento social no Core Loop cria dependência externa — o jogador não consegue executar a ação central sozinho. Social pertence ao Meta Loop.',fail:'❌ Elemento social não deve estar no início do Core Loop pois cria dependência de terceiros para uma ação primária.'},
+  {ok:'✅ Perfeito! Emergência: xadrez tem 6 tipos de peça com regras simples e profundidade quase infinita. Balatro prova que um dev solo pode bater AAA com esse princípio.',fail:'❌ Emergência = poucas regras simples que combinam criando complexidade infinita. Adicionar regras é diferente de criar profundidade.'},
+];
+
+// ─────────────────────────────────────────
+//  XP ENGINE
+// ─────────────────────────────────────────
+function addXP(v, msg, ico='⚡') {
+  XP += v; streak++;
+  updateHUD();
+  toast(ico, '+' + v + ' XP', msg);
+  xpFloat(v);
+  checkAch();
+}
+function updateHUD() {
+  document.getElementById('xp-val').textContent = XP;
+  document.getElementById('streak').textContent = streak;
+  document.getElementById('xp-bar').style.width = Math.min(XP/MAX_XP*100,100)+'%';
+  let lv = LEVELS[0][1];
+  for(const [t,n] of LEVELS) if(XP>=t) lv=n;
+  document.getElementById('xp-level').textContent = lv;
+
+  // stats
+  const oc = objS.filter(Boolean).length,
+        mc = mechS.filter(Boolean).length,
+        ac = actS.filter(Boolean).length;
+  document.getElementById('s-obj').textContent = oc;
+  document.getElementById('s-mec').textContent = mc;
+  document.getElementById('s-qz').textContent  = qCorrect;
+  document.getElementById('s-at').textContent  = ac;
+  // progress bars right
+  set('pr-o',oc+' / 5'); set('pb-o', oc/5*100+'%');
+  set('pr-m',mc+' / 8'); set('pb-m', mc/8*100+'%');
+  set('pr-q',qCorrect+' / 7'); set('pb-q', qCorrect/7*100+'%');
+  set('pr-a',ac+' / 3'); set('pb-a', ac/3*100+'%');
+}
+function set(id,v){const e=document.getElementById(id);if(e)e.textContent!==undefined&&typeof v==='string'&&v.includes('%')?e.style.width=v:e.textContent=v;}
+// fix: separate textContent and style updates
+function upBar(tid,bid,val,max){const t=document.getElementById(tid),b=document.getElementById(bid);if(t)t.textContent=val;if(b)b.style.width=(parseFloat(val)/max*100)+'%';}
+
+function toast(ico, title, msg) {
+  document.getElementById('t-ico').textContent   = ico;
+  document.getElementById('t-title').textContent = title;
+  document.getElementById('t-msg').textContent   = msg;
+  const t = document.getElementById('toast');
+  t.classList.add('show');
+  clearTimeout(t._t);
+  t._t = setTimeout(()=>t.classList.remove('show'), 3200);
+}
+function xpFloat(v) {
+  const el = document.createElement('div');
+  el.className = 'xpf';
+  el.textContent = '+'+v+' XP';
+  el.style.cssText = `left:${20+Math.random()*60}%;top:${50+Math.random()*20}%;`;
+  document.body.appendChild(el);
+  setTimeout(()=>el.remove(), 1400);
+}
+function confetti(){
+  const cl=['#c8f135','#fbbf24','#2de4c8','#a78bfa','#fb7185'];
+  for(let i=0;i<20;i++){
+    const p=document.createElement('div');
+    const s=5+Math.random()*8;
+    p.style.cssText=`position:fixed;z-index:502;pointer-events:none;left:${Math.random()*100}vw;top:-10px;width:${s}px;height:${s}px;background:${cl[i%5]};border-radius:${Math.random()>.5?'50%':'3px'};animation:cfall ${.7+Math.random()*1.1}s ease-in ${Math.random()*.4}s forwards`;
+    document.body.appendChild(p);
+    setTimeout(()=>p.remove(),2200);
+  }
+}
+
+// ─────────────────────────────────────────
+//  OBJECTIVES
+// ─────────────────────────────────────────
+function doObj(el, i) {
+  if(objS[i]) return;
+  objS[i]=true; el.classList.add('done');
+  addXP(5,'Objetivo marcado!','🎯');
+  if(objS.every(Boolean)){addXP(15,'Todos os objetivos!','✅');earn('ac-o');}
+  updateHUD();
+}
+
+// ─────────────────────────────────────────
+//  MECHANICS
+// ─────────────────────────────────────────
+function doMech(card, i) {
+  if(mechS[i]) return;
+  mechS[i]=true; card.classList.add('got');
+  addXP(15,'Mecânica desbloqueada!','🗂️');
+  if(mechS.every(Boolean)){addXP(20,'Catálogo completo!','🏆');earn('ac-m');}
+  updateHUD();
+}
+
+// ─────────────────────────────────────────
+//  PBL TABS
+// ─────────────────────────────────────────
+function swPBL(btn, id){
+  document.querySelectorAll('.tabs .tab').forEach(t=>t.classList.remove('on'));
+  document.querySelectorAll('.panel').forEach(p=>p.classList.remove('on'));
+  btn.classList.add('on');
+  document.getElementById('pbl-'+id).classList.add('on');
+  if(id==='cd') earn('ac-p');
+}
+
+// ─────────────────────────────────────────
+//  LOOP BUILDER
+// ─────────────────────────────────────────
+function dragS(e){
+  dragItem={v:e.target.dataset.v,c:e.target.dataset.c,t:e.target.textContent.trim()};
+}
+function dragO(e){
+  e.preventDefault();
+  document.getElementById('loop-cv').classList.add('over');
+}
+function dropI(e){
+  e.preventDefault();
+  document.getElementById('loop-cv').classList.remove('over');
+  if(!dragItem) return;
+  loopSeq.push(dragItem); renderLoop(); dragItem=null;
+}
+function renderLoop(){
+  const s=document.getElementById('loop-seq');
+  const em=document.getElementById('loop-em');
+  em.style.display=loopSeq.length?'none':'flex';
+  s.innerHTML=loopSeq.map((it,i)=>`
+    <li class="lseq-step" style="background:${it.c}12;border:1px solid ${it.c}30">
+      <span>${it.t}</span><button class="lseq-rm" onclick="rmLoop(${i})">✕</button>
+    </li>
+    ${i<loopSeq.length-1?'<div class="lseq-arrow">↓</div>':''}
+  `).join('');
+}
+function rmLoop(i){loopSeq.splice(i,1);renderLoop();}
+function evalLoop(){
+  if(loopSeq.length<3){toast('⚠️','Loop incompleto','Adicione pelo menos 3 elementos.');return;}
+  const has=v=>loopSeq.some(s=>s.v===v);
+  let sc=0, msgs=[];
+  if(has('trigger')) {sc++;msgs.push('✅ Tem trigger — bom início');}
+  if(has('action'))  {sc++;msgs.push('✅ Tem ação do jogador');}
+  if(has('feedback')){sc++;msgs.push('✅ Tem feedback imediato');}
+  if(has('reward'))  {sc++;msgs.push('✅ Tem recompensa');}
+  if(has('progress')){sc++;msgs.push('🌟 Tem progressão — excelente');}
+  if(!has('trigger')) msgs.push('⚠️ Faltou trigger — algo deve iniciar o loop');
+  if(!has('action'))  msgs.push('⚠️ Faltou ação do jogador — o loop precisa de agência');
+  if(!has('feedback'))msgs.push('⚠️ Faltou feedback — sem resposta imediata o jogador fica perdido');
+  const pct=Math.round(sc/5*100);
+  const ev=document.getElementById('loop-eval');
+  ev.innerHTML=`${pct>=80?'🏆':pct>=60?'⚡':'🔄'} Loop Score: ${pct}%<br><span style="font-size:.85em;opacity:.8">${msgs.join(' · ')}</span>`;
+  ev.classList.add('show');
+  if(!loopDone){loopDone=true;addXP(50,'Loop avaliado!','🔄');earn('ac-l');}
+}
+
+// ─────────────────────────────────────────
+//  QUIZ
+// ─────────────────────────────────────────
+function ansQ(qi, chosen, correct){
+  const card=document.getElementById('qc'+qi);
+  const opts=card.querySelectorAll('.qopt');
+  opts.forEach(o=>o.disabled=true);
+  const ok=chosen===correct;
+  opts[chosen].classList.add(ok?'ok':'no');
+  if(!ok) opts[correct].classList.add('ok');
+  const fb=document.getElementById('qfb'+qi);
+  fb.innerHTML=ok?Q_FB[qi].ok:Q_FB[qi].fail;
+  fb.className='qfb show '+(ok?'ok':'no');
+  document.getElementById('qnx'+qi).classList.add('show');
+  if(ok){qCorrect++;addXP(Q_XPS[qi],'Resposta correta!','🧠');}
+  qAnswered[qi]=ok;
+  const done=Object.keys(qAnswered).length;
+  document.getElementById('q-fill').style.width=(done/7*100)+'%';
+  document.getElementById('q-cnt').textContent=(done)+' / 7';
+  document.getElementById('q-score-mini').textContent=qCorrect+' corretas';
+  updateHUD();
+}
+function nextQ(n){
+  document.getElementById('qc'+(n-1)).classList.remove('on');
+  document.getElementById('qc'+n).classList.add('on');
+}
+function showResult(){
+  document.getElementById('qc6').classList.remove('on');
+  const r=document.getElementById('q-result'); r.classList.add('show');
+  document.getElementById('q-score-txt').textContent=qCorrect+'/7';
+  const msgs=['Estude mais — revise o material 🔄','Progredindo! Continue 📈','Bom trabalho ✅','Excelente domínio! 🌟','Mestre em Mecânicas! 🏆'];
+  document.getElementById('q-msg').textContent=msgs[Math.min(Math.floor(qCorrect/7*4),4)];
+  const earned=Object.keys(qAnswered).filter(k=>qAnswered[k]).reduce((a,k)=>a+Q_XPS[+k],0);
+  document.getElementById('q-xp-txt').textContent='+'+earned+' XP conquistados no Quiz';
+  document.getElementById('q-fill').style.width='100%';
+  document.getElementById('q-cnt').textContent='7 / 7';
+  if(qCorrect>=5){earn('ac-q');confetti();}
+}
+function restartQ(){
+  qCorrect=0; qAnswered={};
+  document.getElementById('q-result').classList.remove('show');
+  document.getElementById('q-fill').style.width='0%';
+  document.getElementById('q-cnt').textContent='0 / 7';
+  document.getElementById('q-score-mini').textContent='0 corretas';
+  for(let i=0;i<7;i++){
+    const c=document.getElementById('qc'+i);
+    c.classList.toggle('on',i===0);
+    c.querySelectorAll('.qopt').forEach(o=>{o.disabled=false;o.classList.remove('ok','no');});
+    const fb=c.querySelector('.qfb');if(fb){fb.className='qfb';fb.innerHTML='';}
+    const nx=c.querySelector('.qnext');if(nx)nx.classList.remove('show');
+  }
+  updateHUD();
+}
+
+// ─────────────────────────────────────────
+//  ACTIVITIES
+// ─────────────────────────────────────────
+function togAct(id){
+  const el=document.getElementById(id);
+  el.classList.toggle('open');
+}
+function togStep(el){el.classList.toggle('done');}
+function doneAct(cardId, btnId, i){
+  if(actS[i]) return;
+  actS[i]=true;
+  const btn=document.getElementById(btnId);
+  btn.disabled=true; btn.textContent='✅ CONCLUÍDA!';
+  document.getElementById(cardId).classList.add('done-act');
+  addXP(100,'Atividade concluída!','🎓');
+  if(actS.every(Boolean)){addXP(50,'Todas as atividades!','⭐');earn('ac-a');confetti();}
+  updateHUD();
+}
+
+// ─────────────────────────────────────────
+//  ACHIEVEMENTS
+// ─────────────────────────────────────────
+function earn(id){
+  const el=document.getElementById(id);
+  if(el&&!el.classList.contains('earned')){
+    el.classList.add('earned');
+    toast('🏆','Conquista desbloqueada!',el.title||'');
+    confetti();
+  }
+}
+function checkAch(){
+  if(XP>=MAX_XP) earn('ac-x');
+}
+
+// ─────────────────────────────────────────
+//  INIT
+// ─────────────────────────────────────────
+// fix progress bar style updates
+function fixBars(){
+  const pairs=[['pr-o','pb-o',objS.filter(Boolean).length,5],['pr-m','pb-m',mechS.filter(Boolean).length,8],['pr-q','pb-q',qCorrect,7],['pr-a','pb-a',actS.filter(Boolean).length,3]];
+  for(const [tid,bid,v,max] of pairs){
+    const t=document.getElementById(tid),b=document.getElementById(bid);
+    if(t)t.textContent=v+' / '+max;
+    if(b)b.style.width=(v/max*100)+'%';
+  }
+}
+const _upd=updateHUD;
+updateHUD=function(){_upd();fixBars();};
+
+// ─────────────────────────────────────────
+//  VIDEO PLAYER
+// ─────────────────────────────────────────
+let vidWatched = false;
+function openVid(id) {
+  const modal = document.getElementById('vid-modal');
+  const iframe = document.getElementById('vid-iframe');
+  iframe.src = `https://www.youtube.com/embed/${id}?autoplay=1&rel=0`;
+  modal.classList.add('open');
+  document.body.style.overflow = 'hidden';
+  if(!vidWatched){ vidWatched=true; addXP(20,'Vídeo assistido!','📺'); }
+}
+function closeVid(e) {
+  if(e.target === document.getElementById('vid-modal')) closeVidBtn();
+}
+function closeVidBtn() {
+  const modal = document.getElementById('vid-modal');
+  const iframe = document.getElementById('vid-iframe');
+  modal.classList.remove('open');
+  iframe.src = '';
+  document.body.style.overflow = '';
+}
+document.addEventListener('keydown', e => { if(e.key==='Escape') closeVidBtn(); });
+
+// ─────────────────────────────────────────
+//  STATS CHART — animate on scroll
+// ─────────────────────────────────────────
+function animateCharts() {
+  document.querySelectorAll('.sbar-fill[data-val]').forEach(bar => {
+    const val = bar.dataset.val;
+    bar.style.width = val + '%';
+    bar.removeAttribute('data-val');
+  });
+}
+// Intersection Observer for chart
+const chartObs = new IntersectionObserver(entries => {
+  entries.forEach(e => { if(e.isIntersecting){ animateCharts(); chartObs.disconnect(); } });
+}, { threshold: 0.3 });
+const chartEl = document.getElementById('stat-chart');
+if(chartEl) chartObs.observe(chartEl);
+
+// ─────────────────────────────────────────
+//  GLOSSARY FILTER
+// ─────────────────────────────────────────
+function filterGloss(q) {
+  const terms = document.querySelectorAll('.gterm');
+  const lq = q.toLowerCase().trim();
+  terms.forEach(t => {
+    const tags = t.dataset.tags || '';
+    const word = t.querySelector('.gterm-word').textContent.toLowerCase();
+    const match = !lq || word.includes(lq) || tags.includes(lq);
+    t.style.display = match ? '' : 'none';
+    t.classList.toggle('highlight', lq && match);
+  });
+}
+
+setTimeout(()=>{
+  earn('ac-s');
+  toast('🚀','Bem-vindo à Semana 03!','Mecânicas de Jogo · 600 XP disponíveis');
+},800);
+updateHUD();
+</script>
+</body>
+</html>

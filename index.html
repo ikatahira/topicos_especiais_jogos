@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tópicos Especiais em Jogos Digitais - IJD-038</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; line-height: 1.6; background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); min-height: 100vh; }
+        
+        .header { background: rgba(255,255,255,0.95); padding: 30px 0; box-shadow: 0 4px 20px rgba(0,0,0,0.1); }
+        .header-content { max-width: 1400px; margin: 0 auto; padding: 0 20px; text-align: center; }
+        .header h1 { color: #667eea; font-size: 2.5em; margin-bottom: 10px; }
+        .header p { color: #666; font-size: 1.1em; }
+        .header .subtitle { color: #764ba2; font-weight: bold; margin-top: 5px; }
+        
+        .container { max-width: 1400px; margin: 40px auto; padding: 0 20px; }
+        
+        .course-info { background: white; border-radius: 15px; padding: 30px; margin-bottom: 30px; box-shadow: 0 4px 20px rgba(0,0,0,0.1); }
+        .course-info h2 { color: #667eea; margin-bottom: 20px; }
+        .info-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 15px; margin: 20px 0; }
+        .info-box { background: #f8f9fa; padding: 15px; border-radius: 8px; border-left: 4px solid #667eea; }
+        .info-box strong { color: #667eea; display: block; margin-bottom: 5px; }
+        
+        .modules-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 25px; margin-top: 30px; }
+        
+        .module-card { background: white; border-radius: 15px; padding: 25px; box-shadow: 0 4px 20px rgba(0,0,0,0.1); transition: transform 0.3s, box-shadow 0.3s; }
+        .module-card:hover { transform: translateY(-5px); box-shadow: 0 8px 30px rgba(0,0,0,0.15); }
+        
+        .module-header { display: flex; align-items: center; gap: 15px; margin-bottom: 20px; padding-bottom: 15px; border-bottom: 2px solid #f0f0f0; }
+        .module-icon { font-size: 2.5em; }
+        .module-title { flex: 1; }
+        .module-title h3 { color: #667eea; font-size: 1.3em; margin-bottom: 5px; }
+        .module-title p { color: #666; font-size: 0.9em; }
+        
+        .weeks-list { list-style: none; }
+        .weeks-list li { margin-bottom: 10px; }
+        .weeks-list a { display: flex; align-items: center; gap: 10px; padding: 12px 15px; background: #f8f9fa; color: #667eea; text-decoration: none; border-radius: 8px; transition: all 0.3s; border-left: 3px solid transparent; }
+        .weeks-list a:hover { background: #667eea; color: white; border-left-color: #764ba2; transform: translateX(5px); }
+        .week-number { font-weight: bold; min-width: 80px; }
+        
+        .module-1 .module-icon { color: #667eea; }
+        .module-2 .module-icon { color: #f093fb; }
+        .module-3 .module-icon { color: #4facfe; }
+        .module-4 .module-icon { color: #43e97b; }
+        
+        @media (max-width: 768px) {
+            .header h1 { font-size: 1.8em; }
+            .modules-grid { grid-template-columns: 1fr; }
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <div class="header-content">
+            <h1>🎮 Tópicos Especiais em Jogos Digitais</h1>
+            <p>IJD-038 | 6º Semestre | Curso Superior de Tecnologia em Jogos Digitais</p>
+            <p class="subtitle">FATEC Ourinhos - Centro Paula Souza</p>
+        </div>
+    </div>
+
+    <div class="container">
+        <div class="course-info">
+            <h2>📋 Informações da Disciplina</h2>
+            <div class="info-grid">
+                <div class="info-box">
+                    <strong>Código:</strong>
+                    IJD-038
+                </div>
+                <div class="info-box">
+                    <strong>Carga Horária:</strong>
+                    80 aulas (4h/semana)
+                </div>
+                <div class="info-box">
+                    <strong>Semestre:</strong>
+                    6º Semestre
+                </div>
+                <div class="info-box">
+                    <strong>Duração:</strong>
+                    20 semanas
+                </div>
+            </div>
+            
+            <h3 style="color: #667eea; margin: 25px 0 15px 0;">🎯 Objetivos</h3>
+            <p>Identificar e compreender tecnologias emergentes e tendências de mercado na área de Jogos Digitais. Dominar conceitos e técnicas de gamificação para aplicação em contextos educacionais e empresariais. Desenvolver habilidades em Motion Design aplicado a jogos.</p>
+            
+            <h3 style="color: #667eea; margin: 25px 0 15px 0;">📚 Ementa</h3>
+            <p>Gamificação: teoria e prática. Gamificação educacional e empresarial. Estudos de tecnologias emergentes em jogos digitais. Motion Design aplicado a jogos e interfaces interativas.</p>
+        </div>
+
+        <div class="modules-grid">
+            <!-- Módulo 1 -->
+            <div class="module-card module-1">
+                <div class="module-header">
+                    <div class="module-icon">🎯</div>
+                    <div class="module-title">
+                        <h3>Módulo 1</h3>
+                        <p>Fundamentos de Gamificação</p>
+                    </div>
+                </div>
+                <ul class="weeks-list">
+                    <li><a href="semana01.html"><span class="week-number">Semana 1</span> Introdução à Gamificação</a></li>
+                    <li><a href="semana02.html"><span class="week-number">Semana 2</span> Psicologia e Motivação</a></li>
+                    <li><a href="semana03.html"><span class="week-number">Semana 3</span> Mecânicas de Jogo</a></li>
+                    <li><a href="semana04.html"><span class="week-number">Semana 4</span> Dinâmicas e Estéticas</a></li>
+                    <li><a href="semana05.html"><span class="week-number">Semana 5</span> Elementos de Gamificação</a></li>
+                </ul>
+            </div>
+
+            <!-- Módulo 2 -->
+            <div class="module-card module-2">
+                <div class="module-header">
+                    <div class="module-icon">💼</div>
+                    <div class="module-title">
+                        <h3>Módulo 2</h3>
+                        <p>Gamificação Aplicada</p>
+                    </div>
+                </div>
+                <ul class="weeks-list">
+                    <li><a href="semana06.html"><span class="week-number">Semana 6</span> Gamificação Educacional</a></li>
+                    <li><a href="semana07.html"><span class="week-number">Semana 7</span> Gamificação Corporativa</a></li>
+                    <li><a href="semana08.html"><span class="week-number">Semana 8</span> Design de Sistemas Gamificados</a></li>
+                    <li><a href="semana09.html"><span class="week-number">Semana 9</span> Métricas e Análise</a></li>
+                    <li><a href="semana10.html"><span class="week-number">Semana 10</span> Casos de Sucesso</a></li>
+                </ul>
+            </div>
+
+            <!-- Módulo 3 -->
+            <div class="module-card module-3">
+                <div class="module-header">
+                    <div class="module-icon">🚀</div>
+                    <div class="module-title">
+                        <h3>Módulo 3</h3>
+                        <p>Tecnologias Emergentes</p>
+                    </div>
+                </div>
+                <ul class="weeks-list">
+                    <li><a href="semana11.html"><span class="week-number">Semana 11</span> Cloud Gaming</a></li>
+                    <li><a href="semana12.html"><span class="week-number">Semana 12</span> Ray Tracing e Gráficos Next-Gen</a></li>
+                    <li><a href="semana13.html"><span class="week-number">Semana 13</span> IA Procedural</a></li>
+                    <li><a href="semana14.html"><span class="week-number">Semana 14</span> Blockchain e NFTs</a></li>
+                    <li><a href="semana15.html"><span class="week-number">Semana 15</span> Metaverso e Mundos Virtuais</a></li>
+                </ul>
+            </div>
+
+            <!-- Módulo 4 -->
+            <div class="module-card module-4">
+                <div class="module-header">
+                    <div class="module-icon">🎨</div>
+                    <div class="module-title">
+                        <h3>Módulo 4</h3>
+                        <p>Motion Design e Projeto Final</p>
+                    </div>
+                </div>
+                <ul class="weeks-list">
+                    <li><a href="semana16.html"><span class="week-number">Semana 16</span> Princípios de Motion Design</a></li>
+                    <li><a href="semana17.html"><span class="week-number">Semana 17</span> Animação de UI/UX</a></li>
+                    <li><a href="semana18.html"><span class="week-number">Semana 18</span> Motion Graphics para Jogos</a></li>
+                    <li><a href="semana19.html"><span class="week-number">Semana 19</span> Desenvolvimento do Projeto</a></li>
+                    <li><a href="semana20.html"><span class="week-number">Semana 20</span> Apresentação Final</a></li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

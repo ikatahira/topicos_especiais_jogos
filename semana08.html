@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Semana 08 - Design de Sistemas Gamificados - Tópicos Especiais em Jogos Digitais</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; line-height: 1.6; background-color: #f0f2f5; }
+        
+        .header { background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white; padding: 20px 0; box-shadow: 0 2px 10px rgba(0,0,0,0.2); position: sticky; top: 0; z-index: 1000; }
+        .header-content { max-width: 1400px; margin: 0 auto; padding: 0 20px; display: flex; align-items: center; gap: 20px; }
+        .header-text h1 { font-size: 1.5em; margin-bottom: 5px; }
+        .header-text p { font-size: 0.9em; opacity: 0.95; }
+        
+        .container { max-width: 1400px; margin: 20px auto; padding: 0 20px; display: flex; gap: 20px; }
+        
+        .sidebar { width: 280px; background: white; border-radius: 10px; padding: 20px; box-shadow: 0 2px 10px rgba(0,0,0,0.1); height: fit-content; position: sticky; top: 120px; }
+        .sidebar h2 { color: #667eea; font-size: 1.2em; margin-bottom: 15px; padding-bottom: 10px; border-bottom: 2px solid #764ba2; }
+        
+        .week-menu { list-style: none; }
+        .week-menu li { margin-bottom: 8px; }
+        .week-menu a { display: block; padding: 12px 15px; background: #f8f9fa; color: #667eea; text-decoration: none; border-radius: 5px; transition: all 0.3s; border-left: 3px solid transparent; }
+        .week-menu a:hover { background: #667eea; color: white; border-left-color: #764ba2; transform: translateX(5px); }
+        .week-menu a.active { background: #667eea; color: white; border-left-color: #764ba2; font-weight: bold; }
+        
+        .main-content { flex: 1; }
+        
+        .section { background: white; margin: 20px 0; padding: 30px; border-radius: 10px; box-shadow: 0 2px 10px rgba(0,0,0,0.1); }
+        .section h2 { color: #667eea; font-size: 1.8em; margin-bottom: 20px; border-bottom: 3px solid #764ba2; padding-bottom: 10px; }
+        .section h3 { color: #764ba2; font-size: 1.3em; margin: 25px 0 15px 0; }
+        
+        .module-badge { display: inline-block; background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white; padding: 8px 16px; border-radius: 20px; font-size: 0.9em; margin-bottom: 15px; }
+        
+        .objectives-list, .topics-list { padding-left: 0; list-style-position: inside; }
+        .objectives-list li, .topics-list li { padding: 10px; margin: 8px 0; background: #f8f9fa; border-left: 4px solid #667eea; border-radius: 5px; list-style-position: inside; }
+        
+        .video-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(350px, 1fr)); gap: 20px; margin: 20px 0; }
+        .video-card { background: #f8f9fa; border-radius: 10px; overflow: hidden; box-shadow: 0 2px 5px rgba(0,0,0,0.1); }
+        .video-card iframe { width: 100%; height: 220px; border: none; }
+        .video-info { padding: 15px; }
+        .video-info h4 { color: #667eea; margin-bottom: 5px; }
+        
+        .atividade { background: #f8f9fa; padding: 25px; margin: 20px 0; border-radius: 10px; border-left: 5px solid #667eea; }
+        .atividade h4 { color: #667eea; font-size: 1.2em; margin-bottom: 15px; }
+        .atividade .descricao { margin: 15px 0; line-height: 1.8; }
+        .atividade .entrega { background: white; padding: 15px; border-radius: 5px; border-left: 3px solid #764ba2; margin-top: 15px; }
+        .atividade .entrega strong { color: #764ba2; display: block; margin-bottom: 5px; }
+        
+        .navigation { display: flex; justify-content: space-between; margin: 30px 0; }
+        .nav-button { padding: 15px 30px; background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white; text-decoration: none; border-radius: 8px; font-weight: bold; transition: transform 0.3s; display: inline-flex; align-items: center; gap: 10px; }
+        .nav-button:hover { transform: translateY(-2px); box-shadow: 0 5px 15px rgba(102, 126, 234, 0.4); }
+        
+        @media (max-width: 1024px) {
+            .container { flex-direction: column; }
+            .sidebar { width: 100%; position: static; }
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <div class="header-content">
+            <div class="header-text">
+                <h1>📚 Semana 08 - Design de Sistemas Gamificados</h1>
+                <p>Tópicos Especiais em Jogos Digitais - IJD-038 | 6º Semestre</p>
+            </div>
+        </div>
+    </div>
+
+    <div class="container">
+        <aside class="sidebar">
+            <h2>🔖 Navegação</h2>
+            <ul class="week-menu">
+                <li><a href="semana01.html">Semana 01</a></li>
+                <li><a href="semana02.html">Semana 02</a></li>
+                <li><a href="semana03.html">Semana 03</a></li>
+                <li><a href="semana04.html">Semana 04</a></li>
+                <li><a href="semana05.html">Semana 05</a></li>
+                <li><a href="semana06.html">Semana 06</a></li>
+                <li><a href="semana07.html">Semana 07</a></li>
+                <li><a href="semana08.html" class="active">Semana 08</a></li>
+                <li><a href="semana09.html">Semana 09</a></li>
+                <li><a href="semana10.html">Semana 10</a></li>
+                <li><a href="semana11.html">Semana 11</a></li>
+                <li><a href="semana12.html">Semana 12</a></li>
+                <li><a href="semana13.html">Semana 13</a></li>
+                <li><a href="semana14.html">Semana 14</a></li>
+                <li><a href="semana15.html">Semana 15</a></li>
+                <li><a href="semana16.html">Semana 16</a></li>
+                <li><a href="semana17.html">Semana 17</a></li>
+                <li><a href="semana18.html">Semana 18</a></li>
+                <li><a href="semana19.html">Semana 19</a></li>
+                <li><a href="semana20.html">Semana 20</a></li>
+                <li style="margin-top: 15px;"><a href="index.html" style="background: #764ba2; color: white;">🏠 Início</a></li>
+            </ul>
+        </aside>
+
+        <main class="main-content">
+            <div class="section">
+                <span class="module-badge">Módulo 2: Gamificação Aplicada</span>
+                <h2>🎯 Objetivos da Semana</h2>
+                <ul class="objectives-list">
+                    <li>Aplicar framework Octalysis</li>
+                    <li>Criar player personas</li>
+                    <li>Design de jornadas de usuário</li>
+                    <li>Prototipagem e testes</li>
+                </ul>
+            </div>
+
+            <div class="section">
+                <h2>📚 Conteúdo Programático</h2>
+                <ul class="topics-list">
+                    <li>Framework Octalysis (Yu-kai Chou)</li>
+                    <li>8 Core Drives</li>
+                    <li>Player Types (Bartle)</li>
+                    <li>User Journey Mapping</li>
+                    <li>Prototipagem Rápida</li>
+                    <li>Playtesting de Sistemas Gamificados</li>
+                </ul>
+            </div>
+
+            <div class="section">
+                <h2>🎬 Vídeos Recomendados</h2>
+                <div class="video-grid">
+                    <div class="video-card">
+                        <iframe src="https://www.youtube.com/embed/Df42vpkLWHI" allowfullscreen></iframe>
+                        <div class="video-info">
+                            <h4>Octalysis Framework</h4>
+                        </div>
+                    </div>
+                    <div class="video-card">
+                        <iframe src="https://www.youtube.com/embed/xjHuxAr4Uxs" allowfullscreen></iframe>
+                        <div class="video-info">
+                            <h4>Player Types and Personas</h4>
+                        </div>
+                    </div>
+                    <div class="video-card">
+                        <iframe src="https://www.youtube.com/embed/M3UGY7nIg6U" allowfullscreen></iframe>
+                        <div class="video-info">
+                            <h4>User Journey Mapping</h4>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="section">
+                <h2>✏️ Atividades Práticas</h2>
+                <div class="atividade">
+                    <h4>🎯 Atividade 1: Análise Octalysis</h4>
+                    <div class="descricao">
+                        <p>Analisar app gamificado usando framework Octalysis. Pontuar cada core drive, criar radar chart, identificar lacunas.</p>
+                    </div>
+                    <div class="entrega">
+                        <strong>📦 Entrega:</strong>
+                        Relatório 4 páginas com análise completa + visualizações + propostas de melhoria
+                    </div>
+                </div>
+                <div class="atividade">
+                    <h4>🎯 Atividade 2: Personas e Jornadas</h4>
+                    <div class="descricao">
+                        <p>Criar 4 player personas usando metodologia UX. Mapear user journey de cada persona em sistema gamificado.</p>
+                    </div>
+                    <div class="entrega">
+                        <strong>📦 Entrega:</strong>
+                        Documento com personas detalhadas + journey maps visualizados + insights
+                    </div>
+                </div>
+                <div class="atividade">
+                    <h4>🎯 Atividade 3: Design e Teste de Sistema</h4>
+                    <div class="descricao">
+                        <p>Projetar sistema gamificado completo do zero, prototipar, testar com usuários reais, iterar baseado em feedback.</p>
+                    </div>
+                    <div class="entrega">
+                        <strong>📦 Entrega:</strong>
+                        Protótipo testado + relatório de testes + análise de iterações + versão final
+                    </div>
+                </div>
+            </div>
+
+            <div class="navigation">
+                <a href="semana07.html" class="nav-button">
+                    ⬅️ Semana Anterior
+                </a>
+                <a href="semana09.html" class="nav-button">
+                    Próxima Semana ➡️
+                </a>
+            </div>
+        </main>
+    </div>
+</body>
+</html>
