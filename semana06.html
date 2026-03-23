@@ -535,9 +535,130 @@ body::after{content:'';position:fixed;inset:0;z-index:999;pointer-events:none;op
       <div class="scard-body">
         <p style="font-size:.87em;color:var(--sub);line-height:1.7;margin-bottom:14px">Faça uma análise comparativa profunda dos dois sistemas: identifique cada elemento gamificado, classifique segundo Bloom e avalie eficácia para diferentes perfis de aprendiz.</p>
         <div style="font-family:var(--mono);font-size:.62em;text-transform:uppercase;letter-spacing:.1em;color:var(--sub);margin-bottom:8px">Passos</div>
-        <ol style="font-size:.83em;line-height:1.8;color:var(--text2);padding-left:18px"><li>Use ambas as plataformas por pelo menos 30 min cada — anote cada elemento gamificado encontrado</li><li>Para cada elemento: qual nível de Bloom ele ativa? É motivação intrínseca ou extrínseca?</li><li>Crie uma tabela comparativa feature-by-feature (streak, progressão, feedback, social)</li><li>Identifique: para qual perfil de aluno cada plataforma é mais eficaz?</li><li>Conclua: qual tem maior foco em aprendizado real vs engajamento?</li></ol>
+        <ol style="font-size:.83em;line-height:1.8;color:var(--text2);padding-left:18px"><li>Use ambas as plataformas por pelo menos 30 min cada — anote cada elemento gamificado encontrado</li><li>Para cada elemento: qual nível de Bloom ele ativa? É motivação intrínseca ou extrínseca?</li><li>Complete o benchmarking interativo abaixo: arraste cada célula para a coluna correta</li><li>Identifique: para qual perfil de aluno cada plataforma é mais eficaz?</li><li>Conclua: qual tem maior foco em aprendizado real vs engajamento?</li></ol>
+
+        <!-- BENCHMARKING DRAG & DROP -->
+        <div style="margin:18px 0 4px;padding:16px;background:var(--ink3);border:1px solid rgba(167,139,250,.2);border-radius:10px">
+          <div style="font-family:var(--mono);font-size:.62em;text-transform:uppercase;letter-spacing:.12em;color:var(--violet);margin-bottom:4px">📊 5. Benchmarking de Funcionalidades: Feature-by-Feature</div>
+          <p style="font-size:.75em;color:var(--sub);margin-bottom:14px;line-height:1.6">A personalização moderna é sustentada por uma arquitetura de software adaptativa que utiliza dados para individualizar a trajetória do aluno. Arraste cada implementação para a coluna correta.</p>
+
+          <!-- TABLE HEADER -->
+          <div id="bench-table" style="display:flex;flex-direction:column;gap:0;border:1px solid var(--line);border-radius:9px;overflow:hidden">
+            <!-- header -->
+            <div style="display:grid;grid-template-columns:1fr 1fr 1fr 1fr;background:var(--ink4);border-bottom:1px solid var(--line)">
+              <div style="padding:10px 12px;font-family:var(--mono);font-size:.65em;font-weight:700;color:var(--sub);text-transform:uppercase;letter-spacing:.08em;border-right:1px solid var(--line)">Feature</div>
+              <div style="padding:10px 12px;font-family:var(--mono);font-size:.65em;font-weight:700;color:#58cc02;text-transform:uppercase;letter-spacing:.08em;border-right:1px solid var(--line)">🦉 Duolingo</div>
+              <div style="padding:10px 12px;font-family:var(--mono);font-size:.65em;font-weight:700;color:#14bf96;text-transform:uppercase;letter-spacing:.08em;border-right:1px solid var(--line)">🌿 Khan Academy</div>
+              <div style="padding:10px 12px;font-family:var(--mono);font-size:.65em;font-weight:700;color:var(--amber);text-transform:uppercase;letter-spacing:.08em">⚡ Impacto</div>
+            </div>
+            <!-- rows -->
+            <div id="bench-row-0" style="display:grid;grid-template-columns:1fr 1fr 1fr 1fr;border-bottom:1px solid var(--line);min-height:64px">
+              <div style="padding:10px 12px;font-size:.78em;font-weight:600;color:var(--text);display:flex;align-items:center;border-right:1px solid var(--line);background:rgba(255,255,255,.015)">Feedback em Tempo Real</div>
+              <div class="bench-zone" id="bz-0-duo" data-row="0" data-col="duo" ondragover="event.preventDefault();this.classList.add('bover')" ondragleave="this.classList.remove('bover')" ondrop="benchDrop(event,'0','duo')" style="border-right:1px solid var(--line)"></div>
+              <div class="bench-zone" id="bz-0-khan" data-row="0" data-col="khan" ondragover="event.preventDefault();this.classList.add('bover')" ondragleave="this.classList.remove('bover')" ondrop="benchDrop(event,'0','khan')" style="border-right:1px solid var(--line)"></div>
+              <div class="bench-zone" id="bz-0-imp" data-row="0" data-col="imp" ondragover="event.preventDefault();this.classList.add('bover')" ondragleave="this.classList.remove('bover')" ondrop="benchDrop(event,'0','imp')"></div>
+            </div>
+            <div id="bench-row-1" style="display:grid;grid-template-columns:1fr 1fr 1fr 1fr;border-bottom:1px solid var(--line);min-height:64px">
+              <div style="padding:10px 12px;font-size:.78em;font-weight:600;color:var(--text);display:flex;align-items:center;border-right:1px solid var(--line);background:rgba(255,255,255,.015)">Progressão de Níveis</div>
+              <div class="bench-zone" id="bz-1-duo" data-row="1" data-col="duo" ondragover="event.preventDefault();this.classList.add('bover')" ondragleave="this.classList.remove('bover')" ondrop="benchDrop(event,'1','duo')" style="border-right:1px solid var(--line)"></div>
+              <div class="bench-zone" id="bz-1-khan" data-row="1" data-col="khan" ondragover="event.preventDefault();this.classList.add('bover')" ondragleave="this.classList.remove('bover')" ondrop="benchDrop(event,'1','khan')" style="border-right:1px solid var(--line)"></div>
+              <div class="bench-zone" id="bz-1-imp" data-row="1" data-col="imp" ondragover="event.preventDefault();this.classList.add('bover')" ondragleave="this.classList.remove('bover')" ondrop="benchDrop(event,'1','imp')"></div>
+            </div>
+            <div id="bench-row-2" style="display:grid;grid-template-columns:1fr 1fr 1fr 1fr;border-bottom:1px solid var(--line);min-height:64px">
+              <div style="padding:10px 12px;font-size:.78em;font-weight:600;color:var(--text);display:flex;align-items:center;border-right:1px solid var(--line);background:rgba(255,255,255,.015)">Personalização</div>
+              <div class="bench-zone" id="bz-2-duo" data-row="2" data-col="duo" ondragover="event.preventDefault();this.classList.add('bover')" ondragleave="this.classList.remove('bover')" ondrop="benchDrop(event,'2','duo')" style="border-right:1px solid var(--line)"></div>
+              <div class="bench-zone" id="bz-2-khan" data-row="2" data-col="khan" ondragover="event.preventDefault();this.classList.add('bover')" ondragleave="this.classList.remove('bover')" ondrop="benchDrop(event,'2','khan')" style="border-right:1px solid var(--line)"></div>
+              <div class="bench-zone" id="bz-2-imp" data-row="2" data-col="imp" ondragover="event.preventDefault();this.classList.add('bover')" ondragleave="this.classList.remove('bover')" ondrop="benchDrop(event,'2','imp')"></div>
+            </div>
+            <div id="bench-row-3" style="display:grid;grid-template-columns:1fr 1fr 1fr 1fr;min-height:64px">
+              <div style="padding:10px 12px;font-size:.78em;font-weight:600;color:var(--text);display:flex;align-items:center;border-right:1px solid var(--line);background:rgba(255,255,255,.015)">Integração Social</div>
+              <div class="bench-zone" id="bz-3-duo" data-row="3" data-col="duo" ondragover="event.preventDefault();this.classList.add('bover')" ondragleave="this.classList.remove('bover')" ondrop="benchDrop(event,'3','duo')" style="border-right:1px solid var(--line)"></div>
+              <div class="bench-zone" id="bz-3-khan" data-row="3" data-col="khan" ondragover="event.preventDefault();this.classList.add('bover')" ondragleave="this.classList.remove('bover')" ondrop="benchDrop(event,'3','khan')" style="border-right:1px solid var(--line)"></div>
+              <div class="bench-zone" id="bz-3-imp" data-row="3" data-col="imp" ondragover="event.preventDefault();this.classList.add('bover')" ondragleave="this.classList.remove('bover')" ondrop="benchDrop(event,'3','imp')"></div>
+            </div>
+          </div>
+
+          <!-- POOL -->
+          <div style="font-family:var(--mono);font-size:.6em;text-transform:uppercase;letter-spacing:.12em;color:var(--sub);margin:14px 0 6px">Banco de Cards — Arraste para as células corretas</div>
+          <div id="bench-pool" style="display:flex;flex-wrap:wrap;gap:7px;padding:12px;background:var(--ink4);border:1px solid var(--line);border-radius:8px;min-height:60px">
+            <div class="bench-item" draggable="true" data-row="0" data-col="duo" ondragstart="benchDragStart(event)">Notificações de acerto/erro instantâneas com reforço visual.</div>
+            <div class="bench-item" draggable="true" data-row="0" data-col="khan" ondragstart="benchDragStart(event)">Respostas imediatas com dicas processuais passo a passo.</div>
+            <div class="bench-item" draggable="true" data-row="0" data-col="imp" ondragstart="benchDragStart(event)">Reduz a carga cognitiva e a ansiedade de erro.</div>
+            <div class="bench-item" draggable="true" data-row="1" data-col="duo" ondragstart="benchDragStart(event)">Linearidade desbloqueável baseada em tarefas curtas.</div>
+            <div class="bench-item" draggable="true" data-row="1" data-col="khan" ondragstart="benchDragStart(event)">Trilhas de domínio flexíveis baseadas em competência.</div>
+            <div class="bench-item" draggable="true" data-row="1" data-col="imp" ondragstart="benchDragStart(event)">Mantém o fluxo (flow) e a percepção de avanço.</div>
+            <div class="bench-item" draggable="true" data-row="2" data-col="duo" ondragstart="benchDragStart(event)">Metas diárias definidas e ajustadas pelo usuário.</div>
+            <div class="bench-item" draggable="true" data-row="2" data-col="khan" ondragstart="benchDragStart(event)">Algoritmos de IA para adaptação de conteúdo e recomendações.</div>
+            <div class="bench-item" draggable="true" data-row="2" data-col="imp" ondragstart="benchDragStart(event)">Aumenta a relevância e respeita o ritmo individual.</div>
+            <div class="bench-item" draggable="true" data-row="3" data-col="duo" ondragstart="benchDragStart(event)">Rankings competitivos e busca ativa de amigos.</div>
+            <div class="bench-item" draggable="true" data-row="3" data-col="khan" ondragstart="benchDragStart(event)">Dashboard de suporte para pais e professores.</div>
+            <div class="bench-item" draggable="true" data-row="3" data-col="imp" ondragstart="benchDragStart(event)">No Duolingo gera hábito; na Khan gera suporte instrucional.</div>
+          </div>
+
+          <div style="display:flex;gap:8px;margin-top:12px;align-items:center;flex-wrap:wrap">
+            <button class="eval-btn" onclick="checkBench()">Verificar Benchmarking ▶</button>
+            <button class="eval-btn" style="background:var(--ink4);color:var(--sub);border:1px solid var(--line)" onclick="resetBench()">↺ Resetar</button>
+          </div>
+          <div id="bench-eval" style="display:none;margin-top:10px;padding:12px 15px;border-radius:8px;font-size:.82em;line-height:1.6"></div>
+        </div>
+
+        <style>
+        .bench-zone{padding:6px;min-height:64px;display:flex;flex-direction:column;gap:4px;justify-content:center;transition:background .15s;}
+        .bench-zone.bover{background:rgba(167,139,250,.08);outline:2px dashed var(--violet);}
+        .bench-item{padding:7px 10px;border-radius:6px;background:var(--ink2);border:1px solid var(--line);font-size:.73em;cursor:grab;user-select:none;transition:all .18s;color:var(--text);line-height:1.4;}
+        .bench-item:hover{transform:translateY(-1px);box-shadow:0 4px 14px rgba(0,0,0,.35);border-color:rgba(167,139,250,.3);}
+        .bench-item.dragging{opacity:.35;}
+        .bench-item.correct{border-color:var(--teal);background:rgba(45,228,200,.08);color:var(--teal);}
+        .bench-item.wrong{border-color:var(--rose);background:rgba(251,113,133,.08);color:var(--rose);}
+        </style>
+
+        <script>
+        let benchDragging=null;
+        function benchDragStart(e){benchDragging=e.target;e.target.classList.add('dragging');}
+        function benchDrop(e,row,col){
+          e.preventDefault();
+          const zone=document.getElementById('bz-'+row+'-'+col);
+          zone.classList.remove('bover');
+          if(benchDragging){
+            // if zone already has an item, send it back to pool
+            const existing=zone.querySelector('.bench-item');
+            if(existing)document.getElementById('bench-pool').appendChild(existing);
+            zone.appendChild(benchDragging);
+            benchDragging.classList.remove('dragging');
+            benchDragging=null;
+          }
+        }
+        function checkBench(){
+          let ok=0,total=12;
+          document.querySelectorAll('.bench-zone').forEach(z=>{
+            const row=z.dataset.row,col=z.dataset.col;
+            const item=z.querySelector('.bench-item');
+            if(item){
+              if(item.dataset.row===row&&item.dataset.col===col){ok++;item.classList.add('correct');item.classList.remove('wrong');}
+              else{item.classList.add('wrong');item.classList.remove('correct');}
+            }
+          });
+          const ev=document.getElementById('bench-eval');ev.style.display='block';
+          if(ok===total){
+            ev.style.background='rgba(45,228,200,.07)';ev.style.border='1px solid rgba(45,228,200,.2)';ev.style.color='var(--teal)';
+            ev.innerHTML='✅ Benchmarking completo! Você mapeou corretamente as 4 features nas 3 dimensões. O Duolingo prioriza engajamento comportamental; a Khan Academy prioriza progressão por domínio.';
+            addXP(30,'Benchmarking concluído!','📊');
+          } else {
+            ev.style.background='rgba(251,113,133,.06)';ev.style.border='1px solid rgba(251,113,133,.18)';ev.style.color='var(--rose)';
+            ev.innerHTML='Acertou '+ok+'/'+total+'. Dica: Duolingo = reforço visual e competição; Khan = dicas processuais e domínio de habilidade. <button class="eval-btn" style="margin-left:8px;padding:5px 12px;font-size:.8em" onclick="resetBench()">↺ Tentar novamente</button>';
+          }
+        }
+        function resetBench(){
+          const pool=document.getElementById('bench-pool');
+          document.querySelectorAll('.bench-zone').forEach(z=>{
+            z.querySelectorAll('.bench-item').forEach(item=>{item.classList.remove('correct','wrong');pool.appendChild(item);});
+          });
+          document.getElementById('bench-eval').style.display='none';
+        }
+        </script>
+
         <div style="font-family:var(--mono);font-size:.62em;text-transform:uppercase;letter-spacing:.1em;color:var(--sub);margin:14px 0 6px">Entrega</div>
-        <p style="font-size:.82em;color:var(--teal);background:rgba(45,228,200,.07);border:1px solid rgba(45,228,200,.15);border-radius:7px;padding:10px 13px">Relatório 4 páginas com tabela comparativa, análise de Bloom aplicada e recomendação de uso por perfil de aluno</p>
+        <p style="font-size:.82em;color:var(--teal);background:rgba(45,228,200,.07);border:1px solid rgba(45,228,200,.15);border-radius:7px;padding:10px 13px">Relatório 4 páginas com tabela comparativa, análise de Bloom aplicada e recomendação de uso por perfil de aluno. Enviar um print para o e-mail <strong>isaque.katahira@fatecourinhos.edu.br</strong></p>
         <button class="eval-btn" style="margin-top:14px" onclick="completeAct(0,60,'ac-e1')">✅ Marcar como Concluída — +60 XP</button>
       </div>
     </div>
@@ -607,7 +728,7 @@ const LEVELS=[[0, "APRENDIZ"], [100, "ESTUDANTE"], [220, "EDUCADOR"], [360, "PED
 const Q_XPS=[15, 20, 15, 15, 20, 15];
 const Q_FB=[{"ok": "✅ O Duolingo é um laboratório de ciência comportamental. Streak cria identidade ('sou alguém que estuda todo dia'), ligas competitivas geram FOMO semanal, XP contextualiza progresso. E o algoritmo de spaced repetition garante aprendizado real por trás da diversão.", "fail": "❌ O segredo do Duolingo é combinar mecânicas comportamentais (streak, FOMO, competição) com algoritmos de aprendizado (spaced repetition SM-2). É a union de game design e ciência cognitiva."}, {"ok": "✅ Criar é o nível mais alto de Bloom. Quando o aluno cria um quiz, ele precisa dominar o conteúdo (Lembrar), organizá-lo (Compreender), pensar nas dificuldades certas (Analisar), avaliar o que é mais importante (Avaliar) — e então Criar. Ensinar é o melhor jeito de aprender.", "fail": "❌ Criar (nível 6) é o topo da pirâmide. Produzir algo novo — um quiz, um jogo, um projeto — exige todos os níveis anteriores. Por isso é a atividade mais poderosa de aprendizado."}, {"ok": "✅ Adaptive learning usa dados de desempenho para encontrar a Zona de Desenvolvimento Proximal de cada aluno — o ponto ótimo entre muito fácil (tédio) e muito difícil (frustração). Duolingo, Khanmigo e sistemas como Mathia são exemplos.", "fail": "❌ Adaptive learning é tecnologia: algoritmos analisam desempenho em tempo real e ajustam o próximo conteúdo. Isso permite que um aluno rápido avance e um que tem dificuldade receba mais prática — impossível em ensino tradicional linear."}, {"ok": "✅ É o problema da 'gamificação de fachada': o aluno descobre que pode maximizar XP fazendo atividades fáceis repetidamente sem aprender. A solução: métricas de aprendizado real (mastery), não apenas métricas de engajamento (tempo no sistema).", "fail": "❌ O risco principal é a confusão entre engajamento e aprendizado. Um aluno pode ter streak de 365 dias no Duolingo sem falar fluentemente. A gamificação deve ser avaliada por aprendizado mensurável, não por tempo de tela."}, {"ok": "✅ Bloom como mapa de design: missões de Nível 1 (quiz de vocabulário) são simples e frequentes. Missões de Nível 6 (criar projeto) são raras mas valem muito XP. Isso garante que o sistema gamificado cultiva habilidades complexas, não só memorização.", "fail": "❌ Bloom é um guia de design: missões fáceis ativam Lembrar/Compreender; missões complexas ativam Analisar/Criar. Um sistema gamificado educacional bem projetado distribui missões em todos os 6 níveis."}, {"ok": "✅ A distinção crítica: engajamento = o aluno está usando o sistema. Aprendizado = o aluno retém e aplica o conhecimento. Streak mede o primeiro; um pré/pós teste mede o segundo. Gamificação educacional real precisa das duas métricas.", "fail": "❌ Tempo no sistema ≠ aprendizado. A questão é o que o aluno retém 1 semana, 1 mês depois. Métricas de mastery (percentual de domínio por competência), testes de retenção e transferência de conhecimento são os indicadores reais de aprendizado."}];
 const OBJECTIVES=["Analisar casos de sucesso: Duolingo, Khan Academy, Classcraft", "Aplicar a Taxonomia de Bloom ao design de gamificação educacional", "Compreender sistemas de aprendizagem adaptativa (adaptive learning)", "Definir métricas que medem aprendizado real vs engajamento superficial", "Projetar experiência educacional gamificada com embasamento pedagógico"];
-const VIDEOS=[{"id": "Lhvf2qJjP8U", "label": "Edu Gamification", "title": "Gamification in Education — Por Que Funciona", "icon": "🎓"}, {"id": "eDZQn3bX0lg", "label": "Duolingo", "title": "Como o Duolingo Usa Ciência do Comportamento", "icon": "🦉"}, {"id": "BQRMvj6cuuw", "label": "Bloom + Games", "title": "Learning Science Meets Game Design", "icon": "🧠"}];
+const VIDEOS=[{"id": "1CZtIIy7tRU", "label": "Edu Gamification", "title": "Gamification in Education — Por Que Funciona", "icon": "🎓"}, {"id": "FAhQb2IFDBg", "label": "Duolingo", "title": "Como o Duolingo Usa Ciência do Comportamento", "icon": "🦉"}, {"id": "ZEoyoXUoIX8", "label": "Bloom + Games", "title": "Learning Science Meets Game Design", "icon": "🧠"}];
 const N_OBJ=5, N_Q=6, N_ACT=3;
 
 let XP=0, streak=0, toastT=null;
