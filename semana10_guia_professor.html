@@ -3,168 +3,1014 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>GUIA PROFESSOR - Semana 10 - Cases de Sucesso e Fracasso</title>
+    <title>GUIA PROFESSOR — Semana 10 · Cases de Sucesso e Fracasso</title>
+    <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;600&family=IBM+Plex+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
     <style>
+        :root {
+            --blue-dark: #0f2044;
+            --blue-mid: #1a3a6e;
+            --blue-accent: #2563eb;
+            --blue-light: #3b82f6;
+            --cyan: #06b6d4;
+            --green: #10b981;
+            --amber: #f59e0b;
+            --red: #ef4444;
+            --purple: #8b5cf6;
+            --text: #1e293b;
+            --text-muted: #64748b;
+            --bg: #f1f5f9;
+            --white: #ffffff;
+            --border: #e2e8f0;
+        }
+
         * { margin: 0; padding: 0; box-sizing: border-box; }
-        body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; line-height: 1.6; background: #f5f5f5; }
-        .header { background: linear-gradient(135deg, #1e3c72 0%, #2a5298 100%); color: white; padding: 30px 20px; box-shadow: 0 4px 20px rgba(0,0,0,0.2); }
-        .header h1 { font-size: 2em; margin-bottom: 10px; }
-        .alert-box { background: #ff6b6b; color: white; padding: 20px; margin: 20px 0; border-radius: 10px; }
-        .container { max-width: 1200px; margin: 20px auto; padding: 0 20px; }
-        .section { background: white; margin: 25px 0; padding: 35px; border-radius: 12px; box-shadow: 0 2px 15px rgba(0,0,0,0.1); }
-        .section h2 { color: #1e3c72; font-size: 1.9em; margin-bottom: 20px; border-bottom: 4px solid #2a5298; padding-bottom: 12px; }
-        .section h3 { color: #2a5298; font-size: 1.4em; margin: 30px 0 15px 0; }
-        .prep-list { background: #e7f5ff; padding: 20px; border-radius: 8px; border-left: 5px solid #1971c2; }
-        .prep-list li { margin: 12px 0; padding-left: 10px; }
-        .concept-box { background: #fff3bf; padding: 25px; margin: 20px 0; border-radius: 10px; border-left: 5px solid #fab005; }
-        .example-box { background: #d3f9d8; padding: 25px; margin: 20px 0; border-radius: 10px; border-left: 5px solid #37b24d; }
-        .dica-box { background: #e7f5ff; padding: 20px; margin: 15px 0; border-radius: 8px; border-left: 5px solid #1971c2; }
-        .nav-buttons { display: flex; justify-content: space-between; margin: 30px 0; }
-        .nav-button { padding: 15px 30px; background: linear-gradient(135deg, #1e3c72 0%, #2a5298 100%); color: white; text-decoration: none; border-radius: 8px; font-weight: bold; }
+
+        body {
+            font-family: 'IBM Plex Sans', sans-serif;
+            background: var(--bg);
+            color: var(--text);
+            line-height: 1.6;
+        }
+
+        /* ===== HEADER ===== */
+        .master-header {
+            background: linear-gradient(135deg, var(--blue-dark) 0%, var(--blue-mid) 100%);
+            color: white;
+            padding: 0;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.3);
+        }
+
+        .confidential-bar {
+            background: var(--red);
+            text-align: center;
+            padding: 6px;
+            font-family: 'IBM Plex Mono', monospace;
+            font-size: 0.75em;
+            font-weight: 600;
+            letter-spacing: 3px;
+            text-transform: uppercase;
+        }
+
+        .header-main {
+            max-width: 1100px;
+            margin: 0 auto;
+            padding: 20px 30px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 20px;
+        }
+
+        .header-left h1 { font-size: 1.6em; font-weight: 700; margin-bottom: 4px; }
+        .header-left p { font-size: 0.9em; opacity: 0.7; font-family: 'IBM Plex Mono', monospace; }
+
+        .header-badges { display: flex; gap: 10px; flex-wrap: wrap; }
+        .badge {
+            padding: 6px 14px;
+            border-radius: 20px;
+            font-size: 0.75em;
+            font-weight: 600;
+            letter-spacing: 0.5px;
+        }
+        .badge-cyan { background: rgba(6,182,212,0.2); color: var(--cyan); border: 1px solid rgba(6,182,212,0.4); }
+        .badge-amber { background: rgba(245,158,11,0.2); color: var(--amber); border: 1px solid rgba(245,158,11,0.4); }
+        .badge-green { background: rgba(16,185,129,0.2); color: var(--green); border: 1px solid rgba(16,185,129,0.4); }
+
+        /* ===== CONTAINER ===== */
+        .container { max-width: 1100px; margin: 0 auto; padding: 30px 30px 80px; }
+
+        /* ===== ALERT BLOCKS ===== */
+        .alert {
+            border-radius: 10px;
+            padding: 20px 25px;
+            margin-bottom: 25px;
+            display: flex;
+            gap: 15px;
+            align-items: flex-start;
+        }
+        .alert-red { background: #fef2f2; border: 1px solid #fecaca; border-left: 4px solid var(--red); }
+        .alert-amber { background: #fffbeb; border: 1px solid #fde68a; border-left: 4px solid var(--amber); }
+        .alert-blue { background: #eff6ff; border: 1px solid #bfdbfe; border-left: 4px solid var(--blue-accent); }
+        .alert-green { background: #f0fdf4; border: 1px solid #bbf7d0; border-left: 4px solid var(--green); }
+        .alert-icon { font-size: 1.5em; flex-shrink: 0; margin-top: 2px; }
+        .alert-text h4 { font-weight: 700; margin-bottom: 6px; color: var(--text); font-size: 0.95em; }
+        .alert-text p, .alert-text li { font-size: 0.9em; color: var(--text-muted); line-height: 1.7; }
+        .alert-text ul { margin-left: 15px; margin-top: 8px; }
+
+        /* ===== SECTIONS ===== */
+        .section {
+            background: var(--white);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            margin-bottom: 25px;
+            overflow: hidden;
+        }
+
+        .section-header {
+            background: linear-gradient(135deg, var(--blue-dark), var(--blue-mid));
+            color: white;
+            padding: 18px 28px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .section-number {
+            font-family: 'IBM Plex Mono', monospace;
+            font-size: 0.75em;
+            background: rgba(255,255,255,0.15);
+            padding: 3px 10px;
+            border-radius: 20px;
+        }
+
+        .section-header h2 { font-size: 1.1em; font-weight: 700; flex: 1; }
+
+        .section-body { padding: 28px; }
+
+        /* ===== TIMELINE / SCHEDULE ===== */
+        .schedule {
+            position: relative;
+            padding-left: 30px;
+        }
+        .schedule::before {
+            content: '';
+            position: absolute;
+            left: 12px; top: 0; bottom: 0;
+            width: 2px;
+            background: var(--border);
+        }
+
+        .schedule-item { position: relative; margin-bottom: 0; }
+
+        .schedule-item::before {
+            content: '';
+            position: absolute;
+            left: -22px; top: 22px;
+            width: 12px; height: 12px;
+            border-radius: 50%;
+            background: var(--blue-accent);
+            border: 2px solid white;
+            box-shadow: 0 0 0 2px var(--blue-accent);
+        }
+
+        .schedule-block {
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            margin-bottom: 12px;
+            overflow: hidden;
+        }
+
+        .schedule-time {
+            background: var(--blue-accent);
+            color: white;
+            padding: 8px 16px;
+            font-family: 'IBM Plex Mono', monospace;
+            font-size: 0.8em;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .schedule-time .duration {
+            background: rgba(255,255,255,0.2);
+            padding: 2px 8px;
+            border-radius: 10px;
+            font-size: 0.85em;
+        }
+
+        .schedule-content { padding: 16px 20px; }
+        .schedule-content h4 { font-size: 0.95em; font-weight: 700; color: var(--text); margin-bottom: 8px; }
+        .schedule-content p { font-size: 0.88em; color: var(--text-muted); line-height: 1.6; }
+
+        .schedule-content .tips-inline {
+            margin-top: 10px;
+            background: #fffbeb;
+            border-left: 3px solid var(--amber);
+            padding: 10px 14px;
+            border-radius: 0 6px 6px 0;
+            font-size: 0.85em;
+            color: #92400e;
+        }
+
+        /* ===== CONCEPT CARDS ===== */
+        .concept-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 15px;
+        }
+
+        @media (max-width: 768px) { .concept-grid { grid-template-columns: 1fr; } }
+
+        .concept-card {
+            background: #f8fafc;
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            padding: 20px;
+        }
+
+        .concept-card h4 {
+            font-size: 0.9em;
+            font-weight: 700;
+            color: var(--blue-accent);
+            margin-bottom: 8px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .concept-card p { font-size: 0.85em; color: var(--text-muted); line-height: 1.7; }
+
+        .concept-card .teacher-note {
+            margin-top: 10px;
+            background: #eff6ff;
+            border-left: 3px solid var(--blue-light);
+            padding: 8px 12px;
+            font-size: 0.82em;
+            color: #1e40af;
+            border-radius: 0 4px 4px 0;
+        }
+
+        /* ===== ACTIVITY GUIDE ===== */
+        .activity-guide {
+            border: 1px solid var(--border);
+            border-radius: 10px;
+            margin-bottom: 20px;
+            overflow: hidden;
+        }
+
+        .activity-guide-header {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 16px 22px;
+            background: #f8fafc;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .act-number {
+            font-family: 'IBM Plex Mono', monospace;
+            font-size: 1.5em;
+            font-weight: 600;
+            color: var(--blue-accent);
+        }
+
+        .activity-guide-header h3 { font-size: 0.95em; font-weight: 700; }
+        .activity-guide-header .act-type { margin-left: auto; font-size: 0.75em; color: var(--text-muted); font-family: 'IBM Plex Mono', monospace; }
+
+        .activity-guide-body { padding: 22px; }
+
+        .rubric-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 15px;
+            font-size: 0.85em;
+        }
+        .rubric-table th {
+            background: var(--blue-dark);
+            color: white;
+            padding: 10px 14px;
+            text-align: left;
+            font-weight: 600;
+        }
+        .rubric-table td {
+            padding: 10px 14px;
+            border-bottom: 1px solid var(--border);
+            vertical-align: top;
+            line-height: 1.5;
+        }
+        .rubric-table tr:last-child td { border-bottom: none; }
+        .rubric-table tr:nth-child(even) td { background: #f8fafc; }
+
+        .score-badge {
+            display: inline-block;
+            padding: 2px 8px;
+            border-radius: 4px;
+            font-size: 0.75em;
+            font-weight: 700;
+            margin-right: 6px;
+        }
+        .score-a { background: #dcfce7; color: #15803d; }
+        .score-b { background: #fef9c3; color: #a16207; }
+        .score-c { background: #fee2e2; color: #b91c1c; }
+
+        /* ===== INFO BOX ===== */
+        .info-box {
+            background: #eff6ff;
+            border: 1px solid #bfdbfe;
+            border-radius: 8px;
+            padding: 16px 20px;
+            margin-top: 10px;
+        }
+        .info-box h4 {
+            font-size: 0.8em;
+            font-weight: 700;
+            color: var(--blue-accent);
+            margin-bottom: 8px;
+            font-family: 'IBM Plex Mono', monospace;
+            letter-spacing: 0.5px;
+        }
+        .info-box p, .info-box li { font-size: 0.88em; color: var(--text-muted); line-height: 1.6; }
+        .info-box ul { margin-left: 15px; margin-top: 5px; }
+
+        /* ===== CHECKLIST ===== */
+        .prep-checklist { list-style: none; }
+        .prep-checklist li {
+            display: flex;
+            align-items: flex-start;
+            gap: 12px;
+            padding: 10px 0;
+            border-bottom: 1px solid var(--border);
+            font-size: 0.9em;
+        }
+        .prep-checklist li:last-child { border-bottom: none; }
+
+        .check-box {
+            width: 22px; height: 22px;
+            border: 2px solid var(--blue-accent);
+            border-radius: 4px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+            font-size: 0.75em;
+            color: white;
+            transition: all 0.2s;
+        }
+        .check-box.checked { background: var(--green); border-color: var(--green); }
+        .check-box.checked::after { content: '✓'; }
+
+        /* ===== ANSWERS SECTION ===== */
+        .toggle-answers-btn {
+            padding: 10px 20px;
+            background: var(--blue-dark);
+            color: white;
+            border: none;
+            border-radius: 6px;
+            font-family: 'IBM Plex Mono', monospace;
+            font-size: 0.8em;
+            cursor: pointer;
+            transition: all 0.2s;
+            margin-bottom: 15px;
+        }
+        .toggle-answers-btn:hover { background: var(--blue-mid); }
+
+        .answers-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 12px;
+        }
+
+        .answer-card {
+            background: #f8fafc;
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            padding: 14px;
+        }
+        .answer-card .q-num {
+            font-family: 'IBM Plex Mono', monospace;
+            font-size: 0.7em;
+            color: var(--text-muted);
+            margin-bottom: 6px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+        .answer-card .q-answer {
+            font-weight: 600;
+            font-size: 0.9em;
+            color: var(--green);
+            margin-bottom: 6px;
+        }
+        .answer-card .q-explain { font-size: 0.82em; color: var(--text-muted); line-height: 1.5; }
+
+        /* ===== FAQ ===== */
+        .faq-item { border: 1px solid var(--border); border-radius: 8px; margin-bottom: 10px; overflow: hidden; }
+        .faq-question {
+            padding: 16px 20px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            font-weight: 600;
+            font-size: 0.92em;
+            transition: background 0.2s;
+        }
+        .faq-question:hover { background: #f8fafc; }
+        .faq-question.open { background: #eff6ff; color: var(--blue-accent); }
+        .faq-icon { margin-left: auto; transition: transform 0.3s; }
+        .faq-question.open .faq-icon { transform: rotate(180deg); }
+        .faq-answer {
+            display: none;
+            padding: 16px 20px;
+            background: #f8fafc;
+            border-top: 1px solid var(--border);
+            font-size: 0.88em;
+            color: var(--text-muted);
+            line-height: 1.7;
+        }
+        .faq-answer.open { display: block; }
+        .faq-answer p { margin-bottom: 10px; }
+        .faq-answer p:last-child { margin-bottom: 0; }
+
+        /* ===== QUICK TIPS GRID ===== */
+        .quick-tips {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 15px;
+        }
+        @media (max-width: 768px) { .quick-tips { grid-template-columns: 1fr; } }
+
+        .tip-card {
+            background: #f8fafc;
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            padding: 18px;
+        }
+        .tip-icon { font-size: 1.8em; display: block; margin-bottom: 8px; }
+        .tip-card h4 { font-size: 0.9em; font-weight: 700; margin-bottom: 6px; color: var(--text); }
+        .tip-card p { font-size: 0.83em; color: var(--text-muted); line-height: 1.6; }
+
+        /* ===== NAV FOOTER ===== */
+        .nav-footer {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 50px;
+            gap: 15px;
+        }
+        .nav-btn {
+            padding: 14px 24px;
+            background: var(--blue-dark);
+            color: white;
+            text-decoration: none;
+            border-radius: 8px;
+            font-weight: 600;
+            font-size: 0.9em;
+            transition: all 0.2s;
+        }
+        .nav-btn:hover { background: var(--blue-mid); transform: translateY(-1px); }
+        .nav-btn-alt {
+            background: var(--blue-accent);
+        }
     </style>
 </head>
 <body>
-    <div class="header">
-        <h1>🎓 GUIA DO PROFESSOR - Semana 10</h1>
-        <p>Cases de Sucesso e Fracasso | Tópicos Especiais em Jogos Digitais</p>
-        <p><strong>⚠️ MATERIAL CONFIDENCIAL - APENAS DOCENTES</strong></p>
-    </div>
 
-    <div class="container">
-        <div class="alert-box">
-            <h3>⚠️ ATENÇÃO PROFESSOR!</h3>
-            <p>Este guia assume que você pode não ser expert em cases de sucesso e fracasso. Estude este material ANTES da aula. Cada conceito está explicado em detalhes para que você possa ensinar com confiança.</p>
+<header class="master-header">
+    <div class="confidential-bar">⚠ MATERIAL CONFIDENCIAL — APENAS DOCENTES ⚠</div>
+    <div class="header-main">
+        <div class="header-left">
+            <h1>🎓 GUIA DO PROFESSOR — Semana 10</h1>
+            <p>Cases de Sucesso e Fracasso · IJD-038 · 6º Semestre</p>
         </div>
-
-        <div class="section">
-            <h2>📋 1. PREPARAÇÃO PARA A AULA</h2>
-            <h3>O Que Fazer ANTES da Aula</h3>
-            <ul class="prep-list">
-                <li>✅ Revisar conteúdo da semana 10 completo</li>
-                <li>✅ Testar todos os links de vídeos</li>
-                <li>✅ Preparar demonstrações práticas se aplicável</li>
-                <li>✅ Estudar conceitos-chave desta seção</li>
-                <li>✅ Ter respostas modelo em mãos (não mostrar aos alunos ainda)</li>
-                <li>✅ Configurar ambiente/ferramentas necessárias</li>
-            </ul>
-        </div>
-
-        <div class="section">
-            <h2>📚 2. CONCEITOS-CHAVE</h2>
-            <div class="concept-box">
-                <strong>Tema Central: Cases de Sucesso e Fracasso</strong>
-                <p style="margin-top: 15px;">Módulo 2: Gamificação Aplicada</p>
-                <p style="margin-top: 15px;"><strong>Objetivos desta semana:</strong></p>
-                <ul style="margin-left: 20px; margin-top: 10px;">
-                    <li>Estudar cases reais profundamente</li>
-                    <li>Identificar fatores de sucesso</li>
-                    <li>Analisar failures e pivot strategies</li>
-                    <li>Extrair lições aplicáveis</li>
-                </ul>
-            </div>
-            
-            <div class="concept-box">
-                <strong>Tópicos que Serão Abordados:</strong>
-                <ul style="margin-left: 20px; margin-top: 10px;">
-                    <li>Sucessos: Nike+, Strava, Habitica</li>
-                    <li>Fracassos: Google+, Foursquare decline</li>
-                    <li>Pivots: Slack, Instagram</li>
-                    <li>Fatores Críticos de Sucesso</li>
-                    <li>Post-Mortem Analysis</li>
-                    <li>Lições Aprendidas</li>
-                </ul>
-            </div>
-        </div>
-
-        <div class="section">
-            <h2>💡 3. DICAS DE ENSINO</h2>
-            
-            <div class="dica-box">
-                <strong>Como Conduzir a Aula:</strong>
-                <ol style="margin-left: 20px; margin-top: 10px;">
-                    <li><strong>Introdução (15min):</strong> Apresente o tema, conecte com semana anterior</li>
-                    <li><strong>Teoria (30min):</strong> Explique conceitos-chave, use slides e exemplos</li>
-                    <li><strong>Vídeos (30min):</strong> Assista os 3 vídeos, pause para discussão</li>
-                    <li><strong>Pausa (10min):</strong> Importante para absorção</li>
-                    <li><strong>Prática (30min):</strong> Explique atividades, tire dúvidas</li>
-                    <li><strong>Encerramento (5min):</strong> Recapitule pontos principais</li>
-                </ol>
-            </div>
-            
-            <div class="example-box">
-                <strong>Exemplo Prático para Demonstrar:</strong>
-                <p style="margin-top: 10px;">Como são alunos do 6º semestre que já desenvolvem jogos:</p>
-                <ul style="margin-left: 20px; margin-top: 10px;">
-                    <li>Relacione conceitos com projetos que eles já fizeram</li>
-                    <li>Use exemplos de jogos AAA que conhecem</li>
-                    <li>Mostre implementações técnicas quando possível</li>
-                    <li>Conecte teoria com prática de mercado</li>
-                </ul>
-            </div>
-        </div>
-
-        <div class="section">
-            <h2>✏️ 4. ATIVIDADES - ORIENTAÇÕES</h2>
-
-            <h3>Atividade 1: Deep Dive em Sucesso</h3>
-            <div class="dica-box">
-                <p><strong>Descrição:</strong> Análise profunda de case de sucesso (Strava, Nike+, Duolingo): história, estratégia, execução, métricas, lições.</p>
-                <p style="margin-top: 10px;"><strong>Entrega Esperada:</strong> Relatório estilo Harvard Business School 6-8 páginas + apresentação executiva</p>
-                <p style="margin-top: 10px;"><strong>Dica de Avaliação:</strong> Use a rubrica fornecida. Foque em profundidade técnica e pensamento crítico, não apenas completude.</p>
-            </div>
-
-            <h3>Atividade 2: Post-Mortem de Fracasso</h3>
-            <div class="dica-box">
-                <p><strong>Descrição:</strong> Análise de gamificação que falhou (Foursquare, Klout, etc): o que deu errado, por quê, como poderia ter sido evitado.</p>
-                <p style="margin-top: 10px;"><strong>Entrega Esperada:</strong> Documento post-mortem 4-5 páginas + lições extraídas + aplicação a projetos próprios</p>
-                <p style="margin-top: 10px;"><strong>Dica de Avaliação:</strong> Use a rubrica fornecida. Foque em profundidade técnica e pensamento crítico, não apenas completude.</p>
-            </div>
-
-            <h3>Atividade 3: Proposta de Gamificação Real</h3>
-            <div class="dica-box">
-                <p><strong>Descrição:</strong> Propor sistema de gamificação para empresa/app real (pode fazer partnership). Pitch profissional.</p>
-                <p style="margin-top: 10px;"><strong>Entrega Esperada:</strong> Pitch deck completo + protótipo + business case + projeções de ROI</p>
-                <p style="margin-top: 10px;"><strong>Dica de Avaliação:</strong> Use a rubrica fornecida. Foque em profundidade técnica e pensamento crítico, não apenas completude.</p>
-            </div>
-        </div>
-
-        <div class="section">
-            <h2>📺 5. VÍDEOS DA SEMANA</h2>
-            <ul class="prep-list">
-                <li><strong>Nike+ Case Study</strong> - https://youtu.be/TqmAjhSKVKU</li>
-                <li><strong>Why Foursquare Failed</strong> - https://youtu.be/lN2l3qQr8X4</li>
-                <li><strong>Startup Success Factors</strong> - https://youtu.be/H_rBX2HFH1c</li>
-            </ul>
-            <div class="dica-box">
-                <strong>💡 Como Usar os Vídeos:</strong>
-                <p style="margin-top: 10px;">Não apenas reproduza - pause para discussão! Pergunte aos alunos: "O que vocês pensam sobre isso?" ou "Como implementariam em um jogo?"</p>
-            </div>
-        </div>
-
-        <div class="section">
-            <h2>❓ 6. FAQ DO PROFESSOR</h2>
-            
-            <div class="dica-box">
-                <strong>P: E se um aluno perguntar algo técnico que não sei?</strong><br>
-                R: Seja honesto: "Excelente pergunta técnica! Não tenho certeza agora, mas vamos pesquisar juntos" ou "Alguém da turma já trabalhou com isso?" Use conhecimento da turma.
-            </div>
-            
-            <div class="dica-box">
-                <strong>P: Como avaliar trabalhos muito técnicos se não domino a ferramenta?</strong><br>
-                R: Foque em: (1) Aluno explicou claramente o que fez? (2) Demonstrou pensamento crítico? (3) Conectou teoria com prática? (4) Código/projeto funciona? Peça demonstração ao vivo se necessário.
-            </div>
-            
-            <div class="dica-box">
-                <strong>P: Alunos do 6º semestre são muito avançados. Como acompanhar?</strong><br>
-                R: Use isso a favor! Peça que compartilhem conhecimentos. Transforme aula em discussão técnica. Seu papel é facilitar, não ser o único expert.
-            </div>
-        </div>
-
-        <div class="nav-buttons">
-            <a href="semana09_guia_professor.html" class="nav-button">⬅️ Guia Anterior</a>
-            <a href="semana10.html" class="nav-button">📄 Ver Aula da Semana</a>
-            <a href="semana11_guia_professor.html" class="nav-button">Próximo Guia ➡️</a>
+        <div class="header-badges">
+            <span class="badge badge-cyan">Módulo 2</span>
+            <span class="badge badge-amber">Gamificação Aplicada</span>
+            <span class="badge badge-green">2 alunos</span>
         </div>
     </div>
+</header>
+
+<div class="container">
+
+    <!-- ALERTA INICIAL -->
+    <div class="alert alert-red">
+        <span class="alert-icon">⚠️</span>
+        <div class="alert-text">
+            <h4>LEIA ANTES DE ENTRAR EM SALA</h4>
+            <p>Esta semana é sobre cases reais de mercado — não é técnica como cloud gaming ou game design puro. O risco é a aula ficar superficial ("ah, o Foursquare falhou porque virou o Swarm"). Seu papel é forçar a <strong>análise estruturada</strong>: por quê, o que causou, o que poderia ter sido diferente. Empurre os alunos para além do óbvio.</p>
+        </div>
+    </div>
+
+    <div class="alert alert-amber">
+        <span class="alert-icon">💡</span>
+        <div class="alert-text">
+            <h4>CONTEXTO DA TURMA: 6º SEMESTRE</h4>
+            <p>Estes alunos já desenvolvem jogos e conhecem conceitos de design. Use isso: peça que conectem cada case ao projeto deles. A pergunta "isso aconteceria no jogo que vocês estão criando?" transforma teoria em aplicação prática imediata.</p>
+        </div>
+    </div>
+
+    <!-- SEÇÃO 1: PREPARAÇÃO -->
+    <div class="section">
+        <div class="section-header">
+            <span class="section-number">01</span>
+            <h2>📋 PREPARAÇÃO PRÉ-AULA</h2>
+        </div>
+        <div class="section-body">
+            <p style="font-size:0.9em; color:var(--text-muted); margin-bottom:20px;">Marque cada item conforme conclui. Itens marcados ✦ são críticos.</p>
+            <ul class="prep-checklist">
+                <li>
+                    <div class="check-box" onclick="toggleCheck(this)"></div>
+                    <span><strong>✦ Ler todo o material do aluno</strong> — as 5 fichas de conceito, os 6 quizzes, os 3 desafios e as 3 missões. Você precisa saber as respostas antes de entrar.</span>
+                </li>
+                <li>
+                    <div class="check-box" onclick="toggleCheck(this)"></div>
+                    <span><strong>✦ Testar os 3 vídeos do YouTube</strong> — abrir no navegador que vai usar em aula. Nada mata o ritmo mais do que vídeo que não carrega na hora H.</span>
+                </li>
+                <li>
+                    <div class="check-box" onclick="toggleCheck(this)"></div>
+                    <span><strong>Estudar os 5 cases em profundidade</strong> — Nike+, Strava, Habitica, Foursquare, Klout. Use a seção de conceitos-chave deste guia para não depender só de memória.</span>
+                </li>
+                <li>
+                    <div class="check-box" onclick="toggleCheck(this)"></div>
+                    <span><strong>Preparar 1 exemplo pessoal</strong> — um app ou produto que você usa (ou usou) que claramente tem gamificação boa ou ruim. Exemplos pessoais do professor humanizam a aula.</span>
+                </li>
+                <li>
+                    <div class="check-box" onclick="toggleCheck(this)"></div>
+                    <span><strong>Conferir seção de respostas</strong> — seção 4 deste guia tem respostas completas dos 3 desafios. Leia antes para poder orientar sem consultar na frente dos alunos.</span>
+                </li>
+                <li>
+                    <div class="check-box" onclick="toggleCheck(this)"></div>
+                    <span><strong>Definir qual missão cada aluno fará</strong> — com 2 alunos, você pode fazer cada um escolher um case diferente para M1 e M2. Isso enriquece a discussão final.</span>
+                </li>
+            </ul>
+        </div>
+    </div>
+
+    <!-- SEÇÃO 2: CRONOGRAMA -->
+    <div class="section">
+        <div class="section-header">
+            <span class="section-number">02</span>
+            <h2>⏱ CRONOGRAMA DA AULA (120 min)</h2>
+        </div>
+        <div class="section-body">
+            <div class="schedule">
+                <div class="schedule-item">
+                    <div class="schedule-block">
+                        <div class="schedule-time">0:00 — 0:15 <span class="duration">15 min</span> 🚀 ABERTURA</div>
+                        <div class="schedule-content">
+                            <h4>Briefing e conexão com a semana anterior</h4>
+                            <p>Pergunte: "O que ficou da semana 9?" Conecte rapidamente ao tema de hoje: "Semana 9 vimos teoria de gamificação — hoje vamos ver o que acontece quando isso vai pra prática real." Leia o briefing da missão com os alunos. Mostre a barra de checkpoint e explique que vão subir de fase ao longo da aula.</p>
+                            <div class="tips-inline">💡 Dica: Se os alunos tiverem projeto em andamento, pergunte logo: "Vocês já usam alguma mecânica de gamificação no projeto?" Isso ativa o cérebro para o que vem.</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="schedule-item">
+                    <div class="schedule-block">
+                        <div class="schedule-time">0:15 — 0:40 <span class="duration">25 min</span> 🧠 FASE 1</div>
+                        <div class="schedule-content">
+                            <h4>Conceitos — Anatomia dos Cases</h4>
+                            <p>Os alunos exploram os 5 conceitos clicando para revelar. Circule entre eles enquanto leem. Para cada conceito revelado, faça UMA pergunta de aprofundamento (ver seção 3 deste guia). Não dê a resposta — pergunte, ouça, complemente.</p>
+                            <div class="tips-inline">💡 Se os alunos revelarem tudo rápido sem ler de verdade: peça que escolham 1 conceito e expliquem com as próprias palavras para você. Isso força assimilação real.</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="schedule-item">
+                    <div class="schedule-block">
+                        <div class="schedule-time">0:40 — 1:10 <span class="duration">30 min</span> 🎬 FASE 2</div>
+                        <div class="schedule-content">
+                            <h4>Vídeos — 3 vídeos com missão de observação</h4>
+                            <p>Para cada vídeo, lembre a missão de observação antes de apertar play. Pause 1–2 vezes por vídeo para perguntar: "Vocês já viram isso funcionar em algum lugar?" ou "Isso contradiz alguma coisa que vocês pensavam?" Dê 5 min ao final para os alunos anotarem as observações no papel.</p>
+                            <div class="tips-inline">💡 Se o tempo apertar: priorize o primeiro vídeo (Nike+) e o segundo (Foursquare). O terceiro é complementar — pode virar dever de casa com anotação escrita.</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="schedule-item">
+                    <div class="schedule-block">
+                        <div class="schedule-time">1:10 — 1:35 <span class="duration">25 min</span> ⚔️ FASE 3</div>
+                        <div class="schedule-content">
+                            <h4>Arena de Desafios — Quiz, Lacunas, Match</h4>
+                            <p>Os alunos fazem os 3 desafios de forma autônoma. Seu papel: circular, observar onde erram, e após o término discutir os erros coletivamente. Não dê dica antes do erro — deixe o sistema de feedback do quiz trabalhar. Use a seção de respostas deste guia para confirmar sem titubear.</p>
+                            <div class="tips-inline">💡 Se terminarem muito rápido: peça que justifiquem cada resposta em voz alta antes de passar para o próximo. "Por que você escolheu B e não C?" forma raciocínio crítico.</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="schedule-item">
+                    <div class="schedule-block">
+                        <div class="schedule-time">1:35 — 2:00 <span class="duration">25 min</span> 🚀 FASE 4</div>
+                        <div class="schedule-content">
+                            <h4>Missões Práticas — Trabalho autônomo + apresentação</h4>
+                            <p>Explique as 3 missões. Com 2 alunos, a configuração ideal é: Aluno A faz M1 (Sucesso) + M3 (Proposta), Aluno B faz M2 (Post-Mortem) + M3 (Proposta). Reserve 8 min para cada aluno apresentar sua missão principal. Use as perguntas de aprofundamento desta seção.</p>
+                            <div class="tips-inline">💡 Se não der tempo de apresentar tudo: exija pelo menos a M1 ou M2 com apresentação oral. A Missão 3 pode ser entregue por escrito na próxima semana.</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- SEÇÃO 3: CONCEITOS-CHAVE -->
+    <div class="section">
+        <div class="section-header">
+            <span class="section-number">03</span>
+            <h2>🧠 CONCEITOS-CHAVE COM PERGUNTAS DE APROFUNDAMENTO</h2>
+        </div>
+        <div class="section-body">
+
+            <div class="alert alert-blue" style="margin-bottom:20px;">
+                <span class="alert-icon">📖</span>
+                <div class="alert-text">
+                    <h4>Como usar esta seção</h4>
+                    <p>Para cada conceito que o aluno revelar na Fase 1, você tem: a explicação completa (para garantir que entendeu) + uma pergunta de aprofundamento para fazer enquanto o aluno ainda está no conceito. Faça apenas 1 pergunta por conceito — não sobrecarregue.</p>
+                </div>
+            </div>
+
+            <div class="concept-grid">
+                <div class="concept-card">
+                    <h4>🏃 Nike+ & Strava</h4>
+                    <p>Ambos transformaram atividade física solitária em experiência social gamificada. O loop é: correr → dados gerados → compartilhamento → reação social → motivação para correr de novo. O crucial é que a recompensa (melhoria física) é real e independe da plataforma.</p>
+                    <div class="teacher-note">🎓 Pergunta ao aluno: "Por que o loop do Strava não colapsa quando um amigo para de usar o app, mas o Foursquare colapsou? O que é diferente?"</div>
+                </div>
+                <div class="concept-card">
+                    <h4>🎮 Habitica</h4>
+                    <p>RPG de produtividade que usa penalidade real (perda de HP e equipamentos) como mecanismo central. A chave teórica: loss aversion (Kahneman) — perder algo dói 2x mais do que ganhar algo equivalente. Habitica aplica isso no core loop, não como feature opcional.</p>
+                    <div class="teacher-note">🎓 Pergunta ao aluno: "Se você removesse a penalidade de perda de HP e só mantivesse o ganho de XP, o Habitica ainda funcionaria? Por quê não?"</div>
+                </div>
+                <div class="concept-card">
+                    <h4>💀 Foursquare</h4>
+                    <p>Case clássico de gamificação superficial. O "Mayor" era uma badge de status sem impacto no mundo real. O colapso veio quando a base de usuários atingiu massa crítica negativa — quando os amigos saíram, o jogo perdeu sentido. Tentou pivot para dados de localização B2B (Swarm) mas já tinha perdido a confiança dos usuários.</p>
+                    <div class="teacher-note">🎓 Pergunta ao aluno: "Como você redesenharia o sistema de Mayor para que tivesse valor real? O que o 'Prefeito' poderia receber de um estabelecimento físico que fizesse sentido?"</div>
+                </div>
+                <div class="concept-card">
+                    <h4>📊 Klout & Google+</h4>
+                    <p>O Klout mediu influência de forma opaca — ninguém entendia o algoritmo e isso gerou desconfiança. O Google+ teve gamificação (circles, +1s) mas sem razão de existir além do Facebook. Lição: gamificação em produto sem propósito único é açúcar sem bolo.</p>
+                    <div class="teacher-note">🎓 Pergunta ao aluno: "Que produto ATUAL tem o mesmo problema do Klout — uma métrica que as pessoas não confiam ou não entendem? Por que isso acontece?"</div>
+                </div>
+                <div class="concept-card">
+                    <h4>🔄 Pivots: Slack & Instagram</h4>
+                    <p>Slack: ferramenta interna de comunicação da equipe do jogo Glitch virou produto. Instagram: app de check-in (Burbn) que foi reduzido ao que os usuários REALMENTE usavam (fotos). Em ambos, a análise de dados de comportamento real substituiu as suposições dos fundadores.</p>
+                    <div class="teacher-note">🎓 Pergunta ao aluno: "Se você fosse o fundador do Burbn e olhasse os dados mostrando que só fotos eram usadas, qual seria seu maior medo ao cortar todas as outras features?"</div>
+                </div>
+                <div class="concept-card">
+                    <h4>📋 Fatores Críticos de Sucesso (FCS)</h4>
+                    <p>Os FCS em gamificação bem-sucedida: (1) Loop vinculado a valor real, (2) Progressão visível e significativa, (3) Componente social calibrado, (4) Dados que geram insight para o usuário, (5) Onboarding fácil + maestria longa. Qualquer gamificação que falha viola pelo menos 1 destes.</p>
+                    <div class="teacher-note">🎓 Pergunta ao aluno: "Do projeto de jogo que vocês estão desenvolvendo, quantos desses 5 FCS vocês atendem hoje? Qual é o mais fraco?"</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- SEÇÃO 4: RESPOSTAS DOS DESAFIOS -->
+    <div class="section">
+        <div class="section-header">
+            <span class="section-number">04</span>
+            <h2>🔑 RESPOSTAS DOS DESAFIOS (GABARITO)</h2>
+        </div>
+        <div class="section-body">
+            <div class="alert alert-amber" style="margin-bottom:20px;">
+                <span class="alert-icon">⚠️</span>
+                <div class="alert-text">
+                    <h4>Não mostre este gabarito diretamente aos alunos</h4>
+                    <p>Use para confirmar respostas e dar feedback fundamentado. Se um aluno discordar de uma resposta, peça que argumente — às vezes a justificativa deles revela compreensão mais profunda do que a resposta correta "oficial".</p>
+                </div>
+            </div>
+
+            <button class="toggle-answers-btn" onclick="toggleAnswers()">👁 REVELAR / OCULTAR GABARITO COMPLETO</button>
+
+            <div id="answersContent" style="display:none;">
+
+                <h3 style="font-size:0.9em; font-weight:700; margin-bottom:12px; color:var(--text);">DESAFIO 1 — QUIZ (6 QUESTÕES)</h3>
+                <div class="answers-grid" style="margin-bottom:25px;">
+                    <div class="answer-card">
+                        <div class="q-num">QUESTÃO 1</div>
+                        <div class="q-answer">✅ B — Loop vinculado a valor real (melhoria física + social)</div>
+                        <div class="q-explain">Nike+ e Strava têm engajamento porque o benefício (ficar em forma, bater PR) existe independente da plataforma. O app amplifica algo que o usuário já quer.</div>
+                    </div>
+                    <div class="answer-card">
+                        <div class="q-num">QUESTÃO 2</div>
+                        <div class="q-answer">✅ C — Título sem valor funcional além da plataforma</div>
+                        <div class="q-explain">Ser "Mayor" não dava desconto no café, não gerava benefício real. Era um título que só existia dentro de um app que a maioria dos amigos já tinha abandonado.</div>
+                    </div>
+                    <div class="answer-card">
+                        <div class="q-num">QUESTÃO 3</div>
+                        <div class="q-answer">✅ B — Penalidades reais (perda de HP) como motivação</div>
+                        <div class="q-explain">A loss aversion é o mecanismo central do Habitica. A ameaça de perda motiva mais do que a promessa de ganho — isso é respaldado por décadas de pesquisa em economia comportamental (Kahneman).</div>
+                    </div>
+                    <div class="answer-card">
+                        <div class="q-num">QUESTÃO 4</div>
+                        <div class="q-answer">✅ B — Jogo online Glitch, descontinuado comercialmente</div>
+                        <div class="q-explain">O Glitch foi um MMORPG experimental que não atingiu adoção suficiente. A equipe percebeu que o sistema de chat interno era mais valioso que o próprio jogo e pivotou para o Slack.</div>
+                    </div>
+                    <div class="answer-card">
+                        <div class="q-num">QUESTÃO 5</div>
+                        <div class="q-answer">✅ C — O loop estava vinculado a valor real para o usuário?</div>
+                        <div class="q-explain">A primeira pergunta de qualquer post-mortem de gamificação: o que o usuário ganhava de real ao usar o produto? Se a resposta for "pontos no sistema", o produto estava construído em areia.</div>
+                    </div>
+                    <div class="answer-card">
+                        <div class="q-num">QUESTÃO 6</div>
+                        <div class="q-answer">✅ D — App de check-in social chamado Burbn</div>
+                        <div class="q-explain">O Burbn tinha check-ins, pontos e badges — bem parecido com Foursquare. Os fundadores Kevin Systrom e Mike Krieger analisaram os dados e viram que só a feature de fotos era usada. Cortaram tudo e relançaram como Instagram.</div>
+                    </div>
+                </div>
+
+                <h3 style="font-size:0.9em; font-weight:700; margin-bottom:12px; color:var(--text);">DESAFIO 2 — COMPLETE AS LACUNAS</h3>
+                <div class="info-box" style="margin-bottom:20px;">
+                    <h4>RESPOSTAS ACEITAS</h4>
+                    <ul>
+                        <li><strong>1.</strong> recompensa (aceite: "gamificação vazia", "recompensa vazia", "badge vazia")</li>
+                        <li><strong>2.</strong> penalidade (aceite: "punição", "perda", "loss", "loss aversion")</li>
+                        <li><strong>3.</strong> pivot (aceite: "pivô", "pivotaram", "mudança de produto")</li>
+                        <li><strong>4.</strong> intrínseco (aceite: "real", "concreto", "genuíno") — o ponto é que o benefício existe fora do app</li>
+                        <li><strong>5.</strong> post-mortem (aceite: "análise post-mortem", "autopsia do produto", "retrospectiva de fracasso")</li>
+                    </ul>
+                </div>
+
+                <h3 style="font-size:0.9em; font-weight:700; margin-bottom:12px; color:var(--text);">DESAFIO 3 — PARES CORRETOS (MATCH)</h3>
+                <div class="info-box">
+                    <h4>COMBINAÇÕES CORRETAS</h4>
+                    <ul>
+                        <li>🏃 <strong>Nike+ & Strava</strong> → "Loop social com valor intrínseco real (saúde física)"</li>
+                        <li>💀 <strong>Foursquare</strong> → "Recompensas vazias sem valor funcional além da plataforma"</li>
+                        <li>🎮 <strong>Habitica</strong> → "Penalidade de perda (loss aversion) como mecânica central"</li>
+                        <li>📸 <strong>Instagram</strong> → "Pivot radical baseado em dados de comportamento real"</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- SEÇÃO 5: RUBRICA DE AVALIAÇÃO -->
+    <div class="section">
+        <div class="section-header">
+            <span class="section-number">05</span>
+            <h2>📊 RUBRICA DE AVALIAÇÃO — MISSÕES PRÁTICAS</h2>
+        </div>
+        <div class="section-body">
+
+            <div class="alert alert-blue" style="margin-bottom:20px;">
+                <span class="alert-icon">⚖️</span>
+                <div class="alert-text">
+                    <h4>Como usar esta rubrica</h4>
+                    <p>Com 1–2 alunos, a avaliação oral é mais rica do que o texto escrito. Peça que expliquem o raciocínio — você avalia se entenderam os mecanismos, não se encontraram os fatos corretos. Um aluno que erra o case mas demonstra compreensão do padrão de falha merece mais crédito do que um que acerta o case mas não sabe por quê.</p>
+                </div>
+            </div>
+
+            <div class="activity-guide">
+                <div class="activity-guide-header">
+                    <div class="act-number">M1</div>
+                    <div>
+                        <h3>Deep Dive em Case de Sucesso</h3>
+                        <p style="font-size:0.82em; color:var(--text-muted);">Missão investigativa · Análise estruturada</p>
+                    </div>
+                    <div class="act-type">Peso: 33%</div>
+                </div>
+                <div class="activity-guide-body">
+                    <table class="rubric-table">
+                        <tr>
+                            <th>Critério</th>
+                            <th>Excelente (A)</th>
+                            <th>Adequado (B)</th>
+                            <th>Incompleto (C)</th>
+                        </tr>
+                        <tr>
+                            <td>Loop de engajamento</td>
+                            <td><span class="score-badge score-a">A</span> Loop mapeado com trigger, ação, recompensa e investimento claramente identificados</td>
+                            <td><span class="score-badge score-b">B</span> Loop descrito mas faltando 1 elemento ou com elementos confusos</td>
+                            <td><span class="score-badge score-c">C</span> Apenas lista de features sem mapeamento do loop</td>
+                        </tr>
+                        <tr>
+                            <td>Fatores Críticos de Sucesso</td>
+                            <td><span class="score-badge score-a">A</span> 3 FCS específicos do case com justificativa que diferencia do concorrente</td>
+                            <td><span class="score-badge score-b">B</span> 2 FCS ou FCS genéricos ("boa UX", "marketing forte")</td>
+                            <td><span class="score-badge score-c">C</span> Menos de 2 FCS ou sem justificativa</td>
+                        </tr>
+                        <tr>
+                            <td>Aplicação ao projeto próprio</td>
+                            <td><span class="score-badge score-a">A</span> Lição concreta e aplicável com reflexão honesta sobre o projeto atual</td>
+                            <td><span class="score-badge score-b">B</span> Lição identificada mas vaga ou hipotética</td>
+                            <td><span class="score-badge score-c">C</span> Sem conexão com o projeto ou lição copiada do material</td>
+                        </tr>
+                    </table>
+                    <div class="info-box" style="margin-top:15px;">
+                        <h4>PERGUNTA DE APROFUNDAMENTO PARA ORAL</h4>
+                        <p>"Se o Strava tivesse sido lançado em 2023, com as redes sociais que existem hoje, ele ainda teria o mesmo sucesso? O que mudaria na estratégia?" — Avalie se o aluno entende que o contexto de mercado é tão importante quanto a mecânica.</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="activity-guide">
+                <div class="activity-guide-header">
+                    <div class="act-number">M2</div>
+                    <div>
+                        <h3>Post-Mortem de Fracasso</h3>
+                        <p style="font-size:0.82em; color:var(--text-muted);">Missão de análise crítica · Diagnóstico de produto</p>
+                    </div>
+                    <div class="act-type">Peso: 33%</div>
+                </div>
+                <div class="activity-guide-body">
+                    <table class="rubric-table">
+                        <tr>
+                            <th>Critério</th>
+                            <th>Excelente (A)</th>
+                            <th>Adequado (B)</th>
+                            <th>Incompleto (C)</th>
+                        </tr>
+                        <tr>
+                            <td>Diagnóstico dos erros</td>
+                            <td><span class="score-badge score-a">A</span> 3 erros identificados com causa, impacto e alternativa concreta para cada</td>
+                            <td><span class="score-badge score-b">B</span> 2 erros ou erros sem alternativa proposta</td>
+                            <td><span class="score-badge score-c">C</span> Apenas 1 erro ou descrição do fracasso sem análise causal</td>
+                        </tr>
+                        <tr>
+                            <td>Causa mortis</td>
+                            <td><span class="score-badge score-a">A</span> Identifica o erro fatal com argumentação que distingue de erros secundários</td>
+                            <td><span class="score-badge score-b">B</span> Identifica uma causa mas não diferencia de outros erros</td>
+                            <td><span class="score-badge score-c">C</span> Não consegue identificar o erro principal</td>
+                        </tr>
+                        <tr>
+                            <td>Checklist antifalha</td>
+                            <td><span class="score-badge score-a">A</span> 5 perguntas acionáveis que qualquer designer poderia usar antes do lançamento</td>
+                            <td><span class="score-badge score-b">B</span> 3–4 perguntas ou perguntas muito genéricas</td>
+                            <td><span class="score-badge score-c">C</span> Menos de 3 perguntas ou checklist não relacionado ao case</td>
+                        </tr>
+                    </table>
+                    <div class="info-box" style="margin-top:15px;">
+                        <h4>PERGUNTA DE APROFUNDAMENTO PARA ORAL</h4>
+                        <p>"Se você fosse contratado como consultor pelo Foursquare em 2012 (1 ano antes do colapso), o que você recomendaria mudar? Você teria coragem de recomendar abandonar o sistema de gamificação que foi o grande diferencial deles?" — Avalie pensamento crítico e capacidade de decisão difícil.</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="activity-guide">
+                <div class="activity-guide-header">
+                    <div class="act-number">M3</div>
+                    <div>
+                        <h3>Proposta de Gamificação Real</h3>
+                        <p style="font-size:0.82em; color:var(--text-muted);">Missão de criação · Pitch profissional</p>
+                    </div>
+                    <div class="act-type">Peso: 33%</div>
+                </div>
+                <div class="activity-guide-body">
+                    <table class="rubric-table">
+                        <tr>
+                            <th>Critério</th>
+                            <th>Excelente (A)</th>
+                            <th>Adequado (B)</th>
+                            <th>Incompleto (C)</th>
+                        </tr>
+                        <tr>
+                            <td>Diagnóstico do problema</td>
+                            <td><span class="score-badge score-a">A</span> Problema de engajamento real e específico com métrica de melhoria definida</td>
+                            <td><span class="score-badge score-b">B</span> Problema identificado mas métrica vaga ("melhorar o engajamento")</td>
+                            <td><span class="score-badge score-c">C</span> Empresa escolhida mas problema não identificado claramente</td>
+                        </tr>
+                        <tr>
+                            <td>Mecânicas propostas</td>
+                            <td><span class="score-badge score-a">A</span> 3 mecânicas com justificativa de por que não serão recompensas vazias (lição do Foursquare)</td>
+                            <td><span class="score-badge score-b">B</span> 2 mecânicas ou mecânicas sem justificativa de valor real</td>
+                            <td><span class="score-badge score-c">C</span> Mecânicas genéricas sem conexão com o comportamento que querem mudar</td>
+                        </tr>
+                        <tr>
+                            <td>Métricas de sucesso</td>
+                            <td><span class="score-badge score-a">A</span> 2 métricas específicas e mensuráveis com hipótese de melhoria fundamentada em dados de cases</td>
+                            <td><span class="score-badge score-b">B</span> Métricas identificadas mas sem hipótese de melhoria</td>
+                            <td><span class="score-badge score-c">C</span> Sem métricas ou métricas não mensuráveis</td>
+                        </tr>
+                    </table>
+                    <div class="info-box" style="margin-top:15px;">
+                        <h4>PERGUNTA DE APROFUNDAMENTO PARA ORAL</h4>
+                        <p>"Em 6 meses, como você saberia se sua gamificação está funcionando ou se está virando outro Foursquare? Que sinal de alerta você monitoraria?" — Avalie se o aluno pensa em métricas de saúde do engajamento, não só de crescimento.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- SEÇÃO 6: FAQ -->
+    <div class="section">
+        <div class="section-header">
+            <span class="section-number">06</span>
+            <h2>❓ FAQ — DÚVIDAS FREQUENTES DOS ALUNOS</h2>
+        </div>
+        <div class="section-body">
+
+            <div class="faq-item">
+                <div class="faq-question" onclick="toggleFaq(this)">
+                    <span>🔴</span> "Mas o Foursquare ainda existe! Não faliu de verdade."
+                    <span class="faq-icon">▼</span>
+                </div>
+                <div class="faq-answer">
+                    <p><strong>Resposta completa:</strong> Ótima observação! O Foursquare sobreviveu, mas não como o produto original. Eles fizeram um pivot radical: separaram o app em dois (Swarm para check-ins, Foursquare City Guide para descoberta de lugares) e pivotaram o negócio para vender dados de localização B2B para empresas.</p>
+                    <p>O que analisamos como "fracasso" é o colapso do modelo de gamificação social — a proposta original. O negócio de dados foi o que salvou a empresa. Isso na verdade confirma a lição do pivot: às vezes o produto inicial falha, mas a infraestrutura construída tem valor diferente.</p>
+                </div>
+            </div>
+
+            <div class="faq-item">
+                <div class="faq-question" onclick="toggleFaq(this)">
+                    <span>💬</span> "O Duolingo também usa gamificação. Por que não falhou como os outros?"
+                    <span class="faq-icon">▼</span>
+                </div>
+                <div class="faq-answer">
+                    <p>Pergunta excelente — o Duolingo é um case de sucesso que pode ser usado como contraponto! A razão fundamental: o loop de engajamento do Duolingo está vinculado a <strong>aprendizado real de idiomas</strong>. A gamificação (streaks, XP, ligas) amplifica um valor intrínseco que o usuário já quer — falar outro idioma.</p>
+                    <p>Além disso, o Duolingo é científico sobre testes A/B de mecânicas — eles medem obsessivamente quais gamificações aumentam aprendizado real e quais só aumentam engajamento superficial. É um case de gamificação responsável. Vale usar como exemplo de FCS aplicados corretamente.</p>
+                </div>
+            </div>
+
+            <div class="faq-item">
+                <div class="faq-question" onclick="toggleFaq(this)">
+                    <span>💬</span> "Na Missão 3, posso escolher meu próprio jogo em desenvolvimento como empresa alvo?"
+                    <span class="faq-icon">▼</span>
+                </div>
+                <div class="faq-answer">
+                    <p><strong>Sim — e isso é até preferível!</strong> Propor gamificação para o próprio projeto força o aluno a pensar na questão mais difícil: "meu próprio jogo tem loop de valor real, ou estou cometendo o erro do Foursquare?"</p>
+                    <p>Se o aluno escolher o próprio projeto, exija que identifique um problema REAL de engajamento (não hipotético). Ex.: "meu jogo tem retenção baixa no terceiro dia" é um problema real. "poderia ter mais jogadores" não é específico o suficiente.</p>
+                </div>
+            </div>
+
+            <div class="faq-item">
+                <div class="faq-question" onclick="toggleFaq(this)">
+                    <span>💬</span> "A gamificação do LinkedIn funciona? Aquela barra de 'perfil completo'?"
+                    <span class="faq-icon">▼</span>
+                </div>
+                <div class="faq-answer">
+                    <p>Pergunta técnica excelente! Sim, funciona bem — é um dos melhores exemplos de gamificação discreta e eficaz em produto B2C. A barra de progresso do perfil usa o princípio de completion compulsion: cérebros humanos detestam ver uma barra de progresso em 80%.</p>
+                    <p>O que torna funcional: o benefício de completar (mais visibilidade para recrutadores = mais oportunidades de emprego) é <strong>real e específico</strong>. Não é uma badge genérica — é uma promessa de valor concreto. Isso é o oposto do Foursquare. Use como exemplo de gamificação que segue os FCS sem ser explícita em mecânicas de jogo.</p>
+                </div>
+            </div>
+
+            <div class="faq-item">
+                <div class="faq-question" onclick="toggleFaq(this)">
+                    <span>💬</span> "E se eu não sei nada sobre esses apps e os alunos sabem mais?"
+                    <span class="faq-icon">▼</span>
+                </div>
+                <div class="faq-answer">
+                    <p>Transforme em vantagem pedagógica: <strong>"Que ótimo — me mostre o que você sabe. Vamos analisar juntos se o que você observa confirma ou contradiz os FCS do material."</strong></p>
+                    <p>Com alunos de 6º semestre que usam esses produtos, seu papel não é ser o maior expert nos apps — é ser o facilitador da <strong>análise estruturada</strong>. Você conhece o framework; eles conhecem os produtos. Juntos vocês chegam mais longe do que qualquer um dos dois sozinho.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- SEÇÃO 7: DICAS PARA TURMA PEQUENA -->
+    <div class="section">
+        <div class="section-header">
+            <span class="section-number">07</span>
+            <h2>💡 DICAS PARA UMA TURMA DE 1–2 ALUNOS</h2>
+        </div>
+        <div class="section-body">
+            <div class="quick-tips">
+                <div class="tip-card">
+                    <span class="tip-icon">🎯</span>
+                    <h4>Divisão de cases entre alunos</h4>
+                    <p>Com 2 alunos, atribua cases diferentes para M1 e M2: um faz Strava + Foursquare, o outro faz Habitica + Klout. A troca na apresentação final multiplica o aprendizado sem duplicar o esforço.</p>
+                </div>
+                <div class="tip-card">
+                    <span class="tip-icon">⏱</span>
+                    <h4>Alerta de tempo</h4>
+                    <p>Avise quando faltarem 20 min ("fase 4 agora") e 10 min ("prepare sua apresentação"). Alunos tendem a se perder nos vídeos. Sem âncora de tempo, a Fase 4 fica sem tempo real.</p>
+                </div>
+                <div class="tip-card">
+                    <span class="tip-icon">🔥</span>
+                    <h4>Se terminar cedo</h4>
+                    <p>Peça que façam todas as 3 missões, ou aprofunde: "Sua Missão 3 tem 3 mecânicas — adicione uma quarta inspirada diretamente no case de sucesso que você estudou."</p>
+                </div>
+                <div class="tip-card">
+                    <span class="tip-icon">💀</span>
+                    <h4>Se travar nos desafios</h4>
+                    <p>Se errar quiz repetidamente, diga: "Volte ao conceito X na Fase 1 e releia a seção de 'Fatores Críticos'." Não dê a resposta — redirecione para o material que já tem a explicação.</p>
+                </div>
+                <div class="tip-card">
+                    <span class="tip-icon">📱</span>
+                    <h4>Usar celular como recurso</h4>
+                    <p>Esta semana, deixar o aluno abrir o app do Strava, LinkedIn ou Habitica durante a aula é pedagogicamente válido — eles podem identificar mecânicas em tempo real enquanto leem o material.</p>
+                </div>
+                <div class="tip-card">
+                    <span class="tip-icon">🏆</span>
+                    <h4>XP como reflexão</h4>
+                    <p>Ao final, pergunte: "O sistema de XP desta aula tem valor real para você, ou é como o Mayor do Foursquare?" Isso fecha a aula de forma reflexiva e aplica o próprio tema ao material pedagógico.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- FOOTER NAV -->
+    <div class="nav-footer">
+        <a href="semana09_guia_professor.html" class="nav-btn">← Guia Semana 09</a>
+        <a href="semana10.html" class="nav-btn nav-btn-alt">📄 Ver Material do Aluno</a>
+        <a href="semana11_guia_professor.html" class="nav-btn">Guia Semana 11 →</a>
+    </div>
+
+</div>
+
+<script>
+    function toggleCheck(el) {
+        el.classList.toggle('checked');
+    }
+
+    function toggleAnswers() {
+        const c = document.getElementById('answersContent');
+        c.style.display = c.style.display === 'none' ? 'block' : 'none';
+    }
+
+    function toggleFaq(trigger) {
+        const answer = trigger.nextElementSibling;
+        const isOpen = trigger.classList.contains('open');
+        document.querySelectorAll('.faq-question').forEach(q => {
+            q.classList.remove('open');
+            q.nextElementSibling.classList.remove('open');
+        });
+        if (!isOpen) {
+            trigger.classList.add('open');
+            answer.classList.add('open');
+        }
+    }
+</script>
 </body>
 </html>
