@@ -241,6 +241,19 @@
             gap: 15px;
             margin-top: 20px;
         }
+        .illustration-card {
+            margin-top: 25px;
+            padding: 22px;
+            border: 1px solid rgba(0,245,255,0.12);
+            border-radius: 16px;
+            background: rgba(0,0,0,0.28);
+        }
+        .illustration-svg {
+            border: 1px solid rgba(255,255,255,0.08);
+            border-radius: 16px;
+            padding: 12px;
+            background: rgba(255,255,255,0.02);
+        }
 
         .briefing-item {
             background: rgba(255,255,255,0.03);
@@ -1030,8 +1043,35 @@
                     <div class="bi-value">1200 XP</div>
                 </div>
             </div>
+            <div class="illustration-card">
+                <h3 style="font-family:'Orbitron',monospace; font-size:0.95em; color:var(--neon-cyan); letter-spacing:1px; margin-bottom:18px;">▶ ILUSTRAÇÃO PRÁTICA</h3>
+                <div class="illustration-svg">
+                    <svg viewBox="0 0 900 260" preserveAspectRatio="xMidYMid meet" style="width:100%; height:260px; display:block;">
+                        <defs>
+                            <linearGradient id="gradCloud" x1="0%" y1="0%" x2="100%" y2="100%">
+                                <stop offset="0%" stop-color="#00f5ff" stop-opacity="0.4"/>
+                                <stop offset="100%" stop-color="#bf00ff" stop-opacity="0.25"/>
+                            </linearGradient>
+                        </defs>
+                        <rect x="10" y="40" width="220" height="140" rx="20" ry="20" fill="rgba(255,255,255,0.06)" stroke="rgba(0,245,255,0.2)" stroke-width="2"/>
+                        <text x="120" y="70" text-anchor="middle" fill="#cbd5e1" font-family="Rajdhani, sans-serif" font-size="18">Seu Dispositivo</text>
+                        <text x="120" y="105" text-anchor="middle" fill="#9b9bff" font-family="Share Tech Mono, monospace" font-size="14">PC / Celular / TV</text>
+                        <circle cx="230" cy="130" r="8" fill="#00f5ff"/>
+                        <path d="M238 125 C340 90 420 80 520 100" fill="none" stroke="#00f5ff" stroke-width="3" stroke-dasharray="12,8"/>
+                        <rect x="500" y="20" width="300" height="160" rx="20" ry="20" fill="url(#gradCloud)" stroke="rgba(191,0,255,0.3)" stroke-width="2"/>
+                        <text x="650" y="55" text-anchor="middle" fill="#e2e8f0" font-family="Orbitron, monospace" font-size="18">Servidor na Nuvem</text>
+                        <text x="650" y="85" text-anchor="middle" fill="#cbd5e1" font-family="Share Tech Mono, monospace" font-size="14">Renderiza o jogo</text>
+                        <circle cx="640" cy="120" r="8" fill="#bf00ff"/>
+                        <path d="M620 160 C560 175 420 180 330 160" fill="none" stroke="#ffd700" stroke-width="3" stroke-dasharray="8,8"/>
+                        <polygon points="330,155 340,165 330,175" fill="#ffd700"/>
+                        <text x="120" y="190" text-anchor="middle" fill="#a8f2ff" font-family="Share Tech Mono, monospace" font-size="13">1. Input do jogador</text>
+                        <text x="650" y="200" text-anchor="middle" fill="#a8f2ff" font-family="Share Tech Mono, monospace" font-size="13">2. Renderização & compressão</text>
+                        <text x="650" y="225" text-anchor="middle" fill="#a8f2ff" font-family="Share Tech Mono, monospace" font-size="13">3. Stream de vídeo chega rápido</text>
+                    </svg>
+                </div>
+                <p style="margin-top:16px; color:var(--text-primary); font-size:1em; line-height:1.7;">No fluxo do jogo, seu controle envia o comando para a nuvem, o servidor processa o mundo do jogo e devolve a imagem. É esse ciclo que precisa ser super-rápido em jogos digitais como <strong>FPS, esportes e simuladores</strong>.</p>
+            </div>
         </div>
-    </div>
 
     <!-- CHECKPOINT BAR -->
     <div class="checkpoint-bar">
@@ -1094,8 +1134,8 @@
                 </div>
                 <div class="concept-body" id="c2">
                     <p><strong>Latência</strong> é o tempo entre você apertar um botão e ver a resposta na tela. Medida em <strong>milissegundos (ms)</strong>. É o maior desafio técnico do cloud gaming.</p>
-                    <p>Em jogos locais, a latência de input é tipicamente <strong>1–5ms</strong>. No cloud gaming, você soma: tempo de upload do input + processamento no servidor + compressão de vídeo + download + descompressão. Isso facilmente chega a <strong>40–100ms</strong>.</p>
-                    <div class="analogy">💡 Jogos como Rocket League ou CS:GO se tornam muito difíceis com alta latência. Jogos de aventura single-player quase não sofrem impacto.</div>
+                    <p>Em jogos locais, a latência de input é tipicamente <strong>1–5ms</strong>. No cloud gaming, você soma: tempo de upload do input + processamento no servidor + compressão de vídeo + download + descompressão. Isso facilmente chega a <strong>40–100ms</strong>, e pode mudar uma partida de <strong>Fortnite</strong> ou <strong>CS:GO</strong>.</p>
+                    <div class="analogy">💡 Em jogos de tiro e corrida, cada milissegundo conta. Em jogos de aventura ou RPG por turnos, uma latência de 80ms pode ser aceitável.</div>
                     <div class="tech-detail">TOLERÂNCIA POR GÊNERO:
 • RPG / Aventura → até 150ms OK
 • Plataformer → até 80ms OK
@@ -1111,7 +1151,7 @@
                 </div>
                 <div class="concept-body" id="c3">
                     <p>O frame do jogo renderizado no servidor precisa ser comprimido e enviado via rede em frações de segundo. Isso é feito por <strong>codecs de vídeo</strong>. Os mais usados em cloud gaming são <strong>H.264, H.265 (HEVC) e AV1</strong>.</p>
-                    <p>O desafio: codecs tradicionais como H.264 introduzem <strong>artefatos visuais</strong> (borramento, pixelização) em cenas com muita ação. O AV1 melhora a qualidade mas exige mais processamento para encodar.</p>
+                    <p>O desafio: codecs tradicionais como H.264 introduzem <strong>artefatos visuais</strong> (borramento, pixelização) em cenas com muita ação. Em jogos como <strong>FIFA</strong> ou <strong>Forza Horizon</strong>, isso aparece nos movimentos rápidos dos jogadores e carros. O AV1 melhora a qualidade, mas exige mais processamento para encodar.</p>
                     <div class="tech-detail">NVIDIA usa NVENC (hardware encoder) para H.265 ultra-rápido.
 Xbox Cloud usa H.264 para compatibilidade ampla.
 GeForce Now suporta AV1 com plano premium.</div>
@@ -1166,12 +1206,26 @@ GeForce Now suporta AV1 com plano premium.</div>
                     <span class="concept-trigger-icon">▼</span>
                 </div>
                 <div class="concept-body" id="c5">
-                    <p>Cloud gaming não é só uma mudança de infraestrutura — ela <strong>muda como os jogos devem ser projetados</strong>.</p>
-                    <p><strong>Restrições a considerar:</strong> Evitar mecânicas frame-perfect. Evitar gêneros hiperdependentes de latência baixa (FPS competitivo). Considerar que o jogador pode estar no celular com touchscreen.</p>
-                    <p><strong>Oportunidades únicas:</strong> Mundos persistentes compartilhados por milhares de jogadores no mesmo servidor. Jogos com grafismo de console em qualquer dispositivo. Experiências únicas com processamento pesado no servidor (física avançada, IA complexa).</p>
+                    <p>Cloud gaming não é só uma mudança de infraestrutura — ela <strong>muda como os jogos devem ser projetados</strong>, especialmente nos gêneros que precisam rodar bem em qualquer dispositivo.</p>
+                    <p><strong>Restrições a considerar:</strong></p>
+                    <ul style="color:var(--text-primary); line-height:1.8; margin-left:18px; margin-bottom:12px;">
+                        <li>Evitar mecânicas frame-perfect (parry em 1/60 de segundo, reflexos de shooter hardcore).</li>
+                        <li>Evitar controles precisos demais se o jogador usar touchscreen ou controle Bluetooth com atraso.</li>
+                        <li>Ter cuidado com gráficos que perdem legibilidade quando comprimidos em vídeo.</li>
+                    </ul>
+                    <p><strong>Oportunidades únicas:</strong></p>
+                    <ul style="color:var(--text-primary); line-height:1.8; margin-left:18px; margin-bottom:12px;">
+                        <li>Mundos persistentes com muitos jogadores sem depender do hardware do usuário.</li>
+                        <li>Física avançada e IA complexa processadas no servidor, como em um simulador de voo.</li>
+                        <li>Cross-play instantâneo em múltiplas telas: PC, TV, celular e até navegador em sala de aula.</li>
+                    </ul>
                     <div class="callout callout-success">
                         <span class="callout-icon">🌟</span>
-                        <span class="callout-text"><strong>Exemplo real:</strong> Microsoft criou o Microsoft Flight Simulator onde parte do processamento do terreno do mundo inteiro fica nos servidores Azure — impossível localmente.</span>
+                        <span class="callout-text"><strong>Exemplo real:</strong> Microsoft Flight Simulator usa servidores Azure para gerar terreno do mundo inteiro e enviar o streaming ao jogador, algo impossível de rodar localmente em um notebook comum.</span>
+                    </div>
+                    <div class="callout callout-info" style="margin-top:14px;">
+                        <span class="callout-icon">🎮</span>
+                        <span class="callout-text">Como designer de jogos digitais, pense: se seu jogo fosse hospedado na nuvem, ele deveria funcionar bem no celular e ainda oferecer experiência rica. Um bom conceito é um RPG de mundo aberto com combate baseado em escolhas e ambiente dinâmico, não um shooter competitivo puro.</span>
                     </div>
                 </div>
             </div>
