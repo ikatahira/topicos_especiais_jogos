@@ -3,168 +3,1153 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>GUIA PROFESSOR - Semana 11 - Cloud Gaming</title>
+    <title>GUIA PROFESSOR — Semana 11 · Cloud Gaming</title>
+    <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;600&family=IBM+Plex+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
     <style>
+        :root {
+            --blue-dark: #0f2044;
+            --blue-mid: #1a3a6e;
+            --blue-accent: #2563eb;
+            --blue-light: #3b82f6;
+            --cyan: #06b6d4;
+            --green: #10b981;
+            --amber: #f59e0b;
+            --red: #ef4444;
+            --purple: #8b5cf6;
+            --text: #1e293b;
+            --text-muted: #64748b;
+            --bg: #f1f5f9;
+            --white: #ffffff;
+            --border: #e2e8f0;
+        }
+
         * { margin: 0; padding: 0; box-sizing: border-box; }
-        body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; line-height: 1.6; background: #f5f5f5; }
-        .header { background: linear-gradient(135deg, #1e3c72 0%, #2a5298 100%); color: white; padding: 30px 20px; box-shadow: 0 4px 20px rgba(0,0,0,0.2); }
-        .header h1 { font-size: 2em; margin-bottom: 10px; }
-        .alert-box { background: #ff6b6b; color: white; padding: 20px; margin: 20px 0; border-radius: 10px; }
-        .container { max-width: 1200px; margin: 20px auto; padding: 0 20px; }
-        .section { background: white; margin: 25px 0; padding: 35px; border-radius: 12px; box-shadow: 0 2px 15px rgba(0,0,0,0.1); }
-        .section h2 { color: #1e3c72; font-size: 1.9em; margin-bottom: 20px; border-bottom: 4px solid #2a5298; padding-bottom: 12px; }
-        .section h3 { color: #2a5298; font-size: 1.4em; margin: 30px 0 15px 0; }
-        .prep-list { background: #e7f5ff; padding: 20px; border-radius: 8px; border-left: 5px solid #1971c2; }
-        .prep-list li { margin: 12px 0; padding-left: 10px; }
-        .concept-box { background: #fff3bf; padding: 25px; margin: 20px 0; border-radius: 10px; border-left: 5px solid #fab005; }
-        .example-box { background: #d3f9d8; padding: 25px; margin: 20px 0; border-radius: 10px; border-left: 5px solid #37b24d; }
-        .dica-box { background: #e7f5ff; padding: 20px; margin: 15px 0; border-radius: 8px; border-left: 5px solid #1971c2; }
-        .nav-buttons { display: flex; justify-content: space-between; margin: 30px 0; }
-        .nav-button { padding: 15px 30px; background: linear-gradient(135deg, #1e3c72 0%, #2a5298 100%); color: white; text-decoration: none; border-radius: 8px; font-weight: bold; }
+
+        body {
+            font-family: 'IBM Plex Sans', sans-serif;
+            background: var(--bg);
+            color: var(--text);
+            line-height: 1.6;
+        }
+
+        /* ===== HEADER ===== */
+        .master-header {
+            background: linear-gradient(135deg, var(--blue-dark) 0%, var(--blue-mid) 100%);
+            color: white;
+            padding: 0;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.3);
+        }
+
+        .confidential-bar {
+            background: var(--red);
+            text-align: center;
+            padding: 6px;
+            font-family: 'IBM Plex Mono', monospace;
+            font-size: 0.75em;
+            font-weight: 600;
+            letter-spacing: 3px;
+            text-transform: uppercase;
+        }
+
+        .header-main {
+            max-width: 1100px;
+            margin: 0 auto;
+            padding: 20px 30px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 20px;
+        }
+
+        .header-left h1 {
+            font-size: 1.6em;
+            font-weight: 700;
+            margin-bottom: 4px;
+        }
+        .header-left p {
+            font-size: 0.9em;
+            opacity: 0.7;
+            font-family: 'IBM Plex Mono', monospace;
+        }
+
+        .header-badges {
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+        }
+        .badge {
+            padding: 6px 14px;
+            border-radius: 20px;
+            font-size: 0.75em;
+            font-weight: 600;
+            letter-spacing: 0.5px;
+        }
+        .badge-cyan { background: rgba(6,182,212,0.2); color: var(--cyan); border: 1px solid rgba(6,182,212,0.4); }
+        .badge-amber { background: rgba(245,158,11,0.2); color: var(--amber); border: 1px solid rgba(245,158,11,0.4); }
+        .badge-green { background: rgba(16,185,129,0.2); color: var(--green); border: 1px solid rgba(16,185,129,0.4); }
+
+        /* ===== CONTAINER ===== */
+        .container {
+            max-width: 1100px;
+            margin: 0 auto;
+            padding: 30px 30px 80px;
+        }
+
+        /* ===== ALERT BLOCKS ===== */
+        .alert {
+            border-radius: 10px;
+            padding: 20px 25px;
+            margin-bottom: 25px;
+            display: flex;
+            gap: 15px;
+            align-items: flex-start;
+        }
+        .alert-red { background: #fef2f2; border: 1px solid #fecaca; border-left: 4px solid var(--red); }
+        .alert-amber { background: #fffbeb; border: 1px solid #fde68a; border-left: 4px solid var(--amber); }
+        .alert-blue { background: #eff6ff; border: 1px solid #bfdbfe; border-left: 4px solid var(--blue-accent); }
+        .alert-green { background: #f0fdf4; border: 1px solid #bbf7d0; border-left: 4px solid var(--green); }
+        .alert-icon { font-size: 1.5em; flex-shrink: 0; margin-top: 2px; }
+        .alert-text h4 { font-weight: 700; margin-bottom: 6px; color: var(--text); font-size: 0.95em; }
+        .alert-text p, .alert-text li { font-size: 0.9em; color: var(--text-muted); line-height: 1.7; }
+        .alert-text ul { margin-left: 15px; margin-top: 8px; }
+
+        /* ===== SECTIONS ===== */
+        .section {
+            background: var(--white);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            margin-bottom: 25px;
+            overflow: hidden;
+        }
+
+        .section-header {
+            background: linear-gradient(135deg, var(--blue-dark), var(--blue-mid));
+            color: white;
+            padding: 18px 28px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .section-number {
+            font-family: 'IBM Plex Mono', monospace;
+            font-size: 0.75em;
+            background: rgba(255,255,255,0.15);
+            padding: 3px 10px;
+            border-radius: 20px;
+        }
+
+        .section-header h2 {
+            font-size: 1.1em;
+            font-weight: 700;
+            flex: 1;
+        }
+
+        .section-body {
+            padding: 28px;
+        }
+
+        /* ===== TIMELINE / SCHEDULE ===== */
+        .schedule {
+            position: relative;
+            padding-left: 30px;
+        }
+        .schedule::before {
+            content: '';
+            position: absolute;
+            left: 12px;
+            top: 0;
+            bottom: 0;
+            width: 2px;
+            background: var(--border);
+        }
+
+        .schedule-item {
+            position: relative;
+            margin-bottom: 0;
+        }
+
+        .schedule-item::before {
+            content: '';
+            position: absolute;
+            left: -22px;
+            top: 22px;
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            background: var(--blue-accent);
+            border: 2px solid white;
+            box-shadow: 0 0 0 2px var(--blue-accent);
+        }
+
+        .schedule-block {
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            margin-bottom: 12px;
+            overflow: hidden;
+        }
+
+        .schedule-time {
+            background: var(--blue-accent);
+            color: white;
+            padding: 8px 16px;
+            font-family: 'IBM Plex Mono', monospace;
+            font-size: 0.8em;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .schedule-time .duration {
+            background: rgba(255,255,255,0.2);
+            padding: 2px 8px;
+            border-radius: 10px;
+            font-size: 0.85em;
+        }
+
+        .schedule-content {
+            padding: 16px 20px;
+        }
+
+        .schedule-content h4 {
+            font-size: 0.95em;
+            font-weight: 700;
+            color: var(--text);
+            margin-bottom: 8px;
+        }
+
+        .schedule-content p {
+            font-size: 0.88em;
+            color: var(--text-muted);
+            line-height: 1.6;
+        }
+
+        .schedule-content .tips-inline {
+            margin-top: 10px;
+            background: #fffbeb;
+            border-left: 3px solid var(--amber);
+            padding: 10px 14px;
+            border-radius: 0 6px 6px 0;
+            font-size: 0.85em;
+            color: #92400e;
+        }
+
+        /* ===== CONCEPT CARDS ===== */
+        .concept-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 15px;
+        }
+
+        @media (max-width: 768px) {
+            .concept-grid { grid-template-columns: 1fr; }
+        }
+
+        .concept-card {
+            background: #f8fafc;
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            padding: 20px;
+        }
+
+        .concept-card h4 {
+            font-size: 0.9em;
+            font-weight: 700;
+            color: var(--blue-accent);
+            margin-bottom: 8px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .concept-card p {
+            font-size: 0.85em;
+            color: var(--text-muted);
+            line-height: 1.7;
+        }
+
+        .concept-card .teacher-note {
+            margin-top: 10px;
+            background: #eff6ff;
+            border-left: 3px solid var(--blue-light);
+            padding: 8px 12px;
+            font-size: 0.82em;
+            color: #1e40af;
+            border-radius: 0 4px 4px 0;
+        }
+
+        /* ===== ACTIVITY GUIDE ===== */
+        .activity-guide {
+            border: 1px solid var(--border);
+            border-radius: 10px;
+            margin-bottom: 20px;
+            overflow: hidden;
+        }
+
+        .activity-guide-header {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 16px 22px;
+            background: #f8fafc;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .act-number {
+            font-family: 'IBM Plex Mono', monospace;
+            font-size: 1.5em;
+            font-weight: 600;
+            color: var(--blue-accent);
+        }
+
+        .activity-guide-header h3 {
+            font-size: 0.95em;
+            font-weight: 700;
+        }
+
+        .activity-guide-header .act-type {
+            margin-left: auto;
+            font-size: 0.75em;
+            color: var(--text-muted);
+            font-family: 'IBM Plex Mono', monospace;
+        }
+
+        .activity-guide-body {
+            padding: 22px;
+        }
+
+        .rubric-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 15px;
+            font-size: 0.85em;
+        }
+
+        .rubric-table th {
+            background: var(--blue-dark);
+            color: white;
+            padding: 10px 14px;
+            text-align: left;
+            font-weight: 600;
+        }
+
+        .rubric-table td {
+            padding: 10px 14px;
+            border-bottom: 1px solid var(--border);
+            vertical-align: top;
+            line-height: 1.5;
+        }
+
+        .rubric-table tr:last-child td { border-bottom: none; }
+        .rubric-table tr:nth-child(even) td { background: #f8fafc; }
+
+        .score-badge {
+            display: inline-block;
+            padding: 2px 10px;
+            border-radius: 12px;
+            font-weight: 700;
+            font-size: 0.85em;
+        }
+        .score-a { background: #d1fae5; color: #065f46; }
+        .score-b { background: #dbeafe; color: #1e40af; }
+        .score-c { background: #fef3c7; color: #92400e; }
+
+        /* ===== FAQ ===== */
+        .faq-item {
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            overflow: hidden;
+            margin-bottom: 10px;
+        }
+
+        .faq-question {
+            padding: 16px 20px;
+            background: #f8fafc;
+            font-weight: 600;
+            font-size: 0.9em;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            transition: background 0.2s;
+        }
+        .faq-question:hover { background: #eff6ff; }
+        .faq-question .faq-icon { margin-left: auto; transition: transform 0.3s; color: var(--text-muted); }
+        .faq-question.open .faq-icon { transform: rotate(180deg); }
+
+        .faq-answer {
+            display: none;
+            padding: 18px 20px;
+            font-size: 0.88em;
+            color: var(--text-muted);
+            line-height: 1.8;
+            border-top: 1px solid var(--border);
+        }
+        .faq-answer.open { display: block; animation: fadeIn 0.3s ease; }
+        @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+
+        .faq-answer strong { color: var(--text); }
+
+        /* ===== ANSWERS ===== */
+        .answers-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 12px;
+        }
+        .answer-card {
+            background: #f0fdf4;
+            border: 1px solid #bbf7d0;
+            border-radius: 8px;
+            padding: 16px;
+        }
+        .answer-card .q-num {
+            font-family: 'IBM Plex Mono', monospace;
+            font-size: 0.75em;
+            color: var(--green);
+            font-weight: 600;
+            margin-bottom: 5px;
+        }
+        .answer-card .q-answer {
+            font-size: 0.9em;
+            font-weight: 700;
+            color: var(--text);
+            margin-bottom: 5px;
+        }
+        .answer-card .q-explain {
+            font-size: 0.8em;
+            color: var(--text-muted);
+            line-height: 1.5;
+        }
+
+        /* ===== INFO BOXES ===== */
+        .info-box {
+            background: #f8fafc;
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            padding: 16px 20px;
+            margin-bottom: 12px;
+        }
+        .info-box h4 {
+            font-size: 0.85em;
+            font-weight: 700;
+            color: var(--blue-accent);
+            margin-bottom: 8px;
+            font-family: 'IBM Plex Mono', monospace;
+            letter-spacing: 0.5px;
+        }
+        .info-box p, .info-box li {
+            font-size: 0.88em;
+            color: var(--text-muted);
+            line-height: 1.7;
+        }
+        .info-box ul { margin-left: 15px; }
+
+        /* ===== QUICK TIPS ===== */
+        .quick-tips {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 12px;
+        }
+        .tip-card {
+            background: #fffbeb;
+            border: 1px solid #fde68a;
+            border-radius: 8px;
+            padding: 16px;
+        }
+        .tip-card .tip-icon { font-size: 1.4em; margin-bottom: 8px; display: block; }
+        .tip-card h4 { font-size: 0.85em; font-weight: 700; color: #92400e; margin-bottom: 6px; }
+        .tip-card p { font-size: 0.82em; color: #78350f; line-height: 1.6; }
+
+        /* ===== NAV ===== */
+        .nav-footer {
+            display: flex;
+            justify-content: space-between;
+            gap: 15px;
+            margin-top: 40px;
+        }
+        .nav-btn {
+            padding: 14px 25px;
+            background: linear-gradient(135deg, var(--blue-dark), var(--blue-mid));
+            color: white;
+            text-decoration: none;
+            border-radius: 8px;
+            font-weight: 600;
+            font-size: 0.85em;
+            transition: all 0.3s;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        .nav-btn:hover { transform: translateY(-2px); box-shadow: 0 5px 15px rgba(37,99,235,0.3); }
+        .nav-btn-alt {
+            background: white;
+            color: var(--blue-accent);
+            border: 1px solid var(--blue-light);
+        }
+        .nav-btn-alt:hover { background: var(--blue-accent); color: white; }
+
+        /* ===== CHECKLIST ===== */
+        .checklist {
+            list-style: none;
+        }
+        .checklist li {
+            display: flex;
+            align-items: flex-start;
+            gap: 12px;
+            padding: 10px 0;
+            border-bottom: 1px solid var(--border);
+            font-size: 0.9em;
+            color: var(--text);
+        }
+        .checklist li:last-child { border-bottom: none; }
+        .check-box {
+            width: 20px;
+            height: 20px;
+            border: 2px solid var(--border);
+            border-radius: 4px;
+            flex-shrink: 0;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.2s;
+            margin-top: 2px;
+        }
+        .check-box:hover { border-color: var(--blue-accent); }
+        .check-box.checked { background: var(--green); border-color: var(--green); color: white; font-size: 0.7em; }
+
+        /* ===== ANSWERS TOGGLE ===== */
+        .answers-toggle {
+            background: none;
+            border: 2px solid var(--red);
+            color: var(--red);
+            padding: 10px 20px;
+            border-radius: 8px;
+            font-family: 'IBM Plex Mono', monospace;
+            font-size: 0.8em;
+            font-weight: 600;
+            cursor: pointer;
+            margin-bottom: 15px;
+            transition: all 0.2s;
+        }
+        .answers-toggle:hover { background: var(--red); color: white; }
+
+        @media (max-width: 768px) {
+            .header-main { flex-direction: column; align-items: flex-start; }
+            .concept-grid, .quick-tips, .answers-grid { grid-template-columns: 1fr; }
+        }
     </style>
 </head>
 <body>
-    <div class="header">
-        <h1>🎓 GUIA DO PROFESSOR - Semana 11</h1>
-        <p>Cloud Gaming | Tópicos Especiais em Jogos Digitais</p>
-        <p><strong>⚠️ MATERIAL CONFIDENCIAL - APENAS DOCENTES</strong></p>
-    </div>
 
-    <div class="container">
-        <div class="alert-box">
-            <h3>⚠️ ATENÇÃO PROFESSOR!</h3>
-            <p>Este guia assume que você pode não ser expert em cloud gaming. Estude este material ANTES da aula. Cada conceito está explicado em detalhes para que você possa ensinar com confiança.</p>
+<header class="master-header">
+    <div class="confidential-bar">⚠ MATERIAL CONFIDENCIAL — APENAS DOCENTES ⚠</div>
+    <div class="header-main">
+        <div class="header-left">
+            <h1>🎓 GUIA DO PROFESSOR — SEMANA 11</h1>
+            <p>Cloud Gaming · IJD-038 · Módulo 3: Tecnologias Emergentes</p>
         </div>
-
-        <div class="section">
-            <h2>📋 1. PREPARAÇÃO PARA A AULA</h2>
-            <h3>O Que Fazer ANTES da Aula</h3>
-            <ul class="prep-list">
-                <li>✅ Revisar conteúdo da semana 11 completo</li>
-                <li>✅ Testar todos os links de vídeos</li>
-                <li>✅ Preparar demonstrações práticas se aplicável</li>
-                <li>✅ Estudar conceitos-chave desta seção</li>
-                <li>✅ Ter respostas modelo em mãos (não mostrar aos alunos ainda)</li>
-                <li>✅ Configurar ambiente/ferramentas necessárias</li>
-            </ul>
-        </div>
-
-        <div class="section">
-            <h2>📚 2. CONCEITOS-CHAVE</h2>
-            <div class="concept-box">
-                <strong>Tema Central: Cloud Gaming</strong>
-                <p style="margin-top: 15px;">Módulo 3: Tecnologias Emergentes</p>
-                <p style="margin-top: 15px;"><strong>Objetivos desta semana:</strong></p>
-                <ul style="margin-left: 20px; margin-top: 10px;">
-                    <li>Compreender tecnologia de cloud gaming</li>
-                    <li>Testar plataformas principais</li>
-                    <li>Analisar latência e performance</li>
-                    <li>Design para cloud-first</li>
-                </ul>
-            </div>
-            
-            <div class="concept-box">
-                <strong>Tópicos que Serão Abordados:</strong>
-                <ul style="margin-left: 20px; margin-top: 10px;">
-                    <li>Cloud Gaming: GeForce Now, Xbox Cloud, PS Plus</li>
-                    <li>Tecnologias: Streaming, codecs, latência</li>
-                    <li>Impacto no Game Design</li>
-                    <li>Business Models</li>
-                    <li>Infraestrutura de Rede</li>
-                    <li>Futuro da Distribuição</li>
-                </ul>
-            </div>
-        </div>
-
-        <div class="section">
-            <h2>💡 3. DICAS DE ENSINO</h2>
-            
-            <div class="dica-box">
-                <strong>Como Conduzir a Aula:</strong>
-                <ol style="margin-left: 20px; margin-top: 10px;">
-                    <li><strong>Introdução (15min):</strong> Apresente o tema, conecte com semana anterior</li>
-                    <li><strong>Teoria (30min):</strong> Explique conceitos-chave, use slides e exemplos</li>
-                    <li><strong>Vídeos (30min):</strong> Assista os 3 vídeos, pause para discussão</li>
-                    <li><strong>Pausa (10min):</strong> Importante para absorção</li>
-                    <li><strong>Prática (30min):</strong> Explique atividades, tire dúvidas</li>
-                    <li><strong>Encerramento (5min):</strong> Recapitule pontos principais</li>
-                </ol>
-            </div>
-            
-            <div class="example-box">
-                <strong>Exemplo Prático para Demonstrar:</strong>
-                <p style="margin-top: 10px;">Como são alunos do 6º semestre que já desenvolvem jogos:</p>
-                <ul style="margin-left: 20px; margin-top: 10px;">
-                    <li>Relacione conceitos com projetos que eles já fizeram</li>
-                    <li>Use exemplos de jogos AAA que conhecem</li>
-                    <li>Mostre implementações técnicas quando possível</li>
-                    <li>Conecte teoria com prática de mercado</li>
-                </ul>
-            </div>
-        </div>
-
-        <div class="section">
-            <h2>✏️ 4. ATIVIDADES - ORIENTAÇÕES</h2>
-
-            <h3>Atividade 1: Teste Comparativo</h3>
-            <div class="dica-box">
-                <p><strong>Descrição:</strong> Testar 3 plataformas de cloud gaming, medir latência, qualidade visual, experiência. Documentar cientificamente.</p>
-                <p style="margin-top: 10px;"><strong>Entrega Esperada:</strong> Relatório técnico com métricas objetivas + gráficos + análise comparativa</p>
-                <p style="margin-top: 10px;"><strong>Dica de Avaliação:</strong> Use a rubrica fornecida. Foque em profundidade técnica e pensamento crítico, não apenas completude.</p>
-            </div>
-
-            <h3>Atividade 2: Game Design para Cloud</h3>
-            <div class="dica-box">
-                <p><strong>Descrição:</strong> Propor design de jogo otimizado para cloud gaming, considerando limitações e vantagens únicas.</p>
-                <p style="margin-top: 10px;"><strong>Entrega Esperada:</strong> GDD focado em cloud + protótipo conceitual + análise de viabilidade técnica</p>
-                <p style="margin-top: 10px;"><strong>Dica de Avaliação:</strong> Use a rubrica fornecida. Foque em profundidade técnica e pensamento crítico, não apenas completude.</p>
-            </div>
-
-            <h3>Atividade 3: Análise de Mercado</h3>
-            <div class="dica-box">
-                <p><strong>Descrição:</strong> Pesquisar mercado de cloud gaming: players, market share, tendências, projeções futuras.</p>
-                <p style="margin-top: 10px;"><strong>Entrega Esperada:</strong> Relatório de mercado estilo consultor 5-6 páginas + infográficos + recommendations</p>
-                <p style="margin-top: 10px;"><strong>Dica de Avaliação:</strong> Use a rubrica fornecida. Foque em profundidade técnica e pensamento crítico, não apenas completude.</p>
-            </div>
-        </div>
-
-        <div class="section">
-            <h2>📺 5. VÍDEOS DA SEMANA</h2>
-            <ul class="prep-list">
-                <li><strong>How Cloud Gaming Works</strong> - https://youtu.be/k8BvHyJv4EE</li>
-                <li><strong>GeForce Now Technology</strong> - https://youtu.be/kws1s6P7RCE</li>
-                <li><strong>Future of Cloud Gaming</strong> - https://youtu.be/YOm8-L3vhg0</li>
-            </ul>
-            <div class="dica-box">
-                <strong>💡 Como Usar os Vídeos:</strong>
-                <p style="margin-top: 10px;">Não apenas reproduza - pause para discussão! Pergunte aos alunos: "O que vocês pensam sobre isso?" ou "Como implementariam em um jogo?"</p>
-            </div>
-        </div>
-
-        <div class="section">
-            <h2>❓ 6. FAQ DO PROFESSOR</h2>
-            
-            <div class="dica-box">
-                <strong>P: E se um aluno perguntar algo técnico que não sei?</strong><br>
-                R: Seja honesto: "Excelente pergunta técnica! Não tenho certeza agora, mas vamos pesquisar juntos" ou "Alguém da turma já trabalhou com isso?" Use conhecimento da turma.
-            </div>
-            
-            <div class="dica-box">
-                <strong>P: Como avaliar trabalhos muito técnicos se não domino a ferramenta?</strong><br>
-                R: Foque em: (1) Aluno explicou claramente o que fez? (2) Demonstrou pensamento crítico? (3) Conectou teoria com prática? (4) Código/projeto funciona? Peça demonstração ao vivo se necessário.
-            </div>
-            
-            <div class="dica-box">
-                <strong>P: Alunos do 6º semestre são muito avançados. Como acompanhar?</strong><br>
-                R: Use isso a favor! Peça que compartilhem conhecimentos. Transforme aula em discussão técnica. Seu papel é facilitar, não ser o único expert.
-            </div>
-        </div>
-
-        <div class="nav-buttons">
-            <a href="semana10_guia_professor.html" class="nav-button">⬅️ Guia Anterior</a>
-            <a href="semana11.html" class="nav-button">📄 Ver Aula da Semana</a>
-            <a href="semana12_guia_professor.html" class="nav-button">Próximo Guia ➡️</a>
+        <div class="header-badges">
+            <span class="badge badge-cyan">⏱ 90 MINUTOS</span>
+            <span class="badge badge-amber">👥 1–2 ALUNOS</span>
+            <span class="badge badge-green">💻 NOTEBOOK / ALUNO</span>
         </div>
     </div>
+</header>
+
+<div class="container">
+
+    <!-- ALERT PRINCIPAL -->
+    <div class="alert alert-amber">
+        <span class="alert-icon">📌</span>
+        <div class="alert-text">
+            <h4>LEIA ANTES DE QUALQUER COISA</h4>
+            <p>Esta aula usa um material <strong>gamificado autodirigido</strong> — os alunos trabalham de forma autônoma no notebook. Seu papel hoje é de <strong>facilitador e avaliador</strong>, não expositor. A maior parte da aula o aluno estará no material digital. Intervenha pontualmente, valide as entregas no final e responda dúvidas técnicas quando chamado.</p>
+        </div>
+    </div>
+
+    <!-- SEÇÃO 1: PREPARAÇÃO -->
+    <div class="section">
+        <div class="section-header">
+            <span class="section-number">01</span>
+            <h2>📋 PREPARAÇÃO — O QUE FAZER ANTES DA AULA</h2>
+        </div>
+        <div class="section-body">
+
+            <div class="alert alert-red" style="margin-bottom:20px;">
+                <span class="alert-icon">🔴</span>
+                <div class="alert-text">
+                    <h4>CRÍTICO: Faça isso pelo menos 30 minutos antes</h4>
+                    <ul>
+                        <li>Teste os 3 links do YouTube no computador da sala — verifique se não estão bloqueados</li>
+                        <li>Abra o arquivo semana11.html no navegador e navegue por todas as 4 fases</li>
+                        <li>Leia o conteúdo de todos os 5 conceitos expansíveis da Fase 1</li>
+                        <li>Verifique se o Wi-Fi da sala tem velocidade mínima de 10 Mbps (fundamental para os testes de cloud gaming)</li>
+                    </ul>
+                </div>
+            </div>
+
+            <h3 style="font-size:0.95em; font-weight:700; margin-bottom:15px; color:var(--text);">CHECKLIST DE PREPARAÇÃO</h3>
+            <ul class="checklist" id="prepChecklist">
+                <li>
+                    <div class="check-box" onclick="toggleCheck(this)">✓</div>
+                    Abri e testei o semana11.html no navegador da sala
+                </li>
+                <li>
+                    <div class="check-box" onclick="toggleCheck(this)">✓</div>
+                    Testei os 3 links do YouTube e estão funcionando
+                </li>
+                <li>
+                    <div class="check-box" onclick="toggleCheck(this)">✓</div>
+                    Li todos os conceitos da Fase 1 e entendi o conteúdo
+                </li>
+                <li>
+                    <div class="check-box" onclick="toggleCheck(this)">✓</div>
+                    Li as respostas dos desafios (Seção 4 deste guia)
+                </li>
+                <li>
+                    <div class="check-box" onclick="toggleCheck(this)">✓</div>
+                    Preparei conta no GeForce Now ou Xbox Cloud para demonstração opcional
+                </li>
+                <li>
+                    <div class="check-box" onclick="toggleCheck(this)">✓</div>
+                    Sei quanto tempo sobra se o aluno terminar rápido (tenha desafio extra pronto)
+                </li>
+            </ul>
+
+            <div class="alert alert-blue" style="margin-top:20px;">
+                <span class="alert-icon">💡</span>
+                <div class="alert-text">
+                    <h4>CONTEXTO DO PROFESSOR: O QUE É CLOUD GAMING</h4>
+                    <p>Cloud gaming é jogar via stream: o jogo roda em servidores remotos (com GPUs potentes), e o vídeo é transmitido para o jogador em tempo real, como um Netflix interativo. O jogador envia seus inputs e recebe frames de volta. O desafio central é a <strong>latência</strong> (delay). As principais plataformas: GeForce Now (NVIDIA), Xbox Cloud Gaming (Microsoft), PS Plus Premium (Sony), Amazon Luna.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- SEÇÃO 2: ROTEIRO DA AULA -->
+    <div class="section">
+        <div class="section-header">
+            <span class="section-number">02</span>
+            <h2>⏱ ROTEIRO MINUTO A MINUTO — 90 MINUTOS</h2>
+        </div>
+        <div class="section-body">
+
+            <div class="alert alert-green" style="margin-bottom:20px;">
+                <span class="alert-icon">🎯</span>
+                <div class="alert-text">
+                    <h4>DINÂMICA GERAL DA AULA</h4>
+                    <p>O aluno <strong>conduz o próprio ritmo</strong> no material gamificado. Você circula, observa e intervém estrategicamente. Não existe "passar de fase sem tentar" — o sistema gamificado exige que o aluno interaja antes de marcar como concluído.</p>
+                </div>
+            </div>
+
+            <div class="schedule">
+                <div class="schedule-item">
+                    <div class="schedule-block">
+                        <div class="schedule-time">
+                            ⏰ 0:00 – 0:10 <span class="duration">10 min</span>
+                        </div>
+                        <div class="schedule-content">
+                            <h4>ABERTURA E CONTEXTUALIZAÇÃO</h4>
+                            <p>Abra o semana11.html no projetor (se disponível). Leia o "Briefing da Missão" em voz alta. Faça 1 pergunta inicial para ativar o conhecimento prévio da turma.</p>
+                            <div class="tips-inline">
+                                💬 <strong>Pergunta de abertura recomendada:</strong> "Você já jogou algum jogo sem instalar nada, direto no navegador ou celular? O que achou da experiência?" — Se nunca tentaram, pergunte o que acham que seria necessário para isso funcionar.
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="schedule-item">
+                    <div class="schedule-block">
+                        <div class="schedule-time" style="background:var(--cyan);">
+                            ⏰ 0:10 – 0:30 <span class="duration">20 min</span>
+                        </div>
+                        <div class="schedule-content">
+                            <h4>FASE 1 — CONCEITOS (AUTÔNOMO)</h4>
+                            <p>Aluno lê e expande todos os conceitos na Fase 1. Cada clique revela uma explicação. São 5 conceitos no total. Seu papel: ficar disponível para perguntas, não explicar proativamente.</p>
+                            <div class="tips-inline">
+                                💡 <strong>Dica de intervenção:</strong> Se o aluno ficar mais de 3 minutos parado em um conceito, pergunte: "Ficou alguma dúvida nesse ponto?" — não explique imediatamente, tente fazer o aluno elaborar primeiro.
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="schedule-item">
+                    <div class="schedule-block">
+                        <div class="schedule-time" style="background:var(--purple);">
+                            ⏰ 0:30 – 0:50 <span class="duration">20 min</span>
+                        </div>
+                        <div class="schedule-content">
+                            <h4>FASE 2 — VÍDEOS COM MISSÃO DE OBSERVAÇÃO</h4>
+                            <p>Aluno assiste os 3 vídeos com uma tarefa de observação específica em cada um. Oriente que <strong>pausem o vídeo para anotar</strong> — isso é explícito na missão, mas reforce se necessário.</p>
+                            <div class="tips-inline">
+                                ⚠️ <strong>Atenção:</strong> Os vídeos somam cerca de 15 minutos. Se o aluno não anotar durante, peça que volte e reassista os momentos relevantes. Não aceite "já vi" sem a anotação.
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="schedule-item">
+                    <div class="schedule-block">
+                        <div class="schedule-time" style="background:var(--red);">
+                            ⏰ 0:50 – 1:10 <span class="duration">20 min</span>
+                        </div>
+                        <div class="schedule-content">
+                            <h4>FASE 3 — ARENA DE DESAFIOS (3 DESAFIOS INTERATIVOS)</h4>
+                            <p><strong>Desafio 1:</strong> Quiz de 6 questões com feedback imediato. <strong>Desafio 2:</strong> Complete as lacunas. <strong>Desafio 3:</strong> Conecte plataforma à característica certa.</p>
+                            <div class="tips-inline">
+                                🎯 <strong>Seu papel aqui:</strong> Observe quais questões o aluno erra. São pontos de incompreensão genuína — use-os para uma conversa breve após os desafios. Não dê a resposta antes do aluno tentar.
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="schedule-item">
+                    <div class="schedule-block">
+                        <div class="schedule-time" style="background:var(--amber); color: #1e293b;">
+                            ⏰ 1:10 – 1:25 <span class="duration">15 min</span>
+                        </div>
+                        <div class="schedule-content">
+                            <h4>FASE 4 — MISSÃO FINAL (PRÁTICA)</h4>
+                            <p>O aluno escolhe por onde começar entre as 3 missões (Teste Comparativo, Game Design, Análise de Mercado). Acompanhe o progresso. Alerte quando faltar 10 minutos.</p>
+                            <div class="tips-inline">
+                                ⚡ <strong>Gestão de tempo:</strong> Se o aluno for rápido, peça que complete 2 missões com mais profundidade. Se for lento, priorize que complete 1 com qualidade em vez de 3 superficialmente.
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="schedule-item">
+                    <div class="schedule-block">
+                        <div class="schedule-time" style="background:var(--green);">
+                            ⏰ 1:25 – 1:30 <span class="duration">5 min</span>
+                        </div>
+                        <div class="schedule-content">
+                            <h4>APRESENTAÇÃO E ENCERRAMENTO</h4>
+                            <p>O aluno apresenta oralmente o que produziu na Fase 4. 2 minutos por missão entregue. Faça 1 pergunta de aprofundamento por entrega. Registre a nota.</p>
+                            <div class="tips-inline">
+                                🏆 <strong>Pergunta de encerramento:</strong> "O que você acha que vai mudar na sua forma de pensar game design depois de entender cloud gaming?" — não precisa ter resposta certa, é reflexão.
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- SEÇÃO 3: CONCEITOS DETALHADOS -->
+    <div class="section">
+        <div class="section-header">
+            <span class="section-number">03</span>
+            <h2>🧠 CONCEITOS-CHAVE — EXPLICAÇÕES APROFUNDADAS PARA O PROFESSOR</h2>
+        </div>
+        <div class="section-body">
+            <div class="alert alert-blue" style="margin-bottom:20px;">
+                <span class="alert-icon">📖</span>
+                <div class="alert-text">
+                    <h4>Para que serve esta seção</h4>
+                    <p>Se um aluno fizer uma pergunta técnica avançada, use as explicações abaixo para responder com segurança. Você não precisa memorizar tudo — este guia é para consulta rápida.</p>
+                </div>
+            </div>
+            <div class="concept-grid">
+                <div class="concept-card">
+                    <h4>☁️ Cloud Gaming — Definição Técnica</h4>
+                    <p>O jogo é renderizado em um servidor remoto com GPU dedicada (tipo RTX 4080). O servidor captura frames, comprime com codec de vídeo (H.265 ou AV1), e envia via internet. O dispositivo do jogador decodifica o stream e envia inputs (teclas, movimento de mouse) de volta ao servidor.</p>
+                    <div class="teacher-note">💬 Se perguntado: "É diferente de emulação? Sim. Emulação roda localmente no seu PC. Cloud gaming roda num servidor externo."</div>
+                </div>
+                <div class="concept-card">
+                    <h4>⚡ Latência — Detalhe Técnico</h4>
+                    <p>Latência total = latência de upload (input) + processamento + encode de vídeo + transmissão + decode no cliente. Em condições ideais com servidor próximo e rede rápida: 20–40ms. Em condições ruins: 100–200ms. Acima de 150ms, a experiência fica claramente degradada em jogos de ação.</p>
+                    <div class="teacher-note">💬 Pergunta frequente: "Por que 5G ajuda?" Resposta: 5G reduz a latência da rede (parte do atraso total) e aumenta a largura de banda, permitindo streams de maior qualidade.</div>
+                </div>
+                <div class="concept-card">
+                    <h4>🎬 Codecs — H.264 vs H.265 vs AV1</h4>
+                    <p><strong>H.264:</strong> Padrão universal, funciona em qualquer dispositivo, menor qualidade por bit. <strong>H.265 (HEVC):</strong> 50% mais eficiente que H.264, mesma qualidade com metade do bitrate. <strong>AV1:</strong> Mais eficiente ainda, open-source, mas exige hardware dedicado para decodificar em tempo real.</p>
+                    <div class="teacher-note">💬 Contexto útil: A NVIDIA usa o encoder NVENC (hardware dedicado) para H.265 ultra-rápido. É por isso que GeForce Now tem vantagem técnica sobre concorrentes que usam encode em software.</div>
+                </div>
+                <div class="concept-card">
+                    <h4>🏢 Modelos de Negócio das Plataformas</h4>
+                    <p><strong>GeForce Now:</strong> Você traz sua biblioteca. Paga pelo acesso à GPU. <strong>Xbox Cloud:</strong> Catálogo incluído no Game Pass (~$15/mês). Estratégia de Microsoft para assinaturas. <strong>PS Plus Premium:</strong> Catálogo PlayStation exclusivo. <strong>Amazon Luna:</strong> Canais temáticos (ex.: Canal de Ubisoft, Canal de Indie).</p>
+                    <div class="teacher-note">💬 Ponto de discussão rico: Qual modelo é melhor para o consumidor? Para o desenvolvedor? Para a plataforma? Não há resposta errada — estimule o debate.</div>
+                </div>
+                <div class="concept-card">
+                    <h4>🎮 Design Cloud-First — O Que Muda</h4>
+                    <p>Evitar: mecânicas frame-perfect (parry timing, just-frame inputs), gêneros hipersensíveis à latência (FPS competitivo, fighting games). Aproveitar: computação pesada no servidor (física avançada, IA complexa), mundos persistentes com muitos jogadores, acesso sem instalação via qualquer dispositivo.</p>
+                    <div class="teacher-note">💬 Exemplo concreto: No cloud gaming, você pode ter IA de NPCs muito mais sofisticada (rodando no servidor poderoso) sem custo para o jogador — isso abre possibilidades impossíveis em jogos locais.</div>
+                </div>
+                <div class="concept-card">
+                    <h4>📈 Mercado — Números Atuais</h4>
+                    <p>O mercado de cloud gaming foi avaliado em aprox. <strong>USD 3–4 bilhões em 2024</strong> e tem projeção de crescimento para USD 20–30 bilhões até 2030. Os principais fatores de crescimento: expansão de 5G, aumento de smart TVs com apps de streaming, redução do custo de hardware de servidor.</p>
+                    <div class="teacher-note">💬 Ponto importante: O Brasil é um mercado estratégico para cloud gaming justamente por ter muitos gamers com hardware limitado. Vale mencionar.</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- SEÇÃO 4: RESPOSTAS DOS DESAFIOS -->
+    <div class="section">
+        <div class="section-header">
+            <span class="section-number">04</span>
+            <h2>🔑 GABARITO COMPLETO DOS DESAFIOS</h2>
+        </div>
+        <div class="section-body">
+
+            <button class="answers-toggle" onclick="toggleAnswers()">
+                ⚠ MOSTRAR / OCULTAR GABARITO
+            </button>
+            <p style="font-size:0.82em; color:var(--text-muted); margin-bottom:15px; font-family:'IBM Plex Mono',monospace;">// Mantenha esta seção oculta durante a aula. Consulte apenas para validar respostas do aluno.</p>
+
+            <div id="answersContent" style="display:none;">
+                <h3 style="font-size:0.9em; font-weight:700; margin-bottom:12px; color:var(--text);">DESAFIO 1 — QUIZ (6 QUESTÕES)</h3>
+                <div class="answers-grid" style="margin-bottom:25px;">
+                    <div class="answer-card">
+                        <div class="q-num">QUESTÃO 1</div>
+                        <div class="q-answer">✅ C — Jogar títulos pesados sem hardware poderoso local</div>
+                        <div class="q-explain">A principal proposta de valor do cloud gaming é democratizar o acesso a jogos AAA sem GPU cara.</div>
+                    </div>
+                    <div class="answer-card">
+                        <div class="q-num">QUESTÃO 2</div>
+                        <div class="q-answer">✅ C — FPS competitivo online (tipo CS:GO)</div>
+                        <div class="q-explain">FPS competitivo exige reação em milissegundos. Latência de 50ms é inaceitável para jogar no nível competitivo.</div>
+                    </div>
+                    <div class="answer-card">
+                        <div class="q-num">QUESTÃO 3</div>
+                        <div class="q-answer">✅ B — Você usa sua própria biblioteca Steam/Epic</div>
+                        <div class="q-explain">GeForce Now não vende jogos — usa os que você já tem. Xbox Cloud inclui catálogo próprio no Game Pass.</div>
+                    </div>
+                    <div class="answer-card">
+                        <div class="q-num">QUESTÃO 4</div>
+                        <div class="q-answer">✅ C — Codecs de vídeo (H.264, H.265, AV1)</div>
+                        <div class="q-explain">Os codecs comprimem os frames do jogo para transmissão em tempo real pela rede.</div>
+                    </div>
+                    <div class="answer-card">
+                        <div class="q-num">QUESTÃO 5</div>
+                        <div class="q-answer">✅ C — Mecânicas que exijam inputs frame-perfect</div>
+                        <div class="q-explain">Parry timing de 1/60s = impossível com 50ms de latência variável.</div>
+                    </div>
+                    <div class="answer-card">
+                        <div class="q-num">QUESTÃO 6</div>
+                        <div class="q-answer">✅ D — Processa terreno do mundo inteiro em servidores Azure</div>
+                        <div class="q-explain">O Flight Simulator usa Bing Maps + IA na nuvem para renderizar o terreno do planeta — impossível localmente.</div>
+                    </div>
+                </div>
+
+                <h3 style="font-size:0.9em; font-weight:700; margin-bottom:12px; color:var(--text);">DESAFIO 2 — COMPLETE AS LACUNAS</h3>
+                <div class="info-box" style="margin-bottom:20px;">
+                    <h4>RESPOSTAS ACEITAS</h4>
+                    <ul>
+                        <li><strong>1.</strong> latência (aceite também: "latency", "delay")</li>
+                        <li><strong>2.</strong> av1 (aceite: "AV1", "avc1") — o H.265 também é aceitável com justificativa</li>
+                        <li><strong>3.</strong> servidor (aceite: "server", "computador remoto", "data center")</li>
+                        <li><strong>4.</strong> geforce now (aceite variações como "GeForce", "GFN")</li>
+                        <li><strong>5.</strong> tolerância (aceite: "resistencia", "tolerante") — contexto: RPG de turno tem alta tolerância a latência</li>
+                    </ul>
+                </div>
+
+                <h3 style="font-size:0.9em; font-weight:700; margin-bottom:12px; color:var(--text);">DESAFIO 3 — COMBINAÇÕES CORRETAS</h3>
+                <div class="info-box">
+                    <h4>PARES CORRETOS</h4>
+                    <ul>
+                        <li>🟢 <strong>GeForce Now</strong> → "Usa sua biblioteca Steam/Epic já comprada"</li>
+                        <li>🔵 <strong>Xbox Cloud</strong> → "Incluso no Game Pass Ultimate da Microsoft"</li>
+                        <li>🔴 <strong>PS Plus Premium</strong> → "Exclusivo para jogos do ecossistema PlayStation"</li>
+                        <li>🟠 <strong>Amazon Luna</strong> → "Modelo de canais por assinatura (como TV a cabo)"</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- SEÇÃO 5: AVALIAÇÃO DAS MISSÕES -->
+    <div class="section">
+        <div class="section-header">
+            <span class="section-number">05</span>
+            <h2>📊 RUBRICA DE AVALIAÇÃO — MISSÕES PRÁTICAS</h2>
+        </div>
+        <div class="section-body">
+
+            <div class="alert alert-blue" style="margin-bottom:20px;">
+                <span class="alert-icon">⚖️</span>
+                <div class="alert-text">
+                    <h4>Como usar esta rubrica</h4>
+                    <p>Avalie cada missão entregue separadamente. Com 1–2 alunos, priorize a conversa oral — peça que expliquem o que fizeram em vez de apenas ler o que escreveram. A explicação oral revela a compreensão real.</p>
+                </div>
+            </div>
+
+            <div class="activity-guide">
+                <div class="activity-guide-header">
+                    <div class="act-number">M1</div>
+                    <div>
+                        <h3>Teste Comparativo de Plataformas</h3>
+                        <p style="font-size:0.82em; color:var(--text-muted);">Missão investigativa · Observação técnica</p>
+                    </div>
+                    <div class="act-type">Peso: 33%</div>
+                </div>
+                <div class="activity-guide-body">
+                    <table class="rubric-table">
+                        <tr>
+                            <th>Critério</th>
+                            <th>Excelente (A)</th>
+                            <th>Adequado (B)</th>
+                            <th>Incompleto (C)</th>
+                        </tr>
+                        <tr>
+                            <td>Tabela comparativa</td>
+                            <td><span class="score-badge score-a">A</span> 3 métricas preenchidas para 2+ plataformas com valores precisos e escala consistente</td>
+                            <td><span class="score-badge score-b">B</span> 2 métricas ou comparação de apenas 1 plataforma</td>
+                            <td><span class="score-badge score-c">C</span> Sem tabela ou apenas descrição vaga</td>
+                        </tr>
+                        <tr>
+                            <td>Análise técnica</td>
+                            <td><span class="score-badge score-a">A</span> Usa termos corretos (latência, codec, artefatos) com evidências observadas</td>
+                            <td><span class="score-badge score-b">B</span> Análise parcialmente técnica, alguns termos corretos</td>
+                            <td><span class="score-badge score-c">C</span> Apenas opinião sem fundamentação técnica</td>
+                        </tr>
+                        <tr>
+                            <td>Apresentação oral</td>
+                            <td><span class="score-badge score-a">A</span> Explica conclusões com clareza e responde pergunta de aprofundamento</td>
+                            <td><span class="score-badge score-b">B</span> Apresenta mas tem dificuldade nas perguntas</td>
+                            <td><span class="score-badge score-c">C</span> Não consegue explicar o que fez</td>
+                        </tr>
+                    </table>
+                    <div class="info-box" style="margin-top:15px;">
+                        <h4>PERGUNTA DE APROFUNDAMENTO PARA ORAL</h4>
+                        <p>"Se você fosse recomendar uma dessas plataformas para um jogador casual brasileiro com internet de 50 Mbps, qual escolheria e por quê?" — Avalie se o aluno considera latência, preço, catálogo e perfil do usuário.</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="activity-guide">
+                <div class="activity-guide-header">
+                    <div class="act-number">M2</div>
+                    <div>
+                        <h3>Projete um Jogo Cloud-First</h3>
+                        <p style="font-size:0.82em; color:var(--text-muted);">Missão de design · Criatividade técnica</p>
+                    </div>
+                    <div class="act-type">Peso: 33%</div>
+                </div>
+                <div class="activity-guide-body">
+                    <table class="rubric-table">
+                        <tr>
+                            <th>Critério</th>
+                            <th>Excelente (A)</th>
+                            <th>Adequado (B)</th>
+                            <th>Incompleto (C)</th>
+                        </tr>
+                        <tr>
+                            <td>High Concept</td>
+                            <td><span class="score-badge score-a">A</span> Ideia clara, gênero adequado para cloud, concept em 1 frase objetiva</td>
+                            <td><span class="score-badge score-b">B</span> Ideia existe mas gênero tem risco de latência não justificado</td>
+                            <td><span class="score-badge score-c">C</span> Ideia vaga ou gênero claramente incompatível com cloud</td>
+                        </tr>
+                        <tr>
+                            <td>Mecânicas cloud-exclusive</td>
+                            <td><span class="score-badge score-a">A</span> 2 mecânicas genuinamente impossíveis sem cloud, com justificativa técnica</td>
+                            <td><span class="score-badge score-b">B</span> 1 mecânica cloud-exclusive clara, outra genérica</td>
+                            <td><span class="score-badge score-c">C</span> Mecânicas que qualquer jogo normal teria</td>
+                        </tr>
+                        <tr>
+                            <td>Consciência das limitações</td>
+                            <td><span class="score-badge score-a">A</span> Identifica mecânica evitada com justificativa técnica correta (ex.: latência)</td>
+                            <td><span class="score-badge score-b">B</span> Identifica o problema mas justificativa é vaga</td>
+                            <td><span class="score-badge score-c">C</span> Não considera limitações do cloud</td>
+                        </tr>
+                    </table>
+                    <div class="info-box" style="margin-top:15px;">
+                        <h4>PERGUNTA DE APROFUNDAMENTO PARA ORAL</h4>
+                        <p>"Como a sua mecânica principal mudaria se a latência subisse de 30ms para 150ms? Ainda funcionaria?" — Avalie se o aluno entende a relação entre design de mecânicas e limitações técnicas de rede.</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="activity-guide">
+                <div class="activity-guide-header">
+                    <div class="act-number">M3</div>
+                    <div>
+                        <h3>Mapa do Mercado</h3>
+                        <p style="font-size:0.82em; color:var(--text-muted);">Missão analítica · Visão de negócio</p>
+                    </div>
+                    <div class="act-type">Peso: 33%</div>
+                </div>
+                <div class="activity-guide-body">
+                    <table class="rubric-table">
+                        <tr>
+                            <th>Critério</th>
+                            <th>Excelente (A)</th>
+                            <th>Adequado (B)</th>
+                            <th>Incompleto (C)</th>
+                        </tr>
+                        <tr>
+                            <td>Dados de mercado</td>
+                            <td><span class="score-badge score-a">A</span> Tamanho atual + projeção com fonte citada e dados plausíveis</td>
+                            <td><span class="score-badge score-b">B</span> Números sem fonte ou muito desatualizados</td>
+                            <td><span class="score-badge score-c">C</span> Sem dados concretos</td>
+                        </tr>
+                        <tr>
+                            <td>Mapeamento dos players</td>
+                            <td><span class="score-badge score-a">A</span> 4 plataformas com empresa, preço e diferencial claro</td>
+                            <td><span class="score-badge score-b">B</span> 2–3 plataformas ou informações incompletas</td>
+                            <td><span class="score-badge score-c">C</span> Apenas 1 plataforma ou dados incorretos</td>
+                        </tr>
+                        <tr>
+                            <td>Análise tendência/barreira</td>
+                            <td><span class="score-badge score-a">A</span> Tendência e barreira identificadas com argumentação lógica e contextualizada</td>
+                            <td><span class="score-badge score-b">B</span> Uma das duas identificada adequadamente</td>
+                            <td><span class="score-badge score-c">C</span> Análise superficial ou incorreta</td>
+                        </tr>
+                    </table>
+                    <div class="info-box" style="margin-top:15px;">
+                        <h4>PERGUNTA DE APROFUNDAMENTO PARA ORAL</h4>
+                        <p>"Você acha que o cloud gaming vai substituir os consoles físicos nos próximos 10 anos? Por quê?" — Não há resposta certa. Avalie se o aluno usa os dados que levantou para fundamentar a opinião.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- SEÇÃO 6: FAQ DO PROFESSOR -->
+    <div class="section">
+        <div class="section-header">
+            <span class="section-number">06</span>
+            <h2>❓ FAQ — DÚVIDAS FREQUENTES DOS ALUNOS</h2>
+        </div>
+        <div class="section-body">
+
+            <div class="faq-item">
+                <div class="faq-question" onclick="toggleFaq(this)">
+                    <span>🔴</span> "Eu não consigo acessar o GeForce Now / Xbox Cloud na rede da escola."
+                    <span class="faq-icon">▼</span>
+                </div>
+                <div class="faq-answer">
+                    <p><strong>Solução imediata:</strong> Oriente o aluno a usar YouTube para encontrar vídeos de gameplay via cloud gaming (existem muitos canais que mostram GFN e Xbox Cloud com comentário técnico). Procure "GeForce Now 4K gameplay" ou "Xbox Cloud Gaming test lag" — servem perfeitamente para a Missão 1 de observação.</p>
+                    <p><strong>Prevenção futura:</strong> Registre a limitação de rede e solicite à TI da escola liberação dos domínios geforcenow.com e xbox.com para uso educacional.</p>
+                </div>
+            </div>
+
+            <div class="faq-item">
+                <div class="faq-question" onclick="toggleFaq(this)">
+                    <span>💬</span> "Por que o cloud gaming existe se minha internet é boa o bastante para baixar o jogo direto?"
+                    <span class="faq-icon">▼</span>
+                </div>
+                <div class="faq-answer">
+                    <p><strong>Resposta completa:</strong> Baixar o jogo é sobre <strong>armazenamento e processamento local</strong>. Um jogo AAA atual precisa de 30–150 GB de espaço e uma GPU que custa R$2.000–R$5.000. Cloud gaming resolve isso: nenhum jogo ocupa espaço local, nenhuma GPU necessária. Qualquer tela vira um console poderoso.</p>
+                    <p>Além disso, há o caso de <strong>jogos que processam dados de servidor</strong> (como Flight Simulator) — quantidade impossível de dados para baixar localmente.</p>
+                </div>
+            </div>
+
+            <div class="faq-item">
+                <div class="faq-question" onclick="toggleFaq(this)">
+                    <span>💬</span> "Qual a diferença entre cloud gaming e Remote Play (PS Remote Play / Steam Link)?"
+                    <span class="faq-icon">▼</span>
+                </div>
+                <div class="faq-answer">
+                    <p>Pergunta técnica excelente! <strong>Remote Play / Steam Link:</strong> O jogo roda no SEU console/PC em casa, e você acessa remotamente de outro dispositivo. Você ainda precisa ter o hardware poderoso.</p>
+                    <p><strong>Cloud Gaming:</strong> O jogo roda em um servidor externo da empresa (NVIDIA, Microsoft). Você não precisa de nenhum hardware poderoso — nem em casa, nem no seu bolso.</p>
+                </div>
+            </div>
+
+            <div class="faq-item">
+                <div class="faq-question" onclick="toggleFaq(this)">
+                    <span>💬</span> "O Brasil vai ter cloud gaming bom algum dia? A internet aqui é horrível."
+                    <span class="faq-icon">▼</span>
+                </div>
+                <div class="faq-answer">
+                    <p>Toque numa realidade importante! O Brasil é estratégico: <strong>70+ milhões de gamers</strong> com hardware tipicamente mais fraco que EUA/Europa. Há investimento real: a NVIDIA anunciou servidores GeForce Now no Brasil (via parceiros), Microsoft tem data centers Azure em São Paulo e Rio.</p>
+                    <p>O 5G está expandindo no país — isso é decisivo. Para cloud gaming aceitável, precisa de latência abaixo de 80ms até o servidor mais próximo, que com infraestrutura local e 5G é viável já em 2024–2025 nas capitais.</p>
+                </div>
+            </div>
+
+            <div class="faq-item">
+                <div class="faq-question" onclick="toggleFaq(this)">
+                    <span>💬</span> "E se eu não sei nada sobre cloud gaming e o aluno sabe mais do que eu?"
+                    <span class="faq-icon">▼</span>
+                </div>
+                <div class="faq-answer">
+                    <p>Seja honesto e transforme em oportunidade: <strong>"Que ótimo — me conta o que você já sabe sobre isso. Vamos comparar com o que o material traz."</strong></p>
+                    <p>Seu papel nesta aula não é ser o maior expert técnico — é garantir que o aluno <strong>complete as fases, reflita criticamente e entregue as missões com qualidade</strong>. Você avalia o processo e a profundidade do raciocínio, não só os fatos técnicos.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- SEÇÃO 7: DICAS RÁPIDAS -->
+    <div class="section">
+        <div class="section-header">
+            <span class="section-number">07</span>
+            <h2>💡 DICAS PARA UMA TURMA DE 1–2 ALUNOS</h2>
+        </div>
+        <div class="section-body">
+            <div class="quick-tips">
+                <div class="tip-card">
+                    <span class="tip-icon">🎯</span>
+                    <h4>Use o silêncio produtivo</h4>
+                    <p>Com 1 aluno, o silêncio durante leitura e desafios é normal. Não interrompa para "ver se está entendendo" — espere ele chamar ou observe os erros nos desafios.</p>
+                </div>
+                <div class="tip-card">
+                    <span class="tip-icon">⏱</span>
+                    <h4>Alerta de tempo</h4>
+                    <p>Avise quando faltarem 20 minutos ("fase 4 agora") e 10 minutos ("conclua o que puder"). Alunos tendem a se perder nos vídeos sem âncoras de tempo.</p>
+                </div>
+                <div class="tip-card">
+                    <span class="tip-icon">🔥</span>
+                    <h4>Se terminar cedo</h4>
+                    <p>Peça para o aluno completar as 3 missões em vez de 1, ou aprofundar — "sua análise de mercado tem 2 dados, consegue encontrar mais 2 em 5 minutos?"</p>
+                </div>
+                <div class="tip-card">
+                    <span class="tip-icon">💀</span>
+                    <h4>Se travar nos desafios</h4>
+                    <p>Se errar a mesma questão mentalmente, diga: "Volta ao conceito X na Fase 1 e lê de novo." Não dê a resposta diretamente — redirecione para o material.</p>
+                </div>
+                <div class="tip-card">
+                    <span class="tip-icon">📱</span>
+                    <h4>Um aluno faltou</h4>
+                    <p>Com 1 aluno presente, o ritmo é mais rápido. Aumente a profundidade das missões: peça 2 mecânicas cloud na M2 com protótipo conceitual desenhado, e análise de 5 players na M3.</p>
+                </div>
+                <div class="tip-card">
+                    <span class="tip-icon">🏆</span>
+                    <h4>XP como feedback</h4>
+                    <p>O sistema de XP no material é motivacional. Se o aluno mencionar o XP, reforce: "No final veja quanto você acumulou — isso mostra o quanto você aprendeu hoje."</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- FOOTER NAV -->
+    <div class="nav-footer">
+        <a href="semana10_guia_professor.html" class="nav-btn">← Guia Semana 10</a>
+        <a href="semana11.html" class="nav-btn nav-btn-alt">📄 Ver Material do Aluno</a>
+        <a href="semana12_guia_professor.html" class="nav-btn">Guia Semana 12 →</a>
+    </div>
+
+</div>
+
+<script>
+    function toggleCheck(el) {
+        el.classList.toggle('checked');
+        el.textContent = el.classList.contains('checked') ? '✓' : '✓';
+    }
+
+    function toggleAnswers() {
+        const c = document.getElementById('answersContent');
+        c.style.display = c.style.display === 'none' ? 'block' : 'none';
+    }
+
+    function toggleFaq(trigger) {
+        const answer = trigger.nextElementSibling;
+        const isOpen = trigger.classList.contains('open');
+        document.querySelectorAll('.faq-question').forEach(q => {
+            q.classList.remove('open');
+            q.nextElementSibling.classList.remove('open');
+        });
+        if (!isOpen) {
+            trigger.classList.add('open');
+            answer.classList.add('open');
+        }
+    }
+</script>
 </body>
 </html>
