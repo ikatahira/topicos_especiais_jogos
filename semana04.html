@@ -69,8 +69,24 @@
 
 <!-- MAIN -->
 <main class="main">
+<section class="scard" id="curso-progresso" style="margin-bottom:20px">
+  <div class="scard-head">
+    <div class="scard-ico ico-lime"><span>📊</span></div>
+    <div class="scard-title">Progresso do Curso — IJD-038</div>
+    <div class="scard-xp" id="cp-count">0 / 20 semanas</div>
+  </div>
+  <div class="scard-body">
+    <div class="prog-bar" style="height:10px;background:rgba(255,255,255,.06);border-radius:100px;overflow:hidden">
+      <div class="prog-fill pf-lime" id="cp-bar" style="height:100%;width:0%;transition:width .3s"></div>
+    </div>
+    <div style="display:flex;justify-content:space-between;align-items:center;margin-top:12px;gap:10px;flex-wrap:wrap">
+      <div style="font-size:.72em;color:var(--sub);font-family:var(--mono)">Marque quando concluir todas as atividades desta semana — seu progresso fica salvo neste navegador.</div>
+      <button class="eval-btn" id="cp-btn" style="margin:0;white-space:nowrap" onclick="toggleWeekDone()">✅ Marcar Semana 04 como Concluída</button>
+    </div>
+  </div>
+</section>
 
-<!-- HERO -->
+    <!-- HERO -->
 <div class="hero">
   <div class="hero-eyebrow">Módulo 1 · Fundamentos de Gamificação</div>
   <h1>Dinâmicas<br>e <em>Estéticas</em></h1>
@@ -408,7 +424,7 @@
       </div>
     </div>
     <div id="ac4b" style="display:none;padding:0 18px 18px;">
-      <div class="act-desc">Etapa 4 do "Painel de Gamificação Física" (continuação da Semana 03). Adicione um potenciômetro ao circuito e demonstre fisicamente o framework MDA: uma Mecânica ajustável (o potenciômetro) gera uma Dinâmica observável (o comportamento do LED/buzzer muda em tempo real), que por sua vez evoca uma Estética (uma sensação, discutida em grupo).</div>
+      <div class="act-desc">Etapa 4 do "Painel de Gamificação Física" (continuação da <a href="semana03.html#atividades" style="color:var(--teal)">Semana 03</a>). Adicione um potenciômetro ao circuito e demonstre fisicamente o framework MDA: uma Mecânica ajustável (o potenciômetro) gera uma Dinâmica observável (o comportamento do LED/buzzer muda em tempo real), que por sua vez evoca uma Estética (uma sensação, discutida em grupo).</div>
       <div class="act-steps">
         <div class="act-step" onclick="togStep(this)"><div class="step-check"></div>Monte um potenciômetro em uma entrada analógica (ex: A0) do Arduino/ESP32</div>
         <div class="act-step" onclick="togStep(this)"><div class="step-check"></div>Use <code>analogRead()</code> para ler o valor (0-1023) e mapeie para o intervalo de velocidade de piscar do LED (<code>map()</code>)</div>
@@ -500,6 +516,36 @@ const AES_DATA=[
   {name:'Expression',ico:'🎭',clr:'#4ade80',desc:'Criatividade, personalização, identidade. O jogador como autor e artista.',ex:'Ex: The Sims — criar famílias, histórias, construir casas únicas.',jogos:'The Sims, Dreams, LittleBigPlanet'},
   {name:'Submission',ico:'🕹️',clr:'#f97316',desc:'Passatempo, relaxamento, flow sem objetivo definido. O jogo como escape.',ex:'Ex: Stardew Valley — o loop tranquilo de plantar, colher, dormir.',jogos:'Stardew Valley, Animal Crossing, Candy Crush'}
 ];
+
+
+/* PROGRESSO DO CURSO — persistido em localStorage, compartilhado entre todas as semanas */
+const CP_KEY='ijd038_progresso';
+const CP_WEEK='semana04';
+const CP_TOTAL=20;
+function cpGet(){try{return JSON.parse(localStorage.getItem(CP_KEY)||'{}');}catch(e){return {};}}
+function cpSet(p){try{localStorage.setItem(CP_KEY,JSON.stringify(p));}catch(e){}}
+function renderCourseProgress(){
+  const p=cpGet();
+  const done=Object.values(p).filter(Boolean).length;
+  const countEl=document.getElementById('cp-count');
+  const barEl=document.getElementById('cp-bar');
+  const btnEl=document.getElementById('cp-btn');
+  if(countEl)countEl.textContent=done+' / '+CP_TOTAL+' semanas';
+  if(barEl)barEl.style.width=(done/CP_TOTAL*100)+'%';
+  if(btnEl){
+    if(p[CP_WEEK]){btnEl.textContent='☑️ Semana 04 Concluída — clique para desmarcar';btnEl.style.opacity='.75';}
+    else{btnEl.textContent='✅ Marcar Semana 04 como Concluída';btnEl.style.opacity='1';}
+  }
+}
+function toggleWeekDone(){
+  const p=cpGet();
+  const wasDone=!!p[CP_WEEK];
+  p[CP_WEEK]=!wasDone;
+  cpSet(p);
+  renderCourseProgress();
+  if(!wasDone){addXP(30,'Semana marcada como concluída!','📊');}
+}
+renderCourseProgress();
 
 function addXP(v,title,ico){
   XP=Math.min(XP+v,MAX_XP);streak++;
