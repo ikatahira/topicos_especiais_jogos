@@ -33,7 +33,7 @@
   </div>
   <div class="hud-xp">
     <div class="streak">🔥 <span id="streak">0</span></div>
-    <div class="xp-count"><strong id="xp-val">0</strong><span>/ 520 XP</span></div>
+    <div class="xp-count"><strong id="xp-val">0</strong><span>/ 620 XP</span></div>
     <div class="hud-bar"><div class="hud-bar-fill" id="xp-bar"></div></div>
     <div class="hud-level" id="xp-level">APRENDIZ</div>
   </div>
@@ -82,7 +82,7 @@
   </div>
   <h1 class="hero-title">Elementos de Gamificação</h1>
   <p class="hero-sub">PBL (Points, Badges, Leaderboards) é apenas a superfície. Gamificação profunda combina onboarding narrativo, feedback loops precisos e elementos que motivam intrinsecamente — sem cair na 'pointsification' que transforma sistemas ricos em coleta vazia de pontos.</p>
-  <div class="hero-chips"><span class="chip chip-accent">🏅 Badges Visuais</span><span class="chip chip-teal">🔄 Feedback Loops</span><span class="chip chip-amber">📖 Onboarding</span><span class="chip chip-rose">⚠️ Pointsification</span><span class="chip chip-lime">520 XP disponíveis</span></div>
+  <div class="hero-chips"><span class="chip chip-accent">🏅 Badges Visuais</span><span class="chip chip-teal">🔄 Feedback Loops</span><span class="chip chip-amber">📖 Onboarding</span><span class="chip chip-rose">⚠️ Pointsification</span><span class="chip chip-lime">620 XP disponíveis</span></div>
   <div class="hero-num">05</div>
 </section>
 
@@ -315,6 +315,27 @@
         <button class="eval-btn" style="margin-top:14px" onclick="completeAct(2,80,'ac-b3')">✅ Marcar como Concluída — +80 XP</button>
       </div>
     </div>
+    <div class="scard" id="act-card-3">
+      <div class="scard-head">
+        <div class="scard-ico ico-rose"><span>🔌</span></div>
+        <div class="scard-title">Atividade 4 — Painel Final: Integração e Crítica de Pointsification</div>
+        <div class="scard-xp">+100 XP</div>
+      </div>
+      <div class="scard-body">
+        <p style="font-size:.87em;color:var(--sub);line-height:1.7;margin-bottom:14px">Etapa final (5 de 5) do "Painel de Gamificação Física". Integre tudo que foi construído nas semanas 01-04 (botão/ponto, buzzer de motivação, badge, leaderboard, potenciômetro) num único painel — e depois sabote o próprio sistema para praticar a crítica de <strong style="color:var(--text)">pointsification</strong> vista nesta semana.</p>
+        <div style="font-family:var(--mono);font-size:.62em;text-transform:uppercase;letter-spacing:.1em;color:var(--sub);margin-bottom:8px">Passos</div>
+        <ol style="font-size:.83em;line-height:1.8;color:var(--text2);padding-left:18px">
+          <li>Monte no mesmo protoboard todos os componentes das 4 semanas anteriores funcionando ao mesmo tempo: botão de pontos, buzzer de recompensa, LED de badge, 2º botão de leaderboard e potenciômetro de dificuldade</li>
+          <li>Adicione um elemento propositalmente "vazio": um 3º LED que pisca em intervalos <strong>aleatórios</strong> (usando <code>random()</code>), sem nenhuma relação com o desempenho real do jogador — uma recompensa de mentira</li>
+          <li>Apresente o painel completo para um colega sem explicar qual LED é o "falso"; peça para ele tentar identificar sozinho qual recompensa não faz sentido</li>
+          <li>Documente: o colega conseguiu identificar o LED aleatório? Por quê ele engana (ou não engana) na prática?</li>
+          <li>Escreva a análise final conectando com a teoria: por que esse LED aleatório é um exemplo físico de pointsification — gamificação superficial sem profundidade de sistema?</li>
+        </ol>
+        <div style="font-family:var(--mono);font-size:.62em;text-transform:uppercase;letter-spacing:.1em;color:var(--sub);margin:14px 0 6px">Entrega</div>
+        <p style="font-size:.82em;color:var(--teal);background:rgba(45,228,200,.07);border:1px solid rgba(45,228,200,.15);border-radius:7px;padding:10px 13px">Vídeo do painel físico completo funcionando (todos os componentes das 5 semanas) + código-fonte final comentado (.ino) + relatório de 1 página com o teste do colega e a análise crítica de pointsification</p>
+        <button class="eval-btn" style="margin-top:14px" onclick="completeAct(3,100,'ac-hw')">✅ Marcar como Concluída — +100 XP</button>
+      </div>
+    </div>
   </div>
 </section>
 
@@ -325,7 +346,7 @@
     <div class="scard-title">Conquistas — Semana 05</div>
   </div>
   <div class="scard-body">
-    <div class="ach-grid" id="ach-grid"><div class="ach-card" id="ac-s" title="Começou S05"><div class="ach-ico">🚀</div><div class="ach-name">Começou S05</div></div><div class="ach-card" id="ac-o" title="Todos os Objetivos"><div class="ach-ico">🎯</div><div class="ach-name">Todos os Objetivos</div></div><div class="ach-card" id="ac-d" title="Taxonomia Dominada"><div class="ach-ico">🔗</div><div class="ach-name">Taxonomia Dominada</div></div><div class="ach-card" id="ac-q" title="Quiz Completo"><div class="ach-ico">🧠</div><div class="ach-name">Quiz Completo</div></div><div class="ach-card" id="ac-p" title="Quiz Perfeito"><div class="ach-ico">💎</div><div class="ach-name">Quiz Perfeito</div></div><div class="ach-card" id="ac-b1" title="Badge Designer"><div class="ach-ico">🎖️</div><div class="ach-name">Badge Designer</div></div><div class="ach-card" id="ac-b2" title="Anti-Pointsification"><div class="ach-ico">⚠️</div><div class="ach-name">Anti-Pointsification</div></div><div class="ach-card" id="ac-b3" title="Design Sprinter"><div class="ach-ico">🚀</div><div class="ach-name">Design Sprinter</div></div><div class="ach-card" id="ac-a" title="Todas as Atividades"><div class="ach-ico">✏️</div><div class="ach-name">Todas as Atividades</div></div><div class="ach-card" id="ac-x" title="XP Máximo"><div class="ach-ico">🏆</div><div class="ach-name">XP Máximo</div></div></div>
+    <div class="ach-grid" id="ach-grid"><div class="ach-card" id="ac-s" title="Começou S05"><div class="ach-ico">🚀</div><div class="ach-name">Começou S05</div></div><div class="ach-card" id="ac-o" title="Todos os Objetivos"><div class="ach-ico">🎯</div><div class="ach-name">Todos os Objetivos</div></div><div class="ach-card" id="ac-d" title="Taxonomia Dominada"><div class="ach-ico">🔗</div><div class="ach-name">Taxonomia Dominada</div></div><div class="ach-card" id="ac-q" title="Quiz Completo"><div class="ach-ico">🧠</div><div class="ach-name">Quiz Completo</div></div><div class="ach-card" id="ac-p" title="Quiz Perfeito"><div class="ach-ico">💎</div><div class="ach-name">Quiz Perfeito</div></div><div class="ach-card" id="ac-b1" title="Badge Designer"><div class="ach-ico">🎖️</div><div class="ach-name">Badge Designer</div></div><div class="ach-card" id="ac-b2" title="Anti-Pointsification"><div class="ach-ico">⚠️</div><div class="ach-name">Anti-Pointsification</div></div><div class="ach-card" id="ac-b3" title="Design Sprinter"><div class="ach-ico">🚀</div><div class="ach-name">Design Sprinter</div></div><div class="ach-card" id="ac-hw" title="Painel Físico Completo"><div class="ach-ico">🔌</div><div class="ach-name">Painel Físico Completo</div></div><div class="ach-card" id="ac-a" title="Todas as Atividades"><div class="ach-ico">✏️</div><div class="ach-name">Todas as Atividades</div></div><div class="ach-card" id="ac-x" title="XP Máximo"><div class="ach-ico">🏆</div><div class="ach-name">XP Máximo</div></div></div>
   </div>
 </section>
 
@@ -345,14 +366,14 @@
 </div>
 
 <script>
-const MAX_XP=520;
+const MAX_XP=620;
 const QUIZ_DATA=[{"q": "O que é 'pointsification' e por que é considerada um erro de design?", "opts": ["Usar muitos pontos deixa o sistema confuso", "Reduzir gamificação a apenas PBL sem motivação intrínseca — engajamento superficial que se esvai quando as recompensas param", "Pontuar apenas as atividades mais difíceis", "Usar pontos em sistemas não-educacionais"], "correct": 1, "xp": 15, "fb_ok": "✅ Exato! Pointsification cria engajamento vazio. Quando o prêmio acaba, a motivação acaba junto. Gamificação real alinha motivação extrínseca (pontos) com intrínseca (senso de progresso e propósito).", "fb_fail": "❌ Pointsification é usar PBL como cosmético sem pensar na motivação subjacente. O resultado: usuários que jogam pelo prêmio, não pelo valor da atividade."}, {"q": "Qual é a diferença entre 'componente' e 'dinâmica' na taxonomia de gamificação?", "opts": ["Componente é mais complexo que dinâmica", "Componente é o artefato visível (badge, ponto); Dinâmica é o comportamento emergente que surge da interação com esses componentes", "São sinônimos com nomes diferentes", "Dinâmica refere-se apenas ao movimento na interface"], "correct": 1, "xp": 15, "fb_ok": "✅ Perfeito! Badge = componente (existe, é visível). A rivalidade que emerge quando dois jogadores disputam o mesmo badge = dinâmica (não foi programada, surgiu da interação).", "fb_fail": "❌ Componentes são os artefatos (badges, pontos, leaderboards). Dinâmicas são comportamentos não programados que emergem quando players interagem com esses componentes."}, {"q": "Por que leaderboards globais podem ser desmotivadores para a maioria dos jogadores?", "opts": ["Porque são difíceis de implementar tecnicamente", "A maioria nunca chegará ao topo — ver-se permanentemente no fundo cria resignação. Leaderboards locais ou temporais são mais eficazes", "Porque expõem dados pessoais dos jogadores", "Não são desmotivadores — são sempre positivos"], "correct": 1, "xp": 15, "fb_ok": "✅ Isso! Pesquisas mostram que rankings globais motivam os top 10% e desmotivam os demais. Solução: rankings de amigos, rankings semanais (todos partem do zero) ou rankings por nível.", "fb_fail": "❌ O problema dos leaderboards globais é que a maioria nunca sobe ao topo. Isso cria 'learned helplessness' — o jogador desiste de competir. Rankings locais (amigos) ou temporais resolvem isso."}, {"q": "O que torna um badge eficaz como elemento de gamificação?", "opts": ["Ser dado com frequência para manter o jogador animado", "Critérios claros de conquista, significado social, raridade adequada e design visual que conta a história do que foi conquistado", "Ter design colorido e chamar atenção", "Ser desbloqueado automaticamente após certo tempo"], "correct": 1, "xp": 20, "fb_ok": "✅ Um badge eficaz é uma medalha com história: o jogador sabe exatamente o que fez para merecer, o esforço fica visível para outros e o design visual comunica a conquista sem precisar de texto.", "fb_fail": "❌ Badges dados facilmente perdem valor. Um badge eficaz tem: critério específico e desafiador, design que conta a conquista, significado social (outros veem) e raridade adequada ao esforço."}, {"q": "O que é um 'feedback loop' e qual seu papel na gamificação?", "opts": ["Sistema de avaliação ao final de cada missão", "Ciclo ação → resultado → reação do sistema → nova ação. Loops curtos criam flow imediato; loops longos criam engajamento duradouro", "Mecanismo para coletar opiniões dos usuários", "Relatório de desempenho enviado ao final do semestre"], "correct": 1, "xp": 20, "fb_ok": "✅ Feedback loops são o coração da gamificação. O exemplo clássico: atiro (ação) → inimigo toma dano com som e visual (feedback imediato) → tento de novo com nova estratégia. Sem feedback, a ação perde sentido.", "fb_fail": "❌ Feedback loop é o ciclo que mantém o engajamento: cada ação gera uma resposta do sistema que informa e motiva a próxima ação. É o que diferencia um jogo de uma tarefa."}, {"q": "Como o onboarding gamificado difere de um tutorial tradicional?", "opts": ["Onboarding gamificado usa mais texto explicativo", "Ensina as regras através do próprio sistema — o jogador aprende fazendo, com feedback imediato, narrativa e pequenas vitórias progressivas", "Onboarding gamificado é apenas mais divertido visualmente", "É mais longo e detalhado que tutoriais convencionais"], "correct": 1, "xp": 15, "fb_ok": "✅ O onboarding gamificado aplica 'show, don't tell': em vez de explicar mecânicas, deixa o player experimentá-las em situações seguras com feedback imediato. Portal, Duolingo e Celeste são referências de onboarding gamificado perfeito.", "fb_fail": "❌ Onboarding gamificado usa as próprias mecânicas do sistema para ensinar. O player descobre as regras através de micro-desafios progressivos, não através de manuais ou longas explicações."}];
 const LEVELS=[[0, "APRENDIZ"], [100, "DESIGNER"], [200, "ARQUITETO"], [350, "ESPECIALISTA"], [480, "MESTRE PBL"]];
 const Q_XPS=[15, 15, 15, 20, 20, 15];
 const Q_FB=[{"ok": "✅ Exato! Pointsification cria engajamento vazio. Quando o prêmio acaba, a motivação acaba junto. Gamificação real alinha motivação extrínseca (pontos) com intrínseca (senso de progresso e propósito).", "fail": "❌ Pointsification é usar PBL como cosmético sem pensar na motivação subjacente. O resultado: usuários que jogam pelo prêmio, não pelo valor da atividade."}, {"ok": "✅ Perfeito! Badge = componente (existe, é visível). A rivalidade que emerge quando dois jogadores disputam o mesmo badge = dinâmica (não foi programada, surgiu da interação).", "fail": "❌ Componentes são os artefatos (badges, pontos, leaderboards). Dinâmicas são comportamentos não programados que emergem quando players interagem com esses componentes."}, {"ok": "✅ Isso! Pesquisas mostram que rankings globais motivam os top 10% e desmotivam os demais. Solução: rankings de amigos, rankings semanais (todos partem do zero) ou rankings por nível.", "fail": "❌ O problema dos leaderboards globais é que a maioria nunca sobe ao topo. Isso cria 'learned helplessness' — o jogador desiste de competir. Rankings locais (amigos) ou temporais resolvem isso."}, {"ok": "✅ Um badge eficaz é uma medalha com história: o jogador sabe exatamente o que fez para merecer, o esforço fica visível para outros e o design visual comunica a conquista sem precisar de texto.", "fail": "❌ Badges dados facilmente perdem valor. Um badge eficaz tem: critério específico e desafiador, design que conta a conquista, significado social (outros veem) e raridade adequada ao esforço."}, {"ok": "✅ Feedback loops são o coração da gamificação. O exemplo clássico: atiro (ação) → inimigo toma dano com som e visual (feedback imediato) → tento de novo com nova estratégia. Sem feedback, a ação perde sentido.", "fail": "❌ Feedback loop é o ciclo que mantém o engajamento: cada ação gera uma resposta do sistema que informa e motiva a próxima ação. É o que diferencia um jogo de uma tarefa."}, {"ok": "✅ O onboarding gamificado aplica 'show, don't tell': em vez de explicar mecânicas, deixa o player experimentá-las em situações seguras com feedback imediato. Portal, Duolingo e Celeste são referências de onboarding gamificado perfeito.", "fail": "❌ Onboarding gamificado usa as próprias mecânicas do sistema para ensinar. O player descobre as regras através de micro-desafios progressivos, não através de manuais ou longas explicações."}];
 const OBJECTIVES=["Dominar a taxonomia completa de elementos gamificados (PBL+)", "Distinguir elementos de componente, mecânica e dinâmica", "Identificar e evitar a armadilha da pointsification", "Projetar sistema de badges com critérios claros e progressão", "Criar onboarding gamificado eficaz com curva de aprendizado ideal"];
 const VIDEOS=[{"id": "BTgBW5X1M1s", "label": "Taxonomia", "title": "Gamification Elements — Taxonomia Completa", "icon": "🏅"}, {"id": "JD1e1xTYHhM", "label": "Badges", "title": "Badge Design Best Practices", "icon": "🎖️"}, {"id": "eDZQn3bX0lg", "label": "Pointsification", "title": "Avoiding the Pointsification Trap", "icon": "⚠️"}];
-const N_OBJ=5, N_Q=6, N_ACT=3;
+const N_OBJ=5, N_Q=6, N_ACT=4;
 
 let XP=0, streak=0, toastT=null;
 let objS=new Array(N_OBJ).fill(false);
@@ -586,7 +607,7 @@ function resetElements(){
 }
 
 
-setTimeout(()=>{earn('ac-s');toast('🚀','Bem-vindo à Semana 05!','Elementos de Gamificação · 520 XP disponíveis');},800);
+setTimeout(()=>{earn('ac-s');toast('🚀','Bem-vindo à Semana 05!','Elementos de Gamificação · 620 XP disponíveis');},800);
 document.getElementById('qdot-0').classList.add('cur');
 updateHUD();
 </script>

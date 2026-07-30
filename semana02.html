@@ -17,7 +17,7 @@
             <div class="xp-bar-outer">
                 <div class="xp-bar-fill" id="xpBar"></div>
             </div>
-            <span class="xp-count" id="xpCount">0 / 400</span>
+            <span class="xp-count" id="xpCount">0 / 500</span>
         </div>
     </nav>
 
@@ -36,11 +36,11 @@
                 <span class="lbl">VÍDEOS</span>
             </div>
             <div class="stat-pill">
-                <span class="val">3</span>
+                <span class="val">4</span>
                 <span class="lbl">MISSÕES</span>
             </div>
             <div class="stat-pill">
-                <span class="val">400</span>
+                <span class="val">500</span>
                 <span class="lbl">XP TOTAL</span>
             </div>
         </div>
@@ -394,7 +394,7 @@
                 <div class="panel-header">
                     <span class="panel-icon">🚀</span>
                     <span class="panel-title">Missões da <span>Semana</span></span>
-                    <span class="panel-xp">400 XP disponíveis</span>
+                    <span class="panel-xp">500 XP disponíveis</span>
                 </div>
                 <div class="panel-body" style="padding-top:16px;">
                     <div class="mission-list">
@@ -498,6 +498,39 @@
                             </div>
                         </div>
 
+                        <!-- MISSION 4 - HARDWARE -->
+                        <div class="mission-card">
+                            <div class="mission-top" onclick="toggleMission(this)">
+                                <div class="mission-num">04</div>
+                                <div class="mission-info">
+                                    <div class="mission-name">🔌 Motivação em Dois Tons — Extrínseca vs Intrínseca no Circuito</div>
+                                    <div class="mission-tags">
+                                        <span class="m-tag tag-individual">INDIVIDUAL</span>
+                                        <span class="m-tag tag-docs">ARDUINO / ESP32</span>
+                                    </div>
+                                </div>
+                                <div class="mission-reward">+100 XP</div>
+                                <span class="chevron">›</span>
+                            </div>
+                            <div class="mission-body">
+                                <p class="mission-desc">
+                                    Etapa 2 do "Painel de Gamificação Física" (continuação da Semana 01). Adicione um buzzer ao circuito já montado e construa fisicamente a diferença entre motivação extrínseca (recompensa instantânea e vazia) e motivação intrínseca (recompensa que exige esforço real).
+                                </p>
+                                <div class="mission-deliverable">
+                                    <strong>📦 ENTREGA</strong>
+                                    <p>Monte 2 botões no mesmo protoboard do circuito da Semana 01: <strong>Botão A (Extrínseco)</strong> — ao apertar, o buzzer toca um bip curto instantaneamente, sempre, não importa o quê. <strong>Botão B (Intrínseco)</strong> — só toca uma pequena melodia de "conquista" se o usuário mantiver o botão pressionado por pelo menos 2 segundos contínuos (use <code>millis()</code> para medir o tempo pressionado, sem usar <code>delay()</code>). Grave um vídeo comparando as duas experiências e escreva um parágrafo: qual dos dois "vicia" mais rápido, e qual dá mais satisfação real, com base na SDT?</p>
+                                </div>
+                                <div class="mission-tips">
+                                    <strong>💡 DICAS</strong>
+                                    <ul>
+                                        <li>Use a função <code>tone(pino, frequência, duração)</code> do Arduino — não precisa de biblioteca extra para o buzzer</li>
+                                        <li>Para medir "segurar por 2 segundos" sem travar o programa, compare <code>millis()</code> atual com o momento em que o botão começou a ser pressionado</li>
+                                        <li>Conecte com o Overjustification Effect discutido na teoria: o Botão A é o equivalente físico de uma recompensa que "esvazia" o significado da ação</li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+
                     </div>
                 </div>
             </div>
@@ -558,7 +591,7 @@
 
     <script>
         // ═══ XP SYSTEM ═══
-        const MAX_XP = 400;
+        const MAX_XP = 500;
         let currentXP = 0;
         let objCount = 0;
 

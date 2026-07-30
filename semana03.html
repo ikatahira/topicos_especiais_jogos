@@ -42,7 +42,7 @@
   </div>
   <div class="hud-xp">
     <div class="streak">🔥 <span id="streak">0</span></div>
-    <div class="xp-count"><strong id="xp-val">0</strong><span>/ 600 XP</span></div>
+    <div class="xp-count"><strong id="xp-val">0</strong><span>/ 700 XP</span></div>
     <div class="hud-bar"><div class="hud-bar-fill" id="xp-bar"></div></div>
     <div class="hud-level" id="xp-level">RECRUTA</div>
   </div>
@@ -95,7 +95,7 @@
       <h1>MECÂNICAS<br>DE <em>JOGO</em></h1>
       <p class="hero-sub">Os blocos que constroem qualquer experiência gamificada — desde o XP do Duolingo até o Battle Pass da Fortnite. Aprenda a arquitetura por baixo dos jogos que você já adora.</p>
       <div class="chips">
-        <div class="chip chip-lime">⚡ 600 XP disponíveis</div>
+        <div class="chip chip-lime">⚡ 700 XP disponíveis</div>
         <div class="chip chip-teal">🕹️ Autodidata</div>
         <div class="chip chip-amber">🏆 8 conquistas</div>
         <div class="chip chip-violet">⏱️ ~3 horas</div>
@@ -1146,6 +1146,34 @@
             </div>
           </div>
 
+          <!-- ATIV 4 - HARDWARE -->
+          <div class="act" id="a4">
+            <div class="act-head" onclick="togAct('a4')">
+              <div class="act-num">4</div>
+              <div class="act-info">
+                <div class="act-title">🔌 PBL Físico — Pontos, Badge e Leaderboard com Arduino</div>
+                <div class="act-meta">Arduino / ESP32 · Continuação da Semana 02 · Individual</div>
+              </div>
+              <div class="act-pts">+100 XP</div>
+              <div class="act-tog">▼</div>
+            </div>
+            <div class="act-body">
+              <p style="font-size:.86em;color:var(--sub);line-height:1.65;margin-bottom:14px">Etapa 3 do "Painel de Gamificação Física". Usando o circuito das semanas anteriores (LED + botão + buzzer), implemente fisicamente os 3 pilares do PBL: <strong style="color:var(--text)">Points, Badges e Leaderboard</strong>.</p>
+              <ul class="steps">
+                <li class="step" onclick="togStep(this)"><div class="snum">1</div><div><strong>Points:</strong> reutilize o botão da Semana 01 — cada aperto soma 1 ponto, exibido via <code>Serial.println()</code></div></li>
+                <li class="step" onclick="togStep(this)"><div class="snum">2</div><div><strong>Badge:</strong> adicione um 2º LED de cor diferente que acende de forma permanente (fica ligado, não pisca) assim que o contador atingir 10 pontos — esse é o "badge desbloqueado"</div></li>
+                <li class="step" onclick="togStep(this)"><div class="snum">3</div><div><strong>Leaderboard:</strong> monte um 2º botão representando um "Jogador B" com sua própria contagem independente. O LED do jogador com mais pontos deve piscar mais rápido que o do outro (compare os dois contadores no <code>loop()</code>)</div></li>
+                <li class="step" onclick="togStep(this)"><div class="snum">4</div><div>Teste com um colega: cada um controla um botão/jogador, e vocês competem por 2 minutos</div></li>
+                <li class="step" onclick="togStep(this)"><div class="snum">5</div><div>Grave um vídeo de 1-2 min mostrando o sistema completo funcionando com os dois jogadores</div></li>
+              </ul>
+              <div class="deliverable">
+                <div class="deliv-label">📦 Entrega</div>
+                <div class="deliv-text">Vídeo do circuito com os 2 jogadores competindo + código-fonte comentado (.ino) + comparação de 1 parágrafo: o que mudou na experiência ao adicionar o badge e o leaderboard, comparado com só ter pontos (Semana 01)?</div>
+              </div>
+              <button class="act-btn" id="btn-a4" onclick="doneAct('a4','btn-a4',3)">✅ MARCAR COMO CONCLUÍDA</button>
+            </div>
+          </div>
+
         </div>
       </div>
     </div>
@@ -1170,7 +1198,7 @@
         <div class="ach" id="ac-l" title="Loop Designer">🔄</div>
         <div class="ach" id="ac-q" title="Quiz Ace">🧠</div>
         <div class="ach" id="ac-a" title="Completo">⭐</div>
-        <div class="ach" id="ac-x" title="600 XP!">💎</div>
+        <div class="ach" id="ac-x" title="700 XP!">💎</div>
       </div>
     </div>
     <div class="rcard">
@@ -1218,10 +1246,10 @@
 //  STATE
 // ─────────────────────────────────────────
 let XP = 0, streak = 0;
-const MAX_XP = 600;
+const MAX_XP = 700;
 const objS   = new Array(5).fill(false);
 const mechS  = new Array(8).fill(false);
-const actS   = new Array(3).fill(false);
+const actS   = new Array(4).fill(false);
 let qCorrect = 0, qAnswered = {}, loopDone = false;
 let loopSeq = [], dragItem = null;
 
@@ -1270,7 +1298,7 @@ function updateHUD() {
   set('pr-o',oc+' / 5'); set('pb-o', oc/5*100+'%');
   set('pr-m',mc+' / 8'); set('pb-m', mc/8*100+'%');
   set('pr-q',qCorrect+' / 7'); set('pb-q', qCorrect/7*100+'%');
-  set('pr-a',ac+' / 3'); set('pb-a', ac/3*100+'%');
+  set('pr-a',ac+' / 4'); set('pb-a', ac/4*100+'%');
 }
 function set(id,v){const e=document.getElementById(id);if(e)e.textContent!==undefined&&typeof v==='string'&&v.includes('%')?e.style.width=v:e.textContent=v;}
 // fix: separate textContent and style updates
@@ -1477,7 +1505,7 @@ function checkAch(){
 // ─────────────────────────────────────────
 // fix progress bar style updates
 function fixBars(){
-  const pairs=[['pr-o','pb-o',objS.filter(Boolean).length,5],['pr-m','pb-m',mechS.filter(Boolean).length,8],['pr-q','pb-q',qCorrect,7],['pr-a','pb-a',actS.filter(Boolean).length,3]];
+  const pairs=[['pr-o','pb-o',objS.filter(Boolean).length,5],['pr-m','pb-m',mechS.filter(Boolean).length,8],['pr-q','pb-q',qCorrect,7],['pr-a','pb-a',actS.filter(Boolean).length,4]];
   for(const [tid,bid,v,max] of pairs){
     const t=document.getElementById(tid),b=document.getElementById(bid);
     if(t)t.textContent=v+' / '+max;
@@ -1545,7 +1573,7 @@ function filterGloss(q) {
 
 setTimeout(()=>{
   earn('ac-s');
-  toast('🚀','Bem-vindo à Semana 03!','Mecânicas de Jogo · 600 XP disponíveis');
+  toast('🚀','Bem-vindo à Semana 03!','Mecânicas de Jogo · 700 XP disponíveis');
 },800);
 updateHUD();
 </script>

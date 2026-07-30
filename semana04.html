@@ -33,7 +33,7 @@
   </div>
   <div class="hud-xp">
     <div class="streak">🔥 <span id="streak">0</span></div>
-    <div class="xp-count"><strong id="xp-val">0</strong><span>/ 550 XP</span></div>
+    <div class="xp-count"><strong id="xp-val">0</strong><span>/ 650 XP</span></div>
     <div class="hud-bar"><div class="hud-bar-fill" id="xp-bar"></div></div>
     <div class="hud-level" id="xp-level">APRENDIZ</div>
   </div>
@@ -79,7 +79,7 @@
     <span class="chip chip-violet">🎯 MDA Framework</span>
     <span class="chip chip-teal">🌊 Emergência</span>
     <span class="chip chip-amber">🎨 8 Estéticas</span>
-    <span class="chip chip-rose">550 XP disponíveis</span>
+    <span class="chip chip-rose">650 XP disponíveis</span>
   </div>
   <div class="hero-deco">04</div>
 </div>
@@ -397,6 +397,28 @@
       <div class="act-deliverable"><strong>📦 Entrega:</strong>Infográfico interativo (Figma/Miro) + análise escrita de 2 páginas</div>
       <button class="act-done-btn" id="adb3" onclick="doneAct(3,event)">✅ Marcar como Concluída</button>
     </div>
+
+    <!-- A4 - HARDWARE -->
+    <div class="act-card" id="ac4" onclick="togAct('ac4b',event)" style="margin-top:8px;">
+      <div class="act-head">
+        <div class="act-num">04</div>
+        <div class="act-name">🔌 Do Mecânico ao Estético — Potenciômetro na Prática</div>
+        <div class="act-xp">+100 XP</div>
+        <span class="act-chevron">▶</span>
+      </div>
+    </div>
+    <div id="ac4b" style="display:none;padding:0 18px 18px;">
+      <div class="act-desc">Etapa 4 do "Painel de Gamificação Física" (continuação da Semana 03). Adicione um potenciômetro ao circuito e demonstre fisicamente o framework MDA: uma Mecânica ajustável (o potenciômetro) gera uma Dinâmica observável (o comportamento do LED/buzzer muda em tempo real), que por sua vez evoca uma Estética (uma sensação, discutida em grupo).</div>
+      <div class="act-steps">
+        <div class="act-step" onclick="togStep(this)"><div class="step-check"></div>Monte um potenciômetro em uma entrada analógica (ex: A0) do Arduino/ESP32</div>
+        <div class="act-step" onclick="togStep(this)"><div class="step-check"></div>Use <code>analogRead()</code> para ler o valor (0-1023) e mapeie para o intervalo de velocidade de piscar do LED (<code>map()</code>)</div>
+        <div class="act-step" onclick="togStep(this)"><div class="step-check"></div>Gire o potenciômetro de uma ponta a outra e observe: em qual extremo o LED pisca tão rápido que parece "urgente"? Em qual ele fica "calmo"?</div>
+        <div class="act-step" onclick="togStep(this)"><div class="step-check"></div>Em grupo (3-4 pessoas), cada pessoa testa o circuito sem saber o valor exato do potenciômetro e descreve em 1 palavra a sensação (Estética) que sentiu em 3 posições diferentes</div>
+        <div class="act-step" onclick="togStep(this)"><div class="step-check"></div>Monte o diagrama causal: Mecânica (posição do potenciômetro) → Dinâmica (frequência do piscar) → Estética (palavras coletadas do grupo)</div>
+      </div>
+      <div class="act-deliverable"><strong>📦 Entrega:</strong>Vídeo do circuito com o potenciômetro sendo girado + código-fonte comentado (.ino) + diagrama MDA com as palavras de Estética coletadas do grupo + código-fonte comentado</div>
+      <button class="act-done-btn" id="adb4" onclick="doneAct(4,event)">✅ Marcar como Concluída</button>
+    </div>
   </div>
 </div>
 
@@ -414,7 +436,7 @@
       <div class="ach" id="ac-e" title="Explorou todas as estéticas"><div class="ach-ico">🎨</div><div class="ach-name">Esteta</div></div>
       <div class="ach" id="ac-q" title="5+ no quiz"><div class="ach-ico">🧠</div><div class="ach-name">Quiz Master</div></div>
       <div class="ach" id="ac-a" title="Todas as atividades"><div class="ach-ico">⭐</div><div class="ach-name">Completo</div></div>
-      <div class="ach" id="ac-x" title="XP máximo"><div class="ach-ico">💎</div><div class="ach-name">550 XP</div></div>
+      <div class="ach" id="ac-x" title="XP máximo"><div class="ach-ico">💎</div><div class="ach-name">650 XP</div></div>
     </div>
   </div>
 </div>
@@ -447,13 +469,13 @@
 </div>
 
 <script>
-const MAX_XP=550;
+const MAX_XP=650;
 let XP=0,streak=0,toastT=null;
 let objS=[false,false,false,false];
 let aesS=new Set();
 let mdaDone=false;
 let qCorrect=0,qAnswered={};
-let actS=[false,false,false];
+let actS=[false,false,false,false];
 let vidWatched=false;
 
 const LEVELS=[
@@ -656,7 +678,7 @@ function closeVid(e){if(e.target===document.getElementById('vid-modal'))closeVid
 function closeVidBtn(){const modal=document.getElementById('vid-modal');const iframe=document.getElementById('vid-iframe');modal.classList.remove('open');iframe.src='';document.body.style.overflow='';}
 document.addEventListener('keydown',e=>{if(e.key==='Escape')closeVidBtn();});
 
-setTimeout(()=>{earn('ac-s');toast('🚀','Bem-vindo à Semana 04!','Dinâmicas e Estéticas · 550 XP disponíveis');},800);
+setTimeout(()=>{earn('ac-s');toast('🚀','Bem-vindo à Semana 04!','Dinâmicas e Estéticas · 650 XP disponíveis');},800);
 updateHUD();
 </script>
     </div>

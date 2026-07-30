@@ -298,6 +298,48 @@
     </span>
 </div>
 </div>
+     <div class="atividade" style="border-left:3px solid #2de4c8;padding-left:14px">
+    <h4>
+        🔌 Atividade 4 (Prática com Hardware) — Ponto Zero: Seu Primeiro Circuito de Feedback
+        <span class="tooltip">
+            <span class="tooltip-icon">i</span>
+            <span class="tooltiptext">
+                Esta é a Etapa 1 de um projeto que continua até a Semana 05: o "Painel de Gamificação Física".<br><br>
+                A cada semana do Módulo 1, você adiciona uma peça nova ao mesmo circuito, ligando a teoria da aula a um componente físico.<br><br>
+                Guarde o circuito montado — você vai reaproveitá-lo na próxima semana.
+            </span>
+        </span>
+    </h4>
+
+    <div class="descricao">
+        <p>Todo jogo — digital ou não — depende de <strong>feedback</strong>: uma ação do jogador precisa gerar uma resposta perceptível. Nesta atividade você constrói, com Arduino ou ESP32, o circuito de feedback mais simples possível: um botão que representa a ação do jogador e um LED que representa a resposta do sistema.</p>
+    </div>
+
+    <div class="procedimento">
+        <strong>🧰 Materiais (kit básico):</strong>
+        <ul>
+            <li>1x Arduino Uno ou ESP32 (qualquer um dos dois kits disponíveis serve)</li>
+            <li>1x LED (qualquer cor)</li>
+            <li>1x resistor de 220Ω (para o LED)</li>
+            <li>1x botão push-button (tátil, 4 pinos)</li>
+            <li>Protoboard e jumpers</li>
+        </ul>
+        <strong>🔧 Passos:</strong>
+        <ul>
+            <li>Monte o LED com o resistor de 220Ω em um pino digital de saída (ex: pino 8)</li>
+            <li>Monte o botão em um pino digital de entrada (ex: pino 2), usando <code>INPUT_PULLUP</code> no código para não precisar de resistor extra</li>
+            <li>Escreva um código que: a cada aperto do botão, pisque o LED uma vez e envie <code>Serial.println()</code> contando o total de "pontos" (apertos) acumulados</li>
+            <li>Teste: aperte o botão 5 vezes seguidas e confira se a contagem no Serial Monitor bate</li>
+            <li>Grave um vídeo curto (30-60s) mostrando o circuito funcionando</li>
+        </ul>
+    </div>
+
+    <div class="entrega">
+        <strong>📦 Entrega:</strong>
+        Vídeo do circuito funcionando + código-fonte comentado (.ino) + 1 parágrafo conectando o experimento ao conceito de "feedback de jogo" visto nesta aula (por que um LED sem o botão, ou um botão sem o LED, não seria "gamificação"?)
+    </div>
+</div>
+
             <div class="navigation">
                 <a href="index.html" class="nav-button">
                     ⬅️ Semana Anterior
