@@ -350,6 +350,15 @@
     min-width:34px;
   }
 
+  table.eval{width:100%;border-collapse:collapse;font-size:.9rem;}
+  table.eval th, table.eval td{text-align:left;padding:11px 12px;border-bottom:1px solid var(--line);vertical-align:top;}
+  table.eval th{
+    font-family:'IBM Plex Mono', monospace;font-size:.72rem;
+    letter-spacing:.08em;text-transform:uppercase;color:var(--muted);
+  }
+  table.eval tr:last-child td{border-bottom:none;}
+  table.eval td.peso{font-family:'IBM Plex Mono', monospace;color:var(--amber);white-space:nowrap;}
+
   /* ---------- BIBLIOGRAPHY ---------- */
   .biblio{padding:8px 0 56px;}
   .biblio > h2{
@@ -646,6 +655,19 @@
           <li><b>IA aplicada ao agronegócio</b> — visão computacional, digital twins, manutenção preditiva — insumo para o Módulo 3 (Tecnologias Emergentes).</li>
           <li><b>Turismo rural</b> — bom tema alternativo para situações de decisão de negócio, fora do eixo produtividade.</li>
         </ul>
+        <p style="margin-top:18px;"><b>Grade de avaliação oficial do evento (Quadro 1)</b> — referência de rigor técnico, não os pesos da nossa disciplina:</p>
+        <table class="eval" style="margin-top:10px;">
+          <thead>
+            <tr><th>Critério</th><th>Peso</th></tr>
+          </thead>
+          <tbody>
+            <tr><td>Qualidade Técnica e Científica</td><td class="peso">3.0</td></tr>
+            <tr><td>Estrutura e Organização</td><td class="peso">2.5</td></tr>
+            <tr><td>Resultados e Discussão</td><td class="peso">2.0</td></tr>
+            <tr><td>Redação e Normas ABNT</td><td class="peso">1.5</td></tr>
+            <tr><td>Originalidade / Inovação</td><td class="peso">1.0</td></tr>
+          </tbody>
+        </table>
       </div>
     </section>
 
