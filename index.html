@@ -1,166 +1,537 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Tópicos Especiais em Jogos Digitais - IJD-038</title>
-    <style>
-        * { margin: 0; padding: 0; box-sizing: border-box; }
-        body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; line-height: 1.6; background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); min-height: 100vh; }
-        
-        .header { background: rgba(255,255,255,0.95); padding: 30px 0; box-shadow: 0 4px 20px rgba(0,0,0,0.1); }
-        .header-content { max-width: 1400px; margin: 0 auto; padding: 0 20px; text-align: center; }
-        .header h1 { color: #667eea; font-size: 2.5em; margin-bottom: 10px; }
-        .header p { color: #666; font-size: 1.1em; }
-        .header .subtitle { color: #764ba2; font-weight: bold; margin-top: 5px; }
-        
-        .container { max-width: 1400px; margin: 40px auto; padding: 0 20px; }
-        
-        .course-info { background: white; border-radius: 15px; padding: 30px; margin-bottom: 30px; box-shadow: 0 4px 20px rgba(0,0,0,0.1); }
-        .course-info h2 { color: #667eea; margin-bottom: 20px; }
-        .info-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 15px; margin: 20px 0; }
-        .info-box { background: #f8f9fa; padding: 15px; border-radius: 8px; border-left: 4px solid #667eea; }
-        .info-box strong { color: #667eea; display: block; margin-bottom: 5px; }
-        
-        .modules-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 25px; margin-top: 30px; }
-        
-        .module-card { background: white; border-radius: 15px; padding: 25px; box-shadow: 0 4px 20px rgba(0,0,0,0.1); transition: transform 0.3s, box-shadow 0.3s; }
-        .module-card:hover { transform: translateY(-5px); box-shadow: 0 8px 30px rgba(0,0,0,0.15); }
-        
-        .module-header { display: flex; align-items: center; gap: 15px; margin-bottom: 20px; padding-bottom: 15px; border-bottom: 2px solid #f0f0f0; }
-        .module-icon { font-size: 2.5em; }
-        .module-title { flex: 1; }
-        .module-title h3 { color: #667eea; font-size: 1.3em; margin-bottom: 5px; }
-        .module-title p { color: #666; font-size: 0.9em; }
-        
-        .weeks-list { list-style: none; }
-        .weeks-list li { margin-bottom: 10px; }
-        .weeks-list a { display: flex; align-items: center; gap: 10px; padding: 12px 15px; background: #f8f9fa; color: #667eea; text-decoration: none; border-radius: 8px; transition: all 0.3s; border-left: 3px solid transparent; }
-        .weeks-list a:hover { background: #667eea; color: white; border-left-color: #764ba2; transform: translateX(5px); }
-        .week-number { font-weight: bold; min-width: 80px; }
-        
-        .module-1 .module-icon { color: #667eea; }
-        .module-2 .module-icon { color: #f093fb; }
-        .module-3 .module-icon { color: #4facfe; }
-        .module-4 .module-icon { color: #43e97b; }
-        
-        @media (max-width: 768px) {
-            .header h1 { font-size: 1.8em; }
-            .modules-grid { grid-template-columns: 1fr; }
-        }
-    </style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Tópicos Especiais em Jogos Digitais — IJD-038</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600;700&family=IBM+Plex+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg:#12100b;
+    --panel:#1b170f;
+    --panel-2:#211c12;
+    --ink:#ede6d6;
+    --muted:#9c8f76;
+    --line:#33291a;
+    --green:#6fa05d;
+    --green-soft:#6fa05d33;
+    --amber:#e3a23c;
+    --amber-soft:#e3a23c33;
+    --teal:#4c93a6;
+    --teal-soft:#4c93a633;
+    --rose:#c1603a;
+    --rose-soft:#c1603a33;
+  }
+
+  *{margin:0;padding:0;box-sizing:border-box;}
+
+  html{scroll-behavior:smooth;}
+
+  body{
+    background:
+      radial-gradient(1200px 600px at 15% -10%, #1d1a10 0%, transparent 60%),
+      repeating-linear-gradient(90deg, #16130d 0px, #16130d 1px, transparent 1px, transparent 64px),
+      var(--bg);
+    color:var(--ink);
+    font-family:'IBM Plex Sans', sans-serif;
+    line-height:1.6;
+    min-height:100vh;
+  }
+
+  a{color:inherit;}
+
+  :focus-visible{
+    outline:2px solid var(--amber);
+    outline-offset:3px;
+  }
+
+  .mono{font-family:'IBM Plex Mono', monospace;}
+
+  .wrap{max-width:1180px;margin:0 auto;padding:0 24px;}
+
+  /* ---------- HEADER ---------- */
+  header{padding:56px 0 40px;border-bottom:1px solid var(--line);}
+
+  .eyebrow{
+    font-family:'IBM Plex Mono', monospace;
+    font-size:.78rem;
+    letter-spacing:.18em;
+    color:var(--green);
+    text-transform:uppercase;
+    display:flex;
+    align-items:center;
+    gap:10px;
+    margin-bottom:18px;
+  }
+  .eyebrow::before{
+    content:"";
+    width:8px;height:8px;border-radius:50%;
+    background:var(--green);
+    box-shadow:0 0 0 3px var(--green-soft);
+  }
+
+  h1{
+    font-family:'IBM Plex Mono', monospace;
+    font-weight:700;
+    font-size:clamp(1.9rem, 4.2vw, 3.1rem);
+    letter-spacing:-.01em;
+    max-width:16ch;
+  }
+
+  .tagline{
+    margin-top:14px;
+    color:var(--muted);
+    font-size:1.05rem;
+    max-width:52ch;
+  }
+  .tagline strong{color:var(--ink);font-weight:600;}
+
+  .stat-strip{
+    margin-top:36px;
+    display:grid;
+    grid-template-columns:repeat(auto-fit, minmax(150px,1fr));
+    gap:1px;
+    background:var(--line);
+    border:1px solid var(--line);
+  }
+  .stat{
+    background:var(--panel);
+    padding:16px 18px;
+    display:flex;
+    flex-direction:column;
+    gap:6px;
+  }
+  .stat .label{
+    font-family:'IBM Plex Mono', monospace;
+    font-size:.68rem;
+    letter-spacing:.14em;
+    text-transform:uppercase;
+    color:var(--muted);
+  }
+  .stat .value{
+    font-family:'IBM Plex Mono', monospace;
+    font-size:1.05rem;
+    font-weight:600;
+    color:var(--ink);
+    display:flex;
+    align-items:baseline;
+    gap:6px;
+  }
+  .stat .value::before{
+    content:"";
+    width:6px;height:6px;border-radius:50%;
+    background:var(--amber);
+    display:inline-block;
+    margin-right:2px;
+  }
+
+  /* ---------- SEASON TIMELINE (signature element) ---------- */
+  .season{
+    padding:52px 0 12px;
+  }
+  .season-head{
+    display:flex;
+    justify-content:space-between;
+    align-items:baseline;
+    flex-wrap:wrap;
+    gap:10px;
+    margin-bottom:22px;
+  }
+  .season-head h2{
+    font-family:'IBM Plex Mono', monospace;
+    font-size:1.05rem;
+    letter-spacing:.06em;
+    text-transform:uppercase;
+  }
+  .season-head span{
+    font-size:.85rem;
+    color:var(--muted);
+  }
+
+  .track{
+    position:relative;
+    display:grid;
+    grid-template-columns:repeat(20, 1fr);
+    gap:3px;
+    height:64px;
+    margin-bottom:10px;
+  }
+  .tick{
+    position:relative;
+    border-radius:3px;
+    cursor:default;
+    transition:transform .15s ease, filter .15s ease;
+  }
+  .tick:hover, .tick:focus-visible{
+    transform:scaleY(1.12);
+    filter:brightness(1.25);
+  }
+  .tick.m1{background:linear-gradient(180deg, var(--green), #4c7440);}
+  .tick.m2{background:linear-gradient(180deg, var(--amber), #b87a26);}
+  .tick.m3{background:linear-gradient(180deg, var(--teal), #35707f);}
+  .tick.m4{background:linear-gradient(180deg, var(--rose), #954a2b);}
+
+  .track-labels{
+    display:grid;
+    grid-template-columns:repeat(4, 1fr);
+    gap:3px;
+    margin-bottom:8px;
+  }
+  .track-labels div{
+    font-family:'IBM Plex Mono', monospace;
+    font-size:.68rem;
+    letter-spacing:.08em;
+    text-transform:uppercase;
+    padding:6px 2px 0;
+  }
+  .track-labels .m1{color:var(--green);}
+  .track-labels .m2{color:var(--amber);}
+  .track-labels .m3{color:var(--teal);}
+  .track-labels .m4{color:var(--rose);}
+
+  .season-caption{
+    color:var(--muted);
+    font-size:.85rem;
+    margin-top:6px;
+  }
+
+  /* ---------- PANELS: objetivos / ementa / toolkit ---------- */
+  .panels{
+    display:grid;
+    grid-template-columns:1.2fr 1fr;
+    gap:24px;
+    padding:48px 0;
+    border-bottom:1px solid var(--line);
+  }
+  .panel{
+    background:var(--panel);
+    border:1px solid var(--line);
+    border-radius:10px;
+    padding:26px 28px;
+  }
+  .panel h3{
+    font-family:'IBM Plex Mono', monospace;
+    font-size:.82rem;
+    letter-spacing:.12em;
+    text-transform:uppercase;
+    color:var(--green);
+    margin-bottom:14px;
+  }
+  .panel p{color:var(--ink);opacity:.92;font-size:.98rem;}
+  .panel p + p{margin-top:10px;}
+
+  .toolkit-list{
+    list-style:none;
+    display:flex;
+    flex-direction:column;
+    gap:14px;
+  }
+  .toolkit-list li{
+    display:flex;
+    gap:12px;
+    align-items:flex-start;
+    padding:12px 14px;
+    background:var(--panel-2);
+    border-radius:8px;
+    border-left:3px solid var(--amber);
+  }
+  .toolkit-list li:nth-child(2){border-left-color:var(--teal);}
+  .toolkit-list .glyph{
+    font-family:'IBM Plex Mono', monospace;
+    font-size:.95rem;
+    color:var(--amber);
+    line-height:1.4;
+  }
+  .toolkit-list li:nth-child(2) .glyph{color:var(--teal);}
+  .toolkit-list .txt strong{display:block;font-size:.92rem;margin-bottom:2px;}
+  .toolkit-list .txt span{font-size:.85rem;color:var(--muted);}
+
+  /* ---------- MODULES ---------- */
+  .modules{padding:48px 0 72px;}
+  .modules > h2{
+    font-family:'IBM Plex Mono', monospace;
+    font-size:1.05rem;
+    letter-spacing:.06em;
+    text-transform:uppercase;
+    margin-bottom:28px;
+  }
+
+  .modules-grid{
+    display:grid;
+    grid-template-columns:repeat(auto-fit, minmax(280px, 1fr));
+    gap:22px;
+  }
+
+  .module-card{
+    background:var(--panel);
+    border:1px solid var(--line);
+    border-radius:10px;
+    padding:24px 24px 22px;
+    display:flex;
+    flex-direction:column;
+    position:relative;
+    overflow:hidden;
+  }
+  .module-card::before{
+    content:"";
+    position:absolute;
+    top:0;left:0;right:0;
+    height:3px;
+  }
+  .module-card.c1::before{background:var(--green);}
+  .module-card.c2::before{background:var(--amber);}
+  .module-card.c3::before{background:var(--teal);}
+  .module-card.c4::before{background:var(--rose);}
+
+  .module-head{
+    display:flex;
+    align-items:flex-start;
+    gap:14px;
+    margin-bottom:6px;
+  }
+  .module-num{
+    font-family:'IBM Plex Mono', monospace;
+    font-size:.72rem;
+    letter-spacing:.1em;
+    color:var(--muted);
+  }
+  .module-head h4{
+    font-size:1.12rem;
+    font-weight:600;
+    margin-top:2px;
+  }
+
+  .module-card.c1 .module-num{color:var(--green);}
+  .module-card.c2 .module-num{color:var(--amber);}
+  .module-card.c3 .module-num{color:var(--teal);}
+  .module-card.c4 .module-num{color:var(--rose);}
+
+  .applied-note{
+    font-size:.86rem;
+    color:var(--muted);
+    background:var(--panel-2);
+    border-radius:7px;
+    padding:10px 12px;
+    margin:14px 0 16px;
+    line-height:1.5;
+  }
+  .applied-note b{color:var(--ink);font-weight:600;}
+
+  .weeks-list{list-style:none;display:flex;flex-direction:column;gap:6px;margin-top:auto;}
+  .weeks-list a{
+    display:flex;
+    align-items:center;
+    gap:10px;
+    padding:9px 10px;
+    border-radius:6px;
+    text-decoration:none;
+    color:var(--ink);
+    font-size:.88rem;
+    transition:background .15s ease, padding-left .15s ease;
+    border-left:2px solid transparent;
+  }
+  .weeks-list a:hover, .weeks-list a:focus-visible{
+    background:var(--panel-2);
+    padding-left:14px;
+  }
+  .module-card.c1 .weeks-list a:hover{border-left-color:var(--green);}
+  .module-card.c2 .weeks-list a:hover{border-left-color:var(--amber);}
+  .module-card.c3 .weeks-list a:hover{border-left-color:var(--teal);}
+  .module-card.c4 .weeks-list a:hover{border-left-color:var(--rose);}
+
+  .week-num{
+    font-family:'IBM Plex Mono', monospace;
+    font-size:.76rem;
+    color:var(--muted);
+    min-width:34px;
+  }
+
+  /* ---------- FOOTER ---------- */
+  footer{
+    border-top:1px solid var(--line);
+    padding:28px 0 40px;
+    color:var(--muted);
+    font-size:.84rem;
+    display:flex;
+    justify-content:space-between;
+    flex-wrap:wrap;
+    gap:10px;
+  }
+  footer .mono{color:var(--muted);}
+
+  @media (prefers-reduced-motion: reduce){
+    html{scroll-behavior:auto;}
+    .tick, .weeks-list a{transition:none;}
+  }
+
+  @media (max-width: 860px){
+    .panels{grid-template-columns:1fr;}
+  }
+  @media (max-width: 620px){
+    .track{grid-template-columns:repeat(10, 1fr);grid-auto-rows:28px;}
+    .track-labels{grid-template-columns:1fr;gap:2px;}
+    .track-labels div{padding-top:0;}
+  }
+</style>
 </head>
 <body>
-    <div class="header">
-        <div class="header-content">
-            <h1>🎮 Tópicos Especiais em Jogos Digitais</h1>
-            <p>IJD-038 | 6º Semestre | Curso Superior de Tecnologia em Jogos Digitais</p>
-            <p class="subtitle">FATEC Ourinhos - Centro Paula Souza</p>
+
+  <div class="wrap">
+    <header>
+      <div class="eyebrow">IJD-038 · FATEC Ourinhos · Centro Paula Souza</div>
+      <h1>Tópicos Especiais em Jogos Digitais</h1>
+      <p class="tagline">6º semestre, trilha 2026: <strong>gamificação aplicada ao agronegócio</strong> — do conceito ao protótipo, combinando motores de jogos com kits Arduino e sensores.</p>
+
+      <div class="stat-strip">
+        <div class="stat"><span class="label">Código</span><span class="value">IJD-038</span></div>
+        <div class="stat"><span class="label">Carga horária</span><span class="value">80 aulas · 4h/sem</span></div>
+        <div class="stat"><span class="label">Semestre</span><span class="value">6º</span></div>
+        <div class="stat"><span class="label">Duração</span><span class="value">20 semanas</span></div>
+      </div>
+    </header>
+
+    <section class="season">
+      <div class="season-head">
+        <h2 class="mono">Safra do semestre — semana 1 a 20</h2>
+        <span class="mono">passe o cursor para ver o tema de cada semana</span>
+      </div>
+
+      <div class="track">
+        <div class="tick m1" title="Semana 1 · Introdução à Gamificação" tabindex="0"></div>
+        <div class="tick m1" title="Semana 2 · Psicologia e Motivação" tabindex="0"></div>
+        <div class="tick m1" title="Semana 3 · Mecânicas de Jogo" tabindex="0"></div>
+        <div class="tick m1" title="Semana 4 · Dinâmicas e Estéticas" tabindex="0"></div>
+        <div class="tick m1" title="Semana 5 · Elementos de Gamificação" tabindex="0"></div>
+        <div class="tick m2" title="Semana 6 · Gamificação Educacional" tabindex="0"></div>
+        <div class="tick m2" title="Semana 7 · Gamificação Corporativa" tabindex="0"></div>
+        <div class="tick m2" title="Semana 8 · Design de Sistemas Gamificados" tabindex="0"></div>
+        <div class="tick m2" title="Semana 9 · Métricas e Análise" tabindex="0"></div>
+        <div class="tick m2" title="Semana 10 · Casos de Sucesso" tabindex="0"></div>
+        <div class="tick m3" title="Semana 11 · Cloud Gaming" tabindex="0"></div>
+        <div class="tick m3" title="Semana 12 · Ray Tracing e Gráficos Next-Gen" tabindex="0"></div>
+        <div class="tick m3" title="Semana 13 · IA Procedural" tabindex="0"></div>
+        <div class="tick m3" title="Semana 14 · Blockchain e NFTs" tabindex="0"></div>
+        <div class="tick m3" title="Semana 15 · Metaverso e Mundos Virtuais" tabindex="0"></div>
+        <div class="tick m4" title="Semana 16 · Princípios de Motion Design" tabindex="0"></div>
+        <div class="tick m4" title="Semana 17 · Animação de UI/UX" tabindex="0"></div>
+        <div class="tick m4" title="Semana 18 · Motion Graphics para Jogos" tabindex="0"></div>
+        <div class="tick m4" title="Semana 19 · Desenvolvimento do Projeto" tabindex="0"></div>
+        <div class="tick m4" title="Semana 20 · Apresentação Final" tabindex="0"></div>
+      </div>
+
+      <div class="track-labels">
+        <div class="m1">01 · Fundamentos</div>
+        <div class="m2">02 · Aplicada</div>
+        <div class="m3">03 · Tecnologias</div>
+        <div class="m4">04 · Motion + Projeto</div>
+      </div>
+      <p class="season-caption">Do plantio da teoria (Módulo 1) à colheita do protótipo (Módulo 4, apresentado em feira).</p>
+    </section>
+
+    <section class="panels">
+      <div class="panel">
+        <h3>Objetivos &amp; ementa</h3>
+        <p>Identificar e compreender tecnologias emergentes e tendências de mercado em Jogos Digitais. Dominar conceitos e técnicas de gamificação para contextos educacionais e empresariais — aqui, aplicados ao agronegócio. Desenvolver habilidades em Motion Design aplicado a jogos.</p>
+        <p>Gamificação: teoria e prática. Gamificação educacional e empresarial. Tecnologias emergentes em jogos digitais. Motion Design aplicado a jogos e interfaces interativas.</p>
+      </div>
+
+      <div class="panel">
+        <h3>Ferramentas desta trilha</h3>
+        <ul class="toolkit-list">
+          <li>
+            <span class="glyph">▣</span>
+            <span class="txt"><strong>Motores de jogos digitais</strong><span>Prototipagem de jogos e quizzes gamificados — inclusive para tablet.</span></span>
+          </li>
+          <li>
+            <span class="glyph">◈</span>
+            <span class="txt"><strong>Kits Arduino + sensores</strong><span>Dezenas de sensores para protótipos físicos aplicados ao campo.</span></span>
+          </li>
+        </ul>
+      </div>
+    </section>
+
+    <section class="modules">
+      <h2 class="mono">Módulos</h2>
+      <div class="modules-grid">
+
+        <div class="module-card c1">
+          <div class="module-head">
+            <div>
+              <div class="module-num">MÓDULO 01</div>
+              <h4>Fundamentos de Gamificação</h4>
+            </div>
+          </div>
+          <div class="applied-note"><b>Semana 1:</b> apresentação da disciplina, ementa e avaliação — já situando o tema do semestre.</div>
+          <ul class="weeks-list">
+            <li><a href="semana01.html"><span class="week-num">S1</span> Introdução à Gamificação</a></li>
+            <li><a href="semana02.html"><span class="week-num">S2</span> Psicologia e Motivação</a></li>
+            <li><a href="semana03.html"><span class="week-num">S3</span> Mecânicas de Jogo</a></li>
+            <li><a href="semana04.html"><span class="week-num">S4</span> Dinâmicas e Estéticas</a></li>
+            <li><a href="semana05.html"><span class="week-num">S5</span> Elementos de Gamificação</a></li>
+          </ul>
         </div>
-    </div>
 
-    <div class="container">
-        <div class="course-info">
-            <h2>📋 Informações da Disciplina</h2>
-            <div class="info-grid">
-                <div class="info-box">
-                    <strong>Código:</strong>
-                    IJD-038
-                </div>
-                <div class="info-box">
-                    <strong>Carga Horária:</strong>
-                    80 aulas (4h/semana)
-                </div>
-                <div class="info-box">
-                    <strong>Semestre:</strong>
-                    6º Semestre
-                </div>
-                <div class="info-box">
-                    <strong>Duração:</strong>
-                    20 semanas
-                </div>
+        <div class="module-card c2">
+          <div class="module-head">
+            <div>
+              <div class="module-num">MÓDULO 02</div>
+              <h4>Gamificação Aplicada</h4>
             </div>
-            
-            <h3 style="color: #667eea; margin: 25px 0 15px 0;">🎯 Objetivos</h3>
-            <p>Identificar e compreender tecnologias emergentes e tendências de mercado na área de Jogos Digitais. Dominar conceitos e técnicas de gamificação para aplicação em contextos educacionais e empresariais. Desenvolver habilidades em Motion Design aplicado a jogos.</p>
-            
-            <h3 style="color: #667eea; margin: 25px 0 15px 0;">📚 Ementa</h3>
-            <p>Gamificação: teoria e prática. Gamificação educacional e empresarial. Estudos de tecnologias emergentes em jogos digitais. Motion Design aplicado a jogos e interfaces interativas.</p>
+          </div>
+          <div class="applied-note"><b>Formato das aulas práticas:</b> primeiras duas aulas com veteranos; nas demais, 30 min de ferramenta + o resto do tempo em produção. Inclui quiz gamificado, simulações de decisão do agronegócio e conteúdo trazido pelos próprios alunos.</div>
+          <ul class="weeks-list">
+            <li><a href="semana06.html"><span class="week-num">S6</span> Gamificação Educacional</a></li>
+            <li><a href="semana07.html"><span class="week-num">S7</span> Gamificação Corporativa</a></li>
+            <li><a href="semana08.html"><span class="week-num">S8</span> Design de Sistemas Gamificados</a></li>
+            <li><a href="semana09.html"><span class="week-num">S9</span> Métricas e Análise</a></li>
+            <li><a href="semana10.html"><span class="week-num">S10</span> Casos de Sucesso</a></li>
+          </ul>
         </div>
 
-        <div class="modules-grid">
-            <!-- Módulo 1 -->
-            <div class="module-card module-1">
-                <div class="module-header">
-                    <div class="module-icon">🎯</div>
-                    <div class="module-title">
-                        <h3>Módulo 1</h3>
-                        <p>Fundamentos de Gamificação</p>
-                    </div>
-                </div>
-                <ul class="weeks-list">
-                    <li><a href="semana01.html"><span class="week-number">Semana 1</span> Introdução à Gamificação</a></li>
-                    <li><a href="semana02.html"><span class="week-number">Semana 2</span> Psicologia e Motivação</a></li>
-                    <li><a href="semana03.html"><span class="week-number">Semana 3</span> Mecânicas de Jogo</a></li>
-                    <li><a href="semana04.html"><span class="week-number">Semana 4</span> Dinâmicas e Estéticas</a></li>
-                    <li><a href="semana05.html"><span class="week-number">Semana 5</span> Elementos de Gamificação</a></li>
-                </ul>
+        <div class="module-card c3">
+          <div class="module-head">
+            <div>
+              <div class="module-num">MÓDULO 03</div>
+              <h4>Tecnologias Emergentes</h4>
             </div>
-
-            <!-- Módulo 2 -->
-            <div class="module-card module-2">
-                <div class="module-header">
-                    <div class="module-icon">💼</div>
-                    <div class="module-title">
-                        <h3>Módulo 2</h3>
-                        <p>Gamificação Aplicada</p>
-                    </div>
-                </div>
-                <ul class="weeks-list">
-                    <li><a href="semana06.html"><span class="week-number">Semana 6</span> Gamificação Educacional</a></li>
-                    <li><a href="semana07.html"><span class="week-number">Semana 7</span> Gamificação Corporativa</a></li>
-                    <li><a href="semana08.html"><span class="week-number">Semana 8</span> Design de Sistemas Gamificados</a></li>
-                    <li><a href="semana09.html"><span class="week-number">Semana 9</span> Métricas e Análise</a></li>
-                    <li><a href="semana10.html"><span class="week-number">Semana 10</span> Casos de Sucesso</a></li>
-                </ul>
-            </div>
-
-            <!-- Módulo 3 -->
-            <div class="module-card module-3">
-                <div class="module-header">
-                    <div class="module-icon">🚀</div>
-                    <div class="module-title">
-                        <h3>Módulo 3</h3>
-                        <p>Tecnologias Emergentes</p>
-                    </div>
-                </div>
-                <ul class="weeks-list">
-                    <li><a href="semana11.html"><span class="week-number">Semana 11</span> Cloud Gaming</a></li>
-                    <li><a href="semana12.html"><span class="week-number">Semana 12</span> Ray Tracing e Gráficos Next-Gen</a></li>
-                    <li><a href="semana13.html"><span class="week-number">Semana 13</span> IA Procedural</a></li>
-                    <li><a href="semana14.html"><span class="week-number">Semana 14</span> Blockchain e NFTs</a></li>
-                    <li><a href="semana15.html"><span class="week-number">Semana 15</span> Metaverso e Mundos Virtuais</a></li>
-                </ul>
-            </div>
-
-            <!-- Módulo 4 -->
-            <div class="module-card module-4">
-                <div class="module-header">
-                    <div class="module-icon">🎨</div>
-                    <div class="module-title">
-                        <h3>Módulo 4</h3>
-                        <p>Motion Design e Projeto Final</p>
-                    </div>
-                </div>
-                <ul class="weeks-list">
-                    <li><a href="semana16.html"><span class="week-number">Semana 16</span> Princípios de Motion Design</a></li>
-                    <li><a href="semana17.html"><span class="week-number">Semana 17</span> Animação de UI/UX</a></li>
-                    <li><a href="semana18.html"><span class="week-number">Semana 18</span> Motion Graphics para Jogos</a></li>
-                    <li><a href="semana19.html"><span class="week-number">Semana 19</span> Desenvolvimento do Projeto</a></li>
-                    <li><a href="semana20.html"><span class="week-number">Semana 20</span> Apresentação Final</a></li>
-                </ul>
-            </div>
+          </div>
+          <div class="applied-note"><b>Conexão com o toolkit:</b> IA procedural e tecnologias emergentes discutidas lado a lado com o que os sensores Arduino podem captar no campo.</div>
+          <ul class="weeks-list">
+            <li><a href="semana11.html"><span class="week-num">S11</span> Cloud Gaming</a></li>
+            <li><a href="semana12.html"><span class="week-num">S12</span> Ray Tracing e Gráficos Next-Gen</a></li>
+            <li><a href="semana13.html"><span class="week-num">S13</span> IA Procedural</a></li>
+            <li><a href="semana14.html"><span class="week-num">S14</span> Blockchain e NFTs</a></li>
+            <li><a href="semana15.html"><span class="week-num">S15</span> Metaverso e Mundos Virtuais</a></li>
+          </ul>
         </div>
-    </div>
+
+        <div class="module-card c4">
+          <div class="module-head">
+            <div>
+              <div class="module-num">MÓDULO 04</div>
+              <h4>Motion Design e Projeto Final</h4>
+            </div>
+          </div>
+          <div class="applied-note"><b>Projeto final:</b> produto simples para o agronegócio — jogo de tablet ou protótipo com sensor — para apresentar em feira na Semana 20.</div>
+          <ul class="weeks-list">
+            <li><a href="semana16.html"><span class="week-num">S16</span> Princípios de Motion Design</a></li>
+            <li><a href="semana17.html"><span class="week-num">S17</span> Animação de UI/UX</a></li>
+            <li><a href="semana18.html"><span class="week-num">S18</span> Motion Graphics para Jogos</a></li>
+            <li><a href="semana19.html"><span class="week-num">S19</span> Desenvolvimento do Projeto</a></li>
+            <li><a href="semana20.html"><span class="week-num">S20</span> Apresentação Final</a></li>
+          </ul>
+        </div>
+
+      </div>
+    </section>
+
+    <footer>
+      <span class="mono">IJD-038 — Curso Superior de Tecnologia em Jogos Digitais</span>
+      <span class="mono">FATEC Ourinhos</span>
+    </footer>
+  </div>
+
 </body>
 </html>
