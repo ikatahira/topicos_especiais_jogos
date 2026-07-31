@@ -1,565 +1,179 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Semana 01 · Introdução à Gamificação · IJD-038</title>
-    <link rel="stylesheet" href="common.css">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Semana 1 · Introdução à Gamificação — IJD-038</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600;700&family=IBM+Plex+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg:#12100b;
+    --panel:#1b170f;
+    --panel-2:#211c12;
+    --ink:#ede6d6;
+    --muted:#9c8f76;
+    --line:#33291a;
+    --green:#6fa05d;
+    --green-soft:#6fa05d33;
+    --amber:#e3a23c;
+  }
+  *{margin:0;padding:0;box-sizing:border-box;}
+  body{
+    background:
+      radial-gradient(1200px 600px at 15% -10%, #1d1a10 0%, transparent 60%),
+      repeating-linear-gradient(90deg, #16130d 0px, #16130d 1px, transparent 1px, transparent 64px),
+      var(--bg);
+    color:var(--ink);
+    font-family:'IBM Plex Sans', sans-serif;
+    line-height:1.65;
+    min-height:100vh;
+  }
+  a{color:inherit;}
+  :focus-visible{outline:2px solid var(--amber);outline-offset:3px;}
+  .mono{font-family:'IBM Plex Mono', monospace;}
+  .wrap{max-width:840px;margin:0 auto;padding:0 24px;}
+
+  .back{
+    display:inline-flex;align-items:center;gap:8px;
+    font-family:'IBM Plex Mono', monospace;font-size:.8rem;
+    color:var(--muted);text-decoration:none;
+    padding-top:36px;margin-bottom:28px;
+  }
+  .back:hover{color:var(--amber);}
+
+  .eyebrow{
+    font-family:'IBM Plex Mono', monospace;font-size:.78rem;
+    letter-spacing:.18em;color:var(--green);text-transform:uppercase;
+    display:flex;align-items:center;gap:10px;margin-bottom:16px;
+  }
+  .eyebrow::before{content:"";width:8px;height:8px;border-radius:50%;background:var(--green);box-shadow:0 0 0 3px var(--green-soft);}
+
+  h1{
+    font-family:'IBM Plex Mono', monospace;font-weight:700;
+    font-size:clamp(1.6rem, 4vw, 2.4rem);letter-spacing:-.01em;
+    margin-bottom:12px;
+  }
+  .lede{color:var(--muted);font-size:1.02rem;max-width:56ch;margin-bottom:44px;}
+  .lede strong{color:var(--ink);}
+
+  section{margin-bottom:36px;}
+  section h2{
+    font-family:'IBM Plex Mono', monospace;font-size:.82rem;
+    letter-spacing:.12em;text-transform:uppercase;color:var(--amber);
+    margin-bottom:14px;
+    display:flex;align-items:center;gap:10px;
+  }
+  section h2::after{content:"";flex:1;height:1px;background:var(--line);}
+
+  .panel{
+    background:var(--panel);border:1px solid var(--line);
+    border-radius:10px;padding:22px 24px;
+  }
+  .panel p{margin-bottom:10px;}
+  .panel p:last-child{margin-bottom:0;}
+
+  ul.plain{list-style:none;display:flex;flex-direction:column;gap:10px;}
+  ul.plain li{
+    display:flex;gap:12px;align-items:flex-start;
+    background:var(--panel-2);border-radius:8px;padding:12px 14px;
+    border-left:3px solid var(--green);
+  }
+  ul.plain li b{color:var(--ink);}
+  ul.plain .num{font-family:'IBM Plex Mono', monospace;font-size:.78rem;color:var(--green);min-width:20px;}
+
+  table.eval{width:100%;border-collapse:collapse;font-size:.94rem;}
+  table.eval th, table.eval td{
+    text-align:left;padding:11px 12px;border-bottom:1px solid var(--line);
+  }
+  table.eval th{
+    font-family:'IBM Plex Mono', monospace;font-size:.72rem;
+    letter-spacing:.08em;text-transform:uppercase;color:var(--muted);
+  }
+  table.eval tr:last-child td{border-bottom:none;}
+  table.eval td.peso{font-family:'IBM Plex Mono', monospace;color:var(--amber);white-space:nowrap;}
+
+  .theme-box{
+    background:linear-gradient(135deg, var(--panel) 0%, var(--panel-2) 100%);
+    border:1px solid var(--line);border-left:3px solid var(--amber);
+    border-radius:10px;padding:24px 26px;
+  }
+  .theme-box p{margin-bottom:10px;}
+  .theme-box p:last-child{margin-bottom:0;}
+  .theme-box .glyph{color:var(--amber);font-family:'IBM Plex Mono', monospace;}
+
+  footer{
+    border-top:1px solid var(--line);padding:28px 0 40px;
+    color:var(--muted);font-size:.84rem;
+    display:flex;justify-content:space-between;flex-wrap:wrap;gap:10px;
+  }
+</style>
 </head>
 <body>
-    <div class="main">
-        <div class="bg-dots"></div><div class="bg-glow"></div><div class="bg-glow2"></div>
+  <div class="wrap">
+    <a class="back" href="index.html">← voltar para a disciplina</a>
 
-<!-- VIDEO MODAL -->
-<div class="vid-modal" id="vid-modal" onclick="closeVid(event)">
-  <div class="vid-modal-box">
-    <button class="vid-modal-close" onclick="closeVidBtn()">✕</button>
-    <iframe class="vid-modal-iframe" id="vid-iframe" src="" allow="autoplay;encrypted-media" allowfullscreen></iframe>
-  </div>
-</div>
+    <div class="eyebrow">Módulo 01 · Semana 1</div>
+    <h1>Introdução à Gamificação</h1>
+    <p class="lede">Primeira aula: quem somos, como o semestre funciona e por que ele vai girar em torno de <strong>gamificação aplicada ao agronegócio</strong>.</p>
 
-<!-- TOAST -->
-<div class="toast" id="toast"><div class="t-ico" id="t-ico">⚡</div><div><div class="t-title" id="t-title">+XP</div><div class="t-msg" id="t-msg"></div></div></div>
-
-<!-- HUD -->
-<header class="hud">
-  <a href="index.html" class="hud-brand">
-    <div class="hud-logo">IJ</div>
-    <div class="hud-course"><span>IJD-038</span>Jogos Digitais · 6º Sem.</div>
-  </a>
-  <div class="hud-crumb">
-    <span>Módulo 1</span><span>·</span><span>Fundamentos de Gamificação</span><span>·</span>
-    <span style="color:var(--lime)">Semana 01</span>
-  </div>
-  <div class="hud-xp">
-    <div class="streak">🔥 <span id="streak">0</span></div>
-    <div class="xp-count"><strong id="xp-val">0</strong><span>/ 520 XP</span></div>
-    <div class="hud-bar"><div class="hud-bar-fill" id="xp-bar"></div></div>
-    <div class="hud-level" id="xp-level">CALOURO</div>
-  </div>
-</header>
-
-<div class="wrap">
-<!-- LEFT NAV -->
-<aside class="left-nav">
-  <div class="nav-card">
-    <div class="nav-label">Semana 01</div>
-    <a href="#objetivos" class="nav-link"><span class="nd"></span>Objetivos</a><a href="#videos" class="nav-link"><span class="nd"></span>📺 Vídeos</a><a href="#conceitos" class="nav-link"><span class="nd"></span>🎮 Conceitos-Chave</a><a href="#cases" class="nav-link"><span class="nd"></span>🏆 Cases Pioneiros</a><a href="#quiz" class="nav-link"><span class="nd"></span>Quiz</a><a href="#atividades" class="nav-link"><span class="nd"></span>Atividades</a><a href="#conquistas" class="nav-link"><span class="nd"></span>Conquistas</a>
-  </div>
-  <div class="nav-card">
-    <div class="nav-label">Navegação</div>
-    <a href="index.html" class="nav-link"><span class="nd"></span>🏠 Início</a>
-    <a href="semana01.html" class="nav-link cur"><span class="nd"></span>Semana 01</a>
-    <a href="semana02.html" class="nav-link"><span class="nd"></span>Semana 02 →</a>
-  </div>
-  <div class="nav-card">
-    <div class="nav-label">Progresso</div>
-    <div class="prog-track">
-      <div class="prog-section">
-        <div class="prog-label"><span>Objetivos</span><span id="p-obj">0 / 5</span></div>
-        <div class="prog-bar"><div class="prog-fill pf-violet" id="pb-obj"></div></div>
+    <section>
+      <h2>Apresentação da disciplina</h2>
+      <div class="panel">
+        <p>Boas-vindas a Tópicos Especiais em Jogos Digitais. Nesta aula vamos apresentar a disciplina, a ementa completa e os critérios de avaliação — e já adiantar o fio condutor do semestre.</p>
+        <p>Ao longo de 20 semanas, o curso segue 4 módulos: fundamentos de gamificação, gamificação aplicada, tecnologias emergentes e motion design + projeto final. Sempre que possível, os exemplos, exercícios e o projeto final vão usar o <strong>agronegócio</strong> como domínio de aplicação.</p>
       </div>
-      <div class="prog-section">
-        <div class="prog-label"><span>Quiz</span><span id="p-quiz">0 / 6</span></div>
-        <div class="prog-bar"><div class="prog-fill pf-teal" id="pb-quiz"></div></div>
+    </section>
+
+    <section>
+      <h2>Ementa</h2>
+      <div class="panel">
+        <p>Gamificação: teoria e prática. Gamificação educacional e empresarial. Estudos de tecnologias emergentes em jogos digitais. Motion Design aplicado a jogos e interfaces interativas.</p>
       </div>
-      <div class="prog-section">
-        <div class="prog-label"><span>Atividades</span><span id="p-act">0 / 4</span></div>
-        <div class="prog-bar"><div class="prog-fill pf-amber" id="pb-act"></div></div>
+    </section>
+
+    <section>
+      <h2>Avaliação da disciplina</h2>
+      <div class="panel">
+        <table class="eval">
+          <thead>
+            <tr><th>Critério</th><th>Peso</th></tr>
+          </thead>
+          <tbody>
+            <tr><td>Atividades práticas ao longo do semestre</td><td class="peso">a definir</td></tr>
+            <tr><td>Quiz gamificado (conteúdo do agronegócio)</td><td class="peso">a definir</td></tr>
+            <tr><td>Situações de decisão de negócio (agro)</td><td class="peso">a definir</td></tr>
+            <tr><td>Projeto final — produto para o agronegócio</td><td class="peso">a definir</td></tr>
+            <tr><td>Bônus: uso de realidade aumentada no projeto final (FJD-037)</td><td class="peso">+5%</td></tr>
+          </tbody>
+        </table>
+        <p style="margin-top:12px;font-size:.82rem;color:var(--muted);">O bônus de AR é opcional — o produto final pode ser jogo de tablet, protótipo com sensor, ou a combinação dos dois. Ver <a href="index.html" style="color:var(--amber);">módulo 4</a> para detalhes.</p>
       </div>
-    </div>
-  </div>
-</aside>
+    </section>
 
-<!-- MAIN -->
-<main class="main">
-
-<!-- PROGRESSO DO CURSO (persiste entre semanas via localStorage) -->
-<section class="scard" id="curso-progresso" style="margin-bottom:20px">
-  <div class="scard-head">
-    <div class="scard-ico ico-lime"><span>📊</span></div>
-    <div class="scard-title">Progresso do Curso — IJD-038</div>
-    <div class="scard-xp" id="cp-count">0 / 20 semanas</div>
-  </div>
-  <div class="scard-body">
-    <div class="prog-bar" style="height:10px;background:rgba(255,255,255,.06);border-radius:100px;overflow:hidden">
-      <div class="prog-fill pf-lime" id="cp-bar" style="height:100%;width:0%;transition:width .3s"></div>
-    </div>
-    <div style="display:flex;justify-content:space-between;align-items:center;margin-top:12px;gap:10px;flex-wrap:wrap">
-      <div style="font-size:.72em;color:var(--sub);font-family:var(--mono)">Marque quando concluir todas as atividades desta semana — seu progresso fica salvo neste navegador.</div>
-      <button class="eval-btn" id="cp-btn" style="margin:0;white-space:nowrap" onclick="toggleWeekDone()">✅ Marcar Semana 01 como Concluída</button>
-    </div>
-  </div>
-</section>
-
-<!-- HERO -->
-<section class="hero-card">
-  <div class="hero-meta">
-    <span class="mod-badge">Módulo 1 · Fundamentos de Gamificação</span>
-    <span style="font-family:var(--mono);font-size:.65em;color:var(--sub)">Semana 01 · DEFINIÇÃO · HISTÓRIA · CASES PIONEIROS</span>
-  </div>
-  <h1 class="hero-title">INTRODUÇÃO À GAMIFICAÇÃO</h1>
-  <p class="hero-sub">Gamificação não é 'colocar pontos em qualquer coisa' — é usar elementos de jogo (feedback, progressão, desafio) para mudar comportamento em contextos que não são jogos. Antes de aprender a projetar sistemas gamificados, você precisa entender o que gamificação é e, principalmente, o que ela NÃO é.</p>
-  <div class="hero-chips"><span class="chip chip-lime">🎮 Gamificação 101</span><span class="chip chip-teal">📜 Histórico</span><span class="chip chip-amber">🏆 Cases Pioneiros</span><span class="chip chip-accent">520 XP disponíveis</span></div>
-  <div class="hero-num">01</div>
-</section>
-
-<!-- OBJECTIVES -->
-<section class="scard" id="objetivos">
-  <div class="scard-head">
-    <div class="scard-ico ico-violet"><span>🎯</span></div>
-    <div class="scard-title">Objetivos da Semana</div>
-    <div class="scard-xp">+10 XP cada</div>
-  </div>
-  <div class="scard-body">
-    <div class="obj-grid" id="obj-grid"></div>
-  </div>
-</section>
-
-<!-- VIDEOS -->
-<section class="scard" id="videos">
-  <div class="scard-head">
-    <div class="scard-ico ico-teal"><span>📺</span></div>
-    <div class="scard-title">Vídeos da Semana</div>
-    <div class="scard-xp">+15 XP ao assistir</div>
-  </div>
-  <div class="scard-body">
-    <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(240px,1fr));gap:12px" id="vid-grid"></div>
-  </div>
-</section>
-
-
-<section class="scard" id="conceitos">
-  <div class="scard-head">
-    <div class="scard-ico ico-lime"><span>🎮</span></div>
-    <div class="scard-title">Conceitos-Chave da Gamificação — Explore Cada Um</div>
-    <div class="scard-xp">+10 XP cada</div>
-  </div>
-  <div class="scard-body">
-    <p style="font-size:.82em;color:var(--sub);margin-bottom:16px">Clique em cada conceito para entender sua definição e como ele se diferencia de termos parecidos.</p>
-    <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-bottom:16px" id="conc01-grid"></div>
-    <div id="conc01-detail" style="padding:16px;background:var(--ink3);border:1px solid var(--line);border-radius:9px;display:none;animation:fadein .2s ease"></div>
-    <div style="font-family:var(--mono);font-size:.62em;color:var(--sub);margin-top:8px;text-align:right" id="conc01-counter">0 / 6 conceitos explorados</div>
-  </div>
-</section>
-
-<section class="scard" id="cases">
-  <div class="scard-head">
-    <div class="scard-ico ico-amber"><span>🏆</span></div>
-    <div class="scard-title">Cases Pioneiros — Explore Cada Um</div>
-    <div class="scard-xp">+10 XP cada</div>
-  </div>
-  <div class="scard-body">
-    <p style="font-size:.82em;color:var(--sub);margin-bottom:16px">Clique em cada case pioneiro para conhecer como ele usou gamificação antes do termo virar mainstream.</p>
-    <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-bottom:16px" id="case01-grid"></div>
-    <div id="case01-detail" style="padding:16px;background:var(--ink3);border:1px solid var(--line);border-radius:9px;display:none;animation:fadein .2s ease"></div>
-    <div style="font-family:var(--mono);font-size:.62em;color:var(--sub);margin-top:8px;text-align:right" id="case01-counter">0 / 3 cases explorados</div>
-  </div>
-</section>
-
-<!-- QUIZ -->
-<section class="scard" id="quiz">
-  <div class="scard-head">
-    <div class="scard-ico ico-amber"><span>🧠</span></div>
-    <div class="scard-title">Quiz — Introdução à Gamificação</div>
-    <div class="scard-xp" id="quiz-score-hd">0 corretas</div>
-  </div>
-  <div class="scard-body">
-    <div class="q-prog">
-      <div class="q-dot" id="qdot-0"></div><div class="q-dot" id="qdot-1"></div><div class="q-dot" id="qdot-2"></div><div class="q-dot" id="qdot-3"></div><div class="q-dot" id="qdot-4"></div><div class="q-dot" id="qdot-5"></div>
-      <div class="q-bar-wrap"><div class="q-bar-fill" id="q-bar-fill" style="width:0%"></div></div>
-      <span class="q-count" id="q-count">0 / 6</span>
-      <span class="q-score-mini" id="q-score-mini">0 XP</span>
-    </div>
-    
-    <div class="qcard on" id="qcard-0">
-      <div class="qtext">Q1. Qual é a definição mais precisa de gamificação?</div>
-      <div class="qopts"><button class="qopt" onclick="answerQ(0,0)">Transformar qualquer app em um jogo completo</button><button class="qopt" onclick="answerQ(0,1)">Usar elementos de jogos (pontos, níveis, desafios) em contextos que não são jogos para aumentar engajamento</button><button class="qopt" onclick="answerQ(0,2)">Criar jogos para vender produtos</button><button class="qopt" onclick="answerQ(0,3)">Adicionar apenas cores vibrantes a uma interface</button></div>
-      <div class="qfb" id="qfb-0"></div>
-      <button class="qnext" id="qnext-0" onclick="nextQ(0)">Próxima →</button>
-    </div>
-    <div class="qcard" id="qcard-1">
-      <div class="qtext">Q2. Qual é a diferença central entre gamificação e um jogo sério (serious game)?</div>
-      <div class="qopts"><button class="qopt" onclick="answerQ(1,0)">Não existe diferença, são sinônimos</button><button class="qopt" onclick="answerQ(1,1)">Gamificação usa elementos de jogo dentro de uma atividade real; jogo sério é o próprio jogo completo com propósito educacional/treinamento</button><button class="qopt" onclick="answerQ(1,2)">Jogo sério é sempre mais divertido</button><button class="qopt" onclick="answerQ(1,3)">Gamificação só existe em aplicativos móveis</button></div>
-      <div class="qfb" id="qfb-1"></div>
-      <button class="qnext" id="qnext-1" onclick="nextQ(1)">Próxima →</button>
-    </div>
-    <div class="qcard" id="qcard-2">
-      <div class="qtext">Q3. O que caracteriza um advergame, diferenciando-o de gamificação comum?</div>
-      <div class="qopts"><button class="qopt" onclick="answerQ(2,0)">É qualquer jogo com anúncios no meio</button><button class="qopt" onclick="answerQ(2,1)">É um jogo completo criado especificamente como peça de marketing de uma marca — o marketing é o próprio jogo</button><button class="qopt" onclick="answerQ(2,2)">É a mesma coisa que gamificação</button><button class="qopt" onclick="answerQ(2,3)">É um jogo que só pode ser jogado em lojas físicas</button></div>
-      <div class="qfb" id="qfb-2"></div>
-      <button class="qnext" id="qnext-2" onclick="nextQ(2)">Próxima →</button>
-    </div>
-    <div class="qcard" id="qcard-3">
-      <div class="qtext">Q4. Por que o Foursquare é considerado um case pioneiro relevante de gamificação?</div>
-      <div class="qopts"><button class="qopt" onclick="answerQ(3,0)">Porque foi o primeiro jogo mobile da história</button><button class="qopt" onclick="answerQ(3,1)">Porque provou que badges e status social (como ser 'prefeito' de um lugar) podiam influenciar comportamento físico real, não só digital</button><button class="qopt" onclick="answerQ(3,2)">Porque tinha os melhores gráficos da época</button><button class="qopt" onclick="answerQ(3,3)">Porque era um jogo de tabuleiro digitalizado</button></div>
-      <div class="qfb" id="qfb-3"></div>
-      <button class="qnext" id="qnext-3" onclick="nextQ(3)">Próxima →</button>
-    </div>
-    <div class="qcard" id="qcard-4">
-      <div class="qtext">Q5. Qual princípio fundamental de gamificação é ilustrado por um LED que acende no instante em que um botão é pressionado?</div>
-      <div class="qopts"><button class="qopt" onclick="answerQ(4,0)">Escassez</button><button class="qopt" onclick="answerQ(4,1)">Feedback imediato — a percepção rápida do resultado da própria ação, essencial para manter engajamento</button><button class="qopt" onclick="answerQ(4,2)">Competição social</button><button class="qopt" onclick="answerQ(4,3)">Narrativa</button></div>
-      <div class="qfb" id="qfb-4"></div>
-      <button class="qnext" id="qnext-4" onclick="nextQ(4)">Próxima →</button>
-    </div>
-    <div class="qcard" id="qcard-5">
-      <div class="qtext">Q6. Em quais setores a gamificação tem aplicações documentadas além de jogos e apps de entretenimento?</div>
-      <div class="qopts"><button class="qopt" onclick="answerQ(5,0)">Apenas em videogames tradicionais</button><button class="qopt" onclick="answerQ(5,1)">Educação, saúde, marketing, produtividade pessoal, fidelização de clientes e treinamento corporativo</button><button class="qopt" onclick="answerQ(5,2)">Somente em redes sociais</button><button class="qopt" onclick="answerQ(5,3)">Não tem aplicação fora de aplicativos de celular</button></div>
-      <div class="qfb" id="qfb-5"></div>
-      <button class="qnext" id="qnext-5" onclick="nextQ(5)">Ver Resultado →</button>
-    </div>
-    <div class="q-result" id="q-result">
-      <div class="q-score-big" id="q-score-big">0/6</div>
-      <div class="q-msg" id="q-msg"></div>
-      <div style="font-family:var(--mono);font-size:.72em;color:var(--violet);margin-top:6px" id="q-xp-earned"></div>
-      <button class="eval-btn" style="margin-top:18px" onclick="restartQuiz()">↺ Tentar Novamente</button>
-    </div>
-  </div>
-</section>
-
-<!-- ACTIVITIES -->
-<section class="scard" id="atividades">
-  <div class="scard-head">
-    <div class="scard-ico ico-rose"><span>✏️</span></div>
-    <div class="scard-title">Atividades Práticas</div>
-    <div class="scard-xp">+XP por conclusão</div>
-  </div>
-  <div class="scard-body" style="display:flex;flex-direction:column;gap:16px">
-    
-    <div class="scard" id="act-card-0">
-      <div class="scard-head">
-        <div class="scard-ico ico-lime"><span>🗺️</span></div>
-        <div class="scard-title">Atividade 1 — Mapa Conceitual de Gamificação</div>
-        <div class="scard-xp">+70 XP</div>
+    <section>
+      <h2>Tema do semestre: agronegócio</h2>
+      <div class="theme-box">
+        <p><span class="glyph">▣</span>&nbsp; O semestre combina duas frentes: <b>jogos digitais</b> (motores de jogo, quizzes, jogos para tablet) e <b>kits Arduino com sensores</b>, aplicados a problemas reais do agronegócio.</p>
+        <p><span class="glyph">◈</span>&nbsp; O projeto final é um produto <b>super simples</b> pensado para o agro — jogo de tablet, protótipo com sensor, ou realidade aumentada (bônus) — para ser apresentado numa feira.</p>
+        <p><span class="glyph">▤</span>&nbsp; Parte do conteúdo prático (situações de decisão, temas de estudo) será trazida pelos próprios alunos, a partir do que já conhecem do setor.</p>
       </div>
-      <div class="scard-body">
-        <p style="font-size:.87em;color:var(--sub);line-height:1.7;margin-bottom:14px">Criar um mapa conceitual identificando definição, elementos-chave, aplicações, benefícios e desafios da gamificação.</p>
-        <div style="font-family:var(--mono);font-size:.62em;text-transform:uppercase;letter-spacing:.1em;color:var(--sub);margin-bottom:8px">Passos</div>
-        <ol style="font-size:.83em;line-height:1.8;color:var(--text2);padding-left:18px"><li>Liste ao menos 10 conceitos relacionados a gamificação vistos nesta aula</li><li>Organize-os em um mapa conceitual mostrando as conexões entre eles</li><li>Use uma ferramenta digital como Miro, Coggle ou MindMeister</li><li>Inclua ao menos 1 exemplo real de jogo/app para cada conceito principal</li></ol>
-        <div style="font-family:var(--mono);font-size:.62em;text-transform:uppercase;letter-spacing:.1em;color:var(--sub);margin:14px 0 6px">Entrega</div>
-        <p style="font-size:.82em;color:var(--teal);background:rgba(45,228,200,.07);border:1px solid rgba(45,228,200,.15);border-radius:7px;padding:10px 13px">Mapa conceitual digital com no mínimo 10 conceitos interligados (Miro, Coggle, MindMeister ou similar)</p>
-        <button class="eval-btn" style="margin-top:14px" onclick="completeAct(0,70,'ac-a1')">✅ Marcar como Concluída — +70 XP</button>
-      </div>
-    </div>
-    <div class="scard" id="act-card-1">
-      <div class="scard-head">
-        <div class="scard-ico ico-teal"><span>🦉</span></div>
-        <div class="scard-title">Atividade 2 — Análise de Case: Duolingo</div>
-        <div class="scard-xp">+60 XP</div>
-      </div>
-      <div class="scard-body">
-        <p style="font-size:.87em;color:var(--sub);line-height:1.7;margin-bottom:14px">Explorar o sistema de gamificação do Duolingo e analisar seus elementos na prática.</p>
-        <div style="font-family:var(--mono);font-size:.62em;text-transform:uppercase;letter-spacing:.1em;color:var(--sub);margin-bottom:8px">Passos</div>
-        <ol style="font-size:.83em;line-height:1.8;color:var(--text2);padding-left:18px"><li>Crie uma conta (ou use modo convidado) no Duolingo</li><li>Complete 3 lições, ganhe um streak e suba 1 nível</li><li>Observe recompensas, feedback visual e o ranking/comparação social</li><li>Documente com prints os elementos de gamificação encontrados</li><li>Explique a função de cada elemento na motivação do jogador</li></ol>
-        <div style="font-family:var(--mono);font-size:.62em;text-transform:uppercase;letter-spacing:.1em;color:var(--sub);margin:14px 0 6px">Entrega</div>
-        <p style="font-size:.82em;color:var(--teal);background:rgba(45,228,200,.07);border:1px solid rgba(45,228,200,.15);border-radius:7px;padding:10px 13px">Relatório estruturado (1 página) com prints, função de cada elemento e qual é o mais eficaz e por quê</p>
-        <button class="eval-btn" style="margin-top:14px" onclick="completeAct(1,60,'ac-a2')">✅ Marcar como Concluída — +60 XP</button>
-      </div>
-    </div>
-    <div class="scard" id="act-card-2">
-      <div class="scard-head">
-        <div class="scard-ico ico-amber"><span>🎯</span></div>
-        <div class="scard-title">Atividade 3 — Projeto Guiado de Gamificação</div>
-        <div class="scard-xp">+65 XP</div>
-      </div>
-      <div class="scard-body">
-        <p style="font-size:.87em;color:var(--sub);line-height:1.7;margin-bottom:14px">Desenvolver uma proposta completa de aplicação de gamificação para um problema real.</p>
-        <div style="font-family:var(--mono);font-size:.62em;text-transform:uppercase;letter-spacing:.1em;color:var(--sub);margin-bottom:8px">Passos</div>
-        <ol style="font-size:.83em;line-height:1.8;color:var(--text2);padding-left:18px"><li>Escolha um contexto real (ex: academia, biblioteca, hábito pessoal)</li><li>Descreva o problema existente e defina o público-alvo</li><li>Crie mecânicas de jogo adequadas ao contexto escolhido</li><li>Explique como o sistema mudaria o comportamento das pessoas envolvidas</li></ol>
-        <div style="font-family:var(--mono);font-size:.62em;text-transform:uppercase;letter-spacing:.1em;color:var(--sub);margin:14px 0 6px">Entrega</div>
-        <p style="font-size:.82em;color:var(--teal);background:rgba(45,228,200,.07);border:1px solid rgba(45,228,200,.15);border-radius:7px;padding:10px 13px">Apresentação de 5 slides (problema, público-alvo, mecânicas propostas, jornada do usuário, resultado esperado)</p>
-        <button class="eval-btn" style="margin-top:14px" onclick="completeAct(2,65,'ac-a3')">✅ Marcar como Concluída — +65 XP</button>
-      </div>
-    </div>
-    <div class="scard" id="act-card-3">
-      <div class="scard-head">
-        <div class="scard-ico ico-rose"><span>🔌</span></div>
-        <div class="scard-title">Atividade 4 — Ponto Zero — Seu Primeiro Circuito de Feedback</div>
-        <div class="scard-xp">+80 XP</div>
-      </div>
-      <div class="scard-body">
-        <p style="font-size:.87em;color:var(--sub);line-height:1.7;margin-bottom:14px">Etapa 1 de 5 do projeto 'Painel de Gamificação Física'. Construa, com Arduino ou ESP32, o circuito de feedback mais simples possível: um botão que representa a ação do jogador e um LED que representa a resposta do sistema. Guarde este circuito — ele será expandido a cada semana até a Semana 05.</p>
-        <div style="font-family:var(--mono);font-size:.62em;text-transform:uppercase;letter-spacing:.1em;color:var(--sub);margin-bottom:8px">Passos</div>
-        <ol style="font-size:.83em;line-height:1.8;color:var(--text2);padding-left:18px"><li>Monte o LED com resistor de 220Ω em um pino digital de saída (ex: pino 8)</li><li>Monte o botão em um pino digital de entrada (ex: pino 2), usando INPUT_PULLUP no código</li><li>Escreva um código que, a cada aperto do botão, pisque o LED uma vez e envie Serial.println() contando o total de 'pontos' acumulados</li><li>Teste apertando o botão 5 vezes seguidas e confira se a contagem bate no Serial Monitor</li><li>Grave um vídeo curto (30-60s) mostrando o circuito funcionando</li></ol>
-        <div style="font-family:var(--mono);font-size:.62em;text-transform:uppercase;letter-spacing:.1em;color:var(--sub);margin:14px 0 6px">Entrega</div>
-        <p style="font-size:.82em;color:var(--teal);background:rgba(45,228,200,.07);border:1px solid rgba(45,228,200,.15);border-radius:7px;padding:10px 13px">Vídeo do circuito funcionando + código-fonte comentado (.ino) + 1 parágrafo conectando o experimento ao conceito de 'feedback de jogo' desta aula</p>
-        <button class="eval-btn" style="margin-top:14px" onclick="completeAct(3,80,'ac-hw1')">✅ Marcar como Concluída — +80 XP</button>
-      </div>
-    </div>
+    </section>
+
+    <section>
+      <h2>Formato das próximas aulas</h2>
+      <ul class="plain">
+        <li><span class="num">01</span><span><b>Duas primeiras aulas práticas</b> acontecem no formato normal, com apoio de alunos veteranos.</span></li>
+        <li><span class="num">02</span><span><b>Aulas seguintes:</b> 30 minutos de introdução à ferramenta, depois produção livre com acompanhamento.</span></li>
+        <li><span class="num">03</span><span><b>Ao longo do módulo 2:</b> quiz gamificado e simulações de decisão de negócio no agro.</span></li>
+      </ul>
+    </section>
+
+    <footer>
+      <span class="mono">IJD-038 — Semana 1 de 20</span>
+      <a class="mono" href="semana02.html" style="color:var(--amber);text-decoration:none;">Próxima semana →</a>
+    </footer>
   </div>
-</section>
-
-<!-- ACHIEVEMENTS -->
-<section class="scard" id="conquistas">
-  <div class="scard-head">
-    <div class="scard-ico ico-amber"><span>🏆</span></div>
-    <div class="scard-title">Conquistas — Semana 01</div>
-  </div>
-  <div class="scard-body">
-    <div class="ach-grid" id="ach-grid"><div class="ach-card" id="ac-s" title="Começou S01"><div class="ach-ico">🚀</div><div class="ach-name">Começou S01</div></div><div class="ach-card" id="ac-o" title="Todos os Objetivos"><div class="ach-ico">🎯</div><div class="ach-name">Todos os Objetivos</div></div><div class="ach-card" id="ac-conc" title="Conceitos-Chave Explorados"><div class="ach-ico">🎮</div><div class="ach-name">Conceitos-Chave Explorados</div></div><div class="ach-card" id="ac-case" title="Cases Pioneiros Explorados"><div class="ach-ico">🏆</div><div class="ach-name">Cases Pioneiros Explorados</div></div><div class="ach-card" id="ac-a1" title="Mapa Conceitual Criado"><div class="ach-ico">🗺️</div><div class="ach-name">Mapa Conceitual Criado</div></div><div class="ach-card" id="ac-a2" title="Case Duolingo Analisado"><div class="ach-ico">🦉</div><div class="ach-name">Case Duolingo Analisado</div></div><div class="ach-card" id="ac-a3" title="Projeto Guiado Pronto"><div class="ach-ico">🎯</div><div class="ach-name">Projeto Guiado Pronto</div></div><div class="ach-card" id="ac-hw1" title="Ponto Zero Montado"><div class="ach-ico">🔌</div><div class="ach-name">Ponto Zero Montado</div></div><div class="ach-card" id="ac-q" title="Quiz Completo"><div class="ach-ico">🧠</div><div class="ach-name">Quiz Completo</div></div><div class="ach-card" id="ac-p" title="Quiz Perfeito"><div class="ach-ico">💎</div><div class="ach-name">Quiz Perfeito</div></div><div class="ach-card" id="ac-a" title="Todas as Atividades"><div class="ach-ico">✏️</div><div class="ach-name">Todas as Atividades</div></div><div class="ach-card" id="ac-x" title="XP Máximo"><div class="ach-ico">🏆</div><div class="ach-name">XP Máximo</div></div></div>
-  </div>
-</section>
-
-<!-- NEXT HINT -->
-<div style="margin:8px 0 32px;padding:16px 20px;background:rgba(45,228,200,.06);border:1px solid rgba(45,228,200,.15);border-radius:10px;font-size:.83em;color:var(--sub);line-height:1.7">
-  <span style="font-family:var(--mono);font-size:.72em;text-transform:uppercase;letter-spacing:.1em;color:var(--teal);display:block;margin-bottom:4px">📌 Para a Próxima Aula (Semana 02)</span>
-  Semana 02 — Psicologia e Motivação: vamos estudar a Teoria da Autodeterminação (SDT) e expandir seu circuito com um buzzer, para demonstrar fisicamente a diferença entre motivação intrínseca e extrínseca. Guarde o circuito desta semana!
-</div>
-
-<!-- NAVIGATION -->
-<div style="display:flex;justify-content:space-between;gap:12px;margin-bottom:40px">
-  <a href="index.html" style="display:inline-flex;align-items:center;gap:8px;padding:12px 22px;background:var(--ink3);border:1px solid var(--line);border-radius:8px;color:var(--text2);text-decoration:none;font-family:var(--mono);font-size:.73em;transition:all .2s">🏠 Início</a>
-  <a href="semana02.html" style="display:inline-flex;align-items:center;gap:8px;padding:12px 22px;background:var(--lime);border:1px solid var(--lime);border-radius:8px;color:var(--ink);text-decoration:none;font-family:var(--mono);font-size:.73em;font-weight:700;transition:all .2s">Semana 02 →</a>
-</div>
-
-</main>
-</div>
-
-<script>
-const MAX_XP=520;
-const QUIZ_DATA=[{"q": "Qual é a definição mais precisa de gamificação?", "opts": ["Transformar qualquer app em um jogo completo", "Usar elementos de jogos (pontos, níveis, desafios) em contextos que não são jogos para aumentar engajamento", "Criar jogos para vender produtos", "Adicionar apenas cores vibrantes a uma interface"], "correct": 1, "xp": 15, "fb_ok": "✅ Gamificação é especificamente sobre aplicar elementos de jogo (não o jogo inteiro) em atividades que não são, em si, jogos — como um app de finanças ou um sistema de treinamento corporativo.", "fb_fail": "❌ A definição central é: elementos de jogo aplicados fora do contexto de jogos — o produto continua sendo, por exemplo, um app de idiomas ou de finanças, só que com mecânicas de engajamento emprestadas de jogos."}, {"q": "Qual é a diferença central entre gamificação e um jogo sério (serious game)?", "opts": ["Não existe diferença, são sinônimos", "Gamificação usa elementos de jogo dentro de uma atividade real; jogo sério é o próprio jogo completo com propósito educacional/treinamento", "Jogo sério é sempre mais divertido", "Gamificação só existe em aplicativos móveis"], "correct": 1, "xp": 15, "fb_ok": "✅ Um jogo sério (como Foldit, que ensina dobramento de proteínas através do jogo inteiro) é diferente de gamificação, onde apenas elementos pontuais de jogo são adicionados a uma experiência que não é, em si, um jogo (como o Duolingo).", "fb_fail": "❌ Jogo sério é uma experiência de jogo completa com propósito sério; gamificação é a aplicação pontual de elementos de jogo (pontos, badges) dentro de uma atividade que continua não sendo um jogo."}, {"q": "O que caracteriza um advergame, diferenciando-o de gamificação comum?", "opts": ["É qualquer jogo com anúncios no meio", "É um jogo completo criado especificamente como peça de marketing de uma marca — o marketing é o próprio jogo", "É a mesma coisa que gamificação", "É um jogo que só pode ser jogado em lojas físicas"], "correct": 1, "xp": 15, "fb_ok": "✅ Advergames são jogos completos concebidos como campanha publicitária — diferente de gamificação, onde elementos de jogo são adicionados a um produto que já existe com outro propósito principal.", "fb_fail": "❌ Advergame é um jogo inteiro feito para divulgar uma marca — o jogo É o anúncio. Gamificação, por outro lado, adiciona elementos de jogo a algo que não é, em si, publicidade ou entretenimento."}, {"q": "Por que o Foursquare é considerado um case pioneiro relevante de gamificação?", "opts": ["Porque foi o primeiro jogo mobile da história", "Porque provou que badges e status social (como ser 'prefeito' de um lugar) podiam influenciar comportamento físico real, não só digital", "Porque tinha os melhores gráficos da época", "Porque era um jogo de tabuleiro digitalizado"], "correct": 1, "xp": 20, "fb_ok": "✅ O Foursquare demonstrou algo poderoso: elementos de jogo simples (check-in, badge, status de 'mayor') conseguiam motivar pessoas a visitar fisicamente lugares repetidamente — prova de conceito real da gamificação influenciando comportamento no mundo físico.", "fb_fail": "❌ O valor histórico do Foursquare está em provar que gamificação pode mudar comportamento físico real (visitar lugares), não apenas engajamento dentro de uma tela — um marco importante para a área."}, {"q": "Qual princípio fundamental de gamificação é ilustrado por um LED que acende no instante em que um botão é pressionado?", "opts": ["Escassez", "Feedback imediato — a percepção rápida do resultado da própria ação, essencial para manter engajamento", "Competição social", "Narrativa"], "correct": 1, "xp": 15, "fb_ok": "✅ Feedback imediato é um dos pilares mais básicos e importantes de qualquer sistema gamificado — sem resposta perceptível e rápida à ação do usuário, a motivação para continuar interagindo cai rapidamente.", "fb_fail": "❌ Esse é o princípio de feedback imediato: quanto mais rápida e clara a resposta a uma ação, mais o sistema reforça o comportamento — um LED acendendo instantaneamente é a versão mais literal e física desse conceito."}, {"q": "Em quais setores a gamificação tem aplicações documentadas além de jogos e apps de entretenimento?", "opts": ["Apenas em videogames tradicionais", "Educação, saúde, marketing, produtividade pessoal, fidelização de clientes e treinamento corporativo", "Somente em redes sociais", "Não tem aplicação fora de aplicativos de celular"], "correct": 1, "xp": 15, "fb_ok": "✅ Gamificação é uma técnica transversal: bancos gamificam níveis de conta, apps de meditação gamificam streaks de prática, empresas gamificam treinamentos de funcionários — a lista de setores de aplicação é bem mais ampla do que parece à primeira vista.", "fb_fail": "❌ A aplicação da gamificação vai muito além de jogos: educação (Duolingo), saúde (Headspace), marketing (programas de fidelidade), produtividade (apps de hábitos) e treinamento corporativo são só alguns exemplos documentados."}];
-const LEVELS=[[0, "CALOURO"], [100, "OBSERVADOR"], [220, "APRENDIZ"], [370, "DESIGNER JR"], [480, "MESTRE DOS FUNDAMENTOS"]];
-const Q_XPS=[15, 15, 15, 20, 15, 15];
-const Q_FB=[{"ok": "✅ Gamificação é especificamente sobre aplicar elementos de jogo (não o jogo inteiro) em atividades que não são, em si, jogos — como um app de finanças ou um sistema de treinamento corporativo.", "fail": "❌ A definição central é: elementos de jogo aplicados fora do contexto de jogos — o produto continua sendo, por exemplo, um app de idiomas ou de finanças, só que com mecânicas de engajamento emprestadas de jogos."}, {"ok": "✅ Um jogo sério (como Foldit, que ensina dobramento de proteínas através do jogo inteiro) é diferente de gamificação, onde apenas elementos pontuais de jogo são adicionados a uma experiência que não é, em si, um jogo (como o Duolingo).", "fail": "❌ Jogo sério é uma experiência de jogo completa com propósito sério; gamificação é a aplicação pontual de elementos de jogo (pontos, badges) dentro de uma atividade que continua não sendo um jogo."}, {"ok": "✅ Advergames são jogos completos concebidos como campanha publicitária — diferente de gamificação, onde elementos de jogo são adicionados a um produto que já existe com outro propósito principal.", "fail": "❌ Advergame é um jogo inteiro feito para divulgar uma marca — o jogo É o anúncio. Gamificação, por outro lado, adiciona elementos de jogo a algo que não é, em si, publicidade ou entretenimento."}, {"ok": "✅ O Foursquare demonstrou algo poderoso: elementos de jogo simples (check-in, badge, status de 'mayor') conseguiam motivar pessoas a visitar fisicamente lugares repetidamente — prova de conceito real da gamificação influenciando comportamento no mundo físico.", "fail": "❌ O valor histórico do Foursquare está em provar que gamificação pode mudar comportamento físico real (visitar lugares), não apenas engajamento dentro de uma tela — um marco importante para a área."}, {"ok": "✅ Feedback imediato é um dos pilares mais básicos e importantes de qualquer sistema gamificado — sem resposta perceptível e rápida à ação do usuário, a motivação para continuar interagindo cai rapidamente.", "fail": "❌ Esse é o princípio de feedback imediato: quanto mais rápida e clara a resposta a uma ação, mais o sistema reforça o comportamento — um LED acendendo instantaneamente é a versão mais literal e física desse conceito."}, {"ok": "✅ Gamificação é uma técnica transversal: bancos gamificam níveis de conta, apps de meditação gamificam streaks de prática, empresas gamificam treinamentos de funcionários — a lista de setores de aplicação é bem mais ampla do que parece à primeira vista.", "fail": "❌ A aplicação da gamificação vai muito além de jogos: educação (Duolingo), saúde (Headspace), marketing (programas de fidelidade), produtividade (apps de hábitos) e treinamento corporativo são só alguns exemplos documentados."}];
-const OBJECTIVES=["Compreender o conceito e a história da gamificação", "Identificar diferenças entre gamificação, jogos sérios e advergames", "Reconhecer aplicações práticas de gamificação em diferentes setores", "Analisar cases de sucesso pioneiros da área", "Montar seu primeiro circuito físico de feedback com Arduino/ESP32"];
-const VIDEOS=[{"id": "OssPfRY3318", "label": "Fundamentos", "title": "What is Gamification? — a definição essencial", "icon": "🎮"}, {"id": "9a5aizIqpR8", "label": "Ciência", "title": "The Science of Gamification", "icon": "🧠"}, {"id": "t0pLA7Onoxo", "label": "Cases", "title": "Gamification Examples and Success Stories", "icon": "🏆"}];
-const N_OBJ=5, N_Q=6, N_ACT=4;
-
-/* PROGRESSO DO CURSO — persistido em localStorage, compartilhado entre todas as semanas */
-const CP_KEY='ijd038_progresso';
-const CP_WEEK='semana01';
-const CP_TOTAL=20;
-function cpGet(){try{return JSON.parse(localStorage.getItem(CP_KEY)||'{}');}catch(e){return {};}}
-function cpSet(p){try{localStorage.setItem(CP_KEY,JSON.stringify(p));}catch(e){}}
-function renderCourseProgress(){
-  const p=cpGet();
-  const done=Object.values(p).filter(Boolean).length;
-  const countEl=document.getElementById('cp-count');
-  const barEl=document.getElementById('cp-bar');
-  const btnEl=document.getElementById('cp-btn');
-  if(countEl)countEl.textContent=done+' / '+CP_TOTAL+' semanas';
-  if(barEl)barEl.style.width=(done/CP_TOTAL*100)+'%';
-  if(btnEl){
-    if(p[CP_WEEK]){btnEl.textContent='☑️ Semana 01 Concluída — clique para desmarcar';btnEl.style.opacity='.75';}
-    else{btnEl.textContent='✅ Marcar Semana 01 como Concluída';btnEl.style.opacity='1';}
-  }
-}
-function toggleWeekDone(){
-  const p=cpGet();
-  const wasDone=!!p[CP_WEEK];
-  p[CP_WEEK]=!wasDone;
-  cpSet(p);
-  renderCourseProgress();
-  if(!wasDone){addXP(30,'Semana marcada como concluída!','📊');}
-}
-renderCourseProgress();
-
-let XP=0, streak=0, toastT=null;
-let objS=new Array(N_OBJ).fill(false);
-let qAnswered={}, qCorrect=0, qXPearned=0, qDone=false;
-let actS=new Array(N_ACT).fill(false);
-let vidWatched=new Set();
-
-/* HUD */
-function addXP(v,msg,ico='⚡'){
-  XP=Math.min(XP+v,MAX_XP); streak++; updateHUD(); toast(ico,'+'+v+' XP',msg);
-  if(XP>=MAX_XP) earn('ac-x');
-}
-function updateHUD(){
-  document.getElementById('xp-val').textContent=XP;
-  document.getElementById('xp-bar').style.width=(XP/MAX_XP*100)+'%';
-  let lv=LEVELS[0];
-  for(const l of LEVELS){if(XP>=l[0])lv=l;}
-  document.getElementById('xp-level').textContent=lv[1];
-  document.getElementById('streak').textContent=streak;
-  const od=objS.filter(Boolean).length;
-  document.getElementById('p-obj').textContent=od+' / '+N_OBJ;
-  document.getElementById('pb-obj').style.width=(od/N_OBJ*100)+'%';
-  const qd=Object.keys(qAnswered).length;
-  document.getElementById('p-quiz').textContent=qd+' / '+N_Q;
-  document.getElementById('pb-quiz').style.width=(qd/N_Q*100)+'%';
-  const ad=actS.filter(Boolean).length;
-  document.getElementById('p-act').textContent=ad+' / '+N_ACT;
-  document.getElementById('pb-act').style.width=(ad/N_ACT*100)+'%';
-}
-
-/* TOAST */
-function toast(ico,title,msg){
-  clearTimeout(toastT);
-  const t=document.getElementById('toast');
-  document.getElementById('t-ico').textContent=ico;
-  document.getElementById('t-title').textContent=title;
-  document.getElementById('t-msg').textContent=msg;
-  t.classList.add('show');
-  toastT=setTimeout(()=>t.classList.remove('show'),2600);
-}
-
-/* OBJECTIVES */
-(function(){
-  const g=document.getElementById('obj-grid');
-  OBJECTIVES.forEach((o,i)=>{
-    const d=document.createElement('div');
-    d.className='obj'; d.id='obj-'+i;
-    d.innerHTML='<div class="obj-ring" id="or-'+i+'"></div><span>'+o+'</span>';
-    d.onclick=()=>completeObj(i);
-    g.appendChild(d);
-  });
-})();
-function completeObj(i){
-  if(objS[i])return;
-  objS[i]=true;
-  const d=document.getElementById('obj-'+i);
-  d.classList.add('done');
-  addXP(10,'Objetivo concluído!','🎯');
-  updateHUD();
-  if(objS.every(Boolean))earn('ac-o');
-}
-
-/* VIDEOS */
-(function(){
-  const g=document.getElementById('vid-grid');
-  VIDEOS.forEach((v,i)=>{
-    const d=document.createElement('div');
-    d.style.cssText='background:var(--ink3);border:1px solid var(--line);border-radius:10px;overflow:hidden;cursor:pointer;transition:all .2s';
-    d.innerHTML=`<div style="height:130px;background:linear-gradient(135deg,rgba(124,58,237,.25),rgba(45,228,200,.15));display:flex;align-items:center;justify-content:center;font-size:2.5em;position:relative">
-      <div style="position:absolute;inset:0;display:flex;align-items:center;justify-content:center">▶</div>
-      <span style="opacity:.4">${v.icon||'📺'}</span>
-    </div>
-    <div style="padding:12px"><div style="font-family:var(--mono);font-size:.68em;color:var(--violet);margin-bottom:4px">${v.label}</div><div style="font-size:.8em;color:var(--text2)">${v.title}</div></div>`;
-    d.onclick=()=>openVid(v.id,i);
-    g.appendChild(d);
-  });
-})();
-function openVid(id,i){
-  const modal=document.getElementById('vid-modal');
-  const iframe=document.getElementById('vid-iframe');
-  iframe.src=`https://www.youtube.com/embed/${id}?autoplay=1&rel=0`;
-  modal.classList.add('open');document.body.style.overflow='hidden';
-  if(!vidWatched.has(i)){vidWatched.add(i);addXP(15,'Vídeo assistido!','📺');}
-}
-function closeVid(e){if(e.target===document.getElementById('vid-modal'))closeVidBtn();}
-function closeVidBtn(){document.getElementById('vid-modal').classList.remove('open');document.getElementById('vid-iframe').src='';document.body.style.overflow='';}
-document.addEventListener('keydown',e=>{if(e.key==='Escape')closeVidBtn();});
-
-/* QUIZ */
-function answerQ(qi,choice){
-  if(qAnswered[qi]!==undefined)return;
-  const q=QUIZ_DATA[qi];
-  const correct=q.correct;
-  qAnswered[qi]=choice;
-  const isOk=(choice===correct);
-  const xpGain=Q_XPS[qi]*(isOk?1:0);
-  if(isOk){qCorrect++;qXPearned+=xpGain;addXP(xpGain,'Resposta correta!','🧠');}
-  else{toast('❌','Resposta errada',Q_FB[qi].fail);}
-  const card=document.getElementById('qcard-'+qi);
-  const opts=card.querySelectorAll('.qopt');
-  opts.forEach((o,j)=>{o.disabled=true;if(j===correct)o.classList.add('ok');else if(j===choice&&!isOk)o.classList.add('no');});
-  const fb=document.getElementById('qfb-'+qi);
-  fb.textContent=isOk?Q_FB[qi].ok:Q_FB[qi].fail;
-  fb.className='qfb show '+(isOk?'ok':'no');
-  document.getElementById('qdot-'+qi).classList.add('done');
-  const done=Object.keys(qAnswered).length;
-  document.getElementById('q-count').textContent=done+' / '+N_Q;
-  document.getElementById('q-bar-fill').style.width=(done/N_Q*100)+'%';
-  document.getElementById('quiz-score-hd').textContent=qCorrect+' corretas';
-  document.getElementById('q-score-mini').textContent=qXPearned+' XP';
-  updateHUD();
-  document.getElementById('qnext-'+qi).classList.add('show');
-  if(done===N_Q){earn('ac-q');if(qCorrect===N_Q)earn('ac-p');}
-}
-function nextQ(cur){
-  document.getElementById('qcard-'+cur).classList.remove('on');
-  const nxt=cur+1;
-  const res=document.getElementById('q-result');
-  if(nxt<N_Q){document.getElementById('qcard-'+nxt).classList.add('on');document.getElementById('qdot-'+nxt).classList.add('cur');}
-  else{
-    res.classList.add('show');
-    document.getElementById('q-score-big').textContent=qCorrect+'/'+N_Q;
-    const msgs=['Continue tentando! 💪','Bom progresso! 📈','Muito bem! 🔥','Excelente! ⚡','Perfeito! 💎'];
-    document.getElementById('q-msg').textContent=msgs[Math.min(Math.floor(qCorrect/(N_Q/5)),4)];
-    document.getElementById('q-xp-earned').textContent='+'+qXPearned+' XP conquistados';
-  }
-}
-function restartQuiz(){
-  qAnswered={};qCorrect=0;qXPearned=0;
-  document.getElementById('q-result').classList.remove('show');
-  document.querySelectorAll('.qcard').forEach((c,i)=>{c.classList.toggle('on',i===0);});
-  document.querySelectorAll('.qopt').forEach(o=>{o.disabled=false;o.className='qopt';});
-  document.querySelectorAll('.qfb').forEach(f=>f.classList.remove('show'));
-  document.querySelectorAll('.qnext').forEach(b=>b.classList.remove('show'));
-  document.querySelectorAll('.q-dot').forEach((d,i)=>{d.className='q-dot'+(i===0?' cur':'');});
-  document.getElementById('q-bar-fill').style.width='0%';
-  document.getElementById('q-count').textContent='0 / '+N_Q;
-  document.getElementById('q-score-mini').textContent='0 XP';
-  updateHUD();
-}
-
-/* ACTIVITIES */
-function completeAct(i,xp,achId){
-  if(actS[i])return;
-  actS[i]=true;
-  const btn=document.querySelector('#act-card-'+i+' .eval-btn');
-  if(btn){btn.disabled=true;btn.textContent='✅ Concluída!';btn.style.opacity='.6';}
-  addXP(xp,'Atividade concluída!','✏️');
-  if(achId)earn(achId);
-  updateHUD();
-  if(actS.every(Boolean))earn('ac-a');
-}
-
-/* ACHIEVEMENTS */
-function earn(id){
-  const el=document.getElementById(id);
-  if(!el||el.classList.contains('earned'))return;
-  el.classList.add('earned');
-  toast('🏆','Conquista desbloqueada!',el.title||el.querySelector('.ach-name')?.textContent||'');
-}
-
-
-const CONC01_DATA=[{"ico": "🎯", "tag": "DEFINIÇÃO", "clr": "var(--lime)", "name": "Gamificação", "desc": "Uso de elementos de jogos (pontos, níveis, recompensas, desafios) em contextos que não são jogos, para aumentar engajamento e motivação.", "ex": "Duolingo usa XP, streaks e ligas para gamificar o aprendizado de idiomas — o produto em si não é um jogo."}, {"ico": "📜", "tag": "HISTÓRIA", "clr": "var(--teal)", "name": "Origem do Termo", "desc": "O termo ganhou popularidade nos anos 2000 junto com redes sociais e apps fitness, explodindo de vez após a popularização dos smartphones.", "ex": "Foursquare (2009) foi um dos primeiros apps mainstream a usar badges e check-ins como mecânica central."}, {"ico": "🎓", "tag": "DIFERENÇA", "clr": "var(--violet)", "name": "Gamificação vs Jogo Sério", "desc": "Gamificação usa elementos de jogo dentro de uma atividade real; um Jogo Sério é o próprio jogo completo, criado com propósito educacional ou de treinamento.", "ex": "Duolingo é gamificação (o app não é um jogo); Foldit é jogo sério (o jogo inteiro serve para dobrar proteínas de verdade)."}, {"ico": "📢", "tag": "DIFERENÇA", "clr": "var(--amber)", "name": "Gamificação vs Advergame", "desc": "Advergame é um jogo completo criado especificamente para divulgar uma marca ou produto — o marketing É o jogo, não um elemento adicionado.", "ex": "Um jogo mobile de corrida criado só para promover um tênis é um advergame, diferente de dar badges por comprar em um app de e-commerce."}, {"ico": "🏢", "tag": "APLICAÇÃO", "clr": "var(--rose)", "name": "Setores de Aplicação", "desc": "Gamificação é usada hoje em educação, saúde, marketing, produtividade pessoal, fidelização de clientes e treinamento corporativo.", "ex": "Apps de meditação (Headspace) usam streaks; bancos usam níveis de conta com benefícios crescentes."}, {"ico": "⚡", "tag": "PRINCÍPIO", "clr": "var(--sky)", "name": "Feedback Imediato", "desc": "Um dos princípios fundamentais: o usuário precisa perceber rapidamente o resultado da própria ação para se manter engajado.", "ex": "Um LED que acende no instante em que você aperta um botão é a forma mais simples e literal de feedback imediato."}];
-let conc01Done=new Set();
-(function(){
-  const g=document.getElementById('conc01-grid');
-  CONC01_DATA.forEach((o,i)=>{
-    const d=document.createElement('div');
-    d.style.cssText='background:var(--ink3);border:1px solid var(--line);border-radius:10px;padding:14px;cursor:pointer;text-align:center;transition:all .22s';
-    d.innerHTML='<div style="font-size:1.8em;margin-bottom:6px">'+o.ico+'</div><div style="font-family:var(--mono);font-size:.62em;color:'+o.clr+';margin-bottom:4px">'+o.tag+'</div><div style="font-size:.75em;font-weight:600">'+o.name+'</div>';
-    d.onclick=()=>{
-      CONC01_DATA.forEach((_,j)=>{g.children[j].style.background='var(--ink3)';g.children[j].style.borderColor='var(--line)';});
-      d.style.background='rgba(167,139,250,.06)';d.style.borderColor=o.clr;
-      const det=document.getElementById('conc01-detail');
-      det.style.display='block';
-      det.innerHTML='<div style="font-family:var(--mono);font-size:.65em;color:'+o.clr+';margin-bottom:6px">'+o.tag+' — '+o.name.toUpperCase()+' '+o.ico+'</div><p style="font-size:.84em;color:var(--text2);line-height:1.7;margin-bottom:10px">'+o.desc+'</p><p style="font-size:.8em;color:'+o.clr+';background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.08);border-radius:7px;padding:10px 12px">🎮 '+o.ex+'</p>';
-      if(!conc01Done.has(i)){conc01Done.add(i);addXP(10,'Item explorado!','🎮');document.getElementById('conc01-counter').textContent=conc01Done.size+' / 6 conceitos explorados';if(conc01Done.size===6)earn('ac-conc');}
-    };
-    g.appendChild(d);
-  });
-})();
-
-const CASE01_DATA=[{"ico": "🏃", "tag": "FITNESS", "clr": "var(--rose)", "name": "Nike+", "desc": "Gamificou a corrida real: registra desempenho, cria desafios entre amigos, ranking e medalhas virtuais por marcos alcançados.", "ex": "Transformou uma atividade solitária (correr) em uma experiência social e competitiva através de dados e comparação."}, {"ico": "📍", "tag": "SOCIAL", "clr": "var(--teal)", "name": "Foursquare", "desc": "Check-ins em locais físicos geravam badges e disputas de 'prefeito' (mayor) do lugar, incentivando visitas repetidas no mundo real.", "ex": "Um dos primeiros apps a provar que gamificação pode influenciar comportamento físico, não só digital."}, {"ico": "🦉", "tag": "EDUCAÇÃO", "clr": "var(--lime)", "name": "Duolingo", "desc": "Aprendizado de idiomas gamificado com XP, streak diário, ligas competitivas semanais e metas diárias personalizáveis.", "ex": "Um dos cases mais estudados de retenção via gamificação — o streak sozinho é responsável por grande parte do engajamento diário."}];
-let case01Done=new Set();
-(function(){
-  const g=document.getElementById('case01-grid');
-  CASE01_DATA.forEach((o,i)=>{
-    const d=document.createElement('div');
-    d.style.cssText='background:var(--ink3);border:1px solid var(--line);border-radius:10px;padding:14px;cursor:pointer;text-align:center;transition:all .22s';
-    d.innerHTML='<div style="font-size:1.8em;margin-bottom:6px">'+o.ico+'</div><div style="font-family:var(--mono);font-size:.62em;color:'+o.clr+';margin-bottom:4px">'+o.tag+'</div><div style="font-size:.75em;font-weight:600">'+o.name+'</div>';
-    d.onclick=()=>{
-      CASE01_DATA.forEach((_,j)=>{g.children[j].style.background='var(--ink3)';g.children[j].style.borderColor='var(--line)';});
-      d.style.background='rgba(167,139,250,.06)';d.style.borderColor=o.clr;
-      const det=document.getElementById('case01-detail');
-      det.style.display='block';
-      det.innerHTML='<div style="font-family:var(--mono);font-size:.65em;color:'+o.clr+';margin-bottom:6px">'+o.tag+' — '+o.name.toUpperCase()+' '+o.ico+'</div><p style="font-size:.84em;color:var(--text2);line-height:1.7;margin-bottom:10px">'+o.desc+'</p><p style="font-size:.8em;color:'+o.clr+';background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.08);border-radius:7px;padding:10px 12px">🎮 '+o.ex+'</p>';
-      if(!case01Done.has(i)){case01Done.add(i);addXP(10,'Item explorado!','🏆');document.getElementById('case01-counter').textContent=case01Done.size+' / 3 cases explorados';if(case01Done.size===3)earn('ac-case');}
-    };
-    g.appendChild(d);
-  });
-})();
-
-setTimeout(()=>{earn('ac-s');toast('🚀','Bem-vindo à Semana 01!','INTRODUÇÃO À GAMIFICAÇÃO · 520 XP disponíveis');},800);
-document.getElementById('qdot-0').classList.add('cur');
-updateHUD();
-</script>
-    </div>
-    <script src="common.js"></script>
 </body>
 </html>

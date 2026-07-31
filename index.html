@@ -238,6 +238,7 @@
     border-left:3px solid var(--amber);
   }
   .toolkit-list li:nth-child(2){border-left-color:var(--teal);}
+  .toolkit-list li:nth-child(3){border-left-color:var(--rose);}
   .toolkit-list .glyph{
     font-family:'IBM Plex Mono', monospace;
     font-size:.95rem;
@@ -245,6 +246,7 @@
     line-height:1.4;
   }
   .toolkit-list li:nth-child(2) .glyph{color:var(--teal);}
+  .toolkit-list li:nth-child(3) .glyph{color:var(--rose);}
   .toolkit-list .txt strong{display:block;font-size:.92rem;margin-bottom:2px;}
   .toolkit-list .txt span{font-size:.85rem;color:var(--muted);}
 
@@ -348,6 +350,55 @@
     min-width:34px;
   }
 
+  /* ---------- BIBLIOGRAPHY ---------- */
+  .biblio{padding:8px 0 56px;}
+  .biblio > h2{
+    font-family:'IBM Plex Mono', monospace;
+    font-size:1.05rem;
+    letter-spacing:.06em;
+    text-transform:uppercase;
+    margin-bottom:22px;
+    color:var(--teal);
+  }
+  .biblio-grid{
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:22px;
+  }
+  .biblio .panel h3{
+    font-family:'IBM Plex Mono', monospace;
+    font-size:.78rem;
+    letter-spacing:.1em;
+    text-transform:uppercase;
+    color:var(--teal);
+    margin-bottom:14px;
+  }
+  .ref-list{list-style:none;display:flex;flex-direction:column;gap:12px;}
+  .ref-list li{
+    font-size:.9rem;
+    color:var(--ink);
+    opacity:.92;
+    padding-left:16px;
+    position:relative;
+    line-height:1.55;
+  }
+  .ref-list li::before{
+    content:"—";
+    position:absolute;
+    left:0;
+    color:var(--muted);
+  }
+  .ref-list em{font-style:italic;color:var(--ink);}
+  .biblio-note{
+    margin-top:18px;
+    font-size:.85rem;
+    color:var(--muted);
+    max-width:70ch;
+  }
+  @media (max-width: 760px){
+    .biblio-grid{grid-template-columns:1fr;}
+  }
+
   /* ---------- FOOTER ---------- */
   footer{
     border-top:1px solid var(--line);
@@ -448,6 +499,10 @@
             <span class="glyph">◈</span>
             <span class="txt"><strong>Kits Arduino + sensores</strong><span>Dezenas de sensores para protótipos físicos aplicados ao campo.</span></span>
           </li>
+          <li>
+            <span class="glyph">⌬</span>
+            <span class="txt"><strong>Realidade Aumentada</strong><span>Retomada de FJD-037 (5º sem.) como opção de tecnologia para o produto final.</span></span>
+          </li>
         </ul>
       </div>
     </section>
@@ -514,7 +569,7 @@
               <h4>Motion Design e Projeto Final</h4>
             </div>
           </div>
-          <div class="applied-note"><b>Projeto final:</b> produto simples para o agronegócio — jogo de tablet ou protótipo com sensor — para apresentar em feira na Semana 20.</div>
+          <div class="applied-note"><b>Projeto final:</b> produto simples para o agronegócio — jogo de tablet, protótipo com sensor ou experiência em realidade aumentada (retomando FJD-037, já cursada no 5º semestre) — apresentado em feira na Semana 20. Uso de tecnologia emergente entra como critério extra de avaliação.</div>
           <ul class="weeks-list">
             <li><a href="semana16.html"><span class="week-num">S16</span> Princípios de Motion Design</a></li>
             <li><a href="semana17.html"><span class="week-num">S17</span> Animação de UI/UX</a></li>
@@ -525,6 +580,30 @@
         </div>
 
       </div>
+    </section>
+
+    <section class="biblio">
+      <h2 class="mono">Bibliografia — plano de curso oficial</h2>
+      <div class="biblio-grid">
+        <div class="panel">
+          <h3>Básica</h3>
+          <ul class="ref-list">
+            <li>MCGONIGAL, J. <em>A Realidade em Jogo.</em> Rio de Janeiro: Best Seller, 2012.</li>
+            <li>ALVES, Flora. <em>Gamification: como criar experiências de aprendizagem engajadoras.</em> São Paulo: DVS Editora, 2014.</li>
+            <li>VIANNA, Ysmar et al. <em>Gamification, Inc. — Como reinventar empresas a partir de jogos.</em> Rio de Janeiro: MJV Press, 2013.</li>
+          </ul>
+        </div>
+        <div class="panel">
+          <h3>Complementar</h3>
+          <ul class="ref-list">
+            <li>JUNG, C. G. <em>O Homem e Seus Símbolos.</em> Rio de Janeiro: Nova Fronteira, 2008.</li>
+            <li>JOHNSON, S. <em>Tudo Que é Ruim é Bom Para Você.</em> Rio de Janeiro: Zahar, 2012.</li>
+            <li>MENDES, C. L. <em>Jogos Eletrônicos: Diversão, Poder e Subjetivação.</em> Campinas: Papirus, 2006.</li>
+            <li>FERNANDES, A. M. R. et al. <em>Jogos Eletrônicos: Mapeando Novas Perspectivas.</em> Florianópolis: Visual Book, 2009.</li>
+          </ul>
+        </div>
+      </div>
+      <p class="biblio-note">Ementário oficial do componente IJD-038 (Plano de Curso — Tecnologia em Jogos Digitais, FATEC Ourinhos). O tema agronegócio é aplicação prática sobre essa base teórica, não a substitui.</p>
     </section>
 
     <footer>

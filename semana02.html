@@ -1,568 +1,217 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Semana 02 · Psicologia e Motivação · IJD-038</title>
-    <link rel="stylesheet" href="common.css">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Semana 2 · Psicologia e Motivação — IJD-038</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600;700&family=IBM+Plex+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg:#12100b;
+    --panel:#1b170f;
+    --panel-2:#211c12;
+    --ink:#ede6d6;
+    --muted:#9c8f76;
+    --line:#33291a;
+    --green:#6fa05d;
+    --green-soft:#6fa05d33;
+    --amber:#e3a23c;
+  }
+  *{margin:0;padding:0;box-sizing:border-box;}
+  body{
+    background:
+      radial-gradient(1200px 600px at 15% -10%, #1d1a10 0%, transparent 60%),
+      repeating-linear-gradient(90deg, #16130d 0px, #16130d 1px, transparent 1px, transparent 64px),
+      var(--bg);
+    color:var(--ink);
+    font-family:'IBM Plex Sans', sans-serif;
+    line-height:1.65;
+    min-height:100vh;
+  }
+  a{color:inherit;}
+  :focus-visible{outline:2px solid var(--amber);outline-offset:3px;}
+  .mono{font-family:'IBM Plex Mono', monospace;}
+  .wrap{max-width:840px;margin:0 auto;padding:0 24px;}
+
+  .nav-row{
+    display:flex;justify-content:space-between;align-items:center;
+    padding-top:36px;margin-bottom:28px;
+  }
+  .back{
+    display:inline-flex;align-items:center;gap:8px;
+    font-family:'IBM Plex Mono', monospace;font-size:.8rem;
+    color:var(--muted);text-decoration:none;
+  }
+  .back:hover{color:var(--amber);}
+
+  .eyebrow{
+    font-family:'IBM Plex Mono', monospace;font-size:.78rem;
+    letter-spacing:.18em;color:var(--green);text-transform:uppercase;
+    display:flex;align-items:center;gap:10px;margin-bottom:16px;
+  }
+  .eyebrow::before{content:"";width:8px;height:8px;border-radius:50%;background:var(--green);box-shadow:0 0 0 3px var(--green-soft);}
+
+  h1{
+    font-family:'IBM Plex Mono', monospace;font-weight:700;
+    font-size:clamp(1.6rem, 4vw, 2.4rem);letter-spacing:-.01em;
+    margin-bottom:12px;
+  }
+  .lede{color:var(--muted);font-size:1.02rem;max-width:56ch;margin-bottom:44px;}
+  .lede strong{color:var(--ink);}
+
+  section{margin-bottom:36px;}
+  section h2{
+    font-family:'IBM Plex Mono', monospace;font-size:.82rem;
+    letter-spacing:.12em;text-transform:uppercase;color:var(--amber);
+    margin-bottom:14px;
+    display:flex;align-items:center;gap:10px;
+  }
+  section h2::after{content:"";flex:1;height:1px;background:var(--line);}
+
+  .panel{
+    background:var(--panel);border:1px solid var(--line);
+    border-radius:10px;padding:22px 24px;
+  }
+  .panel p{margin-bottom:10px;}
+  .panel p:last-child{margin-bottom:0;}
+
+  .sdt-grid{
+    display:grid;grid-template-columns:repeat(3, 1fr);gap:16px;
+  }
+  .sdt-card{
+    background:var(--panel);border:1px solid var(--line);
+    border-radius:10px;padding:18px 18px 16px;
+    border-top:3px solid var(--green);
+  }
+  .sdt-card:nth-child(2){border-top-color:var(--amber);}
+  .sdt-card:nth-child(3){border-top-color:var(--muted);}
+  .sdt-card .k{
+    font-family:'IBM Plex Mono', monospace;font-size:.72rem;
+    letter-spacing:.1em;text-transform:uppercase;color:var(--muted);
+    margin-bottom:8px;
+  }
+  .sdt-card h4{font-size:1.02rem;margin-bottom:8px;}
+  .sdt-card p{font-size:.88rem;color:var(--ink);opacity:.9;}
+
+  table.cmp{width:100%;border-collapse:collapse;font-size:.92rem;}
+  table.cmp th, table.cmp td{text-align:left;padding:11px 12px;border-bottom:1px solid var(--line);vertical-align:top;}
+  table.cmp th{
+    font-family:'IBM Plex Mono', monospace;font-size:.72rem;
+    letter-spacing:.08em;text-transform:uppercase;color:var(--muted);
+  }
+  table.cmp tr:last-child td{border-bottom:none;}
+
+  .theme-box{
+    background:linear-gradient(135deg, var(--panel) 0%, var(--panel-2) 100%);
+    border:1px solid var(--line);border-left:3px solid var(--amber);
+    border-radius:10px;padding:24px 26px;
+  }
+  .theme-box p{margin-bottom:10px;}
+  .theme-box p:last-child{margin-bottom:0;}
+  .theme-box .glyph{color:var(--amber);font-family:'IBM Plex Mono', monospace;}
+
+  ul.plain{list-style:none;display:flex;flex-direction:column;gap:10px;}
+  ul.plain li{
+    display:flex;gap:12px;align-items:flex-start;
+    background:var(--panel-2);border-radius:8px;padding:12px 14px;
+    border-left:3px solid var(--green);
+  }
+  ul.plain li b{color:var(--ink);}
+  ul.plain .num{font-family:'IBM Plex Mono', monospace;font-size:.78rem;color:var(--green);min-width:20px;}
+
+  footer{
+    border-top:1px solid var(--line);padding:28px 0 40px;
+    color:var(--muted);font-size:.84rem;
+    display:flex;justify-content:space-between;flex-wrap:wrap;gap:10px;
+  }
+  footer a{text-decoration:none;}
+  footer a:hover{color:var(--amber);}
+
+  @media (max-width: 640px){
+    .sdt-grid{grid-template-columns:1fr;}
+  }
+</style>
 </head>
 <body>
-    <div class="main">
-        <div class="bg-dots"></div><div class="bg-glow"></div><div class="bg-glow2"></div>
+  <div class="wrap">
+    <div class="nav-row">
+      <a class="back" href="semana01.html">← semana 1</a>
+      <a class="back" href="index.html">índice ↑</a>
+    </div>
 
-<!-- VIDEO MODAL -->
-<div class="vid-modal" id="vid-modal" onclick="closeVid(event)">
-  <div class="vid-modal-box">
-    <button class="vid-modal-close" onclick="closeVidBtn()">✕</button>
-    <iframe class="vid-modal-iframe" id="vid-iframe" src="" allow="autoplay;encrypted-media" allowfullscreen></iframe>
-  </div>
-</div>
+    <div class="eyebrow">Módulo 01 · Semana 2</div>
+    <h1>Psicologia e Motivação</h1>
+    <p class="lede">Antes de desenhar pontos, níveis e badges, é preciso entender <strong>o que move as pessoas</strong> — e por que isso muda dependendo de quem é o jogador: um estudante, um pequeno produtor rural ou o dono de uma revenda agrícola.</p>
 
-<!-- TOAST -->
-<div class="toast" id="toast"><div class="t-ico" id="t-ico">⚡</div><div><div class="t-title" id="t-title">+XP</div><div class="t-msg" id="t-msg"></div></div></div>
-
-<!-- HUD -->
-<header class="hud">
-  <a href="index.html" class="hud-brand">
-    <div class="hud-logo">IJ</div>
-    <div class="hud-course"><span>IJD-038</span>Jogos Digitais · 6º Sem.</div>
-  </a>
-  <div class="hud-crumb">
-    <span>Módulo 1</span><span>·</span><span>Fundamentos de Gamificação</span><span>·</span>
-    <span style="color:var(--teal)">Semana 02</span>
-  </div>
-  <div class="hud-xp">
-    <div class="streak">🔥 <span id="streak">0</span></div>
-    <div class="xp-count"><strong id="xp-val">0</strong><span>/ 540 XP</span></div>
-    <div class="hud-bar"><div class="hud-bar-fill" id="xp-bar"></div></div>
-    <div class="hud-level" id="xp-level">CURIOSO</div>
-  </div>
-</header>
-
-<div class="wrap">
-<!-- LEFT NAV -->
-<aside class="left-nav">
-  <div class="nav-card">
-    <div class="nav-label">Semana 02</div>
-    <a href="#objetivos" class="nav-link"><span class="nd"></span>Objetivos</a><a href="#videos" class="nav-link"><span class="nd"></span>📺 Vídeos</a><a href="#sdt" class="nav-link"><span class="nd"></span>🧠 Necessidades da SDT</a><a href="#mito-fato" class="nav-link"><span class="nd"></span>🔍 Mito ou Fato</a><a href="#quiz" class="nav-link"><span class="nd"></span>Quiz</a><a href="#atividades" class="nav-link"><span class="nd"></span>Atividades</a><a href="#conquistas" class="nav-link"><span class="nd"></span>Conquistas</a>
-  </div>
-  <div class="nav-card">
-    <div class="nav-label">Navegação</div>
-    <a href="semana01.html" class="nav-link"><span class="nd"></span>← Semana 01</a>
-    <a href="semana02.html" class="nav-link cur"><span class="nd"></span>Semana 02</a>
-    <a href="semana03.html" class="nav-link"><span class="nd"></span>Semana 03 →</a>
-  </div>
-  <div class="nav-card">
-    <div class="nav-label">Progresso</div>
-    <div class="prog-track">
-      <div class="prog-section">
-        <div class="prog-label"><span>Objetivos</span><span id="p-obj">0 / 5</span></div>
-        <div class="prog-bar"><div class="prog-fill pf-violet" id="pb-obj"></div></div>
+    <section>
+      <h2>Por que motivação vem antes da mecânica</h2>
+      <div class="panel">
+        <p>Gamificação não é "colocar pontos em tudo". Elementos de jogo só funcionam quando respondem a uma motivação real de quem vai usar o sistema. Um sistema de badges pode engajar um adolescente e ser irrelevante para um produtor rural de 55 anos — não porque gamificação "não funciona no agro", mas porque a motivação por trás precisa ser outra.</p>
+        <p>McGonigal (bibliografia da disciplina) descreve como jogos bem desenhados geram <em>curiosidade epistêmica</em> e estados de <em>flow</em> — engajamento pelo desafio em si, não só pela recompensa externa. É esse mecanismo que queremos entender antes de aplicar.</p>
       </div>
-      <div class="prog-section">
-        <div class="prog-label"><span>Quiz</span><span id="p-quiz">0 / 6</span></div>
-        <div class="prog-bar"><div class="prog-fill pf-teal" id="pb-quiz"></div></div>
+    </section>
+
+    <section>
+      <h2>Teoria da autodeterminação (Deci &amp; Ryan)</h2>
+      <div class="sdt-grid">
+        <div class="sdt-card">
+          <div class="k">01 · Autonomia</div>
+          <h4>Sinto que escolho</h4>
+          <p>A pessoa tem controle real sobre suas ações, não apenas segue um roteiro imposto.</p>
+        </div>
+        <div class="sdt-card">
+          <div class="k">02 · Competência</div>
+          <h4>Sinto que evoluo</h4>
+          <p>Há desafio proporcional à habilidade, com progresso visível — nem fácil demais, nem impossível.</p>
+        </div>
+        <div class="sdt-card">
+          <div class="k">03 · Propósito / pertencimento</div>
+          <h4>Sinto que importa</h4>
+          <p>A ação se conecta a algo maior — um objetivo pessoal, um grupo, uma comunidade.</p>
+        </div>
       </div>
-      <div class="prog-section">
-        <div class="prog-label"><span>Atividades</span><span id="p-act">0 / 4</span></div>
-        <div class="prog-bar"><div class="prog-fill pf-amber" id="pb-act"></div></div>
+    </section>
+
+    <section>
+      <h2>Motivação intrínseca vs. extrínseca</h2>
+      <div class="panel">
+        <table class="cmp">
+          <thead>
+            <tr><th>Intrínseca</th><th>Extrínseca</th></tr>
+          </thead>
+          <tbody>
+            <tr><td>Vem de dentro: curiosidade, domínio de uma habilidade, prazer na tarefa</td><td>Vem de fora: pontos, prêmios, ranking, reconhecimento público</td></tr>
+            <tr><td>Mais durável — a pessoa continua mesmo sem recompensa externa</td><td>Rápida de ativar, mas pode enfraquecer o interesse genuíno se usada em excesso</td></tr>
+            <tr><td>Difícil de desenhar diretamente — é consequência de boa experiência</td><td>Fácil de desenhar — pontos, badges, leaderboards</td></tr>
+          </tbody>
+        </table>
       </div>
-    </div>
-  </div>
-</aside>
+    </section>
 
-<!-- MAIN -->
-<main class="main">
-
-<!-- PROGRESSO DO CURSO (persiste entre semanas via localStorage) -->
-<section class="scard" id="curso-progresso" style="margin-bottom:20px">
-  <div class="scard-head">
-    <div class="scard-ico ico-lime"><span>📊</span></div>
-    <div class="scard-title">Progresso do Curso — IJD-038</div>
-    <div class="scard-xp" id="cp-count">0 / 20 semanas</div>
-  </div>
-  <div class="scard-body">
-    <div class="prog-bar" style="height:10px;background:rgba(255,255,255,.06);border-radius:100px;overflow:hidden">
-      <div class="prog-fill pf-lime" id="cp-bar" style="height:100%;width:0%;transition:width .3s"></div>
-    </div>
-    <div style="display:flex;justify-content:space-between;align-items:center;margin-top:12px;gap:10px;flex-wrap:wrap">
-      <div style="font-size:.72em;color:var(--sub);font-family:var(--mono)">Marque quando concluir todas as atividades desta semana — seu progresso fica salvo neste navegador.</div>
-      <button class="eval-btn" id="cp-btn" style="margin:0;white-space:nowrap" onclick="toggleWeekDone()">✅ Marcar Semana 02 como Concluída</button>
-    </div>
-  </div>
-</section>
-
-<!-- HERO -->
-<section class="hero-card">
-  <div class="hero-meta">
-    <span class="mod-badge">Módulo 1 · Fundamentos de Gamificação</span>
-    <span style="font-family:var(--mono);font-size:.65em;color:var(--sub)">Semana 02 · SDT · FLOW · INTRÍNSECA VS EXTRÍNSECA</span>
-  </div>
-  <h1 class="hero-title">PSICOLOGIA E MOTIVAÇÃO</h1>
-  <p class="hero-sub">Por que os jogadores continuam jogando mesmo sem nenhuma recompensa material? A Teoria da Autodeterminação (Ryan & Deci) explica: todo ser humano busca Competência, Autonomia e Relacionamento. Quando um sistema satisfaz essas 3 necessidades, o engajamento se torna genuíno — não apenas induzido por recompensas externas.</p>
-  <div class="hero-chips"><span class="chip chip-teal">🧠 SDT</span><span class="chip chip-accent">🌊 Flow State</span><span class="chip chip-amber">⚡ Intrínseca x Extrínseca</span><span class="chip chip-lime">540 XP disponíveis</span></div>
-  <div class="hero-num">02</div>
-</section>
-
-<!-- OBJECTIVES -->
-<section class="scard" id="objetivos">
-  <div class="scard-head">
-    <div class="scard-ico ico-violet"><span>🎯</span></div>
-    <div class="scard-title">Objetivos da Semana</div>
-    <div class="scard-xp">+10 XP cada</div>
-  </div>
-  <div class="scard-body">
-    <div class="obj-grid" id="obj-grid"></div>
-  </div>
-</section>
-
-<!-- VIDEOS -->
-<section class="scard" id="videos">
-  <div class="scard-head">
-    <div class="scard-ico ico-teal"><span>📺</span></div>
-    <div class="scard-title">Vídeos da Semana</div>
-    <div class="scard-xp">+15 XP ao assistir</div>
-  </div>
-  <div class="scard-body">
-    <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(240px,1fr));gap:12px" id="vid-grid"></div>
-  </div>
-</section>
-
-
-<section class="scard" id="sdt">
-  <div class="scard-head">
-    <div class="scard-ico ico-teal"><span>🧠</span></div>
-    <div class="scard-title">As 3 Necessidades da SDT — Explore Cada Uma</div>
-    <div class="scard-xp">+12 XP cada</div>
-  </div>
-  <div class="scard-body">
-    <p style="font-size:.82em;color:var(--sub);margin-bottom:16px">Clique em cada necessidade psicológica da Teoria da Autodeterminação (Ryan & Deci, 2000) para entender como jogos de sucesso a satisfazem.</p>
-    <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-bottom:16px" id="sdt02-grid"></div>
-    <div id="sdt02-detail" style="padding:16px;background:var(--ink3);border:1px solid var(--line);border-radius:9px;display:none;animation:fadein .2s ease"></div>
-    <div style="font-family:var(--mono);font-size:.62em;color:var(--sub);margin-top:8px;text-align:right" id="sdt02-counter">0 / 3 necessidades exploradas</div>
-  </div>
-</section>
-
-<section class="scard" id="mito-fato">
-  <div class="scard-head">
-    <div class="scard-ico ico-amber"><span>🔍</span></div>
-    <div class="scard-title">Mito ou Fato — Motivação em Jogos</div>
-    <div class="scard-xp">+12 XP cada</div>
-  </div>
-  <div class="scard-body">
-    <p style="font-size:.82em;color:var(--sub);margin-bottom:16px">Motivação intrínseca e extrínseca são frequentemente confundidas. Avalie cada afirmação com base na teoria vista nesta aula.</p>
-    <div style="display:flex;flex-direction:column;gap:10px" id="mf02-grid"></div>
-  </div>
-</section>
-
-<!-- QUIZ -->
-<section class="scard" id="quiz">
-  <div class="scard-head">
-    <div class="scard-ico ico-amber"><span>🧠</span></div>
-    <div class="scard-title">Quiz — Psicologia e Motivação</div>
-    <div class="scard-xp" id="quiz-score-hd">0 corretas</div>
-  </div>
-  <div class="scard-body">
-    <div class="q-prog">
-      <div class="q-dot" id="qdot-0"></div><div class="q-dot" id="qdot-1"></div><div class="q-dot" id="qdot-2"></div><div class="q-dot" id="qdot-3"></div><div class="q-dot" id="qdot-4"></div><div class="q-dot" id="qdot-5"></div>
-      <div class="q-bar-wrap"><div class="q-bar-fill" id="q-bar-fill" style="width:0%"></div></div>
-      <span class="q-count" id="q-count">0 / 6</span>
-      <span class="q-score-mini" id="q-score-mini">0 XP</span>
-    </div>
-    
-    <div class="qcard on" id="qcard-0">
-      <div class="qtext">Q1. Quais são as 3 necessidades psicológicas básicas da Teoria da Autodeterminação (SDT)?</div>
-      <div class="qopts"><button class="qopt" onclick="answerQ(0,0)">Dinheiro, Fama e Poder</button><button class="qopt" onclick="answerQ(0,1)">Competência, Autonomia e Relacionamento</button><button class="qopt" onclick="answerQ(0,2)">Velocidade, Precisão e Reflexo</button><button class="qopt" onclick="answerQ(0,3)">Gráficos, Som e Narrativa</button></div>
-      <div class="qfb" id="qfb-0"></div>
-      <button class="qnext" id="qnext-0" onclick="nextQ(0)">Próxima →</button>
-    </div>
-    <div class="qcard" id="qcard-1">
-      <div class="qtext">Q2. O que é o Overjustification Effect?</div>
-      <div class="qopts"><button class="qopt" onclick="answerQ(1,0)">Um bug comum em jogos AAA</button><button class="qopt" onclick="answerQ(1,1)">O fenômeno onde adicionar recompensa externa a uma atividade já intrinsecamente prazerosa pode diminuir a motivação para realizá-la</button><button class="qopt" onclick="answerQ(1,2)">Um tipo de conquista difícil de desbloquear</button><button class="qopt" onclick="answerQ(1,3)">Uma técnica de marketing de jogos</button></div>
-      <div class="qfb" id="qfb-1"></div>
-      <button class="qnext" id="qnext-1" onclick="nextQ(1)">Próxima →</button>
-    </div>
-    <div class="qcard" id="qcard-2">
-      <div class="qtext">Q3. Segundo Mihaly Csikszentmihalyi, o que caracteriza o estado de Flow?</div>
-      <div class="qopts"><button class="qopt" onclick="answerQ(2,0)">Jogar o máximo de horas possível</button><button class="qopt" onclick="answerQ(2,1)">O equilíbrio entre o desafio da tarefa e a habilidade da pessoa, gerando imersão total</button><button class="qopt" onclick="answerQ(2,2)">Ter os melhores gráficos possíveis</button><button class="qopt" onclick="answerQ(2,3)">Jogar sempre sozinho, sem interação social</button></div>
-      <div class="qfb" id="qfb-2"></div>
-      <button class="qnext" id="qnext-2" onclick="nextQ(2)">Próxima →</button>
-    </div>
-    <div class="qcard" id="qcard-3">
-      <div class="qtext">Q4. Por que Breath of the Wild é citado como exemplo de satisfação da necessidade de Autonomia?</div>
-      <div class="qopts"><button class="qopt" onclick="answerQ(3,0)">Porque tem gráficos realistas</button><button class="qopt" onclick="answerQ(3,1)">Porque oferece liberdade real de escolha — o jogador pode ir para qualquer lugar do mapa desde o início, sentindo que as decisões são genuinamente suas</button><button class="qopt" onclick="answerQ(3,2)">Porque é um jogo multiplayer</button><button class="qopt" onclick="answerQ(3,3)">Porque tem um sistema de conquistas extenso</button></div>
-      <div class="qfb" id="qfb-3"></div>
-      <button class="qnext" id="qnext-3" onclick="nextQ(3)">Próxima →</button>
-    </div>
-    <div class="qcard" id="qcard-4">
-      <div class="qtext">Q5. Por que motivação intrínseca tende a ser mais duradoura que motivação puramente extrínseca?</div>
-      <div class="qopts"><button class="qopt" onclick="answerQ(4,0)">Porque motivação intrínseca é mais fácil de programar em um jogo</button><button class="qopt" onclick="answerQ(4,1)">Porque motivação intrínseca vem do prazer genuíno da atividade em si, enquanto motivação extrínseca depende da recompensa continuar existindo</button><button class="qopt" onclick="answerQ(4,2)">Não há diferença real de durabilidade entre elas</button><button class="qopt" onclick="answerQ(4,3)">Porque motivação extrínseca é sempre mais forte no curto e longo prazo</button></div>
-      <div class="qfb" id="qfb-4"></div>
-      <button class="qnext" id="qnext-4" onclick="nextQ(4)">Próxima →</button>
-    </div>
-    <div class="qcard" id="qcard-5">
-      <div class="qtext">Q6. Como um sistema pode, em teoria, satisfazer as 3 necessidades da SDT simultaneamente?</div>
-      <div class="qopts"><button class="qopt" onclick="answerQ(5,0)">Isso é teoricamente impossível</button><button class="qopt" onclick="answerQ(5,1)">Combinando progressão de habilidade (Competência), liberdade de escolha real (Autonomia) e conexão social genuína (Relacionamento) na mesma experiência</button><button class="qopt" onclick="answerQ(5,2)">Apenas jogos single-player conseguem fazer isso</button><button class="qopt" onclick="answerQ(5,3)">Apenas aumentando a dificuldade do jogo</button></div>
-      <div class="qfb" id="qfb-5"></div>
-      <button class="qnext" id="qnext-5" onclick="nextQ(5)">Ver Resultado →</button>
-    </div>
-    <div class="q-result" id="q-result">
-      <div class="q-score-big" id="q-score-big">0/6</div>
-      <div class="q-msg" id="q-msg"></div>
-      <div style="font-family:var(--mono);font-size:.72em;color:var(--violet);margin-top:6px" id="q-xp-earned"></div>
-      <button class="eval-btn" style="margin-top:18px" onclick="restartQuiz()">↺ Tentar Novamente</button>
-    </div>
-  </div>
-</section>
-
-<!-- ACTIVITIES -->
-<section class="scard" id="atividades">
-  <div class="scard-head">
-    <div class="scard-ico ico-rose"><span>✏️</span></div>
-    <div class="scard-title">Atividades Práticas</div>
-    <div class="scard-xp">+XP por conclusão</div>
-  </div>
-  <div class="scard-body" style="display:flex;flex-direction:column;gap:16px">
-    
-    <div class="scard" id="act-card-0">
-      <div class="scard-head">
-        <div class="scard-ico ico-teal"><span>🎮</span></div>
-        <div class="scard-title">Atividade 1 — Análise SDT de Jogo AAA</div>
-        <div class="scard-xp">+75 XP</div>
+    <section>
+      <h2>Aplicando ao agronegócio</h2>
+      <div class="theme-box">
+        <p><span class="glyph">▣</span>&nbsp; <b>Competência</b> como motivador central: um quiz gamificado sobre manejo de solo funciona melhor se mostrar progresso claro de domínio do assunto, não só "pontos por acerto".</p>
+        <p><span class="glyph">◈</span>&nbsp; <b>Autonomia</b> nas situações de decisão de negócio: deixar quem joga escolher entre caminhos diferentes (investir em sensor vs. mão de obra, por exemplo) gera mais engajamento do que um caminho único.</p>
+        <p><span class="glyph">▤</span>&nbsp; <b>Propósito</b> como gancho pro produto final: um protótipo (jogo, sensor ou AR) que resolve um problema real de alguém do agronegócio tende a engajar mais os próprios alunos do que um exercício abstrato.</p>
       </div>
-      <div class="scard-body">
-        <p style="font-size:.87em;color:var(--sub);line-height:1.7;margin-bottom:14px">Escolher um jogo já jogado e analisar profundamente como ele atende — ou falha em atender — às 3 necessidades da SDT.</p>
-        <div style="font-family:var(--mono);font-size:.62em;text-transform:uppercase;letter-spacing:.1em;color:var(--sub);margin-bottom:8px">Passos</div>
-        <ol style="font-size:.83em;line-height:1.8;color:var(--text2);padding-left:18px"><li>Escolha um jogo (BotW, Elden Ring, Celeste, Hollow Knight, ou outro relevante)</li><li>Analise cada dimensão da SDT com exemplos específicos de mecânicas do jogo</li><li>Dê uma nota de 0-10 para cada dimensão com justificativa</li><li>Proponha 1 melhoria em um elemento, baseada na teoria vista</li></ol>
-        <div style="font-family:var(--mono);font-size:.62em;text-transform:uppercase;letter-spacing:.1em;color:var(--sub);margin:14px 0 6px">Entrega</div>
-        <p style="font-size:.82em;color:var(--teal);background:rgba(45,228,200,.07);border:1px solid rgba(45,228,200,.15);border-radius:7px;padding:10px 13px">Relatório de 2-3 páginas com introdução do jogo, análise de cada dimensão SDT, notas justificadas e proposta de melhoria</p>
-        <button class="eval-btn" style="margin-top:14px" onclick="completeAct(0,75,'ac-a1')">✅ Marcar como Concluída — +75 XP</button>
-      </div>
-    </div>
-    <div class="scard" id="act-card-1">
-      <div class="scard-head">
-        <div class="scard-ico ico-violet"><span>⚙️</span></div>
-        <div class="scard-title">Atividade 2 — Implementação: Difficulty Adaptive System</div>
-        <div class="scard-xp">+90 XP</div>
-      </div>
-      <div class="scard-body">
-        <p style="font-size:.87em;color:var(--sub);line-height:1.7;margin-bottom:14px">Implementar um sistema que adapta a dificuldade em tempo real para manter o jogador na Flow Zone, baseado em métricas de desempenho.</p>
-        <div style="font-family:var(--mono);font-size:.62em;text-transform:uppercase;letter-spacing:.1em;color:var(--sub);margin-bottom:8px">Passos</div>
-        <ol style="font-size:.83em;line-height:1.8;color:var(--text2);padding-left:18px"><li>Configure Unity ou Unreal com um protótipo simples</li><li>Defina ao menos 2 métricas de desempenho (ex: winRate, deathCount)</li><li>Implemente a lógica de ajuste dinâmico de dificuldade baseada nessas métricas</li><li>Exiba na UI o estado motivacional atual do jogador (BORED / FLOW / ANXIOUS)</li></ol>
-        <div style="font-family:var(--mono);font-size:.62em;text-transform:uppercase;letter-spacing:.1em;color:var(--sub);margin:14px 0 6px">Entrega</div>
-        <p style="font-size:.82em;color:var(--teal);background:rgba(45,228,200,.07);border:1px solid rgba(45,228,200,.15);border-radius:7px;padding:10px 13px">Repositório com protótipo jogável, código comentado do DDA System, README explicando a lógica e vídeo/GIF demonstrando o sistema</p>
-        <button class="eval-btn" style="margin-top:14px" onclick="completeAct(1,90,'ac-a2')">✅ Marcar como Concluída — +90 XP</button>
-      </div>
-    </div>
-    <div class="scard" id="act-card-2">
-      <div class="scard-head">
-        <div class="scard-ico ico-amber"><span>🔬</span></div>
-        <div class="scard-title">Atividade 3 — Experimento: Intrínseca vs Extrínseca</div>
-        <div class="scard-xp">+65 XP</div>
-      </div>
-      <div class="scard-body">
-        <p style="font-size:.87em;color:var(--sub);line-height:1.7;margin-bottom:14px">Desenhar um experimento controlado (planejado, não necessariamente executado) que teste o efeito de recompensas externas na motivação intrínseca de jogar algo.</p>
-        <div style="font-family:var(--mono);font-size:.62em;text-transform:uppercase;letter-spacing:.1em;color:var(--sub);margin-bottom:8px">Passos</div>
-        <ol style="font-size:.83em;line-height:1.8;color:var(--text2);padding-left:18px"><li>Defina uma hipótese clara sobre o efeito das recompensas externas</li><li>Descreva a metodologia: grupo controle e grupo experimental</li><li>Escolha métricas quantitativas (ex: sessões por semana, tempo por sessão, satisfação relatada)</li><li>Conecte com o Overjustification Effect e cite um exemplo real (Warcraft 3: Reforged, Diablo 4, etc.)</li></ol>
-        <div style="font-family:var(--mono);font-size:.62em;text-transform:uppercase;letter-spacing:.1em;color:var(--sub);margin:14px 0 6px">Entrega</div>
-        <p style="font-size:.82em;color:var(--teal);background:rgba(45,228,200,.07);border:1px solid rgba(45,228,200,.15);border-radius:7px;padding:10px 13px">Documento de 2 páginas com hipótese, metodologia, métricas escolhidas e resultados esperados fundamentados na teoria</p>
-        <button class="eval-btn" style="margin-top:14px" onclick="completeAct(2,65,'ac-a3')">✅ Marcar como Concluída — +65 XP</button>
-      </div>
-    </div>
-    <div class="scard" id="act-card-3">
-      <div class="scard-head">
-        <div class="scard-ico ico-rose"><span>🔌</span></div>
-        <div class="scard-title">Atividade 4 — Motivação em Dois Tons — Buzzer da Etapa 2</div>
-        <div class="scard-xp">+80 XP</div>
-      </div>
-      <div class="scard-body">
-        <p style="font-size:.87em;color:var(--sub);line-height:1.7;margin-bottom:14px">Etapa 2 de 5 do "Painel de Gamificação Física" (continuação da <a href="semana01.html#atividades" style="color:var(--teal)">Semana 01</a>). Adicione um buzzer ao circuito já montado e construa fisicamente a diferença entre motivação extrínseca (recompensa instantânea e vazia) e intrínseca (recompensa que exige esforço real).</p>
-        <div style="font-family:var(--mono);font-size:.62em;text-transform:uppercase;letter-spacing:.1em;color:var(--sub);margin-bottom:8px">Passos</div>
-        <ol style="font-size:.83em;line-height:1.8;color:var(--text2);padding-left:18px"><li>Reaproveite o circuito da Semana 01 (LED + botão de pontos) e adicione um buzzer</li><li>Monte um 2º botão: Botão A (Extrínseco) toca um bip curto instantaneamente, sempre, não importa o quê</li><li>Botão B (Intrínseco) só toca uma melodia de 'conquista' se for pressionado por pelo menos 2 segundos contínuos (use millis(), sem delay())</li><li>Grave um vídeo comparando as duas experiências</li><li>Escreva um parágrafo: qual botão 'vicia' mais rápido, e qual dá mais satisfação real, com base na SDT?</li></ol>
-        <div style="font-family:var(--mono);font-size:.62em;text-transform:uppercase;letter-spacing:.1em;color:var(--sub);margin:14px 0 6px">Entrega</div>
-        <p style="font-size:.82em;color:var(--teal);background:rgba(45,228,200,.07);border:1px solid rgba(45,228,200,.15);border-radius:7px;padding:10px 13px">Vídeo comparando os dois botões + código-fonte comentado (.ino) + parágrafo de análise conectando com o Overjustification Effect</p>
-        <button class="eval-btn" style="margin-top:14px" onclick="completeAct(3,80,'ac-hw2')">✅ Marcar como Concluída — +80 XP</button>
-      </div>
-    </div>
+    </section>
+
+    <section>
+      <h2>Para a próxima aula</h2>
+      <ul class="plain">
+        <li><span class="num">01</span><span>Pensar em uma situação real do agronegócio (própria ou de alguém conhecido) que dependa de motivação — o que faria essa pessoa continuar engajada?</span></li>
+        <li><span class="num">02</span><span>Identificar se essa motivação é mais intrínseca ou extrínseca, e por quê.</span></li>
+      </ul>
+    </section>
+
+    <footer>
+      <a class="mono" href="semana01.html">← Semana 1</a>
+      <span class="mono">Semana 2 de 20</span>
+      <a class="mono" href="semana03.html" style="color:var(--amber);">Semana 3 →</a>
+    </footer>
   </div>
-</section>
-
-<!-- ACHIEVEMENTS -->
-<section class="scard" id="conquistas">
-  <div class="scard-head">
-    <div class="scard-ico ico-amber"><span>🏆</span></div>
-    <div class="scard-title">Conquistas — Semana 02</div>
-  </div>
-  <div class="scard-body">
-    <div class="ach-grid" id="ach-grid"><div class="ach-card" id="ac-s" title="Começou S02"><div class="ach-ico">🚀</div><div class="ach-name">Começou S02</div></div><div class="ach-card" id="ac-o" title="Todos os Objetivos"><div class="ach-ico">🎯</div><div class="ach-name">Todos os Objetivos</div></div><div class="ach-card" id="ac-sdt" title="3 Necessidades Exploradas"><div class="ach-ico">🧠</div><div class="ach-name">3 Necessidades Exploradas</div></div><div class="ach-card" id="ac-mf" title="Mito ou Fato Completo"><div class="ach-ico">🔍</div><div class="ach-name">Mito ou Fato Completo</div></div><div class="ach-card" id="ac-a1" title="Análise SDT Concluída"><div class="ach-ico">🎮</div><div class="ach-name">Análise SDT Concluída</div></div><div class="ach-card" id="ac-a2" title="DDA System Implementado"><div class="ach-ico">⚙️</div><div class="ach-name">DDA System Implementado</div></div><div class="ach-card" id="ac-a3" title="Experimento Desenhado"><div class="ach-ico">🔬</div><div class="ach-name">Experimento Desenhado</div></div><div class="ach-card" id="ac-hw2" title="Buzzer Montado"><div class="ach-ico">🔌</div><div class="ach-name">Buzzer Montado</div></div><div class="ach-card" id="ac-q" title="Quiz Completo"><div class="ach-ico">🧠</div><div class="ach-name">Quiz Completo</div></div><div class="ach-card" id="ac-p" title="Quiz Perfeito"><div class="ach-ico">💎</div><div class="ach-name">Quiz Perfeito</div></div><div class="ach-card" id="ac-a" title="Todas as Atividades"><div class="ach-ico">✏️</div><div class="ach-name">Todas as Atividades</div></div><div class="ach-card" id="ac-x" title="XP Máximo"><div class="ach-ico">🏆</div><div class="ach-name">XP Máximo</div></div></div>
-  </div>
-</section>
-
-<!-- NEXT HINT -->
-<div style="margin:8px 0 32px;padding:16px 20px;background:rgba(45,228,200,.06);border:1px solid rgba(45,228,200,.15);border-radius:10px;font-size:.83em;color:var(--sub);line-height:1.7">
-  <span style="font-family:var(--mono);font-size:.72em;text-transform:uppercase;letter-spacing:.1em;color:var(--teal);display:block;margin-bottom:4px">📌 Para a Próxima Aula (Semana 03)</span>
-  Semana 03 — Mecânicas de Jogo: vamos estudar Points, Badges e Leaderboards (PBL) e o Loop de Engajamento — e seu circuito ganha um 2º LED e um 2º botão para construir um PBL físico completo!
-</div>
-
-<!-- NAVIGATION -->
-<div style="display:flex;justify-content:space-between;gap:12px;margin-bottom:40px">
-  <a href="semana01.html" style="display:inline-flex;align-items:center;gap:8px;padding:12px 22px;background:var(--ink3);border:1px solid var(--line);border-radius:8px;color:var(--text2);text-decoration:none;font-family:var(--mono);font-size:.73em;transition:all .2s" onmouseover="this.style.borderColor='var(--violet)'" onmouseout="this.style.borderColor='var(--line)'">← Semana 01</a>
-  <a href="semana03.html" style="display:inline-flex;align-items:center;gap:8px;padding:12px 22px;background:var(--teal);border:1px solid var(--teal);border-radius:8px;color:var(--ink);text-decoration:none;font-family:var(--mono);font-size:.73em;font-weight:700;transition:all .2s">Semana 03 →</a>
-</div>
-
-</main>
-</div>
-
-<script>
-const MAX_XP=540;
-const QUIZ_DATA=[{"q": "Quais são as 3 necessidades psicológicas básicas da Teoria da Autodeterminação (SDT)?", "opts": ["Dinheiro, Fama e Poder", "Competência, Autonomia e Relacionamento", "Velocidade, Precisão e Reflexo", "Gráficos, Som e Narrativa"], "correct": 1, "xp": 15, "fb_ok": "✅ Ryan e Deci (2000) identificaram essas 3 necessidades como universais — quando um sistema (jogo ou não) as satisfaz, a motivação se torna genuína e duradoura.", "fb_fail": "❌ A SDT define Competência (sentir maestria), Autonomia (ter escolhas reais) e Relacionamento (conexão social) como as 3 necessidades psicológicas fundamentais que geram motivação genuína."}, {"q": "O que é o Overjustification Effect?", "opts": ["Um bug comum em jogos AAA", "O fenômeno onde adicionar recompensa externa a uma atividade já intrinsecamente prazerosa pode diminuir a motivação para realizá-la", "Um tipo de conquista difícil de desbloquear", "Uma técnica de marketing de jogos"], "correct": 1, "xp": 20, "fb_ok": "✅ Esse efeito é contraintuitivo mas bem documentado: quando uma recompensa externa é adicionada a algo que a pessoa já fazia por prazer genuíno, o cérebro passa a atribuir a motivação à recompensa — e quando ela desaparece, a motivação de fazer a atividade cai junto.", "fb_fail": "❌ O Overjustification Effect descreve como recompensas externas podem 'sequestrar' a motivação intrínseca — a pessoa passa a fazer a atividade pela recompensa, não pelo prazer original, tornando a motivação frágil quando a recompensa some."}, {"q": "Segundo Mihaly Csikszentmihalyi, o que caracteriza o estado de Flow?", "opts": ["Jogar o máximo de horas possível", "O equilíbrio entre o desafio da tarefa e a habilidade da pessoa, gerando imersão total", "Ter os melhores gráficos possíveis", "Jogar sempre sozinho, sem interação social"], "correct": 1, "xp": 15, "fb_ok": "✅ Flow acontece na zona entre tédio (desafio baixo demais) e ansiedade (desafio alto demais) — quando desafio e habilidade se equilibram, a pessoa entra em um estado de imersão e concentração total na atividade.", "fb_fail": "❌ Flow é definido pelo equilíbrio dinâmico entre desafio e habilidade — desafio demais gera ansiedade, desafio de menos gera tédio; o ponto ideal entre os dois é onde o Flow acontece."}, {"q": "Por que Breath of the Wild é citado como exemplo de satisfação da necessidade de Autonomia?", "opts": ["Porque tem gráficos realistas", "Porque oferece liberdade real de escolha — o jogador pode ir para qualquer lugar do mapa desde o início, sentindo que as decisões são genuinamente suas", "Porque é um jogo multiplayer", "Porque tem um sistema de conquistas extenso"], "correct": 1, "xp": 15, "fb_ok": "✅ A liberdade de 'ir para onde quiser desde o início' é a manifestação direta da necessidade de Autonomia — o jogador sente que suas escolhas de exploração são genuinamente próprias, não guiadas por um caminho linear imposto.", "fb_fail": "❌ A Autonomia em Breath of the Wild vem da liberdade real de escolha do jogador sobre onde ir e como jogar desde o início — uma sensação de que as decisões tomadas são verdadeiramente suas."}, {"q": "Por que motivação intrínseca tende a ser mais duradoura que motivação puramente extrínseca?", "opts": ["Porque motivação intrínseca é mais fácil de programar em um jogo", "Porque motivação intrínseca vem do prazer genuíno da atividade em si, enquanto motivação extrínseca depende da recompensa continuar existindo", "Não há diferença real de durabilidade entre elas", "Porque motivação extrínseca é sempre mais forte no curto e longo prazo"], "correct": 1, "xp": 20, "fb_ok": "✅ Motivação intrínseca não depende de um estímulo externo constante para se sustentar — a pessoa continua engajada mesmo sem recompensas visíveis, enquanto motivação puramente extrínseca tende a desaparecer no momento em que a recompensa para de existir.", "fb_fail": "❌ A durabilidade da motivação intrínseca vem justamente de não depender de recompensas externas contínuas — ela se sustenta pelo prazer genuíno da atividade, diferente da motivação extrínseca que esvai quando a recompensa some."}, {"q": "Como um sistema pode, em teoria, satisfazer as 3 necessidades da SDT simultaneamente?", "opts": ["Isso é teoricamente impossível", "Combinando progressão de habilidade (Competência), liberdade de escolha real (Autonomia) e conexão social genuína (Relacionamento) na mesma experiência", "Apenas jogos single-player conseguem fazer isso", "Apenas aumentando a dificuldade do jogo"], "correct": 1, "xp": 15, "fb_ok": "✅ Jogos como MMORPGs frequentemente combinam as 3 necessidades: progressão de personagem (Competência), escolhas de build/caminho (Autonomia) e guildas/grupos sociais (Relacionamento) — todos ativos ao mesmo tempo na mesma experiência.", "fb_fail": "❌ É perfeitamente possível satisfazer as 3 necessidades simultaneamente — jogos bem projetados combinam progressão de habilidade, liberdade de escolha real e conexão social genuína na mesma experiência de jogo."}];
-const LEVELS=[[0, "CURIOSO"], [110, "ESTUDANTE DA SDT"], [230, "ANALISTA MOTIVACIONAL"], [380, "DESIGNER DE FLOW"], [500, "MESTRE DA MOTIVAÇÃO"]];
-const Q_XPS=[15, 20, 15, 15, 20, 15];
-const Q_FB=[{"ok": "✅ Ryan e Deci (2000) identificaram essas 3 necessidades como universais — quando um sistema (jogo ou não) as satisfaz, a motivação se torna genuína e duradoura.", "fail": "❌ A SDT define Competência (sentir maestria), Autonomia (ter escolhas reais) e Relacionamento (conexão social) como as 3 necessidades psicológicas fundamentais que geram motivação genuína."}, {"ok": "✅ Esse efeito é contraintuitivo mas bem documentado: quando uma recompensa externa é adicionada a algo que a pessoa já fazia por prazer genuíno, o cérebro passa a atribuir a motivação à recompensa — e quando ela desaparece, a motivação de fazer a atividade cai junto.", "fail": "❌ O Overjustification Effect descreve como recompensas externas podem 'sequestrar' a motivação intrínseca — a pessoa passa a fazer a atividade pela recompensa, não pelo prazer original, tornando a motivação frágil quando a recompensa some."}, {"ok": "✅ Flow acontece na zona entre tédio (desafio baixo demais) e ansiedade (desafio alto demais) — quando desafio e habilidade se equilibram, a pessoa entra em um estado de imersão e concentração total na atividade.", "fail": "❌ Flow é definido pelo equilíbrio dinâmico entre desafio e habilidade — desafio demais gera ansiedade, desafio de menos gera tédio; o ponto ideal entre os dois é onde o Flow acontece."}, {"ok": "✅ A liberdade de 'ir para onde quiser desde o início' é a manifestação direta da necessidade de Autonomia — o jogador sente que suas escolhas de exploração são genuinamente próprias, não guiadas por um caminho linear imposto.", "fail": "❌ A Autonomia em Breath of the Wild vem da liberdade real de escolha do jogador sobre onde ir e como jogar desde o início — uma sensação de que as decisões tomadas são verdadeiramente suas."}, {"ok": "✅ Motivação intrínseca não depende de um estímulo externo constante para se sustentar — a pessoa continua engajada mesmo sem recompensas visíveis, enquanto motivação puramente extrínseca tende a desaparecer no momento em que a recompensa para de existir.", "fail": "❌ A durabilidade da motivação intrínseca vem justamente de não depender de recompensas externas contínuas — ela se sustenta pelo prazer genuíno da atividade, diferente da motivação extrínseca que esvai quando a recompensa some."}, {"ok": "✅ Jogos como MMORPGs frequentemente combinam as 3 necessidades: progressão de personagem (Competência), escolhas de build/caminho (Autonomia) e guildas/grupos sociais (Relacionamento) — todos ativos ao mesmo tempo na mesma experiência.", "fail": "❌ É perfeitamente possível satisfazer as 3 necessidades simultaneamente — jogos bem projetados combinam progressão de habilidade, liberdade de escolha real e conexão social genuína na mesma experiência de jogo."}];
-const OBJECTIVES=["Entender a Teoria da Autodeterminação (SDT) e suas 3 necessidades", "Distinguir motivação intrínseca vs extrínseca em jogos reais", "Aplicar o conceito de Flow State no game design", "Analisar sistemas de recompensa de jogos AAA", "Expandir seu circuito físico com um buzzer, demonstrando motivação na prática"];
-const VIDEOS=[{"id": "OssPfRY3318", "label": "Revisão", "title": "O que motiva os jogadores, de verdade", "icon": "🧠"}, {"id": "9a5aizIqpR8", "label": "SDT", "title": "A ciência por trás da motivação em jogos", "icon": "🔬"}, {"id": "t0pLA7Onoxo", "label": "Aplicação", "title": "Sistemas de recompensa em jogos de sucesso", "icon": "🏆"}];
-const N_OBJ=5, N_Q=6, N_ACT=4;
-
-/* PROGRESSO DO CURSO — persistido em localStorage, compartilhado entre todas as semanas */
-const CP_KEY='ijd038_progresso';
-const CP_WEEK='semana02';
-const CP_TOTAL=20;
-function cpGet(){try{return JSON.parse(localStorage.getItem(CP_KEY)||'{}');}catch(e){return {};}}
-function cpSet(p){try{localStorage.setItem(CP_KEY,JSON.stringify(p));}catch(e){}}
-function renderCourseProgress(){
-  const p=cpGet();
-  const done=Object.values(p).filter(Boolean).length;
-  const countEl=document.getElementById('cp-count');
-  const barEl=document.getElementById('cp-bar');
-  const btnEl=document.getElementById('cp-btn');
-  if(countEl)countEl.textContent=done+' / '+CP_TOTAL+' semanas';
-  if(barEl)barEl.style.width=(done/CP_TOTAL*100)+'%';
-  if(btnEl){
-    if(p[CP_WEEK]){btnEl.textContent='☑️ Semana 02 Concluída — clique para desmarcar';btnEl.style.opacity='.75';}
-    else{btnEl.textContent='✅ Marcar Semana 02 como Concluída';btnEl.style.opacity='1';}
-  }
-}
-function toggleWeekDone(){
-  const p=cpGet();
-  const wasDone=!!p[CP_WEEK];
-  p[CP_WEEK]=!wasDone;
-  cpSet(p);
-  renderCourseProgress();
-  if(!wasDone){addXP(30,'Semana marcada como concluída!','📊');}
-}
-renderCourseProgress();
-
-let XP=0, streak=0, toastT=null;
-let objS=new Array(N_OBJ).fill(false);
-let qAnswered={}, qCorrect=0, qXPearned=0, qDone=false;
-let actS=new Array(N_ACT).fill(false);
-let vidWatched=new Set();
-
-/* HUD */
-function addXP(v,msg,ico='⚡'){
-  XP=Math.min(XP+v,MAX_XP); streak++; updateHUD(); toast(ico,'+'+v+' XP',msg);
-  if(XP>=MAX_XP) earn('ac-x');
-}
-function updateHUD(){
-  document.getElementById('xp-val').textContent=XP;
-  document.getElementById('xp-bar').style.width=(XP/MAX_XP*100)+'%';
-  let lv=LEVELS[0];
-  for(const l of LEVELS){if(XP>=l[0])lv=l;}
-  document.getElementById('xp-level').textContent=lv[1];
-  document.getElementById('streak').textContent=streak;
-  const od=objS.filter(Boolean).length;
-  document.getElementById('p-obj').textContent=od+' / '+N_OBJ;
-  document.getElementById('pb-obj').style.width=(od/N_OBJ*100)+'%';
-  const qd=Object.keys(qAnswered).length;
-  document.getElementById('p-quiz').textContent=qd+' / '+N_Q;
-  document.getElementById('pb-quiz').style.width=(qd/N_Q*100)+'%';
-  const ad=actS.filter(Boolean).length;
-  document.getElementById('p-act').textContent=ad+' / '+N_ACT;
-  document.getElementById('pb-act').style.width=(ad/N_ACT*100)+'%';
-}
-
-/* TOAST */
-function toast(ico,title,msg){
-  clearTimeout(toastT);
-  const t=document.getElementById('toast');
-  document.getElementById('t-ico').textContent=ico;
-  document.getElementById('t-title').textContent=title;
-  document.getElementById('t-msg').textContent=msg;
-  t.classList.add('show');
-  toastT=setTimeout(()=>t.classList.remove('show'),2600);
-}
-
-/* OBJECTIVES */
-(function(){
-  const g=document.getElementById('obj-grid');
-  OBJECTIVES.forEach((o,i)=>{
-    const d=document.createElement('div');
-    d.className='obj'; d.id='obj-'+i;
-    d.innerHTML='<div class="obj-ring" id="or-'+i+'"></div><span>'+o+'</span>';
-    d.onclick=()=>completeObj(i);
-    g.appendChild(d);
-  });
-})();
-function completeObj(i){
-  if(objS[i])return;
-  objS[i]=true;
-  const d=document.getElementById('obj-'+i);
-  d.classList.add('done');
-  addXP(10,'Objetivo concluído!','🎯');
-  updateHUD();
-  if(objS.every(Boolean))earn('ac-o');
-}
-
-/* VIDEOS */
-(function(){
-  const g=document.getElementById('vid-grid');
-  VIDEOS.forEach((v,i)=>{
-    const d=document.createElement('div');
-    d.style.cssText='background:var(--ink3);border:1px solid var(--line);border-radius:10px;overflow:hidden;cursor:pointer;transition:all .2s';
-    d.innerHTML=`<div style="height:130px;background:linear-gradient(135deg,rgba(124,58,237,.25),rgba(45,228,200,.15));display:flex;align-items:center;justify-content:center;font-size:2.5em;position:relative">
-      <div style="position:absolute;inset:0;display:flex;align-items:center;justify-content:center">▶</div>
-      <span style="opacity:.4">${v.icon||'📺'}</span>
-    </div>
-    <div style="padding:12px"><div style="font-family:var(--mono);font-size:.68em;color:var(--violet);margin-bottom:4px">${v.label}</div><div style="font-size:.8em;color:var(--text2)">${v.title}</div></div>`;
-    d.onclick=()=>openVid(v.id,i);
-    g.appendChild(d);
-  });
-})();
-function openVid(id,i){
-  const modal=document.getElementById('vid-modal');
-  const iframe=document.getElementById('vid-iframe');
-  iframe.src=`https://www.youtube.com/embed/${id}?autoplay=1&rel=0`;
-  modal.classList.add('open');document.body.style.overflow='hidden';
-  if(!vidWatched.has(i)){vidWatched.add(i);addXP(15,'Vídeo assistido!','📺');}
-}
-function closeVid(e){if(e.target===document.getElementById('vid-modal'))closeVidBtn();}
-function closeVidBtn(){document.getElementById('vid-modal').classList.remove('open');document.getElementById('vid-iframe').src='';document.body.style.overflow='';}
-document.addEventListener('keydown',e=>{if(e.key==='Escape')closeVidBtn();});
-
-/* QUIZ */
-function answerQ(qi,choice){
-  if(qAnswered[qi]!==undefined)return;
-  const q=QUIZ_DATA[qi];
-  const correct=q.correct;
-  qAnswered[qi]=choice;
-  const isOk=(choice===correct);
-  const xpGain=Q_XPS[qi]*(isOk?1:0);
-  if(isOk){qCorrect++;qXPearned+=xpGain;addXP(xpGain,'Resposta correta!','🧠');}
-  else{toast('❌','Resposta errada',Q_FB[qi].fail);}
-  const card=document.getElementById('qcard-'+qi);
-  const opts=card.querySelectorAll('.qopt');
-  opts.forEach((o,j)=>{o.disabled=true;if(j===correct)o.classList.add('ok');else if(j===choice&&!isOk)o.classList.add('no');});
-  const fb=document.getElementById('qfb-'+qi);
-  fb.textContent=isOk?Q_FB[qi].ok:Q_FB[qi].fail;
-  fb.className='qfb show '+(isOk?'ok':'no');
-  document.getElementById('qdot-'+qi).classList.add('done');
-  const done=Object.keys(qAnswered).length;
-  document.getElementById('q-count').textContent=done+' / '+N_Q;
-  document.getElementById('q-bar-fill').style.width=(done/N_Q*100)+'%';
-  document.getElementById('quiz-score-hd').textContent=qCorrect+' corretas';
-  document.getElementById('q-score-mini').textContent=qXPearned+' XP';
-  updateHUD();
-  document.getElementById('qnext-'+qi).classList.add('show');
-  if(done===N_Q){earn('ac-q');if(qCorrect===N_Q)earn('ac-p');}
-}
-function nextQ(cur){
-  document.getElementById('qcard-'+cur).classList.remove('on');
-  const nxt=cur+1;
-  const res=document.getElementById('q-result');
-  if(nxt<N_Q){document.getElementById('qcard-'+nxt).classList.add('on');document.getElementById('qdot-'+nxt).classList.add('cur');}
-  else{
-    res.classList.add('show');
-    document.getElementById('q-score-big').textContent=qCorrect+'/'+N_Q;
-    const msgs=['Continue tentando! 💪','Bom progresso! 📈','Muito bem! 🔥','Excelente! ⚡','Perfeito! 💎'];
-    document.getElementById('q-msg').textContent=msgs[Math.min(Math.floor(qCorrect/(N_Q/5)),4)];
-    document.getElementById('q-xp-earned').textContent='+'+qXPearned+' XP conquistados';
-  }
-}
-function restartQuiz(){
-  qAnswered={};qCorrect=0;qXPearned=0;
-  document.getElementById('q-result').classList.remove('show');
-  document.querySelectorAll('.qcard').forEach((c,i)=>{c.classList.toggle('on',i===0);});
-  document.querySelectorAll('.qopt').forEach(o=>{o.disabled=false;o.className='qopt';});
-  document.querySelectorAll('.qfb').forEach(f=>f.classList.remove('show'));
-  document.querySelectorAll('.qnext').forEach(b=>b.classList.remove('show'));
-  document.querySelectorAll('.q-dot').forEach((d,i)=>{d.className='q-dot'+(i===0?' cur':'');});
-  document.getElementById('q-bar-fill').style.width='0%';
-  document.getElementById('q-count').textContent='0 / '+N_Q;
-  document.getElementById('q-score-mini').textContent='0 XP';
-  updateHUD();
-}
-
-/* ACTIVITIES */
-function completeAct(i,xp,achId){
-  if(actS[i])return;
-  actS[i]=true;
-  const btn=document.querySelector('#act-card-'+i+' .eval-btn');
-  if(btn){btn.disabled=true;btn.textContent='✅ Concluída!';btn.style.opacity='.6';}
-  addXP(xp,'Atividade concluída!','✏️');
-  if(achId)earn(achId);
-  updateHUD();
-  if(actS.every(Boolean))earn('ac-a');
-}
-
-/* ACHIEVEMENTS */
-function earn(id){
-  const el=document.getElementById(id);
-  if(!el||el.classList.contains('earned'))return;
-  el.classList.add('earned');
-  toast('🏆','Conquista desbloqueada!',el.title||el.querySelector('.ach-name')?.textContent||'');
-}
-
-
-const SDT02_DATA=[{"ico": "⚔️", "tag": "SDT", "clr": "var(--violet)", "name": "Competência", "desc": "Sentir que está ficando melhor no jogo — maestria, progresso visível, superação de desafios reais.", "ex": "Elden Ring: cada morte é uma lição; o jogador sente progresso genuíno de habilidade a cada tentativa."}, {"ico": "🗺️", "tag": "SDT", "clr": "var(--teal)", "name": "Autonomia", "desc": "Ter escolhas reais que importam de verdade — sentir que as ações tomadas são suas, não impostas pelo sistema.", "ex": "Breath of the Wild: 'vá para onde quiser' — a liberdade de escolha é o próprio motor de motivação do jogo."}, {"ico": "🤝", "tag": "SDT", "clr": "var(--rose)", "name": "Relacionamento", "desc": "Conexão genuína com outros jogadores ou personagens — sentido de pertencimento a uma comunidade ou grupo.", "ex": "Among Us: a dinâmica de confiança e traição entre jogadores reais é o coração da experiência social do jogo."}];
-let sdt02Done=new Set();
-(function(){
-  const g=document.getElementById('sdt02-grid');
-  SDT02_DATA.forEach((o,i)=>{
-    const d=document.createElement('div');
-    d.style.cssText='background:var(--ink3);border:1px solid var(--line);border-radius:10px;padding:14px;cursor:pointer;text-align:center;transition:all .22s';
-    d.innerHTML='<div style="font-size:1.8em;margin-bottom:6px">'+o.ico+'</div><div style="font-family:var(--mono);font-size:.62em;color:'+o.clr+';margin-bottom:4px">'+o.tag+'</div><div style="font-size:.75em;font-weight:600">'+o.name+'</div>';
-    d.onclick=()=>{
-      SDT02_DATA.forEach((_,j)=>{g.children[j].style.background='var(--ink3)';g.children[j].style.borderColor='var(--line)';});
-      d.style.background='rgba(167,139,250,.06)';d.style.borderColor=o.clr;
-      const det=document.getElementById('sdt02-detail');
-      det.style.display='block';
-      det.innerHTML='<div style="font-family:var(--mono);font-size:.65em;color:'+o.clr+';margin-bottom:6px">'+o.tag+' — '+o.name.toUpperCase()+' '+o.ico+'</div><p style="font-size:.84em;color:var(--text2);line-height:1.7;margin-bottom:10px">'+o.desc+'</p><p style="font-size:.8em;color:'+o.clr+';background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.08);border-radius:7px;padding:10px 12px">🎮 '+o.ex+'</p>';
-      if(!sdt02Done.has(i)){sdt02Done.add(i);addXP(12,'Item explorado!','🧠');document.getElementById('sdt02-counter').textContent=sdt02Done.size+' / 3 necessidades exploradas';if(sdt02Done.size===3)earn('ac-sdt');}
-    };
-    g.appendChild(d);
-  });
-})();
-
-const MF02_DATA=[{"claim": "Adicionar recompensas externas (dinheiro, pontos) sempre aumenta a motivação para realizar uma atividade.", "verdict": "myth", "explain": "Esse é o chamado Overjustification Effect: quando uma atividade já é intrinsecamente prazerosa, adicionar recompensa externa pode na verdade DIMINUIR a motivação — a pessoa passa a associar a atividade à recompensa, não ao prazer genuíno de fazê-la."}, {"claim": "Flow State é o estado psicológico de imersão total, alcançado quando o desafio de uma tarefa está equilibrado com a habilidade da pessoa.", "verdict": "fact", "explain": "Essa é exatamente a definição de Flow proposta por Mihaly Csikszentmihalyi — desafio muito acima da habilidade gera ansiedade; desafio muito abaixo gera tédio; o equilíbrio entre os dois gera o estado de fluxo."}, {"claim": "Um jogo pode satisfazer as 3 necessidades da SDT (Competência, Autonomia, Relacionamento) ao mesmo tempo.", "verdict": "fact", "explain": "Jogos de sucesso frequentemente ativam as 3 necessidades simultaneamente — um MMORPG, por exemplo, oferece progressão de habilidade (Competência), escolha de build/caminho (Autonomia) e guildas (Relacionamento) ao mesmo tempo."}, {"claim": "Motivação intrínseca é sempre mais forte e duradoura do que motivação extrínseca a longo prazo.", "verdict": "fact", "explain": "Estudos em psicologia da motivação consistentemente mostram que motivação intrínseca (fazer algo pelo prazer da atividade em si) tende a se sustentar por mais tempo do que motivação puramente extrínseca (fazer algo só pela recompensa), que tende a desaparecer quando a recompensa some."}, {"claim": "É impossível usar recompensas externas sem prejudicar a motivação intrínseca de alguém.", "verdict": "myth", "explain": "O Overjustification Effect não é uma regra absoluta — recompensas externas usadas com cuidado (ex: reconhecimento social genuíno, feedback informativo em vez de puramente controlador) podem coexistir com motivação intrínseca sem prejudicá-la."}];
-let mf02Done=new Set();
-(function(){
-  const g=document.getElementById('mf02-grid');
-  MF02_DATA.forEach((it,i)=>{
-    const d=document.createElement('div');
-    d.style.cssText='background:var(--ink3);border:1px solid var(--line);border-radius:9px;padding:14px 16px;cursor:pointer;transition:all .2s';
-    d.innerHTML='<div style="font-size:.85em;font-weight:600;color:var(--text)">'+it.claim+'</div><div class="mf-ans" style="display:none;margin-top:10px;padding-top:10px;border-top:1px solid var(--line)"></div>';
-    d.onclick=()=>{
-      if(mf02Done.has(i))return;
-      mf02Done.add(i);
-      const ans=d.querySelector('.mf-ans');
-      const isMyth=it.verdict==='myth';
-      const clr=isMyth?'var(--rose)':'var(--teal)';
-      const label=isMyth?'❌ MITO':'✅ FATO';
-      ans.style.display='block';
-      ans.innerHTML='<span style="font-family:var(--mono);font-size:.68em;font-weight:700;color:'+clr+'">'+label+'</span><p style="font-size:.8em;color:var(--text2);line-height:1.6;margin-top:6px">'+it.explain+'</p>';
-      d.style.borderColor=clr;
-      addXP(12,'Mito ou Fato avaliado!','🔍');
-      if(mf02Done.size===5)earn('ac-mf');
-    };
-    g.appendChild(d);
-  });
-})();
-
-setTimeout(()=>{earn('ac-s');toast('🚀','Bem-vindo à Semana 02!','PSICOLOGIA E MOTIVAÇÃO · 540 XP disponíveis');},800);
-document.getElementById('qdot-0').classList.add('cur');
-updateHUD();
-</script>
-    </div>
-    <script src="common.js"></script>
 </body>
 </html>
