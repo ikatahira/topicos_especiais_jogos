@@ -399,6 +399,23 @@
     .biblio-grid{grid-template-columns:1fr;}
   }
 
+  .ref-list a:hover{color:var(--amber) !important;}
+  .axis-tag{
+    display:inline-block;
+    font-family:'IBM Plex Mono', monospace;
+    font-size:.66rem;
+    letter-spacing:.04em;
+    padding:2px 8px;
+    border-radius:20px;
+    margin-left:6px;
+    white-space:nowrap;
+  }
+  .axis-precisao{background:#6fa05d33;color:var(--green);}
+  .axis-ia{background:#4c93a633;color:var(--teal);}
+  .axis-sust{background:#e3a23c33;color:var(--amber);}
+  .axis-cadeia{background:#c1603a33;color:var(--rose);}
+  .axis-prod{background:#9c8f7633;color:var(--muted);}
+
   /* ---------- FOOTER ---------- */
   footer{
     border-top:1px solid var(--line);
@@ -586,37 +603,40 @@
       <h2 class="mono">Projetos de referência (já existem, vale mostrar em aula)</h2>
 
       <div class="panel" style="margin-bottom:18px;">
-        <h3 style="font-family:'IBM Plex Mono',monospace;font-size:.78rem;letter-spacing:.1em;text-transform:uppercase;color:var(--green);margin-bottom:14px;">Jogos sobre agronegócio</h3>
+        <h3 style="font-family:'IBM Plex Mono',monospace;font-size:.78rem;letter-spacing:.1em;text-transform:uppercase;color:var(--green);margin-bottom:14px;">Jogos e softwares sobre agronegócio</h3>
         <ul class="ref-list">
-          <li><b>Jogo do Agro</b> — criado por estudantes de Goiás dentro do projeto "Escola de Games", justamente pra tornar aulas de algoritmos mais engajadoras usando o tema do agro. Mesmo público-alvo do que vocês estão fazendo. <i>(Band, nov. 2024)</i></li>
-          <li><b>SoilsPlay: o agro entrou no jogo</b> — iniciativa da Embrapa Solos, Firjan SENAI e Sistema CNA/Senar pra aproximar startups de jogos digitais do agronegócio, com desafios sobre solo, carbono e produção. <i>(Portal Embrapa, 2021)</i></li>
-          <li><b>AgroGame</b> — treinamento gamificado com técnicas de RPG pra produtores rurais e técnicos, misturando app com IA e atividades de campo. <i>(Agricultura Inteligente, via Canal Rural)</i></li>
-          <li><b>Farming Simulator</b> — referência comercial internacional de simulação agrícola, já usada como estudo de caso em pesquisas sobre ensino técnico agrícola.</li>
+          <li><a href="https://www.band.com.br/agro/noticias/estudantes-de-goias-criam-jogo-do-agro-202411200936" style="color:var(--ink);text-decoration:underline;" target="_blank" rel="noopener"><b>Jogo do Agro</b></a> — criado por estudantes de Goiás dentro do projeto "Escola de Games", justamente pra tornar aulas de algoritmos mais engajadoras usando o tema do agro. Mesmo público-alvo do que vocês estão fazendo. <span class="axis-tag axis-prod">Produção agrícola</span></li>
+          <li><a href="https://www.embrapa.br/busca-de-noticias/-/noticia/60171867/soilsplay-aproxima-agronegocio-da-industria-dos-jogos-digitais" style="color:var(--ink);text-decoration:underline;" target="_blank" rel="noopener"><b>SoilsPlay: o agro entrou no jogo</b></a> — iniciativa da Embrapa Solos, Firjan SENAI e Sistema CNA/Senar pra aproximar startups de jogos digitais do agronegócio, com desafios sobre solo, carbono e produção. <span class="axis-tag axis-sust">Sustentabilidade produtiva</span></li>
+          <li><a href="https://agevolution.canalrural.com.br/videogame-e-gamificacao-ensinam-a-cuidar-da-producao-nas-fazendas/" style="color:var(--ink);text-decoration:underline;" target="_blank" rel="noopener"><b>AgroGame</b></a> — treinamento gamificado com técnicas de RPG pra produtores rurais e técnicos, misturando app com IA e atividades de campo. <span class="axis-tag axis-cadeia">Cadeias produtivas</span></li>
+          <li><a href="https://apps.apple.com/br/app/simulador-de-fazenda-2024/id1273216352" style="color:var(--ink);text-decoration:underline;" target="_blank" rel="noopener"><b>Farming Simulator</b></a> — franquia internacional de simulação agrícola (Giants Software), já citada como estudo de caso em pesquisas sobre ensino técnico agrícola. <span class="axis-tag axis-prod">Produção agrícola</span></li>
+          <li><a href="https://play.google.com/store/apps/details?id=com.stargamesapps.farmingsimbrasil&hl=en_US" style="color:var(--ink);text-decoration:underline;" target="_blank" rel="noopener"><b>Farming Sim Brasil</b></a> — versão nacional do gênero, com máquinas e culturas brasileiras — bom contraponto pra discutir o que muda quando o jogo é pensado pro produtor daqui. <span class="axis-tag axis-prod">Produção agrícola</span></li>
         </ul>
       </div>
 
       <div class="panel" style="margin-bottom:18px;">
         <h3 style="font-family:'IBM Plex Mono',monospace;font-size:.78rem;letter-spacing:.1em;text-transform:uppercase;color:var(--amber);margin-bottom:14px;">Arduino + sensores no agro (feiras de ciência)</h3>
         <ul class="ref-list">
-          <li><b>Sensor de temperatura de baixo custo para colheitadeiras</b> — alarme sonoro/luminoso pra evitar incêndio de máquina agrícola. <i>(FEBRACE 2022)</i></li>
-          <li><b>Irrigação automatizada com Arduino + placas solares</b> — sensor de umidade do solo aciona bomba, tudo alimentado por energia solar. <i>(FEBRACE 2023)</i></li>
-          <li><b>Irrigação automatizada numa horta escolar</b> — combina umidade do solo e temperatura ambiente pra decidir quando regar. <i>(FEBRACE 2024)</i></li>
-          <li><b>AgroSapiens</b> — robô agrícola com Arduino, Raspberry Pi e IA generativa pra plantio automatizado e economia de água. <i>(FEBRACE 2024)</i></li>
+          <li><a href="https://virtual.febrace.org.br/2022/AGR/245/" style="color:var(--ink);text-decoration:underline;" target="_blank" rel="noopener"><b>Sensor de temperatura de baixo custo para colheitadeiras</b></a> — alarme sonoro/luminoso pra evitar incêndio de máquina agrícola. <span class="axis-tag axis-precisao">Agricultura de precisão</span></li>
+          <li><a href="https://virtual.febrace.org.br/2023/AGR/1318/" style="color:var(--ink);text-decoration:underline;" target="_blank" rel="noopener"><b>Irrigação automatizada com Arduino + placas solares</b></a> — sensor de umidade do solo aciona bomba, tudo alimentado por energia solar. <span class="axis-tag axis-precisao">Agricultura de precisão</span></li>
+          <li><a href="https://virtual.febrace.org.br/2024/AGR/6065/" style="color:var(--ink);text-decoration:underline;" target="_blank" rel="noopener"><b>Irrigação automatizada numa horta escolar</b></a> — combina umidade do solo e temperatura ambiente pra decidir quando regar. <span class="axis-tag axis-precisao">Agricultura de precisão</span></li>
+          <li><a href="https://virtual.febrace.org.br/2024/AGR/6110/" style="color:var(--ink);text-decoration:underline;" target="_blank" rel="noopener"><b>AgroSapiens</b></a> — robô agrícola com Arduino, Raspberry Pi e IA generativa pra plantio automatizado e economia de água. <span class="axis-tag axis-ia">IA aplicada ao agro</span></li>
         </ul>
       </div>
 
       <div class="panel">
         <h3 style="font-family:'IBM Plex Mono',monospace;font-size:.78rem;letter-spacing:.1em;text-transform:uppercase;color:var(--teal);margin-bottom:14px;">Como conectar Arduino a um motor de jogo</h3>
         <ul class="ref-list">
-          <li><b>Ardity</b> — plugin open-source pra comunicação serial entre Arduino e Unity, com tutorial passo a passo. <i>(Medium, interface-lab)</i></li>
-          <li><b>How to integrate Arduino with Unity</b> — tutorial clássico de Alan Zucconi sobre comunicação serial e leitura contínua de sensor dentro do Unity.</li>
-          <li><b>Conexão de Arduino ao Unity</b> — tutorial em português controlando um sprite no eixo X com um circuito simples. <i>(Revista PROGRAMAR)</i></li>
+          <li><a href="https://medium.com/interface-lab/arduino-tutorial-series-connecting-to-unity-eedc48e77087" style="color:var(--ink);text-decoration:underline;" target="_blank" rel="noopener"><b>Ardity</b></a> — plugin open-source pra comunicação serial entre Arduino e Unity, com tutorial passo a passo.</li>
+          <li><a href="https://www.alanzucconi.com/2015/10/07/how-to-integrate-arduino-with-unity/" style="color:var(--ink);text-decoration:underline;" target="_blank" rel="noopener"><b>How to integrate Arduino with Unity</b></a> — tutorial clássico de Alan Zucconi sobre comunicação serial e leitura contínua de sensor dentro do Unity.</li>
+          <li><a href="https://www.revista-programar.info/artigos/conexao-de-arduino-ao-unity/" style="color:var(--ink);text-decoration:underline;" target="_blank" rel="noopener"><b>Conexão de Arduino ao Unity</b></a> — tutorial em português controlando um sprite no eixo X com um circuito simples.</li>
+          <li><a href="https://fazerlab.wordpress.com/2016/09/30/comunicacao-entre-arduino-e-unity3d/" style="color:var(--ink);text-decoration:underline;" target="_blank" rel="noopener"><b>Comunicação entre Arduino e Unity3D</b></a> — outro exemplo em português, usando um acelerômetro como controle de jogo.</li>
         </ul>
         <p class="biblio-note">Referência direta pra semana 3 (Mecânicas de Jogo), quando o sensor lido no Arduino vira input de uma mecânica já pronta no engine.</p>
       </div>
+      <p class="biblio-note" style="margin-top:14px;">As tags coloridas ligam cada exemplo a um <a href="#interagro" style="color:var(--amber);">eixo temático oficial</a> do IV Simpósio InterAgro, logo abaixo.</p>
     </section>
 
-    <section class="biblio">
+    <section class="biblio" id="interagro">
       <h2 class="mono">Referência real: IV Simpósio InterAgro</h2>
       <div class="panel" style="border-left:3px solid var(--rose);">
         <p><b>AgroConecta: Tecnologia e Sustentabilidade no Campo</b> — Fatec Capão Bonito, 21 a 23/09/2026. Inscrição gratuita como ouvinte até 23/09. Não é o destino formal do projeto final (submissão de trabalho científico fecha 24/08, cedo demais para o cronograma da turma), mas serve como <b>referência de conteúdo e visita de campo</b> para alinhar os temas do semestre com o que o setor está discutindo agora.</p>
