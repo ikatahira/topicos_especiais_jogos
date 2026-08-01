@@ -94,6 +94,22 @@
   table.eval tr:last-child td{border-bottom:none;}
   table.eval td.peso{font-family:'IBM Plex Mono', monospace;color:var(--amber);white-space:nowrap;}
 
+  .code-block{
+    background:var(--panel-2);border:1px solid var(--line);border-radius:8px;
+    padding:16px 18px;font-family:'IBM Plex Mono', monospace;font-size:.8rem;
+    overflow-x:auto;white-space:pre;color:var(--ink);line-height:1.6;
+  }
+  .wiring-grid{display:grid;grid-template-columns:1fr 1fr;gap:14px;}
+  .wiring-card{background:var(--panel-2);border-radius:8px;padding:14px 16px;border-left:3px solid var(--green);}
+  .wiring-card:nth-child(2){border-left-color:var(--amber);}
+  .wiring-card .t{font-family:'IBM Plex Mono', monospace;font-size:.72rem;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);margin-bottom:8px;}
+  .wiring-card ul{list-style:none;font-size:.87rem;}
+  .wiring-card li{padding:4px 0;}
+  .timing-row{display:flex;align-items:center;gap:12px;padding:8px 0;border-bottom:1px solid var(--line);}
+  .timing-row:last-child{border-bottom:none;}
+  .timing-row .dur{font-family:'IBM Plex Mono', monospace;font-size:.78rem;color:var(--amber);min-width:52px;}
+  @media (max-width:600px){.wiring-grid{grid-template-columns:1fr;}}
+
   .theme-box{
     background:linear-gradient(135deg, var(--panel) 0%, var(--panel-2) 100%);
     border:1px solid var(--line);border-left:3px solid var(--amber);
@@ -172,10 +188,85 @@
     </section>
 
     <section>
-      <h2>Prática do dia: primeiro contato com o Arduino</h2>
+      <h2>Prática do dia: "Decisão do Agricultor"</h2>
       <div class="panel">
         <p>A turma já domina Unity, Blender e Construct — não faz sentido gastar aula ensinando isso de novo. O tempo prático desta disciplina vai quase todo para o que é <b>realmente novo</b>: os kits Arduino e os sensores.</p>
-        <p>Como ninguém da turma nunca mexeu com Arduino Uno, a semana 1 fica só no básico: desembalar o kit, instalar a IDE, conectar a placa via USB e rodar o "hello world" do hardware — piscar um LED (<span class="mono">Blink</span>). Nada de sensor ainda. O objetivo de hoje é só perder o medo da placa e ver o primeiro programa rodando de verdade.</p>
+        <p>Em vez de um "hello world" isolado, a semana 1 já entra como jogo: o <b>LED representa uma planta saudável</b>, o <b>botão representa a decisão do agricultor de irrigar</b>. Nada de sensor ainda — o objetivo é a lógica <b>problema → decisão → ação</b>, a base de qualquer sistema de agricultura inteligente. O sensor de umidade entra na semana 2 como segunda etapa.</p>
+      </div>
+
+      <div class="panel" style="margin-top:16px;">
+        <p style="margin-bottom:10px;"><b>Materiais por grupo:</b> 1 Arduino Uno · 1 LED · 1 resistor de 220 Ω · 1 botão · jumpers e protoboard.</p>
+        <div class="wiring-grid">
+          <div class="wiring-card">
+            <div class="t">LED</div>
+            <ul>
+              <li>Perna longa → resistor 220 Ω → pino 8</li>
+              <li>Perna curta → GND</li>
+            </ul>
+          </div>
+          <div class="wiring-card">
+            <div class="t">Botão</div>
+            <ul>
+              <li>Um terminal → pino 2</li>
+              <li>Outro terminal → GND</li>
+            </ul>
+          </div>
+        </div>
+        <p style="margin-top:10px;font-size:.85rem;color:var(--muted);">O código usa o resistor interno do Arduino (<span class="mono">INPUT_PULLUP</span>) — não precisa de resistor externo no botão.</p>
+      </div>
+
+      <div class="panel" style="margin-top:16px;">
+        <p style="margin-bottom:10px;"><b>Código (já pronto — a turma monta e sobe, não precisa escrever do zero hoje):</b></p>
+        <div class="code-block">const int led = 8;
+const int botao = 2;
+
+void setup() {
+  pinMode(led, OUTPUT);
+  pinMode(botao, INPUT_PULLUP);
+}
+
+void loop() {
+  if (digitalRead(botao) == LOW) {
+    digitalWrite(led, HIGH);
+    delay(3000);
+    digitalWrite(led, LOW);
+    delay(300);
+  }
+}</div>
+      </div>
+
+      <div class="panel" style="margin-top:16px;">
+        <p style="margin-bottom:10px;"><b>Como o professor conduz o jogo — situações anunciadas em voz alta:</b></p>
+        <ul class="plain">
+          <li><span class="num">→</span><span>"A planta está seca." — aluno aperta o botão.</span></li>
+          <li><span class="num">→</span><span>"Está chovendo." — não aperta.</span></li>
+          <li><span class="num">→</span><span>"Há pouca água disponível." — só aperta se a planta estiver <i>muito</i> seca.</span></li>
+          <li><span class="num">→</span><span>"O agricultor esqueceu de verificar a plantação." — não aperta.</span></li>
+        </ul>
+        <p style="margin:14px 0 6px;font-size:.85rem;color:var(--muted);"><b>Pontuação do jogo:</b> decisão correta +2 · explicação correta +1 · trabalho em equipe +1 · desperdício de água ou decisão sem justificativa −1.</p>
+      </div>
+
+      <div class="panel" style="margin-top:16px;">
+        <p style="margin-bottom:8px;"><b>Roteiro da aula (45–60 min):</b></p>
+        <div class="timing-row"><span class="dur">10 min</span><span>Explicar planta, água e decisão agrícola.</span></div>
+        <div class="timing-row"><span class="dur">15 min</span><span>Montar LED, resistor e botão na protoboard.</span></div>
+        <div class="timing-row"><span class="dur">15 min</span><span>Carregar e testar o código.</span></div>
+        <div class="timing-row"><span class="dur">10 min</span><span>Rodadas do jogo com as situações anunciadas.</span></div>
+        <div class="timing-row"><span class="dur">5 min</span><span>Debrief: "quando devemos agir e quando devemos esperar?"</span></div>
+      </div>
+
+      <div class="panel" style="margin-top:16px;">
+        <p style="margin-bottom:10px;"><b>Avaliação da atividade (10 pontos, não confundir com a nota da disciplina):</b></p>
+        <table class="eval">
+          <thead><tr><th>Critério</th><th>Pontos</th></tr></thead>
+          <tbody>
+            <tr><td>Montagem correta do LED e resistor</td><td class="peso">2</td></tr>
+            <tr><td>Ligação correta do botão</td><td class="peso">2</td></tr>
+            <tr><td>Código funcionando</td><td class="peso">2</td></tr>
+            <tr><td>Decisões corretas durante o jogo</td><td class="peso">2</td></tr>
+            <tr><td>Explicação e trabalho em equipe</td><td class="peso">2</td></tr>
+          </tbody>
+        </table>
       </div>
     </section>
 
