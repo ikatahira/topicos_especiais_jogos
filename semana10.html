@@ -1,779 +1,242 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Semana 10 — Cases de Sucesso e Fracasso | IJD-038</title>
-    <link rel="stylesheet" href="common.css">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Semana 10 · Casos de Sucesso — IJD-038</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600;700&family=IBM+Plex+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg:#12100b;
+    --panel:#1b170f;
+    --panel-2:#211c12;
+    --ink:#ede6d6;
+    --muted:#9c8f76;
+    --line:#33291a;
+    --green:#6fa05d;
+    --green-soft:#6fa05d33;
+    --amber:#e3a23c;
+    --teal:#4c93a6;
+    --rose:#c1603a;
+  }
+  *{margin:0;padding:0;box-sizing:border-box;}
+  body{
+    background:
+      radial-gradient(1200px 600px at 15% -10%, #1d1a10 0%, transparent 60%),
+      repeating-linear-gradient(90deg, #16130d 0px, #16130d 1px, transparent 1px, transparent 64px),
+      var(--bg);
+    color:var(--ink);
+    font-family:'IBM Plex Sans', sans-serif;
+    line-height:1.65;
+    min-height:100vh;
+  }
+  a{color:inherit;}
+  :focus-visible{outline:2px solid var(--amber);outline-offset:3px;}
+  .mono{font-family:'IBM Plex Mono', monospace;}
+  .wrap{max-width:840px;margin:0 auto;padding:0 24px;}
+
+  .nav-row{
+    display:flex;justify-content:space-between;align-items:center;
+    padding-top:36px;margin-bottom:28px;
+  }
+  .back{
+    display:inline-flex;align-items:center;gap:8px;
+    font-family:'IBM Plex Mono', monospace;font-size:.8rem;
+    color:var(--muted);text-decoration:none;
+  }
+  .back:hover{color:var(--amber);}
+
+  .eyebrow{
+    font-family:'IBM Plex Mono', monospace;font-size:.78rem;
+    letter-spacing:.18em;color:var(--amber);text-transform:uppercase;
+    display:flex;align-items:center;gap:10px;margin-bottom:16px;
+  }
+  .eyebrow::before{content:"";width:8px;height:8px;border-radius:50%;background:var(--amber);box-shadow:0 0 0 3px #e3a23c33;}
+
+  h1{
+    font-family:'IBM Plex Mono', monospace;font-weight:700;
+    font-size:clamp(1.6rem, 4vw, 2.4rem);letter-spacing:-.01em;
+    margin-bottom:12px;
+  }
+  .lede{color:var(--muted);font-size:1.02rem;max-width:56ch;margin-bottom:44px;}
+  .lede strong{color:var(--ink);}
+
+  section{margin-bottom:36px;}
+  section h2{
+    font-family:'IBM Plex Mono', monospace;font-size:.82rem;
+    letter-spacing:.12em;text-transform:uppercase;color:var(--green);
+    margin-bottom:14px;
+    display:flex;align-items:center;gap:10px;
+  }
+  section h2::after{content:"";flex:1;height:1px;background:var(--line);}
+
+  .panel{
+    background:var(--panel);border:1px solid var(--line);
+    border-radius:10px;padding:22px 24px;
+  }
+  .panel p{margin-bottom:10px;}
+  .panel p:last-child{margin-bottom:0;}
+
+  .code-block{
+    background:var(--panel-2);border:1px solid var(--line);border-radius:8px;
+    padding:16px 18px;font-family:'IBM Plex Mono', monospace;font-size:.8rem;
+    overflow-x:auto;white-space:pre;color:var(--ink);line-height:1.6;
+  }
+
+  .factor-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;}
+  .factor-card{
+    background:var(--panel);border:1px solid var(--line);border-radius:10px;
+    padding:14px 14px 12px;border-top:3px solid var(--green);
+  }
+  .factor-card:nth-child(2){border-top-color:var(--amber);}
+  .factor-card:nth-child(3){border-top-color:var(--teal);}
+  .factor-card:nth-child(4){border-top-color:var(--rose);}
+  .factor-card:nth-child(5){border-top-color:var(--green);}
+  .factor-card .k{font-family:'IBM Plex Mono', monospace;font-size:.68rem;letter-spacing:.06em;text-transform:uppercase;color:var(--muted);margin-bottom:6px;}
+  .factor-card p{font-size:.82rem;color:var(--ink);opacity:.9;}
+
+  table.cases{width:100%;border-collapse:collapse;font-size:.88rem;}
+  table.cases th, table.cases td{text-align:left;padding:10px 12px;border-bottom:1px solid var(--line);vertical-align:top;}
+  table.cases th{font-family:'IBM Plex Mono', monospace;font-size:.7rem;letter-spacing:.06em;text-transform:uppercase;color:var(--muted);}
+  table.cases tr:last-child td{border-bottom:none;}
+
+  .recap{
+    background:var(--panel);border:1px solid var(--line);border-radius:10px;
+    padding:22px 24px;
+  }
+  .recap-row{
+    display:flex;align-items:flex-start;gap:14px;padding:10px 0;
+    border-bottom:1px solid var(--line);
+  }
+  .recap-row:last-child{border-bottom:none;}
+  .recap-row .w{font-family:'IBM Plex Mono', monospace;font-size:.72rem;color:var(--amber);min-width:64px;padding-top:2px;}
+
+  .theme-box{
+    background:linear-gradient(135deg, var(--panel) 0%, var(--panel-2) 100%);
+    border:1px solid var(--line);border-left:3px solid var(--amber);
+    border-radius:10px;padding:24px 26px;
+  }
+  .theme-box p{margin-bottom:10px;}
+  .theme-box p:last-child{margin-bottom:0;}
+  .theme-box .glyph{color:var(--amber);font-family:'IBM Plex Mono', monospace;}
+
+  ul.plain{list-style:none;display:flex;flex-direction:column;gap:10px;}
+  ul.plain li{
+    display:flex;gap:12px;align-items:flex-start;
+    background:var(--panel-2);border-radius:8px;padding:12px 14px;
+    border-left:3px solid var(--green);
+  }
+  ul.plain li b{color:var(--ink);}
+  ul.plain .num{font-family:'IBM Plex Mono', monospace;font-size:.78rem;color:var(--green);min-width:20px;}
+
+  footer{
+    border-top:1px solid var(--line);padding:28px 0 40px;
+    color:var(--muted);font-size:.84rem;
+    display:flex;justify-content:space-between;flex-wrap:wrap;gap:10px;
+  }
+  footer a{text-decoration:none;}
+  footer a:hover{color:var(--amber);}
+
+  @media (max-width:700px){
+    .factor-grid{grid-template-columns:1fr 1fr;}
+  }
+  @media (max-width:460px){
+    .factor-grid{grid-template-columns:1fr;}
+  }
+</style>
 </head>
 <body>
-    <div class="main">
-        <!-- TOAST -->
-<div class="toast" id="toast">
-    <div class="toast-icon" id="toastIcon">⚡</div>
-    <div class="toast-text">
-        <h4 id="toastTitle">XP Ganho!</h4>
-        <p id="toastMsg">Bom trabalho!</p>
-    </div>
-</div>
-
-<!-- HUD HEADER -->
-<header class="hud-header">
-    <div class="hud-left">
-        <a href="index.html" class="back-btn">← INDEX</a>
-        <div class="hud-title">
-            SEMANA 10
-            <span>IJD-038 · TÓPICOS ESPECIAIS EM JOGOS DIGITAIS</span>
-        </div>
-    </div>
-    <div class="hud-right">
-        <div class="player-stats">
-            <div class="stat-item">
-                <span class="stat-value" id="xpDisplay">0</span>
-                <span class="stat-label">XP Total</span>
-            </div>
-            <div class="stat-item">
-                <span class="stat-value" id="acertosDisplay">0</span>
-                <span class="stat-label">Acertos</span>
-            </div>
-            <div class="stat-item">
-                <span class="stat-value" id="fasesDisplay">0/4</span>
-                <span class="stat-label">Fases</span>
-            </div>
-        </div>
-        <div class="xp-bar-container">
-            <span class="xp-label">XP: <span id="xpDisplayBar">0</span>/1000</span>
-            <div class="xp-bar">
-                <div class="xp-fill" id="xpFill"></div>
-            </div>
-        </div>
-    </div>
-</header>
-
-<main class="main">
-
-    <!-- MISSION INTRO -->
-    <div class="mission-intro">
-        <div class="mission-tag">// MÓDULO 2 · GAMIFICAÇÃO APLICADA</div>
-        <h1 class="mission-title">CASES DE<br>SUCESSO & FRACASSO</h1>
-        <p class="mission-subtitle">Aprenda com quem acertou — e com quem errou feio</p>
-
-        <div class="mission-brief">
-            <h3>// BRIEFING DA MISSÃO</h3>
-            <p>Nesta semana você vai dissecar cases reais de gamificação — os que dominaram mercados e os que implodiriam espetacularmente. Estudar fracassos é tão valioso quanto estudar sucessos: um post-mortem bem feito vale mais do que mil estratégias genéricas.</p>
-            <div class="briefing-grid">
-                <div class="briefing-item">
-                    <span class="bi-icon">🏆</span>
-                    <span class="bi-label">Cases de Sucesso</span>
-                    <span class="bi-value">Nike+, Strava, Habitica</span>
-                </div>
-                <div class="briefing-item">
-                    <span class="bi-icon">💀</span>
-                    <span class="bi-label">Fracassos Analisados</span>
-                    <span class="bi-value">Foursquare, Google+, Klout</span>
-                </div>
-                <div class="briefing-item">
-                    <span class="bi-icon">🔄</span>
-                    <span class="bi-label">Pivots Históricos</span>
-                    <span class="bi-value">Slack, Instagram</span>
-                </div>
-            </div>
-        </div>
+  <div class="wrap">
+    <div class="nav-row">
+      <a class="back" href="semana09.html">&larr; semana 9</a>
+      <a class="back" href="index.html">indice &uarr;</a>
     </div>
 
-    <!-- CHECKPOINT BAR -->
-    <div class="checkpoint-bar">
-        <div class="checkpoint" id="cp1" onclick="scrollToPhase(1)">
-            <span class="cp-icon">🧠</span>
-            <span class="cp-label">FASE 1<br>Conceitos</span>
-        </div>
-        <div class="checkpoint" id="cp2" onclick="scrollToPhase(2)">
-            <span class="cp-icon">🎬</span>
-            <span class="cp-label">FASE 2<br>Vídeos</span>
-        </div>
-        <div class="checkpoint" id="cp3" onclick="scrollToPhase(3)">
-            <span class="cp-icon">⚔️</span>
-            <span class="cp-label">FASE 3<br>Desafios</span>
-        </div>
-        <div class="checkpoint" id="cp4" onclick="scrollToPhase(4)">
-            <span class="cp-icon">🚀</span>
-            <span class="cp-label">FASE 4<br>Missão Final</span>
-        </div>
-    </div>
-
-    <!-- ===================================== -->
-    <!-- FASE 1: CONCEITOS -->
-    <!-- ===================================== -->
-    <div id="phase1">
-        <div class="phase-header">
-            <div class="phase-number">01</div>
-            <div class="phase-info">
-                <h2>ANATOMIA DOS CASES</h2>
-                <p>Clique em cada conceito para revelar a análise completa e ganhar XP.</p>
-            </div>
-            <div class="phase-xp">+200 XP</div>
-        </div>
-        <div class="phase-divider"></div>
-
-        <div class="card">
-            <h3 style="font-family:'Orbitron',monospace; font-size:0.95em; color:var(--text-muted); letter-spacing:1px; margin-bottom:20px;">▶ CLIQUE EM CADA CONCEITO PARA REVELAR</h3>
-
-            <div class="concept-reveal">
-                <div class="concept-trigger" onclick="revealConcept(this, 'c1')">
-                    <span class="concept-trigger-text">🏃 NIKE+ & STRAVA: A GAMIFICAÇÃO QUE GRUDOU</span>
-                    <span class="concept-trigger-icon">▼</span>
-                </div>
-                <div class="concept-body" id="c1">
-                    <p>Nike+ (2006) e Strava (2009) são dois dos maiores cases de gamificação de fitness bem-sucedidos da história. Ambos transformaram atividades solitárias — correr e pedalar — em experiências sociais e competitivas.</p>
-                    <p>O que os tornou diferentes? <strong>Loops de engajamento reais</strong>: a cada corrida, o usuário ganha dados (distância, pace, calorias), badges e sobe em rankings de amigos. O cérebro libera dopamina não só pelo exercício, mas pelo reconhecimento social gamificado.</p>
-                    <div class="analogy">💡 Analogia: Imagine que toda vez que você caminhasse até a padaria, um narrator anunciasse "NOVO RECORDE PESSOAL!" para todos os seus amigos. Você iria a pé muito mais vezes.</div>
-                    <div class="tech-detail">FATORES DE SUCESSO:
-• Dados reais + feedback imediato → loop de recompensa rápido
-• Competição social calibrada → você vê amigos, não estranhos anônimos
-• Achievements progressivos → nunca "termina"
-• Integração com hardware físico (sensores) → dados confiáveis</div>
-                </div>
-            </div>
-
-            <div class="concept-reveal">
-                <div class="concept-trigger" onclick="revealConcept(this, 'c2')">
-                    <span class="concept-trigger-text">🎮 HABITICA: QUANDO A VIDA VIRA RPG</span>
-                    <span class="concept-trigger-icon">▼</span>
-                </div>
-                <div class="concept-body" id="c2">
-                    <p><strong>Habitica</strong> é um aplicativo de produtividade que transforma tarefas do dia a dia em um RPG completo. Você cria um personagem, ganha XP ao completar hábitos reais, sobe de nível, equipa armaduras, e enfrenta chefes em raids com amigos reais.</p>
-                    <p>O genial da Habitica é que a <strong>penalidade é real</strong>: se você não completar suas tarefas, seu personagem PERDE HP. Se o HP chegar a zero, você morre e perde equipamentos. Isso cria uma pressão positiva que a maioria dos apps de hábitos ignora.</p>
-                    <div class="analogy">💡 Por que funciona: A ameaça de perda (loss aversion) é 2x mais motivadora que a perspectiva de ganho. Habitica usa isso no design central, não como feature secundária.</div>
-                    <div class="tech-detail">MECÂNICAS-CHAVE:
-• Quests em grupo → accountability social real
-• Equipamentos com stats reais no jogo → personalização significativa
-• Pets e mounts → colecionáveis que incentivam consistência diária
-• Party system → você prejudica aliados se falhar</div>
-                </div>
-            </div>
-
-            <div class="concept-reveal">
-                <div class="concept-trigger" onclick="revealConcept(this, 'c3')">
-                    <span class="concept-trigger-text">💀 FOURSQUARE: O CRASH DO GAMIFICADO</span>
-                    <span class="concept-trigger-icon">▼</span>
-                </div>
-                <div class="concept-body" id="c3">
-                    <p><strong>Foursquare</strong> (2009–2013) foi uma das apostas mais ambiciosas em gamificação social: check-ins em locais físicos rendiam badges, pontos e o título de "Mayor" (prefeito) do estabelecimento. No auge, tinha 50 milhões de usuários.</p>
-                    <p>Então implodiu. Por quê? O loop de engajamento era <strong>divorciado de valor real</strong>. Ser "prefeito" do Starbucks não significava nada além do jogo em si. Quando a novidade passou, os usuários perceberam que estavam fazendo check-ins para... fazer check-ins.</p>
-                    <div class="analogy">💡 Lição fatal: Gamificação sem valor intrínseco é açúcar sem nutrição. Funciona no curto prazo, cria dependência artificial e colapsa quando o usuário questiona "por que estou fazendo isso?"</div>
-                    <div class="tech-detail">ERROS CRÍTICOS:
-• Recompensas vazias → badges sem valor funcional
-• Dependência de massa crítica → sem amigos ativos, o jogo morria
-• Separação entre jogo e valor real → o check-in não ajudava o usuário
-• Fácil de copiar → Facebook e Instagram replicaram social sem gamificação</div>
-                </div>
-            </div>
-
-            <div class="concept-reveal">
-                <div class="concept-trigger" onclick="revealConcept(this, 'c4')">
-                    <span class="concept-trigger-text">📊 KLOUT E GOOGLE+: PONTUAÇÕES SEM ALMA</span>
-                    <span class="concept-trigger-icon">▼</span>
-                </div>
-                <div class="concept-body" id="c4">
-                    <p><strong>Klout</strong> atribuía uma pontuação de 1–100 de "influência social" às pessoas. <strong>Google+</strong> tentou gamificar o engajamento em rede social com circles e +1s. Ambos fracassaram de formas diferentes mas com a mesma raiz.</p>
-                    <p>O Klout criou uma <strong>métrica que as pessoas se recusaram a respeitar</strong>. A pontuação era opaca (ninguém entendia o algoritmo), arbitrária e levou a comportamentos antiéticos. O Google+ tinha gamificação mas <strong>nenhum motivo real para existir</strong> — o Facebook já fazia tudo.</p>
-                    <table class="compare-table" style="margin-top:15px;">
-                        <tr>
-                            <th>Plataforma</th>
-                            <th>Mecanismo</th>
-                            <th>Por que Falhou</th>
-                        </tr>
-                        <tr>
-                            <td class="highlight">Klout</td>
-                            <td>Score de influência</td>
-                            <td><span class="tag tag-red">Métrica não-confiável</span></td>
-                        </tr>
-                        <tr>
-                            <td class="highlight">Google+</td>
-                            <td>Circles + +1s</td>
-                            <td><span class="tag tag-red">Sem diferencial real</span></td>
-                        </tr>
-                        <tr>
-                            <td class="highlight">Foursquare</td>
-                            <td>Check-in + Mayor</td>
-                            <td><span class="tag tag-red">Recompensa vazia</span></td>
-                        </tr>
-                    </table>
-                </div>
-            </div>
-
-            <div class="concept-reveal">
-                <div class="concept-trigger" onclick="revealConcept(this, 'c5')">
-                    <span class="concept-trigger-text">🔄 PIVOTS QUE SALVARAM EMPRESAS: SLACK & INSTAGRAM</span>
-                    <span class="concept-trigger-icon">▼</span>
-                </div>
-                <div class="concept-body" id="c5">
-                    <p>Nem todo fracasso é fatal — alguns se tornam a base de um produto revolucionário. <strong>Slack</strong> nasceu das cinzas do jogo online "Glitch" (2012), que fracassou comercialmente. A ferramenta interna de comunicação da equipe era tão boa que virou o produto principal.</p>
-                    <p><strong>Instagram</strong> foi um pivot do Burbn — um app de check-in com gamificação (sim, como Foursquare). Ao analisar os dados, os fundadores perceberam que a única feature que as pessoas realmente usavam era compartilhar fotos. Cortaram tudo mais e refizeram o app do zero.</p>
-                    <div class="callout callout-success">
-                        <span class="callout-icon">🌟</span>
-                        <span class="callout-text"><strong>Lição do pivot:</strong> Analisar o comportamento REAL dos usuários (não o que eles dizem que fazem, mas o que os dados mostram que fazem) é a diferença entre um pivot genial e um projeto morto.</span>
-                    </div>
-                    <div class="tech-detail">FATORES CRÍTICOS DE SUCESSO (FCS) EM GAMIFICAÇÃO:
-1. Loop de engajamento com valor real além do jogo
-2. Progressão visível e significativa
-3. Componente social calibrado para o público
-4. Dados que geram insight para o usuário
-5. Fácil onboarding, curva de maestria longa</div>
-                </div>
-            </div>
-
-            <div style="margin-top:25px; text-align:right;">
-                <button onclick="completePhase(1, 200)" style="padding:12px 30px; background:linear-gradient(135deg,var(--neon-cyan),var(--neon-purple)); color:var(--bg-dark); border:none; border-radius:8px; font-family:'Orbitron',monospace; font-size:0.85em; font-weight:700; cursor:pointer; letter-spacing:1px; transition:all 0.3s;" onmouseover="this.style.transform='translateY(-2px)'" onmouseout="this.style.transform='translateY(0)'">
-                    ✅ LI TODOS OS CONCEITOS → +200 XP
-                </button>
-            </div>
-        </div>
-    </div>
-
-    <!-- ===================================== -->
-    <!-- FASE 2: VÍDEOS -->
-    <!-- ===================================== -->
-    <div id="phase2">
-        <div class="phase-header">
-            <div class="phase-number">02</div>
-            <div class="phase-info">
-                <h2>MISSÃO DE RECONHECIMENTO</h2>
-                <p>Assista com foco analítico. Cada vídeo tem uma missão de observação específica.</p>
-            </div>
-            <div class="phase-xp">+150 XP</div>
-        </div>
-        <div class="phase-divider"></div>
-
-        <div class="video-section">
-            <div class="video-block">
-                <iframe src="https://www.youtube.com/embed/TqmAjhSKVKU" allowfullscreen></iframe>
-                <div class="video-meta">
-                    <h4>NIKE+ CASE STUDY</h4>
-                    <p>Como a Nike transformou corrida em experiência social gamificada e criou uma comunidade de milhões.</p>
-                </div>
-                <div class="watch-task">
-                    <strong>🎯 SUA MISSÃO AO ASSISTIR:</strong>
-                    Identifique: quais 3 mecânicas de jogo a Nike usou para criar engajamento duradouro?
-                </div>
-            </div>
-            <div class="video-block">
-                <iframe src="https://www.youtube.com/embed/lN2l3qQr8X4" allowfullscreen></iframe>
-                <div class="video-meta">
-                    <h4>WHY FOURSQUARE FAILED</h4>
-                    <p>A análise do colapso de uma das plataformas mais gamificadas da história da internet.</p>
-                </div>
-                <div class="watch-task">
-                    <strong>🎯 SUA MISSÃO AO ASSISTIR:</strong>
-                    Anote o momento exato em que o Foursquare começou a perder usuários e o que causou o ponto de virada.
-                </div>
-            </div>
-        </div>
-
-        <div class="video-section">
-            <div class="video-block">
-                <iframe src="https://www.youtube.com/embed/H_rBX2HFH1c" allowfullscreen></iframe>
-                <div class="video-meta">
-                    <h4>STARTUP SUCCESS FACTORS</h4>
-                    <p>Os fatores que separam startups que sobrevivem das que implode — com perspectiva de produto e engajamento.</p>
-                </div>
-                <div class="watch-task">
-                    <strong>🎯 SUA MISSÃO AO ASSISTIR:</strong>
-                    Qual fator de sucesso mencionado no vídeo se relaciona DIRETAMENTE com design de gamificação?
-                </div>
-            </div>
-            <div class="video-block" style="display:flex; flex-direction:column; justify-content:center; align-items:center; background:rgba(255,255,255,0.02); min-height:280px;">
-                <div style="text-align:center; padding:30px;">
-                    <div style="font-size:3em; margin-bottom:15px;">📝</div>
-                    <p style="color:var(--text-muted); font-size:0.95em; line-height:1.7;">Enquanto assiste, anote no papel:<br><br><strong style="color:var(--neon-cyan);">1 decisão de design que funcionou</strong> + <strong style="color:var(--neon-purple);">1 erro que você evitaria</strong><br><br>por vídeo. Isso vai alimentar a Fase 4.</p>
-                </div>
-            </div>
-        </div>
-
-        <div style="text-align:right; margin-top:10px;">
-            <button onclick="completePhase(2, 150)" style="padding:12px 30px; background:linear-gradient(135deg,var(--neon-cyan),var(--neon-purple)); color:var(--bg-dark); border:none; border-radius:8px; font-family:'Orbitron',monospace; font-size:0.85em; font-weight:700; cursor:pointer; letter-spacing:1px;">
-                ✅ ASSISTI OS VÍDEOS → +150 XP
-            </button>
-        </div>
-    </div>
-
-    <!-- ===================================== -->
-    <!-- FASE 3: DESAFIOS -->
-    <!-- ===================================== -->
-    <div id="phase3">
-        <div class="phase-header">
-            <div class="phase-number">03</div>
-            <div class="phase-info">
-                <h2>ARENA DE DESAFIOS</h2>
-                <p>Três desafios interativos sobre cases reais. Concentração máxima.</p>
-            </div>
-            <div class="phase-xp">+450 XP</div>
-        </div>
-        <div class="phase-divider"></div>
-
-        <!-- DESAFIO 1: QUIZ -->
-        <div class="quiz-card" id="quiz1">
-            <div class="quiz-header">
-                <div class="quiz-badge">DESAFIO 1</div>
-                <span style="font-family:'Share Tech Mono',monospace; font-size:0.85em; color:var(--text-muted);">QUIZ RÁPIDO · 6 PERGUNTAS · +50 XP CADA</span>
-            </div>
-
-            <!-- P1 -->
-            <div id="q1" style="margin-bottom:30px;">
-                <div class="quiz-question">1. O que diferencia o Nike+ e o Strava dos apps de fitness que fracassaram?</div>
-                <div class="quiz-options">
-                    <button class="quiz-option" onclick="answer(this,'q1','wrong')"><span class="option-letter">A</span> Tinham mais funcionalidades e opções de personalização</button>
-                    <button class="quiz-option" onclick="answer(this,'q1','correct')"><span class="option-letter">B</span> O loop de engajamento estava vinculado a valor real (melhoria física + social)</button>
-                    <button class="quiz-option" onclick="answer(this,'q1','wrong')"><span class="option-letter">C</span> Eram gratuitos e sem anúncios para todos os usuários</button>
-                    <button class="quiz-option" onclick="answer(this,'q1','wrong')"><span class="option-letter">D</span> Focavam exclusivamente em atletas profissionais de alta performance</button>
-                </div>
-                <div class="quiz-feedback" id="q1-fb"></div>
-            </div>
-
-            <!-- P2 -->
-            <div id="q2" style="margin-bottom:30px;">
-                <div class="quiz-question">2. Por que a mecânica do "Mayor" do Foursquare não sustentou o engajamento de longo prazo?</div>
-                <div class="quiz-options">
-                    <button class="quiz-option" onclick="answer(this,'q2','wrong')"><span class="option-letter">A</span> Era muito difícil de alcançar — poucos usuários chegavam a ser Mayors</button>
-                    <button class="quiz-option" onclick="answer(this,'q2','wrong')"><span class="option-letter">B</span> O app travava frequentemente e perdia os dados de check-in</button>
-                    <button class="quiz-option" onclick="answer(this,'q2','correct')"><span class="option-letter">C</span> O título não tinha valor funcional real além da própria plataforma</button>
-                    <button class="quiz-option" onclick="answer(this,'q2','wrong')"><span class="option-letter">D</span> O sistema era facilmente hackeado com check-ins falsos</button>
-                </div>
-                <div class="quiz-feedback" id="q2-fb"></div>
-            </div>
-
-            <!-- P3 -->
-            <div id="q3" style="margin-bottom:30px;">
-                <div class="quiz-question">3. O Habitica se diferencia de outros apps de produtividade porque...</div>
-                <div class="quiz-options">
-                    <button class="quiz-option" onclick="answer(this,'q3','wrong')"><span class="option-letter">A</span> Não usa nenhum elemento visual de jogos — é minimalista</button>
-                    <button class="quiz-option" onclick="answer(this,'q3','correct')"><span class="option-letter">B</span> Usa penalidades reais (perda de HP) que criam pressão motivacional genuína</button>
-                    <button class="quiz-option" onclick="answer(this,'q3','wrong')"><span class="option-letter">C</span> É o único app de hábitos integrado com academias físicas</button>
-                    <button class="quiz-option" onclick="answer(this,'q3','wrong')"><span class="option-letter">D</span> Usa inteligência artificial para criar tarefas automaticamente</button>
-                </div>
-                <div class="quiz-feedback" id="q3-fb"></div>
-            </div>
-
-            <!-- P4 -->
-            <div id="q4" style="margin-bottom:30px;">
-                <div class="quiz-question">4. O Slack nasceu como subproduto de qual projeto fracassado?</div>
-                <div class="quiz-options">
-                    <button class="quiz-option" onclick="answer(this,'q4','wrong')"><span class="option-letter">A</span> Um app de check-in social semelhante ao Foursquare</button>
-                    <button class="quiz-option" onclick="answer(this,'q4','correct')"><span class="option-letter">B</span> Um jogo online chamado Glitch, que foi descontinuado comercialmente</button>
-                    <button class="quiz-option" onclick="answer(this,'q4','wrong')"><span class="option-letter">C</span> Uma plataforma de vídeo anterior ao YouTube</button>
-                    <button class="quiz-option" onclick="answer(this,'q4','wrong')"><span class="option-letter">D</span> Um sistema de e-mail corporativo desenvolvido para o Google</button>
-                </div>
-                <div class="quiz-feedback" id="q4-fb"></div>
-            </div>
-
-            <!-- P5 -->
-            <div id="q5" style="margin-bottom:30px;">
-                <div class="quiz-question">5. Em um post-mortem de gamificação fracassada, qual é a primeira pergunta que deve ser investigada?</div>
-                <div class="quiz-options">
-                    <button class="quiz-option" onclick="answer(this,'q5','wrong')"><span class="option-letter">A</span> Quanto dinheiro foi investido em marketing e aquisição de usuários?</button>
-                    <button class="quiz-option" onclick="answer(this,'q5','wrong')"><span class="option-letter">B</span> Quantos badges e conquistas o sistema tinha disponíveis?</button>
-                    <button class="quiz-option" onclick="answer(this,'q5','correct')"><span class="option-letter">C</span> O loop de engajamento estava vinculado a valor real para o usuário?</button>
-                    <button class="quiz-option" onclick="answer(this,'q5','wrong')"><span class="option-letter">D</span> A concorrência tinha mais funcionalidades no momento do lançamento?</button>
-                </div>
-                <div class="quiz-feedback" id="q5-fb"></div>
-            </div>
-
-            <!-- P6 -->
-            <div id="q6" style="margin-bottom:30px;">
-                <div class="quiz-question">6. O Instagram foi um pivot de qual tipo de app que usava elementos de gamificação semelhantes ao Foursquare?</div>
-                <div class="quiz-options">
-                    <button class="quiz-option" onclick="answer(this,'q6','wrong')"><span class="option-letter">A</span> Um jogo de realidade aumentada focado em exploração urbana</button>
-                    <button class="quiz-option" onclick="answer(this,'q6','wrong')"><span class="option-letter">B</span> Uma plataforma de streaming de músicas ao vivo</button>
-                    <button class="quiz-option" onclick="answer(this,'q6','wrong')"><span class="option-letter">C</span> Um app de delivery de comida com sistema de recompensas</button>
-                    <button class="quiz-option" onclick="answer(this,'q6','correct')"><span class="option-letter">D</span> Um app de check-in social chamado Burbn, que não tinha foco claro</button>
-                </div>
-                <div class="quiz-feedback" id="q6-fb"></div>
-            </div>
-        </div>
-
-        <!-- DESAFIO 2: COMPLETE AS LACUNAS -->
-        <div class="quiz-card">
-            <div class="quiz-header">
-                <div class="quiz-badge">DESAFIO 2</div>
-                <span style="font-family:'Share Tech Mono',monospace; font-size:0.85em; color:var(--text-muted);">COMPLETE AS LACUNAS · +30 XP CADA</span>
-            </div>
-
-            <p style="color:var(--text-muted); font-size:0.9em; margin-bottom:20px; font-family:'Share Tech Mono',monospace;">// Preencha com os termos corretos do vocabulário desta semana</p>
-
-            <div class="fill-blank">
-                1. Um sistema de gamificação que prende usuários apenas com pontos sem benefício real sofre de <input class="blank-input" id="b1" placeholder="______"> vazia — funciona no curto prazo e colapsa com o tempo.
-            </div>
-            <div class="fill-blank">
-                2. A principal lição do Habitica é usar <input class="blank-input" id="b2" placeholder="______"> (perda de HP) como mecanismo motivacional — explorar o medo de perder em vez de só prometer ganhos.
-            </div>
-            <div class="fill-blank">
-                3. Quando uma startup analisa dados de comportamento REAL dos usuários e muda radicalmente de produto com base nisso, chamamos de <input class="blank-input" id="b3" placeholder="______">.
-            </div>
-            <div class="fill-blank">
-                4. O Strava é eficaz porque conecta a gamificação a um benefício <input class="blank-input" id="b4" placeholder="______"> — melhoria física mensurável — além dos pontos e badges.
-            </div>
-            <div class="fill-blank">
-                5. A análise detalhada dos erros e acertos de um projeto após seu fracasso ou encerramento é chamada de <input class="blank-input" id="b5" placeholder="______">, uma prática essencial no desenvolvimento de produtos.
-            </div>
-
-            <div>
-                <button class="check-blanks-btn" onclick="checkBlanks()">⚡ VERIFICAR RESPOSTAS</button>
-                <p class="quiz-feedback" id="blanks-result" style="display:none; margin-top:10px; font-family:'Share Tech Mono',monospace; font-size:0.9em;"></p>
-            </div>
-        </div>
-
-        <!-- DESAFIO 3: MATCH GAME -->
-        <div class="quiz-card">
-            <div class="quiz-header">
-                <div class="quiz-badge">DESAFIO 3</div>
-                <span style="font-family:'Share Tech Mono',monospace; font-size:0.85em; color:var(--text-muted);">CONECTE CASES AOS FATORES · +22 XP CADA PAR</span>
-            </div>
-
-            <p style="color:var(--text-muted); font-size:0.9em; margin-bottom:20px; font-family:'Share Tech Mono',monospace;">// Clique em um case (esquerda) depois no motivo correto (direita)</p>
-
-            <div class="match-area">
-                <div id="match-left">
-                    <div class="match-item" data-id="1" onclick="selectMatch(this, 'left')">🏃 Nike+ & Strava</div>
-                    <div class="match-item" data-id="2" onclick="selectMatch(this, 'left')">💀 Foursquare</div>
-                    <div class="match-item" data-id="3" onclick="selectMatch(this, 'left')">🎮 Habitica</div>
-                    <div class="match-item" data-id="4" onclick="selectMatch(this, 'left')">📸 Instagram</div>
-                </div>
-                <div id="match-right">
-                    <div class="match-item" data-id="b" onclick="selectMatch(this, 'right')">Pivot radical baseado em dados de comportamento real</div>
-                    <div class="match-item" data-id="d" onclick="selectMatch(this, 'right')">Loop social com valor intrínseco real (saúde física)</div>
-                    <div class="match-item" data-id="a" onclick="selectMatch(this, 'right')">Recompensas vazias sem valor funcional além da plataforma</div>
-                    <div class="match-item" data-id="c" onclick="selectMatch(this, 'right')">Penalidade de perda (loss aversion) como mecânica central</div>
-                </div>
-            </div>
-
-            <div id="match-feedback" style="display:none; margin-top:15px;"></div>
-            <p id="match-score" style="font-family:'Share Tech Mono',monospace; font-size:0.8em; color:var(--text-muted); margin-top:10px;">0/4 pares corretos</p>
-        </div>
-
-        <div style="text-align:right; margin-top:10px;">
-            <button onclick="completePhase(3, 100)" style="padding:12px 30px; background:linear-gradient(135deg,var(--neon-orange),#ff9900); color:var(--bg-dark); border:none; border-radius:8px; font-family:'Orbitron',monospace; font-size:0.85em; font-weight:700; cursor:pointer; letter-spacing:1px;">
-                ✅ CONCLUÍ OS DESAFIOS → +100 XP
-            </button>
-        </div>
-    </div>
-
-    <!-- ===================================== -->
-    <!-- FASE 4: MISSÕES PRÁTICAS -->
-    <!-- ===================================== -->
-    <div id="phase4">
-        <div class="phase-header">
-            <div class="phase-number">04</div>
-            <div class="phase-info">
-                <h2>MISSÕES PRÁTICAS</h2>
-                <p>Três missões reais. Entregas que demonstram domínio dos conceitos.</p>
-            </div>
-            <div class="phase-xp">+300 XP</div>
-        </div>
-        <div class="phase-divider"></div>
-
-        <div class="callout callout-warning">
-            <span class="callout-icon">⚠️</span>
-            <span class="callout-text"><strong>Regra das missões:</strong> Siga a ordem dos passos. As entregas são reais — você vai mostrar ao professor no final da aula. Profundidade técnica vale mais do que volume.</span>
-        </div>
-
-        <!-- MISSÃO 1 -->
-        <div class="mission-card">
-            <div class="mission-card-header">
-                <div class="mission-number-badge">M1</div>
-                <div>
-                    <div class="mission-type">MISSÃO INVESTIGATIVA</div>
-                    <h3>DEEP DIVE EM CASE DE SUCESSO</h3>
-                </div>
-            </div>
-
-            <p>Escolha <strong>um case de sucesso</strong> (Strava, Nike+, ou Duolingo) e faça uma análise profunda no estilo Harvard Business School. O objetivo não é resumir — é dissecar: por que funcionou quando tantos similares falharam?</p>
-
-            <ul class="mission-steps">
-                <li><p><strong>Escolha e contextualize:</strong> Qual é o produto? Quando foi lançado? Qual problema real ele resolvia? Quem era o usuário-alvo? Escreva em no máximo 3 linhas — sem enrolação.</p></li>
-                <li><p><strong>Mapeie o loop de engajamento:</strong> Identifique o ciclo completo: Trigger → Ação → Recompensa → Investimento. O que faz o usuário voltar amanhã? Escreva esse loop de forma visual ou descritiva.</p></li>
-                <li><p><strong>Liste os 3 Fatores Críticos de Sucesso (FCS):</strong> Por que ESSE produto funcionou e não os concorrentes que tentaram o mesmo? Seja específico — evite respostas genéricas como "boa UX" ou "marketing forte".</p></li>
-                <li><p><strong>Identifique 1 risco que o produto ainda carrega:</strong> Nenhum produto é perfeito. Qual vulnerabilidade o case escolhido ainda tem? (Ex.: dependência de dados de terceiros, saturação de mercado, comoditização).</p></li>
-                <li><p><strong>Extraia 1 lição aplicável ao seu próprio projeto:</strong> Não hipotética — algo concreto que você pode implementar ou evitar com base no que estudou. Escreva em 2 frases.</p></li>
-            </ul>
-
-            <div class="deliverable-box">
-                <h4>📦 ENTREGA DESTA MISSÃO</h4>
-                <ul>
-                    <li>Loop de engajamento mapeado (visual ou escrito)</li>
-                    <li>3 Fatores Críticos de Sucesso com justificativa</li>
-                    <li>1 risco atual do produto identificado</li>
-                    <li>1 lição aplicável ao seu projeto</li>
-                    <li>Apresentação oral de 3 min para o professor</li>
-                </ul>
-            </div>
-            <div class="xp-reward">🏆 +100 XP ao apresentar</div>
-        </div>
-
-        <!-- MISSÃO 2 -->
-        <div class="mission-card">
-            <div class="mission-card-header">
-                <div class="mission-number-badge">M2</div>
-                <div>
-                    <div class="mission-type">MISSÃO DE ANÁLISE CRÍTICA</div>
-                    <h3>POST-MORTEM DE FRACASSO</h3>
-                </div>
-            </div>
-
-            <p>Escolha <strong>um case de fracasso</strong> (Foursquare, Klout, ou Google+) e monte um post-mortem profissional. Pense como um médico legista do produto: cause mortis, fatores contribuintes, e o que poderia ter salvado o paciente.</p>
-
-            <ul class="mission-steps">
-                <li><p><strong>Timeline do colapso:</strong> Monte uma linha do tempo simples com pelo menos 3 marcos — lançamento com promessa, ponto de inflexão negativo, e colapso ou pivô forçado. Datas aproximadas bastam.</p></li>
-                <li><p><strong>Diagnóstico dos erros:</strong> Liste 3 decisões de design ou negócio que contribuíram para o fracasso. Para cada uma, escreva: "Erro: [descrição]. Por que foi erro: [impacto]. Alternativa possível: [o que poderia ter sido feito]".</p></li>
-                <li><p><strong>Causa mortis principal:</strong> De todos os erros, qual foi o fatal? O que, se corrigido a tempo, poderia ter salvo o produto? Justifique em 2–3 frases.</p></li>
-                <li><p><strong>Checklist antifalha:</strong> Com base na análise, crie um checklist de 5 perguntas que qualquer designer de gamificação deveria responder ANTES de lançar um produto para evitar o mesmo destino.</p></li>
-                <li><p><strong>Conexão com seu projeto:</strong> Algum dos erros identificados existe (ou poderia existir) no seu projeto atual? Seja honesto. Como você vai mitiga-los?</p></li>
-            </ul>
-
-            <div class="deliverable-box">
-                <h4>📦 ENTREGA DESTA MISSÃO</h4>
-                <ul>
-                    <li>Timeline do colapso (3+ marcos)</li>
-                    <li>3 erros diagnosticados com alternativas</li>
-                    <li>Causa mortis principal justificada</li>
-                    <li>Checklist antifalha com 5 perguntas</li>
-                </ul>
-            </div>
-            <div class="xp-reward">🏆 +100 XP ao apresentar</div>
-        </div>
-
-        <!-- MISSÃO 3 -->
-        <div class="mission-card">
-            <div class="mission-card-header">
-                <div class="mission-number-badge">M3</div>
-                <div>
-                    <div class="mission-type">MISSÃO DE CRIAÇÃO</div>
-                    <h3>PROPOSTA DE GAMIFICAÇÃO REAL</h3>
-                </div>
-            </div>
-
-            <p>Crie uma <strong>proposta de gamificação para uma empresa ou app real</strong> — algo que existe hoje e poderia se beneficiar de mecânicas de jogo bem aplicadas. Não é ficção: se bem feito, isso é um pitch profissional de verdade.</p>
-
-            <ul class="mission-steps">
-                <li><p><strong>Escolha o alvo:</strong> Selecione uma empresa/app real com problema de engajamento conhecido. Ex.: um supermercado com programa de fidelidade fraco, um banco digital sem retenção, um app educacional com alta taxa de abandono. Descreva o problema em 2 linhas.</p></li>
-                <li><p><strong>Defina o objetivo de negócio:</strong> O que a gamificação vai melhorar? Retenção de usuários? Frequência de uso? Ticket médio? Seja específico com uma métrica. Ex.: "Aumentar de 2 para 5 o número de sessões semanais no app".</p></li>
-                <li><p><strong>Projete o sistema gamificado:</strong> Descreva pelo menos 3 mecânicas que você implementaria. Para cada uma, explique: como funciona, qual comportamento incentiva, e por que não será uma recompensa vazia (lição do Foursquare).</p></li>
-                <li><p><strong>Monte o loop de engajamento:</strong> Trace o caminho completo do usuário: primeiro acesso → primeira recompensa → ciclo semanal → recompensa de longo prazo. Pode ser em texto ou como diagrama simples.</p></li>
-                <li><p><strong>Estime o impacto:</strong> Proponha 2 métricas de sucesso que você mediria após 90 dias de implementação e uma hipótese de melhoria. Ex.: "Esperamos aumento de 30% na retenção mensal com base no case do Strava que mostrou X%".</p></li>
-            </ul>
-
-            <div class="deliverable-box">
-                <h4>📦 ENTREGA DESTA MISSÃO</h4>
-                <ul>
-                    <li>Empresa alvo e problema identificado</li>
-                    <li>Objetivo de negócio com métrica específica</li>
-                    <li>3 mecânicas gamificadas com justificativa</li>
-                    <li>Loop de engajamento mapeado</li>
-                    <li>2 métricas de sucesso pós-implementação</li>
-                </ul>
-            </div>
-            <div class="xp-reward">🏆 +100 XP ao apresentar</div>
-        </div>
-
-        <div style="text-align:center; margin-top:30px;">
-            <button onclick="completePhase(4, 200)" style="padding:16px 40px; background:linear-gradient(135deg,var(--gold),#ff9900); color:var(--bg-dark); border:none; border-radius:10px; font-family:'Orbitron',monospace; font-size:1em; font-weight:900; cursor:pointer; letter-spacing:2px; box-shadow:0 0 30px rgba(255,215,0,0.3); transition:all 0.3s;" onmouseover="this.style.transform='translateY(-3px)'" onmouseout="this.style.transform='translateY(0)'">
-                🏆 MISSÕES ENTREGUES → COMPLETEI A SEMANA 10
-            </button>
-        </div>
-    </div>
-
-    <!-- FOOTER NAV -->
-    <div class="nav-footer">
-        <a href="semana09.html" class="nav-btn">← SEMANA 09</a>
-        <a href="index.html" class="nav-btn">🏠 INDEX</a>
-        <a href="semana11.html" class="nav-btn">SEMANA 11 →</a>
-    </div>
-
-</main>
-
-<script>
-    // ===== STATE =====
-    let xp = 0;
-    let acertos = 0;
-    let fasesCompletas = 0;
-    const phasesDone = { 1: false, 2: false, 3: false, 4: false };
-
-    let matchSelected = { left: null, right: null };
-    const correctPairs = { '1': 'd', '2': 'a', '3': 'c', '4': 'b' };
-    const matchedPairs = {};
-
-    // ===== XP SYSTEM =====
-    function addXP(amount) {
-        xp = Math.min(1000, xp + amount);
-        document.getElementById('xpDisplay').textContent = xp;
-        document.getElementById('xpDisplayBar').textContent = xp;
-        document.getElementById('xpFill').style.width = (xp / 1000 * 100) + '%';
-    }
-
-    function showToast(icon, title, msg, isGold = false) {
-        const t = document.getElementById('toast');
-        t.style.borderColor = isGold ? 'var(--gold)' : 'var(--neon-green)';
-        document.getElementById('toastIcon').textContent = icon;
-        document.getElementById('toastTitle').textContent = title;
-        document.getElementById('toastMsg').textContent = msg;
-        t.classList.add('show');
-        setTimeout(() => t.classList.remove('show'), 3000);
-    }
-
-    // ===== CONCEPTS =====
-    const conceptsOpened = new Set();
-    function revealConcept(trigger, id) {
-        const body = document.getElementById(id);
-        const isOpen = trigger.classList.contains('open');
-        trigger.classList.toggle('open', !isOpen);
-        body.classList.toggle('open', !isOpen);
-        if (!conceptsOpened.has(id)) {
-            conceptsOpened.add(id);
-            addXP(10);
-        }
-    }
-
-    // ===== PHASE COMPLETE =====
-    function completePhase(phase, xpAmt) {
-        if (phasesDone[phase]) return;
-        phasesDone[phase] = true;
-        fasesCompletas++;
-        document.getElementById('fasesDisplay').textContent = fasesCompletas + '/4';
-        addXP(xpAmt);
-
-        const cp = document.getElementById('cp' + phase);
-        if (cp) { cp.classList.add('done'); }
-
-        const icons = ['🧠','🎬','⚔️','🚀'];
-        const titles = ['Fase 1 Completa!','Fase 2 Completa!','Fase 3 Completa!','SEMANA COMPLETA!'];
-        const msgs = ['+200 XP · Anatomia dos cases dominada','+150 XP · Recon concluída','+100 XP · Arena vencida','🏆 Você dominou Cases de Sucesso e Fracasso!'];
-        const isGold = phase === 4;
-        showToast(icons[phase-1], titles[phase-1], msgs[phase-1], isGold);
-    }
-
-    // ===== QUIZ =====
-    const feedbackTexts = {
-        'q1': { correct: '✅ Exato! O valor real (melhoria física + social genuína) é o que separa gamificações duradouras das temporárias.', wrong: '❌ Não. A chave é o loop de engajamento vinculado a valor real — não features extras ou modelo de negócio.' },
-        'q2': { correct: '✅ Correto! Ser "prefeito" do Starbucks não significava nada fora do Foursquare — recompensa vazia clássica.', wrong: '❌ O problema central era a falta de valor funcional do título. Badges sem impacto real não sustentam engajamento.' },
-        'q3': { correct: '✅ Exato! A penalidade de perda de HP usa loss aversion — o medo de perder é 2x mais motivador que a esperança de ganhar.', wrong: '❌ O diferencial do Habitica são as penalidades reais (perda de HP e equipamentos) que criam pressão motivacional verdadeira.' },
-        'q4': { correct: '✅ Correto! O Slack nasceu da necessidade interna de comunicação da equipe que desenvolvia o jogo Glitch — um fracasso que gerou um sucesso bilionário.', wrong: '❌ O Slack nasceu da ferramenta interna de comunicação usada pela equipe do jogo online Glitch quando este foi descontinuado.' },
-        'q5': { correct: '✅ Perfeito! A primeira investigação sempre deve ser: o engajamento estava gerando valor real para o usuário além da plataforma?', wrong: '❌ A pergunta fundamental de qualquer post-mortem de gamificação: o loop de engajamento estava vinculado a valor real?' },
-        'q6': { correct: '✅ Exato! O Burbn era um app de check-in social com badges e gamificação que não tinha foco. Os fundadores perceberam que só as fotos eram usadas e pivotaram.', wrong: '❌ O Instagram foi um pivot do Burbn — um app de check-in social gamificado que não tinha diferencial claro.' },
-    };
-
-    function answer(btn, qId, result) {
-        const container = document.getElementById(qId);
-        if (container.querySelector('.correct') || container.querySelector('.disabled')) return;
-
-        const allBtns = container.querySelectorAll('.quiz-option');
-        allBtns.forEach(b => b.classList.add('disabled'));
-        btn.classList.add(result);
-
-        const fb = document.getElementById(qId + '-fb');
-        fb.textContent = feedbackTexts[qId][result];
-        fb.className = 'quiz-feedback ' + result;
-
-        if (result === 'correct') {
-            addXP(50);
-            acertos++;
-            document.getElementById('acertosDisplay').textContent = acertos;
-            showToast('⚡', '+50 XP', 'Resposta correta!');
-        } else {
-            showToast('💀', 'Errou!', feedbackTexts[qId].wrong.substring(2, 60) + '...');
-        }
-    }
-
-    // ===== BLANKS =====
-    const blankAnswers = ['recompensa', 'penalidade', 'pivot', 'intrinseco', 'post-mortem'];
-    function checkBlanks() {
-        let correct = 0;
-        const result = document.getElementById('blanks-result');
-        blankAnswers.forEach((ans, i) => {
-            const inp = document.getElementById('b' + (i+1));
-            const val = inp.value.toLowerCase().trim().normalize('NFD').replace(/[\u0300-\u036f]/g,'');
-            const ansNorm = ans.normalize('NFD').replace(/[\u0300-\u036f]/g,'');
-            if (val === ansNorm || val.includes(ansNorm.substring(0,5)) && val.length > 3) {
-                inp.className = 'blank-input correct';
-                correct++;
-            } else {
-                inp.className = 'blank-input wrong';
-            }
-        });
-        const xpEarned = correct * 30;
-        addXP(xpEarned);
-        acertos += correct;
-        document.getElementById('acertosDisplay').textContent = acertos;
-        result.style.display = 'block';
-        result.style.color = correct >= 4 ? 'var(--neon-green)' : 'var(--neon-orange)';
-        result.innerHTML = `// ${correct}/5 corretos · +${xpEarned} XP ${correct >= 4 ? '🏆 EXCELENTE!' : correct >= 2 ? '👍 Continue!' : '💀 Revise os conceitos'}`;
-        showToast('📝', `${correct}/5 Corretos`, `+${xpEarned} XP nas lacunas`);
-    }
-
-    // ===== MATCH GAME =====
-    function selectMatch(el, side) {
-        const id = el.dataset.id;
-        if (matchedPairs[id] || el.style.opacity === '0.4') return;
-
-        document.querySelectorAll('#match-' + side + ' .match-item').forEach(m => {
-            if (!matchedPairs[m.dataset.id]) { m.style.background = ''; m.style.borderColor = ''; }
-        });
-
-        matchSelected[side] = id;
-        el.style.background = 'rgba(0,245,255,0.1)';
-        el.style.borderColor = 'var(--neon-cyan)';
-
-        if (matchSelected.left && matchSelected.right) {
-            const leftId = matchSelected.left;
-            const rightId = matchSelected.right;
-            setTimeout(() => tryPair(leftId, rightId), 200);
-        }
-    }
-
-    function tryPair(leftId, rightId) {
-        const leftEl = document.querySelector(`#match-left [data-id="${leftId}"]`);
-        const rightEl = document.querySelector(`#match-right [data-id="${rightId}"]`);
-
-        if (correctPairs[leftId] === rightId) {
-            [leftEl, rightEl].forEach(el => {
-                el.style.background = 'rgba(0,255,136,0.1)';
-                el.style.borderColor = 'var(--neon-green)';
-                el.style.color = 'var(--neon-green)';
-                el.style.cursor = 'default';
-                el.onclick = null;
-            });
-            matchedPairs[leftId] = rightId;
-            addXP(22);
-            acertos++;
-            document.getElementById('acertosDisplay').textContent = acertos;
-
-            if (Object.keys(matchedPairs).length === 4) {
-                const fb = document.getElementById('match-feedback');
-                fb.style.display = 'block';
-                fb.innerHTML = '<div style="background:rgba(0,255,136,0.1);border:1px solid rgba(0,255,136,0.3);padding:15px 20px;border-radius:8px;color:var(--neon-green);font-family:Share Tech Mono,monospace;">// ✅ TODOS OS PARES CORRETOS! +90 XP · Você dominou a anatomia dos cases.</div>';
-                showToast('🎯', 'Match Perfeito!', '+90 XP · Todos os pares corretos!', true);
-            }
-            document.getElementById('match-score').textContent = Object.keys(matchedPairs).length + '/4 pares corretos';
-        } else {
-            [leftEl, rightEl].forEach(el => {
-                el.style.background = 'rgba(255,0,85,0.1)';
-                el.style.borderColor = 'var(--neon-red)';
-            });
-            setTimeout(() => {
-                [leftEl, rightEl].forEach(el => {
-                    el.style.background = '';
-                    el.style.borderColor = '';
-                });
-            }, 800);
-        }
-
-        matchSelected = { left: null, right: null };
-    }
-
-    // ===== SCROLL TO PHASE =====
-    function scrollToPhase(n) {
-        document.getElementById('phase' + n).scrollIntoView({ behavior: 'smooth', block: 'start' });
-    }
-</script>
-    </div>
-    <script src="common.js"></script>
+    <div class="eyebrow">Modulo 02 &middot; Semana 10 &middot; fecha o modulo</div>
+    <h1>Casos de Sucesso</h1>
+    <p class="lede">Última semana do módulo: em vez de mecânica nova, hoje é sobre <strong>ler</strong> os exemplos reais que já foram catalogados — o quê especificamente fez cada um funcionar (ou não).</p>
+
+    <section>
+      <h2>Prática do dia (30 min): dois sensores, um sistema</h2>
+      <div class="panel">
+        <p>Fechamento técnico do módulo: juntar o sensor analógico (umidade do solo, semana 2) com o DHT11 (temperatura e umidade do ar, semana 8) num único sistema de decisão — dois dados diferentes informando a mesma lógica de alerta.</p>
+        <div class="code-block">int solo = analogRead(A0);
+float tempAr = dht.readTemperature();
+
+bool soloSeco = solo &lt; 300;
+bool calor = tempAr &gt; 30;
+
+if (soloSeco &amp;&amp; calor) {
+  // pior cenario: irrigar com prioridade
+  digitalWrite(ledVermelho, HIGH);
+} else if (soloSeco || calor) {
+  digitalWrite(ledAmarelo, HIGH);
+}</div>
+        <p style="margin-top:12px;">Esse é o tipo de lógica combinada que separa um alerta simples de um sistema de decisão real — dois sinais concordando pesam mais que um sozinho.</p>
+      </div>
+    </section>
+
+    <section>
+      <h2>Fatores de sucesso (literatura)</h2>
+      <div class="factor-grid">
+        <div class="factor-card"><div class="k">Realismo</div><p>O cenário parece verdade, não abstrato.</p></div>
+        <div class="factor-card"><div class="k">Usabilidade</div><p>Não exige manual pra entender o básico.</p></div>
+        <div class="factor-card"><div class="k">Feedback contínuo</div><p>A pessoa sabe o tempo todo como está indo.</p></div>
+        <div class="factor-card"><div class="k">Personalização</div><p>Se adapta a diferentes níveis de habilidade.</p></div>
+        <div class="factor-card"><div class="k">Contexto local</div><p>Reflete a realidade de quem está jogando.</p></div>
+      </div>
+      <p style="margin-top:10px;font-size:.82rem;color:var(--muted);">Fatores identificados em síntese de mais de 170 artigos sobre jogos de negócio na educação empreendedora (citado no artigo EcoFarming, referência no índice).</p>
+    </section>
+
+    <section>
+      <h2>Aplicando o framework</h2>
+      <div class="panel">
+        <table class="cases">
+          <thead><tr><th>Projeto</th><th>Fator mais forte</th><th>Evidência</th></tr></thead>
+          <tbody>
+            <tr><td><b>SEGAE</b></td><td>Feedback contínuo</td><td>86% aprovação, ganho de conhecimento mensurado (semana 6)</td></tr>
+            <tr><td><b>EcoFarming</b></td><td>Contexto local</td><td>Biomas brasileiros — o próprio artigo cita isso como lacuna que preenche</td></tr>
+            <tr><td><b>Fizztopia</b></td><td>Realismo/tema</td><td>Conscientização ambiental com mecânica de coleta clara</td></tr>
+          </tbody>
+        </table>
+        <p style="margin-top:14px;">Exercício da aula: cada dupla escolhe um projeto do <a href="index.html" style="color:var(--amber);">índice</a> que ainda não está nessa tabela e preenche a mesma linha — qual fator é mais forte, e qual evidência sustenta isso.</p>
+      </div>
+    </section>
+
+    <section>
+      <h2>Aplicando ao agronegócio</h2>
+      <div class="theme-box">
+        <p><span class="glyph">&#9635;</span>&nbsp; Dos 5 fatores, <b>contexto local</b> é o que mais separa um projeto genérico de um que realmente conecta com quem está jogando — é literalmente o motivo de trocar "agro genérico" por biomas e situações brasileiras reais.</p>
+        <p><span class="glyph">&#9670;</span>&nbsp; Antes de fechar o design do projeto final (próximos módulos), vale usar essa tabela de 5 fatores como checklist rápido — se 2 ou mais estiverem fracos, provavelmente o sistema não vai engajar como esperado.</p>
+      </div>
+    </section>
+
+    <section>
+      <h2>Fechamento do Módulo 2</h2>
+      <div class="recap">
+        <div class="recap-row"><span class="w">S6</span><span>Gamificação educacional — automação condicional, evidência do SEGAE.</span></div>
+        <div class="recap-row"><span class="w">S7</span><span>Gamificação corporativa — dois limiares, limite ético entre engajar e vigiar.</span></div>
+        <div class="recap-row"><span class="w">S8</span><span>Design de sistemas — mini-GDD de 6 linhas, sensor com biblioteca (DHT11).</span></div>
+        <div class="recap-row"><span class="w">S9</span><span>Métricas e análise — média como primeira métrica, índice composto.</span></div>
+        <div class="recap-row"><span class="w">S10</span><span>Casos de sucesso — 5 fatores, dois sensores combinados num sistema.</span></div>
+      </div>
+    </section>
+
+    <section>
+      <h2>Próxima semana: Módulo 3</h2>
+      <ul class="plain">
+        <li><span class="num">&rarr;</span><span>Tecnologias Emergentes — Cloud Gaming, Ray Tracing, IA Procedural, Blockchain/NFTs, Metaverso (ementa oficial, sem perder de vista).</span></li>
+        <li><span class="num">&rarr;</span><span>Onde couber, esses temas ganham um exemplo aplicado ao agro por cima — sem substituir o conteúdo técnico.</span></li>
+      </ul>
+    </section>
+
+    <footer>
+      <a class="mono" href="semana09.html">&larr; Semana 9</a>
+      <span class="mono">Semana 10 de 20 &middot; fim do Módulo 2</span>
+      <a class="mono" href="semana11.html" style="color:var(--amber);">Semana 11 &rarr;</a>
+    </footer>
+  </div>
 </body>
 </html>
