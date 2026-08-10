@@ -35,14 +35,11 @@
   .mono{font-family:'IBM Plex Mono', monospace;}
   .wrap{max-width:840px;margin:0 auto;padding:0 24px;}
 
-  .nav-row{
-    display:flex;justify-content:space-between;align-items:center;
-    padding-top:36px;margin-bottom:28px;
-  }
   .back{
     display:inline-flex;align-items:center;gap:8px;
     font-family:'IBM Plex Mono', monospace;font-size:.8rem;
     color:var(--muted);text-decoration:none;
+    padding-top:36px;margin-bottom:28px;
   }
   .back:hover{color:var(--amber);}
 
@@ -77,31 +74,41 @@
   .panel p{margin-bottom:10px;}
   .panel p:last-child{margin-bottom:0;}
 
-  .sdt-grid{
-    display:grid;grid-template-columns:repeat(3, 1fr);gap:16px;
+  ul.plain{list-style:none;display:flex;flex-direction:column;gap:10px;}
+  ul.plain li{
+    display:flex;gap:12px;align-items:flex-start;
+    background:var(--panel-2);border-radius:8px;padding:12px 14px;
+    border-left:3px solid var(--green);
   }
-  .sdt-card{
-    background:var(--panel);border:1px solid var(--line);
-    border-radius:10px;padding:18px 18px 16px;
-    border-top:3px solid var(--green);
-  }
-  .sdt-card:nth-child(2){border-top-color:var(--amber);}
-  .sdt-card:nth-child(3){border-top-color:var(--muted);}
-  .sdt-card .k{
-    font-family:'IBM Plex Mono', monospace;font-size:.72rem;
-    letter-spacing:.1em;text-transform:uppercase;color:var(--muted);
-    margin-bottom:8px;
-  }
-  .sdt-card h4{font-size:1.02rem;margin-bottom:8px;}
-  .sdt-card p{font-size:.88rem;color:var(--ink);opacity:.9;}
+  ul.plain li b{color:var(--ink);}
+  ul.plain .num{font-family:'IBM Plex Mono', monospace;font-size:.78rem;color:var(--green);min-width:20px;}
 
-  table.cmp{width:100%;border-collapse:collapse;font-size:.92rem;}
-  table.cmp th, table.cmp td{text-align:left;padding:11px 12px;border-bottom:1px solid var(--line);vertical-align:top;}
-  table.cmp th{
+  table.eval{width:100%;border-collapse:collapse;font-size:.94rem;}
+  table.eval th, table.eval td{
+    text-align:left;padding:11px 12px;border-bottom:1px solid var(--line);
+  }
+  table.eval th{
     font-family:'IBM Plex Mono', monospace;font-size:.72rem;
     letter-spacing:.08em;text-transform:uppercase;color:var(--muted);
   }
-  table.cmp tr:last-child td{border-bottom:none;}
+  table.eval tr:last-child td{border-bottom:none;}
+  table.eval td.peso{font-family:'IBM Plex Mono', monospace;color:var(--amber);white-space:nowrap;}
+
+  .code-block{
+    background:var(--panel-2);border:1px solid var(--line);border-radius:8px;
+    padding:16px 18px;font-family:'IBM Plex Mono', monospace;font-size:.8rem;
+    overflow-x:auto;white-space:pre;color:var(--ink);line-height:1.6;
+  }
+  .wiring-grid{display:grid;grid-template-columns:1fr 1fr;gap:14px;}
+  .wiring-card{background:var(--panel-2);border-radius:8px;padding:14px 16px;border-left:3px solid var(--green);}
+  .wiring-card:nth-child(2){border-left-color:var(--amber);}
+  .wiring-card .t{font-family:'IBM Plex Mono', monospace;font-size:.72rem;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);margin-bottom:8px;}
+  .wiring-card ul{list-style:none;font-size:.87rem;}
+  .wiring-card li{padding:4px 0;}
+  .timing-row{display:flex;align-items:center;gap:12px;padding:8px 0;border-bottom:1px solid var(--line);}
+  .timing-row:last-child{border-bottom:none;}
+  .timing-row .dur{font-family:'IBM Plex Mono', monospace;font-size:.78rem;color:var(--amber);min-width:52px;}
+  @media (max-width:600px){.wiring-grid{grid-template-columns:1fr;}}
 
   .theme-box{
     background:linear-gradient(135deg, var(--panel) 0%, var(--panel-2) 100%);
@@ -112,114 +119,51 @@
   .theme-box p:last-child{margin-bottom:0;}
   .theme-box .glyph{color:var(--amber);font-family:'IBM Plex Mono', monospace;}
 
-  ul.plain{list-style:none;display:flex;flex-direction:column;gap:10px;}
-  ul.plain li{
-    display:flex;gap:12px;align-items:flex-start;
-    background:var(--panel-2);border-radius:8px;padding:12px 14px;
-    border-left:3px solid var(--green);
-  }
-  ul.plain li b{color:var(--ink);}
-  ul.plain .num{font-family:'IBM Plex Mono', monospace;font-size:.78rem;color:var(--green);min-width:20px;}
-
   footer{
     border-top:1px solid var(--line);padding:28px 0 40px;
     color:var(--muted);font-size:.84rem;
     display:flex;justify-content:space-between;flex-wrap:wrap;gap:10px;
   }
-  footer a{text-decoration:none;}
-  footer a:hover{color:var(--amber);}
-
-  @media (max-width: 640px){
-    .sdt-grid{grid-template-columns:1fr;}
-  }
 </style>
 </head>
 <body>
   <div class="wrap">
-    <div class="nav-row">
-      <a class="back" href="semana01.html">← semana 1</a>
-      <a class="back" href="index.html">índice ↑</a>
-    </div>
+    <a class="back" href="index.html">← voltar para a disciplina</a>
 
     <div class="eyebrow">Módulo 01 · Semana 2</div>
     <h1>Psicologia e Motivação</h1>
-    <p class="lede">Antes de desenhar pontos, níveis e badges, é preciso entender <strong>o que move as pessoas</strong> — e por que isso muda dependendo de quem é o jogador: um estudante, um pequeno produtor rural ou o dono de uma revenda agrícola.</p>
+    <p class="lede">O que faz alguém querer continuar jogando — e por que isso importa tanto quanto o código, na hora de escrever o feedback do quiz.</p>
 
     <section>
-      <h2>Prática do dia: primeiro sensor</h2>
+      <h2>Teoria: o que motiva um jogador</h2>
       <div class="panel">
-        <p>Semana passada foi só piscar um LED. Hoje sobe um degrau: ligar o primeiro sensor analógico do kit — um LDR (sensor de luz) ou um potenciômetro, o que estiver disponível — e ler o valor bruto no Monitor Serial com <span class="mono">analogRead()</span>.</p>
-        <p>Ainda sem jogo, sem mecânica, sem código bonito. Só entender o que é esse número entre 0 e 1023, e ver ele mudar em tempo real quando a mão cobre o sensor ou o potenciômetro gira. Essa leitura crua é a base de tudo que vem depois.</p>
+        <p>Base da aula: <b>Teoria da Autodeterminação</b> (Deci &amp; Ryan) — motivação intrínseca sustenta engajamento melhor que recompensa externa, e depende de três pilares: <b>autonomia</b> (sinto que escolho), <b>competência</b> (sinto que evoluo) e <b>relação</b> (sinto que pertenço a algo). Contraste entre motivação intrínseca e extrínseca, e por que gamificação mal feita vira só "pontinho por pontinho".</p>
       </div>
     </section>
 
     <section>
-      <h2>Por que motivação vem antes da mecânica</h2>
+      <h2>Aplicação no Projeto Agro 2026</h2>
       <div class="panel">
-        <p>Gamificação não é "colocar pontos em tudo". Elementos de jogo só funcionam quando respondem a uma motivação real de quem vai usar o sistema. Um sistema de badges pode engajar um adolescente e ser irrelevante para um produtor rural de 55 anos — não porque gamificação "não funciona no agro", mas porque a motivação por trás precisa ser outra.</p>
-        <p>McGonigal (bibliografia da disciplina) descreve como jogos bem desenhados geram <em>curiosidade epistêmica</em> e estados de <em>flow</em> — engajamento pelo desafio em si, não só pela recompensa externa. É esse mecanismo que queremos entender antes de aplicar.</p>
+        <p>Hoje entra o <b>sensor de umidade do solo</b> no jogo "Decisão do Agricultor" da semana passada — segunda etapa da lógica problema → decisão → ação, agora com dado real em vez de situação anunciada em voz alta.</p><p>Em paralelo, a equipe de <b>Roteiro</b> usa a teoria de hoje pra escrever os primeiros micro-textos de feedback do quiz: por que "Muito bem! Sem a sementinha não tem plantinha" funciona melhor pra reforçar competência do que só "Certo!".</p>
       </div>
     </section>
 
     <section>
-      <h2>Teoria da autodeterminação (Deci &amp; Ryan)</h2>
-      <div class="sdt-grid">
-        <div class="sdt-card">
-          <div class="k">01 · Autonomia</div>
-          <h4>Sinto que escolho</h4>
-          <p>A pessoa tem controle real sobre suas ações, não apenas segue um roteiro imposto.</p>
-        </div>
-        <div class="sdt-card">
-          <div class="k">02 · Competência</div>
-          <h4>Sinto que evoluo</h4>
-          <p>Há desafio proporcional à habilidade, com progresso visível — nem fácil demais, nem impossível.</p>
-        </div>
-        <div class="sdt-card">
-          <div class="k">03 · Propósito / pertencimento</div>
-          <h4>Sinto que importa</h4>
-          <p>A ação se conecta a algo maior — um objetivo pessoal, um grupo, uma comunidade.</p>
-        </div>
-      </div>
-    </section>
-
-    <section>
-      <h2>Motivação intrínseca vs. extrínseca</h2>
+      <h2>Atividade da semana</h2>
       <div class="panel">
-        <table class="cmp">
-          <thead>
-            <tr><th>Intrínseca</th><th>Extrínseca</th></tr>
-          </thead>
-          <tbody>
-            <tr><td>Vem de dentro: curiosidade, domínio de uma habilidade, prazer na tarefa</td><td>Vem de fora: pontos, prêmios, ranking, reconhecimento público</td></tr>
-            <tr><td>Mais durável — a pessoa continua mesmo sem recompensa externa</td><td>Rápida de ativar, mas pode enfraquecer o interesse genuíno se usada em excesso</td></tr>
-            <tr><td>Difícil de desenhar diretamente — é consequência de boa experiência</td><td>Fácil de desenhar — pontos, badges, leaderboards</td></tr>
-          </tbody>
-        </table>
+        <ul class="plain">
+          <li><span class="num">1</span><span>Montar o sensor de umidade e integrar à lógica de irrigação do jogo da semana 1.</span></li>
+          <li><span class="num">2</span><span>Roteiro rascunha 2 exemplos de feedback (acerto e erro) aplicando autonomia/competência/relação.</span></li>
+          <li><span class="num">3</span><span>Discussão em grupo: qual elemento do projeto arrisca virar 'pontinho por pontinho'?</span></li>
+        </ul>
       </div>
     </section>
 
-    <section>
-      <h2>Aplicando ao agronegócio</h2>
-      <div class="theme-box">
-        <p><span class="glyph">▣</span>&nbsp; <b>Competência</b> como motivador central: um quiz gamificado sobre manejo de solo funciona melhor se mostrar progresso claro de domínio do assunto, não só "pontos por acerto".</p>
-        <p><span class="glyph">◈</span>&nbsp; <b>Autonomia</b> nas situações de decisão de negócio: deixar quem joga escolher entre caminhos diferentes gera mais engajamento do que um caminho único — por exemplo, investir em sensor de agricultura de precisão vs. expandir pra turismo rural, dois eixos reais discutidos no <a href="index.html" style="color:var(--amber);">IV Simpósio InterAgro</a>.</p>
-        <p><span class="glyph">▤</span>&nbsp; <b>Propósito</b> como gancho pro produto final: um protótipo (jogo, sensor ou AR) que resolve um problema real de alguém do agronegócio tende a engajar mais os próprios alunos do que um exercício abstrato.</p>
-        <p><span class="glyph">⌬</span>&nbsp; A própria turma é um bom exemplo de <b>competência</b> em ação: em Unity/Blender/Construct, o desafio já é baixo — dominado desde semestres anteriores, então motiva pouco por novidade. Já o Arduino entra no ponto ideal da teoria: desafio real, mas alcançável, exatamente o que sustenta engajamento por competência.</p>
-      </div>
-    </section>
-
-    <section>
-      <h2>Para a próxima aula</h2>
-      <ul class="plain">
-        <li><span class="num">01</span><span>Pensar em uma situação real do agronegócio (própria ou de alguém conhecido) que dependa de motivação — o que faria essa pessoa continuar engajada?</span></li>
-        <li><span class="num">02</span><span>Identificar se essa motivação é mais intrínseca ou extrínseca, e por quê.</span></li>
-      </ul>
-    </section>
 
     <footer>
-      <a class="mono" href="semana01.html">← Semana 1</a>
-      <span class="mono">Semana 2 de 20</span>
-      <a class="mono" href="semana03.html" style="color:var(--amber);">Semana 3 →</a>
+      <span class="mono">IJD-038 — Semana 2 de 20</span>
+      <a class="mono" href="semana01.html" style="color:var(--muted);text-decoration:none;">← semana anterior</a>
+      <a class="mono" href="semana03.html" style="color:var(--amber);text-decoration:none;">Próxima semana →</a>
     </footer>
   </div>
 </body>

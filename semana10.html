@@ -18,8 +18,6 @@
     --green:#6fa05d;
     --green-soft:#6fa05d33;
     --amber:#e3a23c;
-    --teal:#4c93a6;
-    --rose:#c1603a;
   }
   *{margin:0;padding:0;box-sizing:border-box;}
   body{
@@ -37,23 +35,20 @@
   .mono{font-family:'IBM Plex Mono', monospace;}
   .wrap{max-width:840px;margin:0 auto;padding:0 24px;}
 
-  .nav-row{
-    display:flex;justify-content:space-between;align-items:center;
-    padding-top:36px;margin-bottom:28px;
-  }
   .back{
     display:inline-flex;align-items:center;gap:8px;
     font-family:'IBM Plex Mono', monospace;font-size:.8rem;
     color:var(--muted);text-decoration:none;
+    padding-top:36px;margin-bottom:28px;
   }
   .back:hover{color:var(--amber);}
 
   .eyebrow{
     font-family:'IBM Plex Mono', monospace;font-size:.78rem;
-    letter-spacing:.18em;color:var(--amber);text-transform:uppercase;
+    letter-spacing:.18em;color:var(--green);text-transform:uppercase;
     display:flex;align-items:center;gap:10px;margin-bottom:16px;
   }
-  .eyebrow::before{content:"";width:8px;height:8px;border-radius:50%;background:var(--amber);box-shadow:0 0 0 3px #e3a23c33;}
+  .eyebrow::before{content:"";width:8px;height:8px;border-radius:50%;background:var(--green);box-shadow:0 0 0 3px var(--green-soft);}
 
   h1{
     font-family:'IBM Plex Mono', monospace;font-weight:700;
@@ -66,7 +61,7 @@
   section{margin-bottom:36px;}
   section h2{
     font-family:'IBM Plex Mono', monospace;font-size:.82rem;
-    letter-spacing:.12em;text-transform:uppercase;color:var(--green);
+    letter-spacing:.12em;text-transform:uppercase;color:var(--amber);
     margin-bottom:14px;
     display:flex;align-items:center;gap:10px;
   }
@@ -79,39 +74,41 @@
   .panel p{margin-bottom:10px;}
   .panel p:last-child{margin-bottom:0;}
 
+  ul.plain{list-style:none;display:flex;flex-direction:column;gap:10px;}
+  ul.plain li{
+    display:flex;gap:12px;align-items:flex-start;
+    background:var(--panel-2);border-radius:8px;padding:12px 14px;
+    border-left:3px solid var(--green);
+  }
+  ul.plain li b{color:var(--ink);}
+  ul.plain .num{font-family:'IBM Plex Mono', monospace;font-size:.78rem;color:var(--green);min-width:20px;}
+
+  table.eval{width:100%;border-collapse:collapse;font-size:.94rem;}
+  table.eval th, table.eval td{
+    text-align:left;padding:11px 12px;border-bottom:1px solid var(--line);
+  }
+  table.eval th{
+    font-family:'IBM Plex Mono', monospace;font-size:.72rem;
+    letter-spacing:.08em;text-transform:uppercase;color:var(--muted);
+  }
+  table.eval tr:last-child td{border-bottom:none;}
+  table.eval td.peso{font-family:'IBM Plex Mono', monospace;color:var(--amber);white-space:nowrap;}
+
   .code-block{
     background:var(--panel-2);border:1px solid var(--line);border-radius:8px;
     padding:16px 18px;font-family:'IBM Plex Mono', monospace;font-size:.8rem;
     overflow-x:auto;white-space:pre;color:var(--ink);line-height:1.6;
   }
-
-  .factor-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;}
-  .factor-card{
-    background:var(--panel);border:1px solid var(--line);border-radius:10px;
-    padding:14px 14px 12px;border-top:3px solid var(--green);
-  }
-  .factor-card:nth-child(2){border-top-color:var(--amber);}
-  .factor-card:nth-child(3){border-top-color:var(--teal);}
-  .factor-card:nth-child(4){border-top-color:var(--rose);}
-  .factor-card:nth-child(5){border-top-color:var(--green);}
-  .factor-card .k{font-family:'IBM Plex Mono', monospace;font-size:.68rem;letter-spacing:.06em;text-transform:uppercase;color:var(--muted);margin-bottom:6px;}
-  .factor-card p{font-size:.82rem;color:var(--ink);opacity:.9;}
-
-  table.cases{width:100%;border-collapse:collapse;font-size:.88rem;}
-  table.cases th, table.cases td{text-align:left;padding:10px 12px;border-bottom:1px solid var(--line);vertical-align:top;}
-  table.cases th{font-family:'IBM Plex Mono', monospace;font-size:.7rem;letter-spacing:.06em;text-transform:uppercase;color:var(--muted);}
-  table.cases tr:last-child td{border-bottom:none;}
-
-  .recap{
-    background:var(--panel);border:1px solid var(--line);border-radius:10px;
-    padding:22px 24px;
-  }
-  .recap-row{
-    display:flex;align-items:flex-start;gap:14px;padding:10px 0;
-    border-bottom:1px solid var(--line);
-  }
-  .recap-row:last-child{border-bottom:none;}
-  .recap-row .w{font-family:'IBM Plex Mono', monospace;font-size:.72rem;color:var(--amber);min-width:64px;padding-top:2px;}
+  .wiring-grid{display:grid;grid-template-columns:1fr 1fr;gap:14px;}
+  .wiring-card{background:var(--panel-2);border-radius:8px;padding:14px 16px;border-left:3px solid var(--green);}
+  .wiring-card:nth-child(2){border-left-color:var(--amber);}
+  .wiring-card .t{font-family:'IBM Plex Mono', monospace;font-size:.72rem;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);margin-bottom:8px;}
+  .wiring-card ul{list-style:none;font-size:.87rem;}
+  .wiring-card li{padding:4px 0;}
+  .timing-row{display:flex;align-items:center;gap:12px;padding:8px 0;border-bottom:1px solid var(--line);}
+  .timing-row:last-child{border-bottom:none;}
+  .timing-row .dur{font-family:'IBM Plex Mono', monospace;font-size:.78rem;color:var(--amber);min-width:52px;}
+  @media (max-width:600px){.wiring-grid{grid-template-columns:1fr;}}
 
   .theme-box{
     background:linear-gradient(135deg, var(--panel) 0%, var(--panel-2) 100%);
@@ -122,120 +119,51 @@
   .theme-box p:last-child{margin-bottom:0;}
   .theme-box .glyph{color:var(--amber);font-family:'IBM Plex Mono', monospace;}
 
-  ul.plain{list-style:none;display:flex;flex-direction:column;gap:10px;}
-  ul.plain li{
-    display:flex;gap:12px;align-items:flex-start;
-    background:var(--panel-2);border-radius:8px;padding:12px 14px;
-    border-left:3px solid var(--green);
-  }
-  ul.plain li b{color:var(--ink);}
-  ul.plain .num{font-family:'IBM Plex Mono', monospace;font-size:.78rem;color:var(--green);min-width:20px;}
-
   footer{
     border-top:1px solid var(--line);padding:28px 0 40px;
     color:var(--muted);font-size:.84rem;
     display:flex;justify-content:space-between;flex-wrap:wrap;gap:10px;
   }
-  footer a{text-decoration:none;}
-  footer a:hover{color:var(--amber);}
-
-  @media (max-width:700px){
-    .factor-grid{grid-template-columns:1fr 1fr;}
-  }
-  @media (max-width:460px){
-    .factor-grid{grid-template-columns:1fr;}
-  }
 </style>
 </head>
 <body>
   <div class="wrap">
-    <div class="nav-row">
-      <a class="back" href="semana09.html">&larr; semana 9</a>
-      <a class="back" href="index.html">indice &uarr;</a>
-    </div>
+    <a class="back" href="index.html">← voltar para a disciplina</a>
 
-    <div class="eyebrow">Modulo 02 &middot; Semana 10 &middot; fecha o modulo</div>
+    <div class="eyebrow">Módulo 02 · Semana 10</div>
     <h1>Casos de Sucesso</h1>
-    <p class="lede">Última semana do módulo: em vez de mecânica nova, hoje é sobre <strong>ler</strong> os exemplos reais que já foram catalogados — o quê especificamente fez cada um funcionar (ou não).</p>
+    <p class="lede">Duas referências acadêmicas reais, testadas com usuários de verdade — o que dá pra copiar e o que dá pra evitar.</p>
 
     <section>
-      <h2>Prática do dia (30 min): dois sensores, um sistema</h2>
+      <h2>Teoria: estudo aprofundado de casos reais</h2>
       <div class="panel">
-        <p>Fechamento técnico do módulo: juntar o sensor analógico (umidade do solo, semana 2) com o DHT11 (temperatura e umidade do ar, semana 8) num único sistema de decisão — dois dados diferentes informando a mesma lógica de alerta.</p>
-        <div class="code-block">int solo = analogRead(A0);
-float tempAr = dht.readTemperature();
-
-bool soloSeco = solo &lt; 300;
-bool calor = tempAr &gt; 30;
-
-if (soloSeco &amp;&amp; calor) {
-  // pior cenario: irrigar com prioridade
-  digitalWrite(ledVermelho, HIGH);
-} else if (soloSeco || calor) {
-  digitalWrite(ledAmarelo, HIGH);
-}</div>
-        <p style="margin-top:12px;">Esse é o tipo de lógica combinada que separa um alerta simples de um sistema de decisão real — dois sinais concordando pesam mais que um sozinho.</p>
+        <p>Revisão em profundidade de dois estudos de caso já citados como referência na disciplina: <b>SEGAE</b> (consórcio europeu, testado com 52 universitários de 5 países — conhecimento sobre agroecologia subiu de 43% pra 51%) e <b>EcoFarming</b> (pesquisadores brasileiros, plataforma multijogador pro ensino médio nos 6 biomas do Brasil).</p>
       </div>
     </section>
 
     <section>
-      <h2>Fatores de sucesso (literatura)</h2>
-      <div class="factor-grid">
-        <div class="factor-card"><div class="k">Realismo</div><p>O cenário parece verdade, não abstrato.</p></div>
-        <div class="factor-card"><div class="k">Usabilidade</div><p>Não exige manual pra entender o básico.</p></div>
-        <div class="factor-card"><div class="k">Feedback contínuo</div><p>A pessoa sabe o tempo todo como está indo.</p></div>
-        <div class="factor-card"><div class="k">Personalização</div><p>Se adapta a diferentes níveis de habilidade.</p></div>
-        <div class="factor-card"><div class="k">Contexto local</div><p>Reflete a realidade de quem está jogando.</p></div>
-      </div>
-      <p style="margin-top:10px;font-size:.82rem;color:var(--muted);">Fatores identificados em síntese de mais de 170 artigos sobre jogos de negócio na educação empreendedora (citado no artigo EcoFarming, referência no índice).</p>
-    </section>
-
-    <section>
-      <h2>Aplicando o framework</h2>
+      <h2>Aplicação no Projeto Agro 2026</h2>
       <div class="panel">
-        <table class="cases">
-          <thead><tr><th>Projeto</th><th>Fator mais forte</th><th>Evidência</th></tr></thead>
-          <tbody>
-            <tr><td><b>SEGAE</b></td><td>Feedback contínuo</td><td>86% aprovação, ganho de conhecimento mensurado (semana 6)</td></tr>
-            <tr><td><b>EcoFarming</b></td><td>Contexto local</td><td>Biomas brasileiros — o próprio artigo cita isso como lacuna que preenche</td></tr>
-            <tr><td><b>Fizztopia</b></td><td>Realismo/tema</td><td>Conscientização ambiental com mecânica de coleta clara</td></tr>
-          </tbody>
-        </table>
-        <p style="margin-top:14px;">Exercício da aula: cada dupla escolhe um projeto do <a href="index.html" style="color:var(--amber);">índice</a> que ainda não está nessa tabela e preenche a mesma linha — qual fator é mais forte, e qual evidência sustenta isso.</p>
+        <p>Cada equipe extrai <b>uma lição concreta</b> desses dois casos pra aplicar no projeto — por exemplo: o "limite de mudanças restantes por rodada" do SEGAE (força priorização em vez de mexer em tudo) pode inspirar como a Fase 2/3 limita opções por rodada; o Índice de Economia Limpa do EcoFarming pode inspirar como pontuar a Fase 3 sem virar "só lucro".</p>
       </div>
     </section>
 
     <section>
-      <h2>Aplicando ao agronegócio</h2>
-      <div class="theme-box">
-        <p><span class="glyph">&#9635;</span>&nbsp; Dos 5 fatores, <b>contexto local</b> é o que mais separa um projeto genérico de um que realmente conecta com quem está jogando — é literalmente o motivo de trocar "agro genérico" por biomas e situações brasileiras reais.</p>
-        <p><span class="glyph">&#9670;</span>&nbsp; Antes de fechar o design do projeto final (próximos módulos), vale usar essa tabela de 5 fatores como checklist rápido — se 2 ou mais estiverem fracos, provavelmente o sistema não vai engajar como esperado.</p>
+      <h2>Atividade da semana</h2>
+      <div class="panel">
+        <ul class="plain">
+          <li><span class="num">1</span><span>Cada equipe apresenta 1 lição do SEGAE ou EcoFarming aplicável ao projeto.</span></li>
+          <li><span class="num">2</span><span>Documentação registra essas lições — vira parte da fundamentação teórica do artigo.</span></li>
+          <li><span class="num">3</span><span>Fechamento do Módulo 2: revisar se Fases 1, 2 e 3 estão consistentes entre si.</span></li>
+        </ul>
       </div>
     </section>
 
-    <section>
-      <h2>Fechamento do Módulo 2</h2>
-      <div class="recap">
-        <div class="recap-row"><span class="w">S6</span><span>Gamificação educacional — automação condicional, evidência do SEGAE.</span></div>
-        <div class="recap-row"><span class="w">S7</span><span>Gamificação corporativa — dois limiares, limite ético entre engajar e vigiar.</span></div>
-        <div class="recap-row"><span class="w">S8</span><span>Design de sistemas — mini-GDD de 6 linhas, sensor com biblioteca (DHT11).</span></div>
-        <div class="recap-row"><span class="w">S9</span><span>Métricas e análise — média como primeira métrica, índice composto.</span></div>
-        <div class="recap-row"><span class="w">S10</span><span>Casos de sucesso — 5 fatores, dois sensores combinados num sistema.</span></div>
-      </div>
-    </section>
-
-    <section>
-      <h2>Próxima semana: Módulo 3</h2>
-      <ul class="plain">
-        <li><span class="num">&rarr;</span><span>Tecnologias Emergentes — Cloud Gaming, Ray Tracing, IA Procedural, Blockchain/NFTs, Metaverso (ementa oficial, sem perder de vista).</span></li>
-        <li><span class="num">&rarr;</span><span>Onde couber, esses temas ganham um exemplo aplicado ao agro por cima — sem substituir o conteúdo técnico.</span></li>
-      </ul>
-    </section>
 
     <footer>
-      <a class="mono" href="semana09.html">&larr; Semana 9</a>
-      <span class="mono">Semana 10 de 20 &middot; fim do Módulo 2</span>
-      <a class="mono" href="semana11.html" style="color:var(--amber);">Semana 11 &rarr;</a>
+      <span class="mono">IJD-038 — Semana 10 de 20</span>
+      <a class="mono" href="semana09.html" style="color:var(--muted);text-decoration:none;">← semana anterior</a>
+      <a class="mono" href="semana11.html" style="color:var(--amber);text-decoration:none;">Próxima semana →</a>
     </footer>
   </div>
 </body>

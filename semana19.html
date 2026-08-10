@@ -1,156 +1,167 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Semana 19 - Desenvolvimento do Projeto Final - Tópicos Especiais em Jogos Digitais</title>
-    <link rel="stylesheet" href="common.css">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Semana 19 · Desenvolvimento do Projeto — IJD-038</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600;700&family=IBM+Plex+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg:#12100b;
+    --panel:#1b170f;
+    --panel-2:#211c12;
+    --ink:#ede6d6;
+    --muted:#9c8f76;
+    --line:#33291a;
+    --green:#6fa05d;
+    --green-soft:#6fa05d33;
+    --amber:#e3a23c;
+  }
+  *{margin:0;padding:0;box-sizing:border-box;}
+  body{
+    background:
+      radial-gradient(1200px 600px at 15% -10%, #1d1a10 0%, transparent 60%),
+      repeating-linear-gradient(90deg, #16130d 0px, #16130d 1px, transparent 1px, transparent 64px),
+      var(--bg);
+    color:var(--ink);
+    font-family:'IBM Plex Sans', sans-serif;
+    line-height:1.65;
+    min-height:100vh;
+  }
+  a{color:inherit;}
+  :focus-visible{outline:2px solid var(--amber);outline-offset:3px;}
+  .mono{font-family:'IBM Plex Mono', monospace;}
+  .wrap{max-width:840px;margin:0 auto;padding:0 24px;}
+
+  .back{
+    display:inline-flex;align-items:center;gap:8px;
+    font-family:'IBM Plex Mono', monospace;font-size:.8rem;
+    color:var(--muted);text-decoration:none;
+    padding-top:36px;margin-bottom:28px;
+  }
+  .back:hover{color:var(--amber);}
+
+  .eyebrow{
+    font-family:'IBM Plex Mono', monospace;font-size:.78rem;
+    letter-spacing:.18em;color:var(--green);text-transform:uppercase;
+    display:flex;align-items:center;gap:10px;margin-bottom:16px;
+  }
+  .eyebrow::before{content:"";width:8px;height:8px;border-radius:50%;background:var(--green);box-shadow:0 0 0 3px var(--green-soft);}
+
+  h1{
+    font-family:'IBM Plex Mono', monospace;font-weight:700;
+    font-size:clamp(1.6rem, 4vw, 2.4rem);letter-spacing:-.01em;
+    margin-bottom:12px;
+  }
+  .lede{color:var(--muted);font-size:1.02rem;max-width:56ch;margin-bottom:44px;}
+  .lede strong{color:var(--ink);}
+
+  section{margin-bottom:36px;}
+  section h2{
+    font-family:'IBM Plex Mono', monospace;font-size:.82rem;
+    letter-spacing:.12em;text-transform:uppercase;color:var(--amber);
+    margin-bottom:14px;
+    display:flex;align-items:center;gap:10px;
+  }
+  section h2::after{content:"";flex:1;height:1px;background:var(--line);}
+
+  .panel{
+    background:var(--panel);border:1px solid var(--line);
+    border-radius:10px;padding:22px 24px;
+  }
+  .panel p{margin-bottom:10px;}
+  .panel p:last-child{margin-bottom:0;}
+
+  ul.plain{list-style:none;display:flex;flex-direction:column;gap:10px;}
+  ul.plain li{
+    display:flex;gap:12px;align-items:flex-start;
+    background:var(--panel-2);border-radius:8px;padding:12px 14px;
+    border-left:3px solid var(--green);
+  }
+  ul.plain li b{color:var(--ink);}
+  ul.plain .num{font-family:'IBM Plex Mono', monospace;font-size:.78rem;color:var(--green);min-width:20px;}
+
+  table.eval{width:100%;border-collapse:collapse;font-size:.94rem;}
+  table.eval th, table.eval td{
+    text-align:left;padding:11px 12px;border-bottom:1px solid var(--line);
+  }
+  table.eval th{
+    font-family:'IBM Plex Mono', monospace;font-size:.72rem;
+    letter-spacing:.08em;text-transform:uppercase;color:var(--muted);
+  }
+  table.eval tr:last-child td{border-bottom:none;}
+  table.eval td.peso{font-family:'IBM Plex Mono', monospace;color:var(--amber);white-space:nowrap;}
+
+  .code-block{
+    background:var(--panel-2);border:1px solid var(--line);border-radius:8px;
+    padding:16px 18px;font-family:'IBM Plex Mono', monospace;font-size:.8rem;
+    overflow-x:auto;white-space:pre;color:var(--ink);line-height:1.6;
+  }
+  .wiring-grid{display:grid;grid-template-columns:1fr 1fr;gap:14px;}
+  .wiring-card{background:var(--panel-2);border-radius:8px;padding:14px 16px;border-left:3px solid var(--green);}
+  .wiring-card:nth-child(2){border-left-color:var(--amber);}
+  .wiring-card .t{font-family:'IBM Plex Mono', monospace;font-size:.72rem;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);margin-bottom:8px;}
+  .wiring-card ul{list-style:none;font-size:.87rem;}
+  .wiring-card li{padding:4px 0;}
+  .timing-row{display:flex;align-items:center;gap:12px;padding:8px 0;border-bottom:1px solid var(--line);}
+  .timing-row:last-child{border-bottom:none;}
+  .timing-row .dur{font-family:'IBM Plex Mono', monospace;font-size:.78rem;color:var(--amber);min-width:52px;}
+  @media (max-width:600px){.wiring-grid{grid-template-columns:1fr;}}
+
+  .theme-box{
+    background:linear-gradient(135deg, var(--panel) 0%, var(--panel-2) 100%);
+    border:1px solid var(--line);border-left:3px solid var(--amber);
+    border-radius:10px;padding:24px 26px;
+  }
+  .theme-box p{margin-bottom:10px;}
+  .theme-box p:last-child{margin-bottom:0;}
+  .theme-box .glyph{color:var(--amber);font-family:'IBM Plex Mono', monospace;}
+
+  footer{
+    border-top:1px solid var(--line);padding:28px 0 40px;
+    color:var(--muted);font-size:.84rem;
+    display:flex;justify-content:space-between;flex-wrap:wrap;gap:10px;
+  }
+</style>
 </head>
 <body>
-    <div class="main">
-        <div class="header">
-        <div class="header-content">
-            <div class="header-text">
-                <h1>📚 Semana 19 - Desenvolvimento do Projeto Final</h1>
-                <p>Tópicos Especiais em Jogos Digitais - IJD-038 | 6º Semestre</p>
-            </div>
-        </div>
-    </div>
+  <div class="wrap">
+    <a class="back" href="index.html">← voltar para a disciplina</a>
 
-    <div class="container">
-        <aside class="sidebar">
-            <h2>🔖 Navegação</h2>
-            <ul class="week-menu">
-                <li><a href="semana01.html">Semana 01</a></li>
-                <li><a href="semana02.html">Semana 02</a></li>
-                <li><a href="semana03.html">Semana 03</a></li>
-                <li><a href="semana04.html">Semana 04</a></li>
-                <li><a href="semana05.html">Semana 05</a></li>
-                <li><a href="semana06.html">Semana 06</a></li>
-                <li><a href="semana07.html">Semana 07</a></li>
-                <li><a href="semana08.html">Semana 08</a></li>
-                <li><a href="semana09.html">Semana 09</a></li>
-                <li><a href="semana10.html">Semana 10</a></li>
-                <li><a href="semana11.html">Semana 11</a></li>
-                <li><a href="semana12.html">Semana 12</a></li>
-                <li><a href="semana13.html">Semana 13</a></li>
-                <li><a href="semana14.html">Semana 14</a></li>
-                <li><a href="semana15.html">Semana 15</a></li>
-                <li><a href="semana16.html">Semana 16</a></li>
-                <li><a href="semana17.html">Semana 17</a></li>
-                <li><a href="semana18.html">Semana 18</a></li>
-                <li><a href="semana19.html" class="active">Semana 19</a></li>
-                <li><a href="semana20.html">Semana 20</a></li>
-                <li style="margin-top: 15px;"><a href="index.html" style="background: #764ba2; color: white;">🏠 Início</a></li>
-            </ul>
-        </aside>
+    <div class="eyebrow">Módulo 04 · Semana 19</div>
+    <h1>Desenvolvimento do Projeto</h1>
+    <p class="lede">Sem teoria nova esta semana — é a reta final de produção, fechando pendências de todas as equipes.</p>
 
-        <main class="main-content">
-            <div class="section">
-                <span class="module-badge">Módulo 4: Motion Design e Projeto Final</span>
-                <h2>🎯 Objetivos da Semana</h2>
-                <ul class="objectives-list">
-                    <li>Integrar conhecimentos do semestre</li>
-                    <li>Desenvolver projeto completo</li>
-                    <li>Documentar processo</li>
-                    <li>Preparar apresentação</li>
-                </ul>
+    <section>
+      <h2>Foco da semana: fechamento geral</h2>
+      <div class="panel">
+        <p>Última semana de produção antes da apresentação final. Sem conteúdo teórico novo — o tempo de aula é dedicado a fechar pendências de <b>todas</b> as frentes: quiz (as 3 fases), mini-fazenda física, som, arte e documentação/artigo.</p>
+      </div>
+    </section>
 
-<div class="scard">
-    <div class="scard-head">
-        <div class="scard-ico ico-amber">🔮</div>
-        <div class="scard-title">Futuro dos Jogos Digitais</div>
-        <div class="scard-xp">+50 XP</div>
-    </div>
-    <div class="scard-body">
-        <p><strong>Neuralink Gaming:</strong> Controle mental direto - protótipos já existem.</p>
-        <p><strong>IA Procedural:</strong> Mundos infinitos gerados - No Man's Sky mostrou potencial.</p>
-        <p><strong>Realidade Híbrida:</strong> Fusão VR/AR/físico - Apple Vision Pro é primeiro passo.</p>
-    </div>
-</div>
-            </div>
+    <section>
+      <h2>Checklist de fechamento por equipe</h2>
+      <div class="panel">
+        <ul class="plain">
+          <li><span class="num">Programação</span><span>3 fases jogáveis sem bugs bloqueantes, tempo total ≤ 15 minutos.</span></li>
+          <li><span class="num">Arte</span><span>Todas as telas com arte final (sem placeholder), personagem-guia consistente.</span></li>
+          <li><span class="num">Roteiro</span><span>Textos revisados, sem erro de português, feedback completo em todas as perguntas.</span></li>
+          <li><span class="num">Som</span><span>Trilha e SFX aplicados em todas as fases e transições.</span></li>
+          <li><span class="num">Arduino/Mini-fazenda</span><span>Ao menos a porteira automática funcionando de forma independente e estável.</span></li>
+          <li><span class="num">Documentação</span><span>Rascunho do artigo fechado, faltando só resultados finais da apresentação.</span></li>
+          <li><span class="num">Gerência de Projeto</span><span>Checklist geral revisado com todas as equipes antes da semana 20.</span></li>
+        </ul>
+      </div>
+    </section>
 
-            <div class="section">
-                <h2>📚 Conteúdo Programático</h2>
-                <ul class="topics-list">
-                    <li>Gestão de Projeto</li>
-                    <li>Integração de Sistemas</li>
-                    <li>Testes e Iteração</li>
-                    <li>Documentação Técnica</li>
-                    <li>Preparação de Portfolio</li>
-                    <li>Apresentação Profissional</li>
-                </ul>
-            </div>
 
-            <div class="section">
-                <h2>🎬 Vídeos Recomendados</h2>
-                <div class="video-grid">
-                    <div class="video-card">
-                        <iframe src="https://www.youtube.com/embed/XF8TUxRirn0" allowfullscreen></iframe>
-                        <div class="video-info">
-                            <h4>Project Management for Games</h4>
-                        </div>
-                    </div>
-                    <div class="video-card">
-                        <iframe src="https://www.youtube.com/embed/qPLa_hXJTso" allowfullscreen></iframe>
-                        <div class="video-info">
-                            <h4>Portfolio Best Practices</h4>
-                        </div>
-                    </div>
-                    <div class="video-card">
-                        <iframe src="https://www.youtube.com/embed/OQ2zxGtzuJE" allowfullscreen></iframe>
-                        <div class="video-info">
-                            <h4>Technical Documentation</h4>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <div class="section">
-                <h2>✏️ Atividades Práticas</h2>
-                <div class="atividade">
-                    <h4>🎯 Atividade 1: Desenvolvimento Sprint 1</h4>
-                    <div class="descricao">
-                        <p>Primeira sprint de desenvolvimento: setup, arquitetura, core features, playtesting inicial.</p>
-                    </div>
-                    <div class="entrega">
-                        <strong>📦 Entrega:</strong>
-                        Build alpha + sprint report + backlog atualizado + métricas de testes
-                    </div>
-                </div>
-                <div class="atividade">
-                    <h4>🎯 Atividade 2: Desenvolvimento Sprint 2</h4>
-                    <div class="descricao">
-                        <p>Segunda sprint: polish, bug fixes, content, documentação, preparação apresentação.</p>
-                    </div>
-                    <div class="entrega">
-                        <strong>📦 Entrega:</strong>
-                        Build beta + documentação completa + vídeo demo + slide deck
-                    </div>
-                </div>
-                <div class="atividade">
-                    <h4>🎯 Atividade 3: Portfolio Piece</h4>
-                    <div class="descricao">
-                        <p>Criar página de portfolio profissional para o projeto com case study completo.</p>
-                    </div>
-                    <div class="entrega">
-                        <strong>📦 Entrega:</strong>
-                        Página web publicada + caso de estudo + assets para divulgação
-                    </div>
-                </div>
-            </div>
-
-            <div class="navigation">
-                <a href="semana18.html" class="nav-button">
-                    ⬅️ Semana Anterior
-                </a>
-                <a href="semana20.html" class="nav-button">
-                    Próxima Semana ➡️
-                </a>
-            </div>
-        </main>
-    </div>
-    </div>
-    <script src="common.js"></script>
+    <footer>
+      <span class="mono">IJD-038 — Semana 19 de 20</span>
+      <a class="mono" href="semana18.html" style="color:var(--muted);text-decoration:none;">← semana anterior</a>
+      <a class="mono" href="semana20.html" style="color:var(--amber);text-decoration:none;">Próxima semana →</a>
+    </footer>
+  </div>
 </body>
 </html>
