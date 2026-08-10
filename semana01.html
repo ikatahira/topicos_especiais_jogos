@@ -145,7 +145,7 @@
     <section>
       <h2>Ementa</h2>
       <div class="panel">
-        <p>Gamificação: teoria e prática. Gamificação educacional e empresarial. Estudos de tecnologias emergentes em jogos digitais. Motion Design aplicado a jogos e interfaces interativas.</p>
+        <p>Gamificação: teoria e prática. Gamificação educacional e empresarial. Estudos de tecnologias emergentes em jogos digitais. Motion Design.</p>
       </div>
     </section>
 
@@ -160,11 +160,38 @@
             <tr><td>Atividades práticas ao longo do semestre</td><td class="peso">a definir</td></tr>
             <tr><td>Quiz gamificado (conteúdo do agronegócio)</td><td class="peso">a definir</td></tr>
             <tr><td>Situações de decisão de negócio (agro)</td><td class="peso">a definir</td></tr>
-            <tr><td>Projeto final — produto para o agronegócio</td><td class="peso">a definir</td></tr>
+            <tr><td>Projeto final — Projeto Agro 2026 (quiz-simulador, 3 fases)</td><td class="peso">a definir</td></tr>
             <tr><td>Bônus: uso de realidade aumentada no projeto final (FJD-037)</td><td class="peso">+5%</td></tr>
           </tbody>
         </table>
-        <p style="margin-top:12px;font-size:.82rem;color:var(--muted);">O bônus de AR é opcional — o produto final pode ser jogo de tablet, protótipo com sensor, ou a combinação dos dois. Ver <a href="index.html" style="color:var(--amber);">módulo 4</a> para detalhes.</p>
+        <p style="margin-top:12px;font-size:.82rem;color:var(--muted);">O bônus de AR é opcional — vale confirmar com o professor se ainda faz sentido junto do Projeto Agro 2026, já que a direção de arte definida (2D cartunizado) pode não combinar com AR. Ver <a href="index.html" style="color:var(--amber);">módulo 4</a> para detalhes.</p>
+      </div>
+    </section>
+
+    <section>
+      <h2>Projeto Agro 2026 — o que já está definido</h2>
+      <div class="panel">
+        <p><b>Contexto:</b> nas feiras da FATEC, todos os cursos levam algo pra mostrar (sistemas, projetos de Segurança da Informação, jogos...) — só o curso de Agronegócio não tinha nada. O projeto nasce como encomenda do próprio coordenador do curso de Agro (cliente real, entrevista já feita), pensado especificamente pra resolver isso.</p>
+        <p style="margin-top:10px;">É um <b>quiz-simulador</b> em formato de "mapa de fases": completa uma fase, avança pra próxima. Segue a divisão clássica do setor entre <b>"antes"</b> e <b>"depois da porteira"</b>.</p>
+        <ul class="plain" style="margin-top:10px;">
+          <li><span class="num">1</span><span><b>Campo</b> — gestão da fazenda (plantação, animais). É a mesma lógica do jogo "Decisão do Agricultor" de hoje, agora em versão digital.</span></li>
+          <li><span class="num">2</span><span><b>Cooperativa</b> — gestão de uma cooperativa agrícola, outra área real de atuação do profissional de Agronegócio.</span></li>
+          <li><span class="num">3</span><span><b>Em aberto</b> — ideia inicial do cliente foi empresa de exportação de frutas, mas a definição final depende de consultar o <span class="mono">PPC</span> (Plano Pedagógico) do curso de Agro para ver que matérias (economia, comércio exterior etc.) fazem sentido como base.</span></li>
+        </ul>
+        <p style="margin-top:12px;"><b>Formato:</b> 5 perguntas por fase, múltipla escolha, com feedback explicativo no acerto e no erro. O jogo inteiro (3 fases) não pode passar de <b>15 minutos</b> — precisa ser rápido o bastante pra um estande de evento.</p>
+        <p><b>Plataforma:</b> PC primeiro (sem hardware de tablet disponível); mobile só se sobrar tempo no semestre.</p>
+        <p><b>Conteúdo:</b> vem pronto (bruto) do curso de Agronegócio — a turma de Jogos Digitais roteiriza e transforma em jogo, não cria o conteúdo técnico.</p>
+        <p><b>Arte:</b> 2D cartunizado, estilo "Turma da Mônica", fofo e chamativo — evitar visual muito 3D/genérico pra não parecer propaganda de Jogos Digitais em vez de Agro.</p>
+        <p style="margin-top:12px;"><b>Equipe (14 alunos):</b> Gerência de Projeto (1) · Arte, liderada por Maria Eduarda (3) · Roteiro/Game Design (2) · Programação (4) · Som/Áudio (1) · Arduino/Mini-fazenda física (2) · Documentação/Artigo (2).</p>
+        <p><b>Personagem-guia:</b> proposta em avaliação é uma versão criança/mascote do coordenador do curso de Agro — cogitada até impressão 3D como brinde físico.</p>
+        <p style="margin-top:12px;"><b>Entregas:</b> parciais a cada 4 semanas, para validação do cliente ao longo do semestre.</p>
+        <p style="margin-top:16px;padding-top:14px;border-top:1px dashed var(--line);"><b>Extensão pedagógica (ideia do professor Isaac, ainda não validada com o cliente):</b> uma <b>mini-fazenda física</b> com Arduino, <b>independente do jogo digital</b> — não precisa de integração serial nem de o quiz estar pronto. Kit já disponível na disciplina, incluindo sensor de umidade do solo. Construída em 3 módulos independentes, em ordem de prioridade — cada um funciona sozinho no estande mesmo que os outros não terminem:</p>
+        <ol style="margin:10px 0 0 20px;font-size:.95rem;">
+          <li style="margin-bottom:6px;"><b>Porteira automática</b> — âncora do conceito "antes/depois da porteira"; LED de fase + micro servo abrindo o braço via gatilho próprio.</li>
+          <li style="margin-bottom:6px;"><b>Irrigação automática</b> — reaproveita o sensor de umidade do solo desta mesma semana; aciona bomba (ou LED indicador) quando o solo está seco.</li>
+          <li><b>Farolete de alerta</b> — só LED, sem motor; item mais simples, fica por último se o tempo apertar.</li>
+        </ol>
+        <p style="margin-top:10px;">Não é requisito do cliente nem parte do escopo entregue ao Tarcísio; é aprofundamento do que a turma já aprende com Arduino no Módulo 2. Por ser desacoplada e priorizada, pode ficar pronta cedo e vira peça própria de destaque no estande — o físico costuma chamar mais atenção do que a tela numa feira.</p>
       </div>
     </section>
 
@@ -291,8 +318,8 @@ void loop() {
       <h2>Tema do semestre: agronegócio</h2>
       <div class="theme-box">
         <p><span class="glyph">▣</span>&nbsp; O semestre combina duas frentes: <b>jogos digitais</b> (motores de jogo, quizzes, jogos para tablet) e <b>kits Arduino com sensores</b>, aplicados a problemas reais do agronegócio.</p>
-        <p><span class="glyph">◈</span>&nbsp; O projeto final é um produto <b>super simples</b> pensado para o agro — jogo de tablet, protótipo com sensor, ou realidade aumentada (bônus) — feito para <b>demonstração em escolas de ensino médio e eventos</b>, servindo como porta de entrada para quem ainda não conhece o agronegócio. O <b>IV Simpósio InterAgro</b> (21–23/09, Fatec Capão Bonito) é uma referência real: seus eixos temáticos — agricultura de precisão, IA no agro, turismo rural — orientam os temas que vamos explorar.</p>
-        <p><span class="glyph">▤</span>&nbsp; Parte do conteúdo prático (situações de decisão, temas de estudo) será trazida pelos próprios alunos, a partir do que já conhecem do setor. Existem <a href="index.html" style="color:var(--amber);">projetos reais parecidos</a> — de estudantes de outro estado a iniciativas da Embrapa — que valem como referência desde já.</p>
+        <p><span class="glyph">◈</span>&nbsp; O projeto final já tem nome: <b>Projeto Agro 2026</b>, encomendado por um <b>cliente real</b> — o coordenador do curso de Agronegócio, que não tinha nada pra mostrar nas feiras da FATEC (diferente dos outros cursos). É um quiz-simulador desenvolvido primeiro para <b>PC</b> (mobile só se sobrar tempo), com 3 fases — campo, cooperativa e uma 3ª fase ainda em aberto — que seguem a divisão do setor entre <b>"antes"</b> e <b>"depois da porteira"</b>. O <b>IV Simpósio InterAgro</b> (21–23/09, Fatec Capão Bonito) segue como referência real complementar: seus eixos temáticos — agricultura de precisão, IA no agro, turismo rural — orientam os temas que vamos explorar.</p>
+        <p><span class="glyph">▤</span>&nbsp; O conteúdo bruto das perguntas (situações de decisão, temas de estudo) vem do próprio curso de Agronegócio — a turma de Jogos Digitais lapidra esse material em formato de quiz, não gera o conteúdo técnico do zero. Existem <a href="index.html" style="color:var(--amber);">projetos reais parecidos</a> — de estudantes de outro estado a iniciativas da Embrapa — que valem como referência desde já.</p>
       </div>
     </section>
 

@@ -459,7 +459,7 @@
     <header>
       <div class="eyebrow">IJD-038 · FATEC Ourinhos · Centro Paula Souza</div>
       <h1>Tópicos Especiais em Jogos Digitais</h1>
-      <p class="tagline">6º semestre, trilha 2026: <strong>gamificação aplicada ao agronegócio</strong> — do conceito ao protótipo, combinando motores de jogos com kits Arduino e sensores.</p>
+      <p class="tagline">6º semestre, trilha 2026: <strong>gamificação aplicada ao agronegócio</strong> — do conceito ao <strong>Projeto Agro 2026</strong> (quiz-simulador para um cliente real), combinando motores de jogos com kits Arduino e sensores.</p>
 
       <div class="stat-strip">
         <div class="stat"><span class="label">Código</span><span class="value">IJD-038</span></div>
@@ -510,8 +510,8 @@
     <section class="panels">
       <div class="panel">
         <h3>Objetivos &amp; ementa</h3>
-        <p>Identificar e compreender tecnologias emergentes e tendências de mercado em Jogos Digitais. Dominar conceitos e técnicas de gamificação para contextos educacionais e empresariais — aqui, aplicados ao agronegócio. Desenvolver habilidades em Motion Design aplicado a jogos.</p>
-        <p>Gamificação: teoria e prática. Gamificação educacional e empresarial. Tecnologias emergentes em jogos digitais. Motion Design aplicado a jogos e interfaces interativas.</p>
+        <p>Identificar e compreender tecnologias emergentes e tendências de mercado na área de Jogos Digitais.</p>
+        <p>Gamificação: teoria e prática. Gamificação educacional e empresarial. Estudos de tecnologias emergentes em jogos digitais. Motion Design.</p>
       </div>
 
       <div class="panel">
@@ -595,7 +595,7 @@
               <h4>Motion Design e Projeto Final</h4>
             </div>
           </div>
-          <div class="applied-note"><b>Projeto final:</b> produto simples para o agronegócio — jogo de tablet, protótipo com sensor ou realidade aumentada (retomando FJD-037) — pensado para <b>demonstração em eventos e escolas de ensino médio</b>, como porta de entrada para quem ainda não conhece o agronegócio. Uso de tecnologia emergente entra como critério extra de avaliação.</div>
+          <div class="applied-note"><b>Projeto Agro 2026:</b> quiz-simulador em 3 fases — campo → cooperativa → 3ª fase em aberto (a definir a partir do PPC do curso de Agro) — desenvolvido primeiro para <b>PC</b> (mobile só se sobrar tempo). Conteúdo bruto vem do próprio curso de Agronegócio (cliente real); a turma lapidra em formato de quiz. Objetivo declarado: atrair futuros alunos em demonstrações de eventos e escolas. Uso de tecnologia emergente entra como critério extra de avaliação.</div>
           <ul class="weeks-list">
             <li><a href="semana16.html"><span class="week-num">S16</span> Princípios de Motion Design</a></li>
             <li><a href="semana17.html"><span class="week-num">S17</span> Animação de UI/UX</a></li>
@@ -607,6 +607,60 @@
 
       </div>
     </section>
+
+    <section class="panels" style="border-bottom:1px solid var(--line);">
+      <div class="panel">
+        <h3>Projeto Agro 2026 — cliente real, produto para feiras</h3>
+        <p>Motivação de origem: em feiras e eventos da FATEC, todos os cursos levam algo pra mostrar (sistemas, projetos de Segurança da Informação, jogos...) — só o curso de Agronegócio não tinha nada. O <b>Projeto Agro 2026</b> nasce pra resolver isso: um <b>quiz-simulador</b> encomendado pelo próprio coordenador do curso de Agro (cliente real, entrevista já realizada), organizado em fases no estilo "mapa de níveis" que seguem a divisão clássica do setor entre <b>"antes da porteira"</b> e <b>"depois da porteira"</b>.</p>
+        <ul class="toolkit-list" style="margin-top:14px;">
+          <li>
+            <span class="glyph">①</span>
+            <span class="txt"><strong>Fase 1 — Campo</strong><span>Gestão da fazenda: plantação e animais. Mesma lógica do jogo "Decisão do Agricultor" da semana 1, agora em formato quiz digital.</span></span>
+          </li>
+          <li>
+            <span class="glyph">②</span>
+            <span class="txt"><strong>Fase 2 — Cooperativa</strong><span>Gestão de uma cooperativa agrícola — também uma área real de atuação do profissional de Agronegócio.</span></span>
+          </li>
+          <li>
+            <span class="glyph">③</span>
+            <span class="txt"><strong>Fase 3 — em aberto</strong><span>Ideia inicial do cliente: empresa de exportação de frutas. Definição final depende de consultar o <span class="mono">PPC</span> (Plano Pedagógico) do curso de Agro — que matérias os alunos cursam (economia, comércio exterior etc.) indicam o tema.</span></span>
+          </li>
+        </ul>
+        <p style="margin-top:14px;"><b>Formato do quiz:</b> 5 perguntas por fase, múltipla escolha, com feedback explicativo tanto no acerto quanto no erro. Percorrer o jogo inteiro (as 3 fases) não pode passar de <b>15 minutos</b> — precisa ser rápido o bastante pra um estande de evento.</p>
+        <p><b>Plataforma:</b> PC primeiro (limitação de hardware — cogitaram tablet, mas a turma não tem). Versão mobile entra depois, só se sobrar tempo no semestre.</p>
+        <p><b>Conteúdo:</b> o conteúdo bruto das perguntas e situações vem do próprio curso de Agronegócio (cliente) — a turma de Jogos Digitais não gera o conteúdo técnico, só roteiriza e transforma em formato de jogo.</p>
+        <p><b>Direção de arte:</b> 2D cartunizado, estilo "Turma da Mônica", fofo e chamativo — evitar visual muito 3D/genérico pra não parecer propaganda de Jogos Digitais em vez de Agro. <i>(Vale confirmar com o professor se isso muda o encaixe do bônus de AR do módulo — ver nota abaixo.)</i></p>
+        <p><b>Entregas:</b> parciais a cada 4 semanas, para validação do cliente ao longo do semestre.</p>
+        <p style="margin-top:14px;padding-top:12px;border-top:1px dashed var(--line);font-size:.9rem;"><b>Extensão pedagógica (ideia do professor, ainda não validada com o cliente):</b> mini-fazenda física com Arduino, <b>independente do jogo digital</b> — sem integração serial com o quiz. Kit já disponível na disciplina (inclui sensor de umidade do solo). Construída em 3 módulos independentes, em ordem de prioridade, cada um funcionando sozinho no estande mesmo que os outros não terminem:</p>
+        <ol style="margin:10px 0 0 20px;font-size:.9rem;color:var(--ink);opacity:.92;">
+          <li style="margin-bottom:6px;"><b>Porteira automática</b> — âncora conceitual do projeto ("antes/depois da porteira"); LED de fase + micro servo abrindo o braço via gatilho próprio.</li>
+          <li style="margin-bottom:6px;"><b>Irrigação automática</b> — reaproveita o sensor de umidade do solo já usado na semana 2; aciona bomba (ou LED indicador) quando o solo está seco.</li>
+          <li><b>Farolete de alerta</b> — só LED, sem motor; item mais simples, fica por último se o tempo apertar.</li>
+        </ol>
+        <p style="margin-top:10px;font-size:.9rem;">Por ser standalone e priorizado, pode ficar pronto cedo (Módulo 2 em diante) sem depender do cronograma do quiz — e vira peça de destaque à parte no estande, já que o físico costuma chamar mais atenção que a tela numa feira.</p>
+      </div>
+
+      <div class="panel">
+        <h3>Equipe do projeto — 14 alunos</h3>
+        <table class="eval">
+          <thead>
+            <tr><th>Equipe</th><th>Alunos</th></tr>
+          </thead>
+          <tbody>
+            <tr><td>Gerência de Projeto — cronograma, versionamento, ponto de contato com professor/cliente</td><td class="peso">1</td></tr>
+            <tr><td>Arte — liderada por Maria Eduarda: identidade visual 2D, personagem-guia, concept art, motion do UI</td><td class="peso">3</td></tr>
+            <tr><td>Roteiro / Game Design — narrativa, perguntas por fase, falas do personagem-guia</td><td class="peso">2</td></tr>
+            <tr><td>Programação — lógica do quiz em Unity, build PC</td><td class="peso">4</td></tr>
+            <tr><td>Som / Áudio — trilha por fase e SFX de acerto/erro/transição</td><td class="peso">1</td></tr>
+            <tr><td>Arduino / Mini-fazenda física — protótipo standalone (porteira, irrigação, farolete)</td><td class="peso">2</td></tr>
+            <tr><td>Documentação / Artigo — metodologia, resultados, redação ABNT</td><td class="peso">2</td></tr>
+          </tbody>
+        </table>
+        <p style="margin-top:14px;font-size:.9rem;color:var(--muted);"><b>Personagem-guia:</b> proposta em avaliação é uma versão criança/mascote do coordenador do curso de Agro — inclusive com possibilidade de impressão 3D como brinde físico.</p>
+        <p style="margin-top:10px;font-size:.9rem;color:var(--muted);">Documentação acompanha o processo desde o início (não só no fim), pra registrar decisões e a entrevista com o cliente — mesmo padrão dos artigos já publicados pelo grupo de pesquisa da Fatec Ourinhos citados abaixo.</p>
+      </div>
+    </section>
+
 
     <section class="biblio">
       <h2 class="mono">Projetos de referência (já existem, vale mostrar em aula)</h2>
