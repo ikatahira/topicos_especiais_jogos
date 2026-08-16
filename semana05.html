@@ -110,6 +110,14 @@
   .timing-row .dur{font-family:'IBM Plex Mono', monospace;font-size:.78rem;color:var(--amber);min-width:52px;}
   @media (max-width:600px){.wiring-grid{grid-template-columns:1fr;}}
 
+  .roles-grid{display:grid;grid-template-columns:repeat(2, 1fr);gap:14px;margin-bottom:14px;}
+  .role-card{background:var(--panel-2);border-radius:8px;padding:16px 18px;border-left:3px solid var(--green);}
+  .role-card:nth-child(2n){border-left-color:var(--amber);}
+  .role-card-title{font-family:'IBM Plex Mono', monospace;font-weight:700;font-size:.95rem;margin-bottom:2px;}
+  .role-card-sub{font-family:'IBM Plex Mono', monospace;font-size:.72rem;color:var(--muted);text-transform:uppercase;letter-spacing:.08em;margin-bottom:8px;}
+  .role-card p{font-size:.88rem;color:var(--ink);margin:0;}
+  @media (max-width:600px){.roles-grid{grid-template-columns:1fr;}}
+
   .theme-box{
     background:linear-gradient(135deg, var(--panel) 0%, var(--panel-2) 100%);
     border:1px solid var(--line);border-left:3px solid var(--amber);
@@ -200,6 +208,38 @@
     </section>
 
     <section>
+      <h2>Contexto: áreas de atuação em jogos digitais</h2>
+      <div class="panel">
+        <p>Antes de fechar o documento de game design desta semana, vale mapear quem faz o quê num time de desenvolvimento — são 4 áreas clássicas, cada uma com uma responsabilidade bem definida.</p>
+      </div>
+      <div class="roles-grid">
+        <div class="role-card">
+          <div class="role-card-title">🎯 Game Design</div>
+          <div class="role-card-sub">Projeto de jogo</div>
+          <p>Área responsável pela concepção, desenvolvimento e coordenação de todo o jogo — mecânicas, dinâmicas, regras e a experiência como um todo. É a área que fecha o documento de game design desta semana.</p>
+        </div>
+        <div class="role-card">
+          <div class="role-card-title">🎨 Game Art</div>
+          <div class="role-card-sub">Projeto gráfico</div>
+          <p>Área responsável por toda a criação artística: objetos gráficos, design visual e efeitos, incluindo a representação de personagens, cenários e objetos do jogo.</p>
+        </div>
+        <div class="role-card">
+          <div class="role-card-title">🔊 Game Sound</div>
+          <div class="role-card-sub">Som</div>
+          <p>Área responsável pela criação dos sons e efeitos sonoros do jogo.</p>
+        </div>
+        <div class="role-card">
+          <div class="role-card-title">💻 Game Programming</div>
+          <div class="role-card-sub">Programação</div>
+          <p>Área responsável pela implementação das regras, das fases e da jogabilidade — transforma o design em algo jogável de fato.</p>
+        </div>
+      </div>
+      <div class="panel">
+        <p><b>Por que é raro uma mesma pessoa acumular design e programação?</b> Porque os jogos atingiram níveis de complexidade altos e geralmente requerem um ou mais designers dedicados, além dos programadores — cada área acima já é, sozinha, um campo de especialização.</p>
+      </div>
+    </section>
+
+    <section>
       <h2>Aplicação no Projeto Agro 2026 — fechamento do Módulo 1</h2>
       <div class="panel">
         <p>Consolidação do <b>documento de game design</b> do projeto: pontuação por pergunta, formato do feedback (visto na semana 2), a barra/mapa de progresso entre as 3 fases (visto na semana 4), e o papel do personagem-guia como avatar condutor.</p>
@@ -226,7 +266,7 @@
       <h2>Teste seus conhecimentos</h2>
       <div class="quiz-progress">
         <span>Questionário de fixação — Elementos de Gamificação</span>
-        <span class="score" id="quizScore">0 / 6</span>
+        <span class="score" id="quizScore">0 / 10</span>
       </div>
 
       <div class="quiz-card" data-qid="1">
@@ -295,8 +335,52 @@
         <div class="quiz-feedback"><strong>Protótipo navegável da fase 1.</strong> É a primeira validação prática do cliente, mesmo com arte provisória — encerrando o ciclo de 4 semanas.</div>
       </div>
 
+      <div class="quiz-card" data-qid="7">
+        <div class="quiz-q-head"><span class="quiz-q-num">7</span><span class="quiz-q-text">Qual área é responsável pela implementação das regras, das fases e da <b>jogabilidade</b> de um jogo?</span></div>
+        <div class="quiz-options">
+          <button class="quiz-option" data-correct="false"><span class="letter">a.</span><span>Game design</span></button>
+          <button class="quiz-option" data-correct="false"><span class="letter">b.</span><span>Game art</span></button>
+          <button class="quiz-option" data-correct="false"><span class="letter">c.</span><span>Game sound</span></button>
+          <button class="quiz-option" data-correct="true"><span class="letter">d.</span><span>Game programming</span></button>
+        </div>
+        <div class="quiz-feedback"><strong>Game programming.</strong> É a área que transforma o design em algo jogável de fato, implementando regras, fases e jogabilidade.</div>
+      </div>
+
+      <div class="quiz-card" data-qid="8">
+        <div class="quiz-q-head"><span class="quiz-q-num">8</span><span class="quiz-q-text">Quem cria a representação visual de personagens, cenários e objetos de um jogo?</span></div>
+        <div class="quiz-options">
+          <button class="quiz-option" data-correct="false"><span class="letter">a.</span><span>Game programming</span></button>
+          <button class="quiz-option" data-correct="false"><span class="letter">b.</span><span>Game design</span></button>
+          <button class="quiz-option" data-correct="true"><span class="letter">c.</span><span>Game art</span></button>
+          <button class="quiz-option" data-correct="false"><span class="letter">d.</span><span>Game sound</span></button>
+        </div>
+        <div class="quiz-feedback"><strong>Game art.</strong> É a área responsável por toda a criação artística — objetos gráficos, design visual e efeitos.</div>
+      </div>
+
+      <div class="quiz-card" data-qid="9">
+        <div class="quiz-q-head"><span class="quiz-q-num">9</span><span class="quiz-q-text">Qual área concebe, desenvolve e coordena o jogo como um todo — inclusive o documento de game design fechado nesta semana?</span></div>
+        <div class="quiz-options">
+          <button class="quiz-option" data-correct="true"><span class="letter">a.</span><span>Game design</span></button>
+          <button class="quiz-option" data-correct="false"><span class="letter">b.</span><span>Game art</span></button>
+          <button class="quiz-option" data-correct="false"><span class="letter">c.</span><span>Game sound</span></button>
+          <button class="quiz-option" data-correct="false"><span class="letter">d.</span><span>Game programming</span></button>
+        </div>
+        <div class="quiz-feedback"><strong>Game design.</strong> É a área que concebe, desenvolve e coordena todo o jogo — a mesma que fecha o documento de game design desta semana.</div>
+      </div>
+
+      <div class="quiz-card" data-qid="10">
+        <div class="quiz-q-head"><span class="quiz-q-num">10</span><span class="quiz-q-text">Por que é raro encontrar um jogo digital em que o programador principal também é o designer principal?</span></div>
+        <div class="quiz-options">
+          <button class="quiz-option" data-correct="false"><span class="letter">a.</span><span>Porque os designers não têm habilidades de programação</span></button>
+          <button class="quiz-option" data-correct="false"><span class="letter">b.</span><span>Porque os programadores não têm habilidades de design</span></button>
+          <button class="quiz-option" data-correct="false"><span class="letter">c.</span><span>Porque a indústria de jogos proíbe essa prática</span></button>
+          <button class="quiz-option" data-correct="true"><span class="letter">d.</span><span>Porque os jogos atingiram níveis de complexidade altos e geralmente requerem um ou mais designers dedicados, além dos programadores</span></button>
+        </div>
+        <div class="quiz-feedback"><strong>Complexidade alta exige especialização.</strong> Cada área (design, arte, som, programação) já é, sozinha, um campo de especialização nos jogos atuais.</div>
+      </div>
+
       <div class="quiz-final" id="quizFinal">
-        <div class="big" id="quizFinalScore">0 / 6</div>
+        <div class="big" id="quizFinalScore">0 / 10</div>
         <p id="quizFinalMsg">Revise as questões incorretas acima antes de seguir para a semana 6.</p>
         <button class="quiz-retry" onclick="quizReset()">↺ Refazer questionário</button>
       </div>
@@ -323,6 +407,7 @@
       function updateScore() {
         scoreEl.textContent = score + ' / ' + total;
       }
+      updateScore(); // inicializa o placar com o total real de perguntas (evita nº "chumbado" no HTML)
 
       cards.forEach(card => {
         const options = Array.from(card.querySelectorAll('.quiz-option'));
