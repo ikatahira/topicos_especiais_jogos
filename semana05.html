@@ -124,6 +124,64 @@
     color:var(--muted);font-size:.84rem;
     display:flex;justify-content:space-between;flex-wrap:wrap;gap:10px;
   }
+
+  /* ─── QUESTIONÁRIO ─── */
+  :root{ --red:#c2604a; --red-soft:#c2604a33; }
+  .quiz-progress{
+    font-family:'IBM Plex Mono', monospace;font-size:.76rem;color:var(--muted);
+    margin-bottom:16px;display:flex;justify-content:space-between;align-items:center;
+  }
+  .quiz-progress .score{color:var(--amber);}
+  .quiz-card{
+    background:var(--panel);border:1px solid var(--line);border-radius:10px;
+    padding:20px 22px;margin-bottom:14px;
+  }
+  .quiz-q-head{display:flex;gap:12px;align-items:baseline;margin-bottom:14px;}
+  .quiz-q-num{font-family:'IBM Plex Mono', monospace;font-size:.78rem;color:var(--green);min-width:20px;}
+  .quiz-q-text{font-size:.98rem;color:var(--ink);}
+  .quiz-options{display:flex;flex-direction:column;gap:8px;}
+  .quiz-option{
+    display:flex;align-items:flex-start;gap:10px;
+    background:var(--panel-2);border:1px solid var(--line);border-radius:8px;
+    padding:11px 14px;cursor:pointer;font-size:.9rem;text-align:left;
+    color:var(--ink);transition:border-color .15s, background .15s;
+  }
+  .quiz-option:hover:not(.locked){border-color:var(--amber);}
+  .quiz-option .letter{
+    font-family:'IBM Plex Mono', monospace;font-size:.75rem;color:var(--muted);
+    min-width:16px;
+  }
+  .quiz-option.correct{border-color:var(--green);background:var(--green-soft);}
+  .quiz-option.correct .letter{color:var(--green);}
+  .quiz-option.incorrect{border-color:var(--red);background:var(--red-soft);}
+  .quiz-option.incorrect .letter{color:var(--red);}
+  .quiz-option.locked{cursor:default;}
+  .quiz-option.dim{opacity:.5;}
+  .quiz-feedback{
+    margin-top:12px;padding:11px 14px;border-radius:8px;font-size:.86rem;
+    display:none;font-family:'IBM Plex Sans', sans-serif;
+    border-left:3px solid var(--green);background:var(--panel-2);color:var(--muted);
+  }
+  .quiz-feedback.show{display:block;}
+  .quiz-feedback.wrong{border-left-color:var(--red);}
+  .quiz-feedback strong{color:var(--ink);}
+  .quiz-final{
+    background:linear-gradient(135deg, var(--panel) 0%, var(--panel-2) 100%);
+    border:1px solid var(--line);border-left:3px solid var(--amber);
+    border-radius:10px;padding:24px 26px;text-align:center;display:none;
+  }
+  .quiz-final.show{display:block;}
+  .quiz-final .big{
+    font-family:'IBM Plex Mono', monospace;font-size:2.2rem;font-weight:700;
+    color:var(--amber);margin-bottom:6px;
+  }
+  .quiz-final p{color:var(--muted);margin-bottom:16px;}
+  .quiz-retry{
+    font-family:'IBM Plex Mono', monospace;font-size:.8rem;
+    background:transparent;border:1px solid var(--line);color:var(--ink);
+    padding:9px 18px;border-radius:8px;cursor:pointer;transition:border-color .15s;
+  }
+  .quiz-retry:hover{border-color:var(--amber);}
 </style>
 </head>
 <body>
@@ -164,11 +222,166 @@
     </section>
 
 
+    <section>
+      <h2>Teste seus conhecimentos</h2>
+      <div class="quiz-progress">
+        <span>Questionário de fixação — Elementos de Gamificação</span>
+        <span class="score" id="quizScore">0 / 6</span>
+      </div>
+
+      <div class="quiz-card" data-qid="1">
+        <div class="quiz-q-head"><span class="quiz-q-num">1</span><span class="quiz-q-text">O framework <b>PBL</b>, citado como ponto de partida clássico da teoria desta semana, significa:</span></div>
+        <div class="quiz-options">
+          <button class="quiz-option" data-correct="true"><span class="letter">a.</span><span>Points, Badges, Leaderboards</span></button>
+          <button class="quiz-option" data-correct="false"><span class="letter">b.</span><span>Player, Board, Level</span></button>
+          <button class="quiz-option" data-correct="false"><span class="letter">c.</span><span>Progress, Bonus, Loop</span></button>
+          <button class="quiz-option" data-correct="false"><span class="letter">d.</span><span>Points, Bonus, Level</span></button>
+        </div>
+        <div class="quiz-feedback"><strong>PBL = Points, Badges, Leaderboards</strong> — pontos, emblemas e rankings, o trio mais citado como porta de entrada clássica para gamificação.</div>
+      </div>
+
+      <div class="quiz-card" data-qid="2">
+        <div class="quiz-q-head"><span class="quiz-q-num">2</span><span class="quiz-q-text">No documento de game design do Projeto Agro 2026, o que representa a <b>barra/mapa de progresso</b> entre as 3 fases?</span></div>
+        <div class="quiz-options">
+          <button class="quiz-option" data-correct="false"><span class="letter">a.</span><span>O elemento "narrativa"</span></button>
+          <button class="quiz-option" data-correct="true"><span class="letter">b.</span><span>O elemento "níveis"</span></button>
+          <button class="quiz-option" data-correct="false"><span class="letter">c.</span><span>O elemento "feedback"</span></button>
+          <button class="quiz-option" data-correct="false"><span class="letter">d.</span><span>O próprio framework PBL</span></button>
+        </div>
+        <div class="quiz-feedback"><strong>Níveis.</strong> A barra/mapa de progresso é a materialização desse elemento — visto na semana 4 e agora formalizado no documento de game design.</div>
+      </div>
+
+      <div class="quiz-card" data-qid="3">
+        <div class="quiz-q-head"><span class="quiz-q-num">3</span><span class="quiz-q-text">Qual elemento de gamificação corresponde ao <b>personagem-guia</b> do Projeto Agro 2026?</span></div>
+        <div class="quiz-options">
+          <button class="quiz-option" data-correct="false"><span class="letter">a.</span><span>Badge</span></button>
+          <button class="quiz-option" data-correct="false"><span class="letter">b.</span><span>Leaderboard</span></button>
+          <button class="quiz-option" data-correct="true"><span class="letter">c.</span><span>Avatar</span></button>
+          <button class="quiz-option" data-correct="false"><span class="letter">d.</span><span>Desafio</span></button>
+        </div>
+        <div class="quiz-feedback"><strong>Avatar.</strong> O personagem-guia cumpre o papel de avatar condutor — um dos elementos adicionais ao framework PBL clássico.</div>
+      </div>
+
+      <div class="quiz-card" data-qid="4">
+        <div class="quiz-q-head"><span class="quiz-q-num">4</span><span class="quiz-q-text">O formato de feedback definido na semana 2 e retomado agora no fechamento do Módulo 1 faz parte de qual conjunto de elementos?</span></div>
+        <div class="quiz-options">
+          <button class="quiz-option" data-correct="false"><span class="letter">a.</span><span>Elementos exclusivos de estética visual</span></button>
+          <button class="quiz-option" data-correct="true"><span class="letter">b.</span><span>Elementos clássicos de gamificação (junto de níveis, desafios, narrativa e avatares)</span></button>
+          <button class="quiz-option" data-correct="false"><span class="letter">c.</span><span>Elementos exclusivos de programação</span></button>
+          <button class="quiz-option" data-correct="false"><span class="letter">d.</span><span>Elementos exclusivos de trilha sonora</span></button>
+        </div>
+        <div class="quiz-feedback"><strong>Elementos clássicos de gamificação.</strong> Feedback é um dos elementos adicionais ao PBL — cada um cumprindo uma função motivacional própria.</div>
+      </div>
+
+      <div class="quiz-card" data-qid="5">
+        <div class="quiz-q-head"><span class="quiz-q-num">5</span><span class="quiz-q-text">O que precisa ser fechado nesta semana para consolidar o Módulo 1?</span></div>
+        <div class="quiz-options">
+          <button class="quiz-option" data-correct="false"><span class="letter">a.</span><span>Somente a arte da fase 1</span></button>
+          <button class="quiz-option" data-correct="true"><span class="letter">b.</span><span>O documento de game design: mecânicas + dinâmicas + estética + elementos</span></button>
+          <button class="quiz-option" data-correct="false"><span class="letter">c.</span><span>Apenas o cronograma do Módulo 2</span></button>
+          <button class="quiz-option" data-correct="false"><span class="letter">d.</span><span>O contrato com o cliente</span></button>
+        </div>
+        <div class="quiz-feedback"><strong>O documento de game design completo.</strong> A atividade da semana pede o fechamento de mecânicas + dinâmicas + estética + elementos — a entrega central desta semana.</div>
+      </div>
+
+      <div class="quiz-card" data-qid="6">
+        <div class="quiz-q-head"><span class="quiz-q-num">6</span><span class="quiz-q-text">Qual é a entrega parcial ao cliente que encerra o ciclo de 4 semanas do Módulo 1?</span></div>
+        <div class="quiz-options">
+          <button class="quiz-option" data-correct="false"><span class="letter">a.</span><span>O documento de game design completo, sem protótipo</span></button>
+          <button class="quiz-option" data-correct="false"><span class="letter">b.</span><span>Um relatório escrito sobre teoria de gamificação</span></button>
+          <button class="quiz-option" data-correct="true"><span class="letter">c.</span><span>Protótipo navegável da fase 1, mesmo com arte provisória</span></button>
+          <button class="quiz-option" data-correct="false"><span class="letter">d.</span><span>Um pitch em vídeo do projeto</span></button>
+        </div>
+        <div class="quiz-feedback"><strong>Protótipo navegável da fase 1.</strong> É a primeira validação prática do cliente, mesmo com arte provisória — encerrando o ciclo de 4 semanas.</div>
+      </div>
+
+      <div class="quiz-final" id="quizFinal">
+        <div class="big" id="quizFinalScore">0 / 6</div>
+        <p id="quizFinalMsg">Revise as questões incorretas acima antes de seguir para a semana 6.</p>
+        <button class="quiz-retry" onclick="quizReset()">↺ Refazer questionário</button>
+      </div>
+    </section>
+
     <footer>
       <span class="mono">IJD-038 — Semana 5 de 20</span>
       <a class="mono" href="semana04.html" style="color:var(--muted);text-decoration:none;">← semana anterior</a>
       <a class="mono" href="semana06.html" style="color:var(--amber);text-decoration:none;">Próxima semana →</a>
     </footer>
   </div>
+
+  <script>
+    (function () {
+      const cards = Array.from(document.querySelectorAll('.quiz-card'));
+      const scoreEl = document.getElementById('quizScore');
+      const finalBox = document.getElementById('quizFinal');
+      const finalScoreEl = document.getElementById('quizFinalScore');
+      const finalMsgEl = document.getElementById('quizFinalMsg');
+      const total = cards.length;
+      let answered = 0;
+      let score = 0;
+
+      function updateScore() {
+        scoreEl.textContent = score + ' / ' + total;
+      }
+
+      cards.forEach(card => {
+        const options = Array.from(card.querySelectorAll('.quiz-option'));
+        const feedback = card.querySelector('.quiz-feedback');
+
+        options.forEach(opt => {
+          opt.addEventListener('click', () => {
+            if (card.dataset.locked) return;
+            card.dataset.locked = 'true';
+            answered++;
+
+            const isCorrect = opt.dataset.correct === 'true';
+            if (isCorrect) score++;
+
+            options.forEach(o => {
+              o.classList.add('locked');
+              if (o.dataset.correct === 'true') {
+                o.classList.add('correct');
+              } else if (o === opt) {
+                o.classList.add('incorrect');
+              } else {
+                o.classList.add('dim');
+              }
+            });
+
+            feedback.classList.add('show');
+            if (!isCorrect) feedback.classList.add('wrong');
+
+            updateScore();
+
+            if (answered === total) {
+              finalScoreEl.textContent = score + ' / ' + total;
+              const pct = Math.round((score / total) * 100);
+              finalMsgEl.textContent = pct === 100
+                ? 'Gabaritou! Pode seguir tranquilo para a semana 6.'
+                : 'Revise as questões incorretas acima antes de seguir para a semana 6.';
+              finalBox.classList.add('show');
+              finalBox.scrollIntoView({ behavior: 'smooth', block: 'center' });
+            }
+          });
+        });
+      });
+
+      window.quizReset = function () {
+        answered = 0;
+        score = 0;
+        updateScore();
+        finalBox.classList.remove('show');
+        cards.forEach(card => {
+          delete card.dataset.locked;
+          const feedback = card.querySelector('.quiz-feedback');
+          feedback.classList.remove('show', 'wrong');
+          card.querySelectorAll('.quiz-option').forEach(o => {
+            o.classList.remove('locked', 'correct', 'incorrect', 'dim');
+          });
+        });
+        cards[0].scrollIntoView({ behavior: 'smooth', block: 'center' });
+      };
+    })();
+  </script>
 </body>
 </html>
